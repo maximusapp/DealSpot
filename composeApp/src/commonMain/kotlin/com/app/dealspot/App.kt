@@ -24,6 +24,7 @@ import dealspot.composeapp.generated.resources.apple
 fun App() {
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
+            // Test comment
         Column(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.primaryContainer)

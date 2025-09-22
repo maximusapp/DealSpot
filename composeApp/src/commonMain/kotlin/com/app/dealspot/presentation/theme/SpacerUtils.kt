@@ -1,0 +1,50 @@
+package com.app.dealspot.presentation.theme
+
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+
+/** Vertical Spacer */
+@Composable
+fun SpacerHeight10Dp() {
+    Spacer(modifier = Modifier.height(dimens_10))
+}
+
+@Composable
+fun SpacerHeight15Dp() {
+    Spacer(modifier = Modifier.height(dimens_15))
+}
+
+@Composable
+fun SpacerHeight20Dp() {
+    Spacer(modifier = Modifier.height(dimens_20))
+}
+
+@Composable
+fun SpacerHeight25Dp() {
+    Spacer(modifier = Modifier.height(dimens_25))
+}
+
+@Composable
+fun SpacerHeight40Dp() {
+    Spacer(modifier = Modifier.height(dimens_40))
+}
+
+/** Horizontal Spacer */
+@Composable
+fun SpacerWidth5Dp() {
+    Spacer(modifier = Modifier.width(dimens_5))
+}
+
+@Composable
+fun SpacerWidth10Dp() {
+    Spacer(modifier = Modifier.width(dimens_10))
+}
+
+@Composable
+fun SpacerWidth15Dp() {
+    Spacer(modifier = Modifier.width(dimens_15))
+}
+

@@ -1,0 +1,50 @@
+package com.app.dealspot.presentation.ui.splash
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import org.koin.compose.koinInject
+import presentation.navigation.SplashNavigation
+
+@Composable
+internal fun SplashNav(
+    splashViewModel: SplashViewModel = koinInject(),
+//    loginViewModel: LoginViewModel = koinInject(),
+//    registerViewModel: RegisterViewModel = koinInject(),
+    navigateToMain: () -> Unit
+) {
+    val navigator = rememberNavController()
+
+    NavHost(
+        startDestination = SplashNavigation.Splash,
+        navController = navigator,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        composable<SplashNavigation.Splash> {
+            SplashScreen(
+
+            )
+        }
+        composable<SplashNavigation.Login> {
+//            LoginScreen(
+//                viewModel = loginViewModel,
+//                navigateToMain = navigateToMain,
+//                navigateToRegister = { navigator.navigate(SplashNavigation.Register) },
+//                state = loginViewModel.state.value,
+//                events = loginViewModel::onTriggerEvent
+//            )
+        }
+        composable<SplashNavigation.Register> {
+//            RegisterScreen(
+//                viewModel = registerViewModel,
+//                navigateToMain = navigateToMain,
+//                state = registerViewModel.state.value,
+//                events = registerViewModel::onTriggerEvent
+//            )
+        }
+    }
+
+}

@@ -6,7 +6,6 @@ import com.app.dealspot.presentation.App
 
 @Composable
 fun MainView(application: Application) {
-
     App(application)
 }
 

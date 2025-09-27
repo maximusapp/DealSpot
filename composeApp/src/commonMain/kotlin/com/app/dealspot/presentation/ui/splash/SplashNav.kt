@@ -18,6 +18,8 @@ internal fun SplashNav(
 ) {
     val navigator = rememberNavController()
 
+    // DS-1
+
     NavHost(
         startDestination = SplashNavigation.Splash,
         navController = navigator,

@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
-import presentation.navigation.SplashNavigation
+import com.app.dealspot.presentation.navigation.SplashNavigation
 
 @Composable
 internal fun SplashNav(
@@ -18,16 +18,23 @@ internal fun SplashNav(
 ) {
     val navigator = rememberNavController()
 
-    // DS-1
-
     NavHost(
-        startDestination = SplashNavigation.Splash,
+        startDestination = SplashNavigation.Welcome,
         navController = navigator,
         modifier = Modifier.fillMaxSize()
     ) {
-        composable<SplashNavigation.Splash> {
-            SplashScreen(
-
+        composable<SplashNavigation.Welcome> {
+            WelcomeScreen(
+                navigateToOnboarding = { navigator.navigate(SplashNavigation.Onboarding) },
+                navigateToMain = navigateToMain,
+                navigateToLogin = { navigator.navigate(SplashNavigation.Login) },
+                navigateToRegister = { navigator.navigate(SplashNavigation.Register) }
+            )
+        }
+        composable<SplashNavigation.Onboarding> {
+            OnboardingScreen(
+                onGetStartedClick = navigateToMain,
+                onSkipClick = navigateToMain
             )
         }
         composable<SplashNavigation.Login> {

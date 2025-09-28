@@ -1,4 +1,4 @@
-package presentation.navigation
+package com.app.dealspot.presentation.navigation
 
 import kotlinx.serialization.Serializable
 
@@ -6,7 +6,10 @@ import kotlinx.serialization.Serializable
 sealed interface SplashNavigation {
 
     @Serializable
-    data object Splash : SplashNavigation
+    data object Welcome : SplashNavigation
+
+    @Serializable
+    data object Onboarding : SplashNavigation
 
     @Serializable
     data object Login : SplashNavigation

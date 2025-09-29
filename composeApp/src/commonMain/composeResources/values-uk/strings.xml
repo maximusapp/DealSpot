@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">DealSpot</string>
     <string name="welcome">Ласкаво просимо до DealSpot</string>
+    <string name="welcome_description">Знайдіть або створіть швидкі угоди поблизу</string>
 </resources>

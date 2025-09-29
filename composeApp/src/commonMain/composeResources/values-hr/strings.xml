@@ -2,5 +2,6 @@
 <resources>
     <string name="app_name">DealSpot</string>
     <string name="welcome">Dobrodošli u DealSpot</string>
+    <string name="welcome_description">Pronađite ili stvorite brze ponude u blizini</string>
     <!--Croatian -->
 </resources>

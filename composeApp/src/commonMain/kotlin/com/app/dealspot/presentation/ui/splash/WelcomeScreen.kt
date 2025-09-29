@@ -1,5 +1,6 @@
 package com.app.dealspot.presentation.ui.splash
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -7,14 +8,23 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.app.dealspot.presentation.theme.*
+import com.app.dealspot.presentation.utils.DealSpotDarkButton
+import com.app.dealspot.presentation.utils.Spacer10Height
+import com.app.dealspot.presentation.utils.Spacer15Height
+import com.app.dealspot.presentation.utils.Spacer20Height
+import com.app.dealspot.presentation.utils.Spacer30Height
+import com.app.dealspot.presentation.utils.Spacer50Height
 import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.ic_deal_spot
 import dealspot.composeapp.generated.resources.welcome
+import dealspot.composeapp.generated.resources.welcome_description
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -44,23 +54,14 @@ internal fun WelcomeScreen(
             verticalArrangement = Arrangement.Center
         ) {
             // App Logo/Icon placeholder
-            Box(
+            Image(
+                painter = painterResource(Res.drawable.ic_deal_spot),
+                contentDescription = null,
                 modifier = Modifier
-                    .size(dimens_100)
-                    .background(
-                        blue,
-                        RoundedCornerShape(dimens_20)
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "🍽️",
-                    fontSize = 50.sp,
-                    color = Color.White
-                )
-            }
+                    .clip(RoundedCornerShape(16.dp))
+            )
 
-            Spacer(modifier = Modifier.height(dimens_30))
+            Spacer30Height()
 
             // Welcome Title
             Text(
@@ -72,11 +73,11 @@ internal fun WelcomeScreen(
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(dimens_10))
+            Spacer10Height()
 
             // Subtitle
             Text(
-                text = "Discover amazing food deals and discounts",
+                text = stringResource(Res.string.welcome_description),
                 fontSize = text_size_16,
                 color = grey_700,
                 fontWeight = FontWeight.W400,
@@ -84,29 +85,18 @@ internal fun WelcomeScreen(
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(dimens_50))
+            Spacer50Height()
 
             // Get Started Button
-            Button(
-                onClick = navigateToOnboarding,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(dimens_56),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = blue,
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(dimens_12)
-            ) {
-                Text(
-                    text = "Get Started",
-                    fontSize = text_size_18,
-                    fontWeight = FontWeight.W600,
-                    fontFamily = latoFontFamily()
-                )
-            }
+            DealSpotDarkButton(
+                buttonText = "Get started",
+                onClick = {
+                    println("WelcomeScreen. Get started button clicked")
+                    navigateToOnboarding.invoke()
+                }
+            )
 
-            Spacer(modifier = Modifier.height(dimens_20))
+            Spacer20Height()
 
             // Login Button
             OutlinedButton(
@@ -130,7 +120,7 @@ internal fun WelcomeScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(dimens_15))
+            Spacer15Height()
 
             // Register Link
             TextButton(

@@ -3,6 +3,7 @@ package com.app.dealspot.presentation.theme
 import androidx.compose.ui.graphics.Color
 
 
+val DealSpotDark = Color(0xFF0C2239)
 val PrimaryColor = Color(0xFFFF4747)
 val PrimaryVariantColor = Color(0xFFCA3D49)
 val AccentColor = Color(0xFFC62F79)

@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.ui.splash
+package com.app.dealspot.presentation.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -8,8 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
 import presentation.navigation.MainNavigation
-import com.app.dealspot.presentation.ui.splash.home.HomeScreen
-import com.app.dealspot.presentation.ui.splash.home.HomeScreenViewModel
+import com.app.dealspot.presentation.ui.home.HomeScreen
+import com.app.dealspot.presentation.ui.home.HomeScreenViewModel
 
 @Composable
 internal fun MainNav(

@@ -2,4 +2,15 @@
     <string name="app_name">DealSpot</string>
     <string name="welcome">Welcome to DealSpot</string>
     <string name="welcome_description">Find or create fast deals nearby</string>
+    <string name="get_started">Get started</string>
+    <string name="login">Login</string>
+    <string name="do_not_have_account_sign_up">Don't have an account? Sign Up</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="skip">Skip</string>
+    <string name="create_and_find_quick_jobs">Create or Find Quick Jobs</string>
+    <string name="create_and_find_quick_jobs_text">Post a task or find nearby job opportunities – from home repairs to tech help – all in one place.</string>
+    <string name="earn_or_get_things_faster">Earn Fast or Resolve Problems Fast</string>
+    <string name="earn_or_get_things_faster_text">Create fast jobs to earn money or get reliable help quickly for anything you need.</string>
+    <string name="safe_fast_local">Safely, quickly and near you</string>
+    <string name="safe_fast_local_text">Connect with trusted people in your area, chat instantly, and complete job with ease and confidence.</string>
 </resources>

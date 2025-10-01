@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.ui.splash
+package com.app.dealspot.presentation.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -8,6 +8,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
 import com.app.dealspot.presentation.navigation.SplashNavigation
+import com.app.dealspot.presentation.ui.auth.LoginScreen
+import com.app.dealspot.presentation.ui.auth.RegistrationScreen
+import com.app.dealspot.presentation.ui.welcome.WelcomeScreen
 
 @Composable
 internal fun SplashNav(
@@ -33,26 +36,26 @@ internal fun SplashNav(
         }
         composable<SplashNavigation.Onboarding> {
             OnboardingScreen(
-                onGetStartedClick = navigateToMain,
-                onSkipClick = navigateToMain
+                onGetStartedClick = { navigator.popBackStack() },
+                onSkipClick = { navigator.popBackStack() }
             )
         }
         composable<SplashNavigation.Login> {
-//            LoginScreen(
+            LoginScreen(
 //                viewModel = loginViewModel,
 //                navigateToMain = navigateToMain,
 //                navigateToRegister = { navigator.navigate(SplashNavigation.Register) },
 //                state = loginViewModel.state.value,
 //                events = loginViewModel::onTriggerEvent
-//            )
+            )
         }
         composable<SplashNavigation.Register> {
-//            RegisterScreen(
+            RegistrationScreen(
 //                viewModel = registerViewModel,
 //                navigateToMain = navigateToMain,
 //                state = registerViewModel.state.value,
 //                events = registerViewModel::onTriggerEvent
-//            )
+            )
         }
     }
 

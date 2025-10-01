@@ -31,6 +31,7 @@ val dimens_60 = 60.dp
 val dimens_62 = 62.dp
 val dimens_90 = 90.dp
 val dimens_100 = 100.dp
+val dimens_200 = 200.dp
 val dimens_385 = 385.dp
 
 /* Text size */

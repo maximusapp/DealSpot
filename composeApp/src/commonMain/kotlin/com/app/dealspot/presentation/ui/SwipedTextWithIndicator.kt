@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.ui.splash
+package com.app.dealspot.presentation.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

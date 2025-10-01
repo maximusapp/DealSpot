@@ -4,7 +4,8 @@ import com.app.dealspot.business.AppDataStore
 import com.app.dealspot.business.AppDataStoreManager
 import com.app.dealspot.common.Context
 import com.app.dealspot.presentation.SharedViewModel
-import com.app.dealspot.presentation.ui.splash.SplashViewModel
+import com.app.dealspot.presentation.ui.SplashViewModel
+import com.app.dealspot.presentation.ui.welcome.WelcomeScreenViewModel
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
@@ -40,6 +41,7 @@ fun appModule(context: Context) = module {
 //    factory { BaseAuthViewModel() }
     factory { SplashViewModel() }
     factory { SharedViewModel(get()) }
+    factory { WelcomeScreenViewModel(get()) }
 //    factory { LoginViewModel(get(), get(), get()) }
 //    factory { RegisterViewModel(get(), get(), get(), get()) }
 //    factory { EmailVerificationScreenViewModel(get()) }

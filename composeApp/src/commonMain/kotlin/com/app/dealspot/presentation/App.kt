@@ -11,11 +11,11 @@ import com.app.dealspot.common.Context
 import com.app.dealspot.di.appModule
 import com.app.dealspot.presentation.navigation.AppNavigation
 import com.app.dealspot.presentation.theme.AppTheme
-import com.app.dealspot.presentation.ui.splash.MainNav
+import com.app.dealspot.presentation.ui.MainNav
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
-import com.app.dealspot.presentation.ui.splash.SplashNav
+import com.app.dealspot.presentation.ui.SplashNav
 
 @Composable
 @Preview

@@ -2,6 +2,17 @@
 <resources>
     <string name="app_name">DealSpot</string>
     <string name="welcome">Vítejte v DealSpot</string>
-    <string name="welcome_description">Najděte nebo vytvořte rychlé nabídky poblíž</string>
+    <string name="welcome_description">Najdan nebo vytvořte rychlé nabídky poblíž</string>
+    <string name="get_started">Začněte</string>
+    <string name="login">Přihlášení</string>
+    <string name="do_not_have_account_sign_up">Nemáte účet? Zaregistrujte se</string>
+    <string name="sign_up">Zaregistrujte se</string>
+    <string name="skip">Přeskočit</string>
+    <string name="create_and_find_quick_jobs">Vytvářejte nebo najděte rychlou úlohu</string>
+    <string name="create_and_find_quick_jobs_text">Zveřejněte úkol nebo najděte nedaleké pracovní příležitosti - od oprav domů po technickou pomoc - vše na jednom místě.</string>
+    <string name="earn_or_get_things_faster">Vydělávejte rychle nebo vyřešte problémy rychle</string>
+    <string name="earn_or_get_things_faster_text">Vytvořte rychlou práci, abyste vydělali peníze nebo získali spolehlivou pomoc rychle za vše, co potřebujete.</string>
+    <string name="safe_fast_local">Bezpečně, rychle a ve vašem okolí</string>
+    <string name="safe_fast_local_text">Spojte se s důvěryhodnými lidmi ve vaší oblasti, okamžitě si povídejte a kompletní práci s lehkostí a důvěrou.</string>
     <!--Czech -->
 </resources>

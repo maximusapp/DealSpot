@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.ui.splash.home
+package com.app.dealspot.presentation.ui.auth
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,11 +12,12 @@ import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.dimens_20
 import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.text_size_24
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@Preview
 @Composable
-internal fun HomeScreen(
-
-) {
+fun RegistrationScreen() {
+    // Main Content Area
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -25,12 +26,11 @@ internal fun HomeScreen(
     ) {
         // Your main content goes here
         Text(
-            text = "Welcome to About screen",
+            text = "Welcome to Registration screen",
             fontSize = text_size_24,
             color = Grey,
             fontWeight = FontWeight.W700,
             fontFamily = latoFontFamily()
         )
     }
-
 }

@@ -3,5 +3,16 @@
     <string name="app_name">DealSpot</string>
     <string name="welcome">Dobrodošli u DealSpot</string>
     <string name="welcome_description">Pronađite ili stvorite brze ponude u blizini</string>
+    <string name="get_started">Započeti</string>
+    <string name="login">Prijava</string>
+    <string name="do_not_have_account_sign_up">Nemate račun? Prijaviti se</string>
+    <string name="sign_up">Prijaviti se</string>
+    <string name="skip">Preskočiti</string>
+    <string name="create_and_find_quick_jobs">Stvorite ili pronađite brze poslove</string>
+    <string name="create_and_find_quick_jobs_text">Objavite zadatak ili pronađite prilika za posao u blizini - od popravka kuće do tehnološke pomoći - sve na jednom mjestu.</string>
+    <string name="earn_or_get_things_faster">Brzo zaradite ili riješite probleme</string>
+    <string name="earn_or_get_things_faster_text">Stvorite brze poslove kako biste zaradili novac ili brzo dobili pouzdanu pomoć za sve što vam treba.</string>
+    <string name="safe_fast_local">Sigurno, brzo i blizu vas</string>
+    <string name="safe_fast_local_text">Povežite se s pouzdanim ljudima u vašem području, odmah razgovarajte i dovršite posao s lakoćom i povjerenjem.</string>
     <!--Croatian -->
 </resources>

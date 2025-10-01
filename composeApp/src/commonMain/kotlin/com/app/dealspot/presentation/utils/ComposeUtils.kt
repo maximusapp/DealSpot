@@ -9,6 +9,7 @@ import com.app.dealspot.presentation.theme.dimens_15
 import com.app.dealspot.presentation.theme.dimens_20
 import com.app.dealspot.presentation.theme.dimens_30
 import com.app.dealspot.presentation.theme.dimens_50
+import com.app.dealspot.presentation.theme.dimens_60
 
 @Composable
 fun Spacer10Height() {
@@ -33,5 +34,10 @@ fun Spacer30Height() {
 @Composable
 fun Spacer50Height() {
     Spacer(modifier = Modifier.height(dimens_50))
+}
+
+@Composable
+fun Spacer60Height() {
+    Spacer(modifier = Modifier.height(dimens_60))
 }
 

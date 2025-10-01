@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.ui.splash.home.about
+package com.app.dealspot.presentation.ui.home.about
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

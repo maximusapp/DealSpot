@@ -3,4 +3,15 @@
     <string name="app_name">DealSpot</string>
     <string name="welcome">Ласкаво просимо до DealSpot</string>
     <string name="welcome_description">Знайдіть або створіть швидкі угоди поблизу</string>
+    <string name="get_started">Розпочати</string>
+    <string name="login">Логін</string>
+    <string name="do_not_have_account_sign_up">Не маєте облікового запису? Зареєструватися</string>
+    <string name="sign_up">Зареєструватися</string>
+    <string name="skip">Пропустити</string>
+    <string name="create_and_find_quick_jobs">Створіть або знайдіть швидку роботу</string>
+    <string name="create_and_find_quick_jobs_text">Публікуйте роботу або знайдіть поблизу можливості роботи - від ремонту дому до технічної допомоги - все в одному місці.</string>
+    <string name="earn_or_get_things_faster">Швидко заробляйте або вирішуйте швидко проблеми</string>
+    <string name="earn_or_get_things_faster_text">Створюйте заявку на швидку роботу, щоб заробити гроші або швидко отримати надійну допомогу за все, що вам потрібно.</string>
+    <string name="safe_fast_local">Безпечно, швидко та біля вас</string>
+    <string name="safe_fast_local_text">Зв’язуйтесь з довіреними людьми у вашому районі, миттєво спілкуйтеся та виконайте роботу з легкістю та впевненістю</string>
 </resources>

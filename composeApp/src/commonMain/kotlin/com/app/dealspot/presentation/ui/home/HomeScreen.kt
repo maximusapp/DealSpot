@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.ui.splash.home.settings
+package com.app.dealspot.presentation.ui.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,8 +14,9 @@ import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.text_size_24
 
 @Composable
-internal fun SettingsScreen() {
-    // Main Content Area
+internal fun HomeScreen(
+
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -24,11 +25,12 @@ internal fun SettingsScreen() {
     ) {
         // Your main content goes here
         Text(
-            text = "Welcome to Settings screen",
+            text = "Welcome to About screen",
             fontSize = text_size_24,
             color = Grey,
             fontWeight = FontWeight.W700,
             fontFamily = latoFontFamily()
         )
     }
+
 }

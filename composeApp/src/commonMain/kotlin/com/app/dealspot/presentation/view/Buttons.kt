@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.utils
+package com.app.dealspot.presentation.view
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,13 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.app.dealspot.presentation.theme.DealSpotDark
-import com.app.dealspot.presentation.theme.blue
 import com.app.dealspot.presentation.theme.dimens_1
 import com.app.dealspot.presentation.theme.dimens_12
 import com.app.dealspot.presentation.theme.dimens_50
 import com.app.dealspot.presentation.theme.grey_700
 import com.app.dealspot.presentation.theme.latoFontFamily
-import com.app.dealspot.presentation.theme.text_size_14
 import com.app.dealspot.presentation.theme.text_size_16
 import com.app.dealspot.presentation.theme.text_size_18
 import org.jetbrains.compose.ui.tooling.preview.Preview

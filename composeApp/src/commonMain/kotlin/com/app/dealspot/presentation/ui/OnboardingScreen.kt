@@ -43,8 +43,8 @@ import com.app.dealspot.presentation.theme.grey_700
 import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.text_size_16
 import com.app.dealspot.presentation.theme.text_size_24
-import com.app.dealspot.presentation.utils.DealSpotDarkButton
-import com.app.dealspot.presentation.utils.DealSpotTextButton
+import com.app.dealspot.presentation.view.DealSpotDarkButton
+import com.app.dealspot.presentation.view.DealSpotTextButton
 import com.app.dealspot.presentation.utils.Spacer60Height
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.create_and_find_quick_jobs

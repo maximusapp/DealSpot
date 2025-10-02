@@ -19,8 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.app.dealspot.presentation.theme.*
-import com.app.dealspot.presentation.utils.DealSpotDarkButton
-import com.app.dealspot.presentation.utils.DealSpotOutlineButton
+import com.app.dealspot.presentation.view.DealSpotDarkButton
+import com.app.dealspot.presentation.view.DealSpotOutlineButton
 import com.app.dealspot.presentation.utils.Spacer10Height
 import com.app.dealspot.presentation.utils.Spacer15Height
 import com.app.dealspot.presentation.utils.Spacer30Height

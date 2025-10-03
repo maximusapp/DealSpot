@@ -24,7 +24,7 @@ fun textLatoDisplayLargeBlueW800(
 
 @Suppress("ComposableNaming")
 @Composable
-fun textLatoDisplayLargeBlueW600(
+fun textLatoDisplayLargeDarkW600(
     text: String = "",
     modifier: Modifier = Modifier
 ) {
@@ -32,7 +32,7 @@ fun textLatoDisplayLargeBlueW600(
         modifier = modifier,
         text = text,
         style = MaterialTheme.typography.displayMedium,
-        color = blueSplashText,
+        color = DealSpotDark,
         fontWeight = FontWeight.W600,
         fontFamily = latoFontFamily()
     )

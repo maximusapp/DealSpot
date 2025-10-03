@@ -14,5 +14,10 @@
     <string name="earn_or_get_things_faster_text">Stvorite brze poslove kako biste zaradili novac ili brzo dobili pouzdanu pomoć za sve što vam treba.</string>
     <string name="safe_fast_local">Sigurno, brzo i blizu vas</string>
     <string name="safe_fast_local_text">Povežite se s pouzdanim ljudima u vašem području, odmah razgovarajte i dovršite posao s lakoćom i povjerenjem.</string>
+    <string name="lets_get_started">Započnimo</string>
+    <string name="email">E-pošta</string>
+    <string name="password">Lozinka</string>
+    <string name="forgot_password">Zaboravljena lozinka</string>
+    <string name="do_not_have_account">Nemate račun?</string>
     <!--Croatian -->
 </resources>

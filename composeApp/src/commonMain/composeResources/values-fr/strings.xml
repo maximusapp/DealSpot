@@ -14,4 +14,9 @@
     <string name="earn_or_get_things_faster_text">Créez des emplois rapides pour gagner de l'argent ou obtenez une aide fiable rapidement pour tout ce dont vous avez besoin.</string>
     <string name="safe_fast_local">En toute sécurité, rapidement et près de chez vous</string>
     <string name="safe_fast_local_text">Connectez-vous avec des personnes de confiance dans votre région, discutez instantanément et complétez le travail avec facilité et confiance.</string>
+    <string name="lets_get_started">Commençons</string>
+    <string name="email">E-mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="forgot_password">Mot de passe oublié</string>
+    <string name="do_not_have_account">Vous n'avez pas de compte?</string>
 </resources>

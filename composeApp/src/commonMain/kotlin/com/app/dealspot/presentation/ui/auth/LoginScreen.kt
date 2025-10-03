@@ -18,28 +18,38 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.SpacerHeight10Dp
 import com.app.dealspot.presentation.theme.SpacerHeight15Dp
 import com.app.dealspot.presentation.theme.SpacerHeight20Dp
 import com.app.dealspot.presentation.theme.SpacerHeight25Dp
 import com.app.dealspot.presentation.theme.SpacerHeight40Dp
+import com.app.dealspot.presentation.theme.SpacerHeight60Dp
 import com.app.dealspot.presentation.theme.SpacerWidth5Dp
 import com.app.dealspot.presentation.theme.blue
 import com.app.dealspot.presentation.theme.blueSplashText
 import com.app.dealspot.presentation.theme.dimens_20
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
-import com.app.dealspot.presentation.theme.textLatoDisplayLargeBlueW600
+import com.app.dealspot.presentation.theme.textLatoDisplayLargeDarkW600
 import com.app.dealspot.presentation.theme.text_size_14
 import com.app.dealspot.presentation.theme.text_size_24
 import com.app.dealspot.presentation.view.DealSpotDarkButton
 import com.app.dealspot.presentation.view.TextInputField
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.app_name
+import dealspot.composeapp.generated.resources.do_not_have_account
+import dealspot.composeapp.generated.resources.do_not_have_account_sign_up
+import dealspot.composeapp.generated.resources.email
+import dealspot.composeapp.generated.resources.forgot_password
+import dealspot.composeapp.generated.resources.ic_lock
+import dealspot.composeapp.generated.resources.ic_mail
 import dealspot.composeapp.generated.resources.ic_visibility_off
 import dealspot.composeapp.generated.resources.ic_visibility_on
+import dealspot.composeapp.generated.resources.lets_get_started
 import dealspot.composeapp.generated.resources.login
+import dealspot.composeapp.generated.resources.password
 import dealspot.composeapp.generated.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -66,9 +76,9 @@ fun LoginScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            SpacerHeight40Dp()
+            SpacerHeight60Dp()
 
-            textLatoDisplayLargeBlueW600(text = stringResource(Res.string.app_name))
+            textLatoDisplayLargeDarkW600(text = stringResource(Res.string.app_name))
 
             SpacerHeight40Dp()
 
@@ -85,7 +95,7 @@ fun LoginScreen() {
 
             Text(
                 modifier = Modifier.align(Alignment.Start),
-                text = "Let's go to start",
+                text = stringResource(Res.string.lets_get_started),
                 fontSize = text_size_14,
                 color = grey_middle,
                 fontWeight = FontWeight.W600,
@@ -96,10 +106,10 @@ fun LoginScreen() {
 
             TextInputField(
                 modifier = Modifier,
-                placeHolderText = "Email",
+                placeHolderText = stringResource(Res.string.email),
                 isPasswordField = false,
-                leftIcon = Res.drawable.ic_visibility_on,
-                leftIconTint = blue
+                leftIcon = Res.drawable.ic_mail,
+                leftIconTint = DealSpotDark
             ) { email ->
                 println("Login screen. Email is: $email")
 //                events(AuthEvent.OnUpdateEmailLogin(email))
@@ -109,10 +119,10 @@ fun LoginScreen() {
 
             TextInputField(
                 modifier = Modifier,
-                placeHolderText = "Password",
+                placeHolderText = stringResource(Res.string.password),
                 isPasswordField = true,
-                leftIcon = Res.drawable.ic_visibility_off,
-                leftIconTint = blue
+                leftIcon = Res.drawable.ic_lock,
+                leftIconTint = DealSpotDark
             ) { password ->
                 println("Login screen. Password is: $password")
 //                events(AuthEvent.OnUpdatePasswordLogin(password))
@@ -121,10 +131,13 @@ fun LoginScreen() {
             SpacerHeight15Dp()
 
             Text(
-                modifier = Modifier.align(Alignment.End),
-                text = "Forgot passwoprd",
+                modifier = Modifier.align(Alignment.End).clickable {
+                    println("Login screen. Forgot password text clicked.")
+//                        navigateToMaingateToRegister.invoke()
+                },
+                text = stringResource(Res.string.forgot_password),
                 fontSize = text_size_14,
-                color = blueSplashText,
+                color = DealSpotDark,
                 fontWeight = FontWeight.W600,
                 fontFamily = latoFontFamily()
             )
@@ -140,11 +153,12 @@ fun LoginScreen() {
                 }
             )
 
+            SpacerHeight20Dp()
 
             Row {
                 Text(
                     modifier = Modifier,
-                    text = "do_not_have_account",
+                    text = stringResource(Res.string.do_not_have_account),
                     fontSize = text_size_14,
                     color = grey_middle,
                     fontWeight = FontWeight.W600,
@@ -160,7 +174,7 @@ fun LoginScreen() {
                     },
                     text = stringResource(Res.string.sign_up),
                     fontSize = text_size_14,
-                    color = blueSplashText,
+                    color = DealSpotDark,
                     fontWeight = FontWeight.W600,
                     fontFamily = latoFontFamily()
                 )

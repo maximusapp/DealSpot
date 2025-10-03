@@ -7,7 +7,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -18,20 +17,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.dimens_5
 import com.app.dealspot.presentation.theme.dimens_58
 import com.app.dealspot.presentation.theme.grey_light
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.transparent
 import dealspot.composeapp.generated.resources.Res
-import dealspot.composeapp.generated.resources.ic_deal_spot
 import dealspot.composeapp.generated.resources.ic_visibility_off
 import dealspot.composeapp.generated.resources.ic_visibility_on
 import org.jetbrains.compose.resources.DrawableResource
@@ -63,20 +59,12 @@ fun TextInputField(
 
     OutlinedTextField(
         value = text,
-        label = { Text(text = placeHolderText) },
+        label = { Text(text = placeHolderText, color = DealSpotDark) },
         onValueChange = {
             text = it
             inputText.invoke(it)
         },
         modifier = modifier.height(dimens_58).fillMaxWidth(),
-        placeholder = {
-            Text(
-                text = placeHolderText,
-                color = grey_middle,
-                fontWeight = FontWeight.Normal,
-                style = MaterialTheme.typography.bodyLarge
-            )
-        },
         singleLine = true,
         shape = RoundedCornerShape(dimens_5),
         leadingIcon = {

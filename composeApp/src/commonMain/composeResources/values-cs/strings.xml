@@ -14,5 +14,10 @@
     <string name="earn_or_get_things_faster_text">Vytvořte rychlou práci, abyste vydělali peníze nebo získali spolehlivou pomoc rychle za vše, co potřebujete.</string>
     <string name="safe_fast_local">Bezpečně, rychle a ve vašem okolí</string>
     <string name="safe_fast_local_text">Spojte se s důvěryhodnými lidmi ve vaší oblasti, okamžitě si povídejte a kompletní práci s lehkostí a důvěrou.</string>
+    <string name="lets_get_started">Začněme</string>
+    <string name="email">E-mail</string>
+    <string name="password">Heslo</string>
+    <string name="forgot_password">Zapomenuté heslo</string>
+    <string name="do_not_have_account">Nemáte účet?</string>
     <!--Czech -->
 </resources>

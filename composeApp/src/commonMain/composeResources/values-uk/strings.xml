@@ -14,4 +14,9 @@
     <string name="earn_or_get_things_faster_text">Створюйте заявку на швидку роботу, щоб заробити гроші або швидко отримати надійну допомогу за все, що вам потрібно.</string>
     <string name="safe_fast_local">Безпечно, швидко та біля вас</string>
     <string name="safe_fast_local_text">Зв’язуйтесь з довіреними людьми у вашому районі, миттєво спілкуйтеся та виконайте роботу з легкістю та впевненістю</string>
+    <string name="lets_get_started">Почнемо</string>
+    <string name="email">Електронна пошта</string>
+    <string name="password">Пароль</string>
+    <string name="forgot_password">Забули пароль</string>
+    <string name="do_not_have_account">Не маєте облікового запису?</string>
 </resources>

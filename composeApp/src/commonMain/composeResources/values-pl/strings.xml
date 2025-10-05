@@ -19,5 +19,6 @@
     <string name="password">Hasło</string>
     <string name="forgot_password">Zapomniałem hasła</string>
     <string name="do_not_have_account">Nie masz konta?</string>
+    <string name="registration">Registration</string>
     <!--Polish-->
 </resources>

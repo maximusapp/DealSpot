@@ -19,5 +19,6 @@
     <string name="password">Lozinka</string>
     <string name="forgot_password">Zaboravljena lozinka</string>
     <string name="do_not_have_account">Nemate račun?</string>
+    <string name="registration">Registration</string>
     <!--Croatian -->
 </resources>

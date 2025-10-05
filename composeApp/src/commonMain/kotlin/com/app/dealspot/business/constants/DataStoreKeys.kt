@@ -10,4 +10,15 @@ object DataStoreKeys {
     const val USER_EMAIL = "USER_EMAIL"
     const val USER_PASSWORD = "USER_PASSWORD"
     const val USER_SUB = "USER_SUB"
+
+    // Registration flow persistence
+    const val REG_ACTIVE_STEP = "REG_ACTIVE_STEP" // values: 1,2,3
+    const val REG_AVATAR_URI = "REG_AVATAR_URI"
+    const val REG_FIRST_NAME = "REG_FIRST_NAME"
+    const val REG_LAST_NAME = "REG_LAST_NAME"
+    const val REG_AGE = "REG_AGE"
+    const val REG_GENDER = "REG_GENDER" // "male" | "female" | ""
+    const val REG_EMAIL = "REG_EMAIL"
+    const val REG_PHONE = "REG_PHONE"
+    const val REG_PASSWORD = "REG_PASSWORD"
 }

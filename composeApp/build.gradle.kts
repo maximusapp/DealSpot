@@ -35,6 +35,7 @@ kotlin {
             implementation(libs.accompanist.permissions)
             //DI
             implementation(libs.koin.android)
+            implementation(libs.coil3.network.okhttp)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -55,6 +56,8 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
             implementation(libs.compose.navigation)
+            implementation(libs.coil3.core)
+            implementation(libs.coil3.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

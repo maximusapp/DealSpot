@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,7 +15,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.SpacerHeight10Dp
@@ -27,8 +24,6 @@ import com.app.dealspot.presentation.theme.SpacerHeight25Dp
 import com.app.dealspot.presentation.theme.SpacerHeight40Dp
 import com.app.dealspot.presentation.theme.SpacerHeight60Dp
 import com.app.dealspot.presentation.theme.SpacerWidth5Dp
-import com.app.dealspot.presentation.theme.blue
-import com.app.dealspot.presentation.theme.blueSplashText
 import com.app.dealspot.presentation.theme.dimens_20
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
@@ -36,17 +31,14 @@ import com.app.dealspot.presentation.theme.textLatoDisplayLargeDarkW600
 import com.app.dealspot.presentation.theme.text_size_14
 import com.app.dealspot.presentation.theme.text_size_24
 import com.app.dealspot.presentation.view.DealSpotDarkButton
-import com.app.dealspot.presentation.view.TextInputField
+import com.app.dealspot.presentation.view.DealSpotTextInputField
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.app_name
 import dealspot.composeapp.generated.resources.do_not_have_account
-import dealspot.composeapp.generated.resources.do_not_have_account_sign_up
 import dealspot.composeapp.generated.resources.email
 import dealspot.composeapp.generated.resources.forgot_password
 import dealspot.composeapp.generated.resources.ic_lock
 import dealspot.composeapp.generated.resources.ic_mail
-import dealspot.composeapp.generated.resources.ic_visibility_off
-import dealspot.composeapp.generated.resources.ic_visibility_on
 import dealspot.composeapp.generated.resources.lets_get_started
 import dealspot.composeapp.generated.resources.login
 import dealspot.composeapp.generated.resources.password
@@ -106,7 +98,7 @@ fun LoginScreen(
 
             SpacerHeight25Dp()
 
-            TextInputField(
+            DealSpotTextInputField(
                 modifier = Modifier,
                 placeHolderText = stringResource(Res.string.email),
                 isPasswordField = false,
@@ -119,7 +111,7 @@ fun LoginScreen(
 
             SpacerHeight10Dp()
 
-            TextInputField(
+            DealSpotTextInputField(
                 modifier = Modifier,
                 placeHolderText = stringResource(Res.string.password),
                 isPasswordField = true,

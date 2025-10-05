@@ -19,4 +19,5 @@
     <string name="password">Пароль</string>
     <string name="forgot_password">Забули пароль</string>
     <string name="do_not_have_account">Не маєте облікового запису?</string>
+    <string name="registration">Реєстрація</string>
 </resources>

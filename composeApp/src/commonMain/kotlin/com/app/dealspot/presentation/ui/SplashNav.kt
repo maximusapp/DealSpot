@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
 import com.app.dealspot.presentation.navigation.SplashNavigation
 import com.app.dealspot.presentation.ui.auth.LoginScreen
-import com.app.dealspot.presentation.ui.auth.RegistrationScreen
+import com.app.dealspot.presentation.ui.auth.registration.RegistrationScreen
 import com.app.dealspot.presentation.ui.welcome.WelcomeScreen
 
 @Composable

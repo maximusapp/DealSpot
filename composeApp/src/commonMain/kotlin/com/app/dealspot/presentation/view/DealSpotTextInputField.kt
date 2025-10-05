@@ -34,7 +34,7 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun TextInputField(
+fun DealSpotTextInputField(
     modifier: Modifier,
     placeHolderText: String = "Test placeholder",
     isPasswordField: Boolean = false,
@@ -43,6 +43,7 @@ fun TextInputField(
     keyboardType: KeyboardType = KeyboardType.Unspecified,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Unspecified,
+    prevValue: String = "",
     inputText: (String) -> Unit
 ) {
 
@@ -58,7 +59,7 @@ fun TextInputField(
     }
 
     OutlinedTextField(
-        value = text,
+        value = prevValue.ifEmpty { text },
         label = { Text(text = placeHolderText, color = DealSpotDark) },
         onValueChange = {
             text = it
@@ -90,6 +91,4 @@ fun TextInputField(
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = keyboardActions
     )
-
-
 }

@@ -19,5 +19,6 @@
     <string name="password">Heslo</string>
     <string name="forgot_password">Zapomenuté heslo</string>
     <string name="do_not_have_account">Nemáte účet?</string>
+    <string name="registration">Registration</string>
     <!--Czech -->
 </resources>

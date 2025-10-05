@@ -54,6 +54,7 @@ fun DealSpotDarkButton(
 fun DealSpotOutlineButton(
     modifier: Modifier = Modifier,
     buttonText: String = "Some text",
+    enabled: Boolean = true,
     onClick: () -> Unit = {}
 ) {
     OutlinedButton(
@@ -67,7 +68,8 @@ fun DealSpotOutlineButton(
         border = ButtonDefaults.outlinedButtonBorder().copy(
             width = dimens_1
         ),
-        shape = RoundedCornerShape(dimens_12)
+        shape = RoundedCornerShape(dimens_12),
+        enabled = enabled
     ) {
         Text(
             text = buttonText,

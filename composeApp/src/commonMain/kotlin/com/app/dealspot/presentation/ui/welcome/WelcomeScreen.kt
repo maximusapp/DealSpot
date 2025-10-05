@@ -55,6 +55,10 @@ internal fun WelcomeScreen(
     var isFirstTimeOpened: Boolean? by remember { mutableStateOf(null) }
     LaunchedEffect(Unit) {
         isFirstTimeOpened = viewModel.isAppFirstTimeOpened()
+        // Auto-continue registration if in progress
+        if (viewModel.hasInProgressRegistration()) {
+            navigateToRegister.invoke()
+        }
     }
 
     Box(

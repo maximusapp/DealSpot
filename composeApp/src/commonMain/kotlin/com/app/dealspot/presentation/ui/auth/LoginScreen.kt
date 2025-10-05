@@ -56,7 +56,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navigateToRegister: () -> Unit = {}
+) {
 
     var isLoginButtonClicked by remember { mutableStateOf(false) }
 //    val loginDataValidationState: LoginDataValidation by viewModel.loginDataValidationState.collectAsStateWithLifecycle()
@@ -170,7 +172,7 @@ fun LoginScreen() {
                 Text(
                     modifier = Modifier.clickable {
                         println("Login screen. Sign up text clicked.")
-//                        navigateToMaingateToRegister.invoke()
+                        navigateToRegister.invoke()
                     },
                     text = stringResource(Res.string.sign_up),
                     fontSize = text_size_14,

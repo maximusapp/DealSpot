@@ -44,7 +44,7 @@ internal fun SplashNav(
             LoginScreen(
 //                viewModel = loginViewModel,
 //                navigateToMain = navigateToMain,
-//                navigateToRegister = { navigator.navigate(SplashNavigation.Register) },
+                navigateToRegister = { navigator.navigate(SplashNavigation.Register) },
 //                state = loginViewModel.state.value,
 //                events = loginViewModel::onTriggerEvent
             )

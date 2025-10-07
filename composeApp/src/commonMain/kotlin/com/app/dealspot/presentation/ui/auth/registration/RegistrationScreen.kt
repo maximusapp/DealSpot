@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.app.dealspot.business.GenderType
 import com.app.dealspot.business.Step1
 import com.app.dealspot.business.Step2
 import com.app.dealspot.business.Step3
@@ -37,6 +38,7 @@ import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.SpacerHeight10Dp
 import com.app.dealspot.presentation.theme.SpacerHeight15Dp
+import com.app.dealspot.presentation.theme.SpacerHeight20Dp
 import com.app.dealspot.presentation.theme.SpacerHeight50Dp
 import com.app.dealspot.presentation.theme.dimens_10
 import com.app.dealspot.presentation.theme.dimens_100
@@ -181,7 +183,7 @@ private fun StepOneContent(
     onFirstName: (String) -> Unit,
     onLastName: (String) -> Unit,
     onAge: (String) -> Unit,
-    onGender: (String) -> Unit
+    onGender: (GenderType) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         AvatarPicker(currentUri = state.avatarUri, onPick = onAvatarPick)
@@ -228,25 +230,25 @@ private fun StepOneContent(
             onAge.invoke(age)
         }
 
-        SpacerHeight10Dp()
+        SpacerHeight20Dp()
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            val selected = state.gender
+            val selected = state.gender.ordinal
 
             DealSpotOutlineButton(
                 modifier = Modifier.weight(1f),
                 buttonText = "Male",
-                enabled = selected != "male"
+                enabled = selected != GenderType.MALE.ordinal
             ) {
-                onGender("male")
+                onGender(GenderType.MALE)
             }
 
             DealSpotOutlineButton(
                 modifier = Modifier.weight(1f),
                 buttonText = "Female",
-                enabled = selected != "female"
+                enabled = selected != GenderType.FEMALE.ordinal
             ) {
-                onGender("female")
+                onGender(GenderType.FEMALE)
             }
         }
     }

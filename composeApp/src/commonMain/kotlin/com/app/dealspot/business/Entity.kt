@@ -14,10 +14,10 @@ data class Step1(
     val firstName: String = "",
     val lastName: String = "",
     val age: String = "",
-    val gender: String = "" // male | female
+    val gender: GenderType = GenderType.NONE // male | female
 ) {
     val isValid: Boolean
-        get() = firstName.isNotBlank() && lastName.isNotBlank() && age.toIntOrNull()?.let { it in 1..120 } == true && gender in setOf("male", "female")
+        get() = firstName.isNotBlank() && lastName.isNotBlank() && age.toIntOrNull()?.let { it in 1..120 } == true && gender in setOf(GenderType.MALE, GenderType.FEMALE)
 }
 
 data class Step2(

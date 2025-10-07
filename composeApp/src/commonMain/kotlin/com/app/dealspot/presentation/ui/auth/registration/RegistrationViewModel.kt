@@ -3,6 +3,7 @@ package com.app.dealspot.presentation.ui.auth.registration
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.dealspot.business.AppDataStore
+import com.app.dealspot.business.GenderType
 import com.app.dealspot.business.Step1
 import com.app.dealspot.business.Step2
 import com.app.dealspot.business.Step3
@@ -38,12 +39,14 @@ class RegistrationViewModel(
             val savedStep = dataStore.getString(DataStoreKeys.REG_ACTIVE_STEP)?.toIntOrNull() ?: 1
             _activeStep.value = savedStep.coerceIn(1, 3)
 
+            val gender = dataStore.getString(DataStoreKeys.REG_GENDER) ?: ""
+
             _step1.value = Step1(
                 avatarUri = dataStore.getString(DataStoreKeys.REG_AVATAR_URI) ?: "",
                 firstName = dataStore.getString(DataStoreKeys.REG_FIRST_NAME) ?: "",
                 lastName = dataStore.getString(DataStoreKeys.REG_LAST_NAME) ?: "",
                 age = dataStore.getString(DataStoreKeys.REG_AGE) ?: "",
-                gender = dataStore.getString(DataStoreKeys.REG_GENDER) ?: ""
+                gender = if (gender.toInt() == GenderType.FEMALE.ordinal) GenderType.FEMALE else GenderType.MALE
             )
 
             _step2.value = Step2(
@@ -98,9 +101,9 @@ class RegistrationViewModel(
         }
     }
 
-    fun setGender(value: String) {
+    fun setGender(value: GenderType) {
         _step1.value = _step1.value.copy(gender = value)
-        persistString(DataStoreKeys.REG_GENDER, value)
+        persistString(DataStoreKeys.REG_GENDER, value.ordinal.toString())
     }
 
     fun setEmail(value: String) {

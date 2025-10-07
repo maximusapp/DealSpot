@@ -39,14 +39,15 @@ class RegistrationViewModel(
             val savedStep = dataStore.getString(DataStoreKeys.REG_ACTIVE_STEP)?.toIntOrNull() ?: 1
             _activeStep.value = savedStep.coerceIn(1, 3)
 
-            val gender = dataStore.getString(DataStoreKeys.REG_GENDER) ?: ""
+            val gender = dataStore.getString(DataStoreKeys.REG_GENDER) ?: "-1".ifEmpty { "-1" }
+            println("gender: $gender")
 
             _step1.value = Step1(
                 avatarUri = dataStore.getString(DataStoreKeys.REG_AVATAR_URI) ?: "",
                 firstName = dataStore.getString(DataStoreKeys.REG_FIRST_NAME) ?: "",
                 lastName = dataStore.getString(DataStoreKeys.REG_LAST_NAME) ?: "",
                 age = dataStore.getString(DataStoreKeys.REG_AGE) ?: "",
-                gender = if (gender.toInt() == GenderType.FEMALE.ordinal) GenderType.FEMALE else GenderType.MALE
+                gender = if (gender.isBlank()) GenderType.NONE else if (gender.toInt() == GenderType.FEMALE.ordinal) GenderType.FEMALE else GenderType.MALE
             )
 
             _step2.value = Step2(

@@ -1,11 +1,20 @@
 package com.app.dealspot.presentation.view
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -17,9 +26,12 @@ import com.app.dealspot.presentation.theme.dimens_1
 import com.app.dealspot.presentation.theme.dimens_12
 import com.app.dealspot.presentation.theme.dimens_50
 import com.app.dealspot.presentation.theme.grey_700
+import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.text_size_16
 import com.app.dealspot.presentation.theme.text_size_18
+import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.ic_circle_check
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -54,7 +66,8 @@ fun DealSpotDarkButton(
 fun DealSpotOutlineButton(
     modifier: Modifier = Modifier,
     buttonText: String = "Some text",
-    enabled: Boolean = true,
+    selected: Boolean = false,
+    needCheckSelected: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     OutlinedButton(
@@ -63,13 +76,18 @@ fun DealSpotOutlineButton(
             .fillMaxWidth()
             .height(dimens_50),
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = DealSpotDark
+            contentColor = if (needCheckSelected) {
+                if (selected) DealSpotDark else grey_middle
+            } else DealSpotDark
         ),
-        border = ButtonDefaults.outlinedButtonBorder().copy(
-            width = dimens_1
+        border = BorderStroke(
+            width = dimens_1,
+            color = if (needCheckSelected) {
+                if (selected) DealSpotDark else grey_middle
+            } else DealSpotDark
         ),
         shape = RoundedCornerShape(dimens_12),
-        enabled = enabled
+        enabled = true
     ) {
         Text(
             text = buttonText,

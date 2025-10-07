@@ -238,7 +238,8 @@ private fun StepOneContent(
             DealSpotOutlineButton(
                 modifier = Modifier.weight(1f),
                 buttonText = "Male",
-                enabled = selected != GenderType.MALE.ordinal
+                selected = selected == GenderType.MALE.ordinal,
+                needCheckSelected = true
             ) {
                 onGender(GenderType.MALE)
             }
@@ -246,7 +247,8 @@ private fun StepOneContent(
             DealSpotOutlineButton(
                 modifier = Modifier.weight(1f),
                 buttonText = "Female",
-                enabled = selected != GenderType.FEMALE.ordinal
+                selected = selected == GenderType.FEMALE.ordinal,
+                needCheckSelected = true
             ) {
                 onGender(GenderType.FEMALE)
             }

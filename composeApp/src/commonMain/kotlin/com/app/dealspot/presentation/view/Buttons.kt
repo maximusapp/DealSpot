@@ -21,13 +21,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.TextUnit
 import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.dimens_1
 import com.app.dealspot.presentation.theme.dimens_12
 import com.app.dealspot.presentation.theme.dimens_50
 import com.app.dealspot.presentation.theme.grey_700
+import com.app.dealspot.presentation.theme.grey_light
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
+import com.app.dealspot.presentation.theme.text_size_14
 import com.app.dealspot.presentation.theme.text_size_16
 import com.app.dealspot.presentation.theme.text_size_18
 import dealspot.composeapp.generated.resources.Res
@@ -66,32 +71,29 @@ fun DealSpotDarkButton(
 fun DealSpotOutlineButton(
     modifier: Modifier = Modifier,
     buttonText: String = "Some text",
-    selected: Boolean = false,
-    needCheckSelected: Boolean = false,
+    enable: Boolean = true,
+    textSize: TextUnit = text_size_16,
+    buttonHeight: Dp = dimens_50,
     onClick: () -> Unit = {}
 ) {
     OutlinedButton(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .height(dimens_50),
+            .height(buttonHeight),
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = if (needCheckSelected) {
-                if (selected) DealSpotDark else grey_middle
-            } else DealSpotDark
+            contentColor = if (enable) DealSpotDark else grey_middle
         ),
         border = BorderStroke(
             width = dimens_1,
-            color = if (needCheckSelected) {
-                if (selected) DealSpotDark else grey_middle
-            } else DealSpotDark
+            color = if (enable) DealSpotDark else grey_light
         ),
         shape = RoundedCornerShape(dimens_12),
-        enabled = true
+        enabled = enable
     ) {
         Text(
             text = buttonText,
-            fontSize = text_size_18,
+            fontSize = textSize,
             fontWeight = FontWeight.W600,
             fontFamily = latoFontFamily()
         )

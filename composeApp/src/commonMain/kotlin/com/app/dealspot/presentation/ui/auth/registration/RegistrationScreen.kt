@@ -2,6 +2,7 @@ package com.app.dealspot.presentation.ui.auth.registration
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,17 +12,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,25 +47,41 @@ import com.app.dealspot.presentation.theme.SpacerHeight10Dp
 import com.app.dealspot.presentation.theme.SpacerHeight15Dp
 import com.app.dealspot.presentation.theme.SpacerHeight20Dp
 import com.app.dealspot.presentation.theme.SpacerHeight50Dp
+import com.app.dealspot.presentation.theme.SpacerHeight60Dp
+import com.app.dealspot.presentation.theme.SpacerWidth10Dp
+import com.app.dealspot.presentation.theme.blueSplashText
 import com.app.dealspot.presentation.theme.dimens_10
 import com.app.dealspot.presentation.theme.dimens_100
+import com.app.dealspot.presentation.theme.dimens_110
+import com.app.dealspot.presentation.theme.dimens_15
 import com.app.dealspot.presentation.theme.dimens_20
+import com.app.dealspot.presentation.theme.dimens_25
+import com.app.dealspot.presentation.theme.dimens_40
 import com.app.dealspot.presentation.theme.dimens_70
 import com.app.dealspot.presentation.theme.dimens_8
 import com.app.dealspot.presentation.theme.dimens_80
+import com.app.dealspot.presentation.theme.grey_700
 import com.app.dealspot.presentation.theme.grey_light
 import com.app.dealspot.presentation.theme.latoFontFamily
+import com.app.dealspot.presentation.theme.text_size_14
+import com.app.dealspot.presentation.theme.text_size_16
+import com.app.dealspot.presentation.theme.text_size_18
 import com.app.dealspot.presentation.theme.text_size_24
 import com.app.dealspot.presentation.view.DealSpotOutlineButton
 import com.app.dealspot.presentation.view.DealSpotTextInputField
 import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.ic_calendar_month
 import dealspot.composeapp.generated.resources.ic_deal_spot
+import dealspot.composeapp.generated.resources.ic_female
 import dealspot.composeapp.generated.resources.ic_lock
+import dealspot.composeapp.generated.resources.ic_male
+import dealspot.composeapp.generated.resources.ic_person
 import dealspot.composeapp.generated.resources.registration
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
+import kotlin.collections.get
 
 @Preview
 @Composable
@@ -108,8 +131,7 @@ fun RegistrationScreen() {
             1 -> StepOneContent(
                 state = step1,
                 onAvatarPick = { viewModel.setAvatar(it) },
-                onFirstName = viewModel::setFirstName,
-                onLastName = viewModel::setLastName,
+                onFullName = viewModel::setFirstName,
                 onAge = viewModel::setAge,
                 onGender = viewModel::setGender
             )
@@ -129,11 +151,14 @@ fun RegistrationScreen() {
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
 
-            OutlinedButton(
-                onClick = { viewModel.prevStep() },
-                enabled = activeStep > 1
+            DealSpotOutlineButton(
+                modifier = Modifier.width(dimens_110),
+                enable = activeStep > 1,
+                buttonText = "Prev",
+                textSize = text_size_14,
+                buttonHeight = dimens_40
             ) {
-                Text("Prev")
+                viewModel.prevStep()
             }
 
             val canProceed = when (activeStep) {
@@ -142,16 +167,18 @@ fun RegistrationScreen() {
                 else -> step3.isValid
             }
 
-            Button(
-                onClick = { if (activeStep < 3) viewModel.nextStep() else { /* submit */ } },
-                enabled = canProceed,
-                colors = ButtonDefaults.buttonColors()
+            DealSpotOutlineButton(
+                modifier = Modifier.width(dimens_110),
+                enable = canProceed,
+                buttonText = if (activeStep < 3) "Next" else "Finish",
+                textSize = text_size_14,
+                buttonHeight = dimens_40
             ) {
-                Text(if (activeStep < 3) "Next" else "Finish")
+                if (activeStep < 3) viewModel.nextStep() else { /* submit */ }
             }
         }
 
-        SpacerHeight50Dp()
+        SpacerHeight60Dp()
     }
 }
 
@@ -180,48 +207,37 @@ private fun StepProgress(activeStep: Int) {
 private fun StepOneContent(
     state: Step1,
     onAvatarPick: (String) -> Unit,
-    onFirstName: (String) -> Unit,
-    onLastName: (String) -> Unit,
+    onFullName: (String) -> Unit,
     onAge: (String) -> Unit,
     onGender: (GenderType) -> Unit
 ) {
+    val genders = GenderType.entries.toList()
+    var selectedGender by remember { mutableStateOf<GenderType?>(null) }
+
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         AvatarPicker(currentUri = state.avatarUri, onPick = onAvatarPick)
+
         SpacerHeight10Dp()
-//        OutlinedTextField(value = state.firstName, onValueChange = onFirstName, label = { Text("First name") }, modifier = Modifier.fillMaxWidth())
 
         DealSpotTextInputField(
             Modifier.fillMaxWidth(),
-            placeHolderText = "First name",
-            leftIcon = Res.drawable.ic_lock,
-            prevValue = state.firstName
+            placeHolderText = "Full name",
+            leftIcon = Res.drawable.ic_person,
+            prevValue = state.fullName
         )
-        { firstName ->
-            println("RegistrationScreen. First name: $firstName")
-            onFirstName.invoke(firstName)
+        { fullName ->
+            println("RegistrationScreen. Full name: $fullName")
+            onFullName.invoke(fullName)
         }
 
         SpacerHeight10Dp()
 
-//        OutlinedTextField(value = state.lastName, onValueChange = onLastName, label = { Text("Last name") }, modifier = Modifier.fillMaxWidth())
-        DealSpotTextInputField(
-            Modifier.fillMaxWidth(),
-            placeHolderText = "Last name",
-            leftIcon = Res.drawable.ic_lock,
-            prevValue = state.lastName
-        )
-        { lastName ->
-            println("RegistrationScreen. LastName name: $lastName")
-            onLastName.invoke(lastName)
-        }
-
         SpacerHeight10Dp()
 
-//        OutlinedTextField(value = state.age, onValueChange = onAge, label = { Text("Age") }, modifier = Modifier.fillMaxWidth())
         DealSpotTextInputField(
             Modifier.fillMaxWidth(),
             placeHolderText = "Age",
-            leftIcon = Res.drawable.ic_lock,
+            leftIcon = Res.drawable.ic_calendar_month,
             prevValue = state.age,
             keyboardType = KeyboardType.Number
         )
@@ -233,24 +249,55 @@ private fun StepOneContent(
         SpacerHeight20Dp()
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            val selected = state.gender.ordinal
-
-            DealSpotOutlineButton(
-                modifier = Modifier.weight(1f),
-                buttonText = "Male",
-                selected = selected == GenderType.MALE.ordinal,
-                needCheckSelected = true
-            ) {
-                onGender(GenderType.MALE)
+            val selected = state.gender?.ordinal
+            if (selected != null) {
+                selectedGender = genders[selected]
             }
 
-            DealSpotOutlineButton(
-                modifier = Modifier.weight(1f),
-                buttonText = "Female",
-                selected = selected == GenderType.FEMALE.ordinal,
-                needCheckSelected = true
-            ) {
-                onGender(GenderType.FEMALE)
+            // Debug: Print genders once when the composable is created/recomposed
+            println("Available genders: ${genders.joinToString { it.name }}")
+
+            for(gender in genders) {
+                Surface(
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable {
+                            selectedGender = gender
+                            println("Registration screen. Selected gender: $selectedGender")
+                            onGender(gender)
+                        },
+                    color = if (selectedGender?.ordinal == gender.ordinal) DealSpotDark else grey_light,
+                    shape = RoundedCornerShape(dimens_8)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = dimens_15, horizontal = dimens_25),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        val icon = when (gender.ordinal) {
+                            GenderType.MALE.ordinal -> Res.drawable.ic_male
+                            GenderType.FEMALE.ordinal -> Res.drawable.ic_female
+                            else -> Res.drawable.ic_male
+                        }
+                        Icon(
+                            painter = painterResource(icon),
+                            contentDescription = "Gender icon",
+                            modifier = Modifier.size(dimens_25),
+                            tint = if (selectedGender?.ordinal == gender.ordinal) Color.White else grey_700
+                        )
+                        SpacerWidth10Dp()
+
+                        Text(
+                            text = stringResource(gender.displayName),
+                            color = if (selectedGender?.ordinal == gender.ordinal) Color.White else grey_700,
+                            fontSize = text_size_18,
+                            fontWeight = FontWeight.SemiBold,
+                            fontFamily = latoFontFamily()
+                        )
+                    }
+                }
             }
         }
     }

@@ -11,13 +11,12 @@ data class OnboardingPage(
 
 data class Step1(
     val avatarUri: String = "",
-    val firstName: String = "",
-    val lastName: String = "",
+    val fullName: String = "",
     val age: String = "",
-    val gender: GenderType = GenderType.NONE // male | female
+    val gender: GenderType? = null // male | female
 ) {
     val isValid: Boolean
-        get() = firstName.isNotBlank() && lastName.isNotBlank() && age.toIntOrNull()?.let { it in 1..120 } == true && gender in setOf(GenderType.MALE, GenderType.FEMALE)
+        get() = fullName.isNotBlank() && age.toIntOrNull()?.let { it in 1..120 } == true && gender in setOf(GenderType.MALE, GenderType.FEMALE)
 }
 
 data class Step2(

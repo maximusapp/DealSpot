@@ -38,7 +38,7 @@ fun DealSpotTextInputField(
     modifier: Modifier,
     placeHolderText: String = "Test placeholder",
     isPasswordField: Boolean = false,
-    leftIcon: DrawableResource,
+    leftIcon: DrawableResource? = null,
     leftIconTint: Color = grey_middle,
     keyboardType: KeyboardType = KeyboardType.Unspecified,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -69,11 +69,13 @@ fun DealSpotTextInputField(
         singleLine = true,
         shape = RoundedCornerShape(dimens_5),
         leadingIcon = {
-            Icon(
-                painter = painterResource(leftIcon),
-                contentDescription = "Some Icon",
-                tint = leftIconTint
-            )
+            leftIcon?.let {
+                Icon(
+                    painter = painterResource(it),
+                    contentDescription = "Some Icon",
+                    tint = leftIconTint
+                )
+            }
         },
         trailingIcon = if (isPasswordField) trailingPasswordIcon else null,
         colors = OutlinedTextFieldDefaults.colors(

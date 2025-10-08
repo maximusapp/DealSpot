@@ -44,10 +44,9 @@ class RegistrationViewModel(
 
             _step1.value = Step1(
                 avatarUri = dataStore.getString(DataStoreKeys.REG_AVATAR_URI) ?: "",
-                firstName = dataStore.getString(DataStoreKeys.REG_FIRST_NAME) ?: "",
-                lastName = dataStore.getString(DataStoreKeys.REG_LAST_NAME) ?: "",
+                fullName = dataStore.getString(DataStoreKeys.REG_FULL_NAME) ?: "",
                 age = dataStore.getString(DataStoreKeys.REG_AGE) ?: "",
-                gender = if (gender.isBlank()) GenderType.NONE else if (gender.toInt() == GenderType.FEMALE.ordinal) GenderType.FEMALE else GenderType.MALE
+                gender = if (gender.isBlank()) null else if (gender.toInt() == GenderType.MALE.ordinal) GenderType.MALE else GenderType.FEMALE
             )
 
             _step2.value = Step2(
@@ -86,13 +85,8 @@ class RegistrationViewModel(
     }
 
     fun setFirstName(value: String) {
-        _step1.value = _step1.value.copy(firstName = value)
-        persistString(DataStoreKeys.REG_FIRST_NAME, value)
-    }
-
-    fun setLastName(value: String) {
-        _step1.value = _step1.value.copy(lastName = value)
-        persistString(DataStoreKeys.REG_LAST_NAME, value)
+        _step1.value = _step1.value.copy(fullName = value)
+        persistString(DataStoreKeys.REG_FULL_NAME, value)
     }
 
     fun setAge(value: String) {

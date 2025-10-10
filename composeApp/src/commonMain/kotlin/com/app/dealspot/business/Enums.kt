@@ -11,7 +11,9 @@ enum class GenderType(val displayName: StringResource) {
     FEMALE(Res.string.female)
 }
 
-enum class Gender(val displayName: String) {
-    MALE("Male"),
-    FEMALE("Female")
+enum class VerificationCodeErrorType {
+    ERROR_CODE_SHOULD_BE_6_DIGITS,
+    CONFIRMATION_CODE_INCORRECT,
+    CONFIRMATION_CODE_RESEND,
+    NONE
 }

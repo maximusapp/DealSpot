@@ -25,6 +25,6 @@ class WelcomeScreenViewModel(
 
     suspend fun hasInProgressRegistration(): Boolean {
         val step = appDataStore.getString(DataStoreKeys.REG_ACTIVE_STEP)?.toIntOrNull() ?: 0
-        return step in 1..3
+        return step in 1..4
     }
 }

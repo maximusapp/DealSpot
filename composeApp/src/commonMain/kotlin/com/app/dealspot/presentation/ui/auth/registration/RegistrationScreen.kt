@@ -16,11 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,17 +45,15 @@ import com.app.dealspot.presentation.theme.SpacerHeight20Dp
 import com.app.dealspot.presentation.theme.SpacerHeight50Dp
 import com.app.dealspot.presentation.theme.SpacerHeight60Dp
 import com.app.dealspot.presentation.theme.SpacerWidth10Dp
-import com.app.dealspot.presentation.theme.blueSplashText
 import com.app.dealspot.presentation.theme.dimens_10
-import com.app.dealspot.presentation.theme.dimens_100
 import com.app.dealspot.presentation.theme.dimens_110
+import com.app.dealspot.presentation.theme.dimens_120
 import com.app.dealspot.presentation.theme.dimens_15
 import com.app.dealspot.presentation.theme.dimens_20
 import com.app.dealspot.presentation.theme.dimens_25
 import com.app.dealspot.presentation.theme.dimens_40
 import com.app.dealspot.presentation.theme.dimens_70
 import com.app.dealspot.presentation.theme.dimens_8
-import com.app.dealspot.presentation.theme.dimens_80
 import com.app.dealspot.presentation.theme.grey_700
 import com.app.dealspot.presentation.theme.grey_light
 import com.app.dealspot.presentation.theme.latoFontFamily
@@ -74,14 +68,15 @@ import dealspot.composeapp.generated.resources.ic_calendar_month
 import dealspot.composeapp.generated.resources.ic_deal_spot
 import dealspot.composeapp.generated.resources.ic_female
 import dealspot.composeapp.generated.resources.ic_lock
+import dealspot.composeapp.generated.resources.ic_mail
 import dealspot.composeapp.generated.resources.ic_male
 import dealspot.composeapp.generated.resources.ic_person
+import dealspot.composeapp.generated.resources.ic_phone
 import dealspot.composeapp.generated.resources.registration
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
-import kotlin.collections.get
 
 @Preview
 @Composable
@@ -106,7 +101,7 @@ fun RegistrationScreen() {
             modifier = Modifier
                 .height(dimens_70)
                 .width(dimens_70)
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(dimens_15))
         )
 
         SpacerHeight15Dp()
@@ -140,10 +135,15 @@ fun RegistrationScreen() {
                 onEmail = viewModel::setEmail,
                 onPhone = viewModel::setPhone
             )
-            else -> StepThreeContent(
+            3 -> StepThreeContent(
                 state = step3,
                 onPassword = viewModel::setPassword,
                 onConfirm = viewModel::setConfirmPassword
+            )
+            else -> StepFourContent(
+                step1 = step1,
+                step2 = step2,
+                step3 = step3
             )
         }
 
@@ -164,17 +164,27 @@ fun RegistrationScreen() {
             val canProceed = when (activeStep) {
                 1 -> step1.isValid
                 2 -> step2.isValid
-                else -> step3.isValid
+                3 -> step3.isValid
+                else -> true // Step 4 (review step) - always valid
+            }
+
+            val buttonText = when (activeStep) {
+                1, 2 -> "Next"
+                3 -> "Check info"
+                else -> "Register"
             }
 
             DealSpotOutlineButton(
-                modifier = Modifier.width(dimens_110),
+                modifier = Modifier.width(dimens_120),
                 enable = canProceed,
-                buttonText = if (activeStep < 3) "Next" else "Finish",
+                buttonText = buttonText,
                 textSize = text_size_14,
                 buttonHeight = dimens_40
             ) {
-                if (activeStep < 3) viewModel.nextStep() else { /* submit */ }
+                when (activeStep) {
+                    1, 2, 3 -> viewModel.nextStep()
+                    else -> viewModel.completeRegistration()
+                }
             }
         }
 
@@ -185,7 +195,7 @@ fun RegistrationScreen() {
 @Composable
 private fun StepProgress(activeStep: Int) {
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-        repeat(3) { index ->
+        repeat(4) { index ->
             val stepIndex = index + 1
             val color = when {
                 stepIndex < activeStep -> Color(0xFF3cb371)
@@ -310,9 +320,30 @@ private fun StepTwoContent(
     onPhone: (String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        OutlinedTextField(value = state.email, onValueChange = onEmail, label = { Text("Email") }, modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(value = state.phone, onValueChange = onPhone, label = { Text("Phone") }, modifier = Modifier.fillMaxWidth())
+        DealSpotTextInputField(
+            Modifier.fillMaxWidth(),
+            placeHolderText = "Email",
+            leftIcon = Res.drawable.ic_mail,
+            prevValue = state.email
+        )
+        { email ->
+            println("RegistrationScreen. Email: $email")
+            onEmail.invoke(email)
+        }
+
+        SpacerHeight10Dp()
+
+        DealSpotTextInputField(
+            Modifier.fillMaxWidth(),
+            placeHolderText = "Phone",
+            leftIcon = Res.drawable.ic_phone,
+            prevValue = state.phone,
+            keyboardType = KeyboardType.Number
+        )
+        { phone ->
+            println("RegistrationScreen. Phone: $phone")
+            onPhone.invoke(phone)
+        }
     }
 }
 
@@ -323,9 +354,126 @@ private fun StepThreeContent(
     onConfirm: (String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        OutlinedTextField(value = state.password, onValueChange = onPassword, label = { Text("Password") }, modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(value = state.confirmPassword, onValueChange = onConfirm, label = { Text("Confirm password") }, modifier = Modifier.fillMaxWidth())
+        DealSpotTextInputField(
+            Modifier.fillMaxWidth(),
+            placeHolderText = "Password",
+            leftIcon = Res.drawable.ic_lock,
+            prevValue = state.password,
+            keyboardType = KeyboardType.Number
+        )
+        { password ->
+            println("RegistrationScreen. Password: $password")
+            onPassword.invoke(password)
+        }
+
+        SpacerHeight10Dp()
+
+        DealSpotTextInputField(
+            Modifier.fillMaxWidth(),
+            placeHolderText = "Confirm password",
+            leftIcon = Res.drawable.ic_lock,
+            prevValue = state.password,
+            keyboardType = KeyboardType.Number
+        )
+        { confirmPassword ->
+            println("RegistrationScreen. Confirm password: $confirmPassword")
+            onConfirm.invoke(confirmPassword)
+        }
+    }
+}
+
+@Composable
+private fun StepFourContent(
+    step1: Step1,
+    step2: Step2,
+    step3: Step3
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = "Review your information",
+            fontSize = text_size_18,
+            color = Grey,
+            fontWeight = FontWeight.W600,
+            fontFamily = latoFontFamily(),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        SpacerHeight20Dp()
+
+        // Personal Information Section
+        ReviewSection(
+            title = "Personal Information",
+            items = listOf(
+                "Full Name" to step1.fullName.ifEmpty { "Not provided" },
+                "Age" to step1.age.ifEmpty { "Not provided" },
+                "Gender" to step1.gender?.let { stringResource(it.displayName) }.toString()
+            )
+        )
+
+        SpacerHeight15Dp()
+
+        // Contact Information Section
+        ReviewSection(
+            title = "Contact Information",
+            items = listOf(
+                "Email" to step2.email.ifEmpty { "Not provided" },
+                "Phone" to step2.phone.ifEmpty { "Not provided" }
+            )
+        )
+
+        SpacerHeight15Dp()
+
+        // Security Information Section
+        ReviewSection(
+            title = "Security",
+            items = listOf(
+                "Password" to if (step3.password.isNotEmpty()) "••••••••" else "Not provided",
+                "Confirm Password" to if (step3.confirmPassword.isNotEmpty()) "••••••••" else "Not provided"
+            )
+        )
+    }
+}
+
+@Composable
+private fun ReviewSection(
+    title: String,
+    items: List<Pair<String, String>>
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = title,
+            fontSize = text_size_16,
+            color = DealSpotDark,
+            fontWeight = FontWeight.W600,
+            fontFamily = latoFontFamily(),
+            modifier = Modifier.padding(bottom = dimens_10)
+        )
+
+        items.forEach { (label, value) ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = dimens_8),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = label,
+                    fontSize = text_size_14,
+                    color = grey_700,
+                    fontWeight = FontWeight.W500,
+                    fontFamily = latoFontFamily()
+                )
+                
+                Text(
+                    text = value,
+                    fontSize = text_size_14,
+                    color = Grey,
+                    fontWeight = FontWeight.W400,
+                    fontFamily = latoFontFamily()
+                )
+            }
+        }
     }
 }
 

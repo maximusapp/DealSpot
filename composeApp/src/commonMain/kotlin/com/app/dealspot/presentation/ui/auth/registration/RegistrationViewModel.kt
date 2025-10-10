@@ -37,7 +37,7 @@ class RegistrationViewModel(
     private fun restoreFromDataStore() {
         viewModelScope.launch {
             val savedStep = dataStore.getString(DataStoreKeys.REG_ACTIVE_STEP)?.toIntOrNull() ?: 1
-            _activeStep.value = savedStep.coerceIn(1, 3)
+            _activeStep.value = savedStep.coerceIn(1, 4)
 
             val gender = dataStore.getString(DataStoreKeys.REG_GENDER) ?: "-1".ifEmpty { "-1" }
             println("gender: $gender")
@@ -62,7 +62,7 @@ class RegistrationViewModel(
     }
 
     fun updateStep(step: Int) {
-        val newStep = step.coerceIn(1, 3)
+        val newStep = step.coerceIn(1, 4)
         _activeStep.value = newStep
         persistActiveStep(newStep)
     }
@@ -71,13 +71,30 @@ class RegistrationViewModel(
         val canProceed = when (_activeStep.value) {
             1 -> _step1.value.isValid
             2 -> _step2.value.isValid
-            else -> _step3.value.isValid
+            3 -> _step3.value.isValid
+            else -> true // Step 4 (review step) - always valid
         }
         if (!canProceed) return
         updateStep(_activeStep.value + 1)
     }
 
     fun prevStep() { updateStep(_activeStep.value - 1) }
+
+    fun completeRegistration() {
+        // Clear registration data and navigate to main screen
+        viewModelScope.launch {
+            // Clear all registration data
+            dataStore.putString(DataStoreKeys.REG_ACTIVE_STEP, "0")
+            dataStore.putString(DataStoreKeys.REG_AVATAR_URI, "")
+            dataStore.putString(DataStoreKeys.REG_FULL_NAME, "")
+            dataStore.putString(DataStoreKeys.REG_AGE, "")
+            dataStore.putString(DataStoreKeys.REG_GENDER, "")
+            dataStore.putString(DataStoreKeys.REG_EMAIL, "")
+            dataStore.putString(DataStoreKeys.REG_PHONE, "")
+            dataStore.putString(DataStoreKeys.REG_PASSWORD, "")
+            dataStore.putString(DataStoreKeys.USER_PASSWORD, "")
+        }
+    }
 
     fun setAvatar(uri: String) {
         _step1.value = _step1.value.copy(avatarUri = uri)

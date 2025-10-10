@@ -53,12 +53,15 @@ internal fun WelcomeScreen(
     val viewModel: WelcomeScreenViewModel = koinInject()
 
     var isFirstTimeOpened: Boolean? by remember { mutableStateOf(null) }
+    var hasInProgressReg: Boolean? by remember { mutableStateOf(null) }
+    
     LaunchedEffect(Unit) {
-        isFirstTimeOpened = viewModel.isAppFirstTimeOpened()
-        // Auto-continue registration if in progress
-        if (viewModel.hasInProgressRegistration()) {
+        hasInProgressReg = viewModel.hasInProgressRegistration()
+        if (hasInProgressReg == true) {
             navigateToRegister.invoke()
+            return@LaunchedEffect
         }
+        isFirstTimeOpened = viewModel.isAppFirstTimeOpened()
     }
 
     Box(
@@ -68,10 +71,12 @@ internal fun WelcomeScreen(
             .padding(horizontal = dimens_20),
         contentAlignment = Alignment.Center
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
+        // Only show content if there's no in-progress registration
+        if (hasInProgressReg != true) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
             // App Logo/Icon placeholder
             Image(
                 painter = painterResource(Res.drawable.ic_deal_spot),
@@ -141,6 +146,7 @@ internal fun WelcomeScreen(
                         navigateToRegister.invoke()
                     }
                 )
+            }
             }
         }
     }

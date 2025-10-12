@@ -23,9 +23,8 @@ internal fun HomeScreen(
             .padding(horizontal = dimens_20),
         contentAlignment = Alignment.Center
     ) {
-        // Your main content goes here
         Text(
-            text = "Welcome to About screen",
+            text = "Welcome to Home screen",
             fontSize = text_size_24,
             color = Grey,
             fontWeight = FontWeight.W700,

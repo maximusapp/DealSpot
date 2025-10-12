@@ -2,13 +2,15 @@ package com.app.dealspot.business
 
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.female
+import dealspot.composeapp.generated.resources.ic_female
+import dealspot.composeapp.generated.resources.ic_male
 import dealspot.composeapp.generated.resources.male
-import dealspot.composeapp.generated.resources.none
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
-enum class GenderType(val displayName: StringResource) {
-    MALE(Res.string.male),
-    FEMALE(Res.string.female)
+enum class GenderType(val displayName: StringResource, val icon: DrawableResource) {
+    MALE(Res.string.male, Res.drawable.ic_male),
+    FEMALE(Res.string.female, Res.drawable.ic_female)
 }
 
 enum class VerificationCodeErrorType {

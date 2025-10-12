@@ -23,6 +23,7 @@ class EmailVerificationScreenViewModel(
         println("EmailVerificationScreenViewModel. verifyEmail. Code: $code")
         viewModelScope.launch {
 //            _verificationEmailState.value = emailVerificationUseCase.verifyEmail(code = code)
+            _verificationEmailState.value = VerificationEmailState.Success
         }
     }
 

@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.ui.auth
+package com.app.dealspot.presentation.ui.auth.login
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -74,7 +74,7 @@ fun LoginScreen(
 
             textLatoDisplayLargeDarkW600(text = stringResource(Res.string.app_name))
 
-            SpacerHeight40Dp()
+            SpacerHeight25Dp()
 
             Text(
                 modifier = Modifier.align(Alignment.Start),
@@ -102,8 +102,7 @@ fun LoginScreen(
                 modifier = Modifier,
                 placeHolderText = stringResource(Res.string.email),
                 isPasswordField = false,
-                leftIcon = Res.drawable.ic_mail,
-                leftIconTint = DealSpotDark
+                leftIcon = Res.drawable.ic_mail
             ) { email ->
                 println("Login screen. Email is: $email")
 //                events(AuthEvent.OnUpdateEmailLogin(email))
@@ -115,8 +114,7 @@ fun LoginScreen(
                 modifier = Modifier,
                 placeHolderText = stringResource(Res.string.password),
                 isPasswordField = true,
-                leftIcon = Res.drawable.ic_lock,
-                leftIconTint = DealSpotDark
+                leftIcon = Res.drawable.ic_lock
             ) { password ->
                 println("Login screen. Password is: $password")
 //                events(AuthEvent.OnUpdatePasswordLogin(password))

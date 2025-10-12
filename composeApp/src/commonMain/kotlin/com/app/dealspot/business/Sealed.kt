@@ -11,3 +11,9 @@ sealed class VerificationEmailState {
     data object Success: VerificationEmailState()
     data class Error(val message: String, val cause: String) : VerificationEmailState()
 }
+
+sealed class RegistrationState {
+    data object None: RegistrationState()
+    data class Success(val email: String) : RegistrationState()
+    data class Error(val message: String) : RegistrationState()
+}

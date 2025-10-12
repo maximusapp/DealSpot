@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
 import com.app.dealspot.presentation.navigation.SplashNavigation
-import com.app.dealspot.presentation.ui.auth.LoginScreen
+import com.app.dealspot.presentation.ui.auth.login.LoginScreen
 import com.app.dealspot.presentation.ui.auth.registration.RegistrationScreen
 import com.app.dealspot.presentation.ui.welcome.WelcomeScreen
 
@@ -52,7 +52,8 @@ internal fun SplashNav(
         composable<SplashNavigation.Register> {
             RegistrationScreen(
 //                viewModel = registerViewModel,
-//                navigateToMain = navigateToMain,
+                navigateToMain = navigateToMain,
+                backClicked = { navigator.popBackStack() }
 //                state = registerViewModel.state.value,
 //                events = registerViewModel::onTriggerEvent
             )

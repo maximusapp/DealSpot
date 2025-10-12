@@ -19,7 +19,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -51,7 +50,6 @@ import com.app.dealspot.presentation.theme.SpacerWidth10Dp
 import com.app.dealspot.presentation.theme.SpacerWidth5Dp
 import com.app.dealspot.presentation.theme.blue
 import com.app.dealspot.presentation.theme.blueSplashText
-import com.app.dealspot.presentation.theme.blue_dark
 import com.app.dealspot.presentation.theme.dimens_1
 import com.app.dealspot.presentation.theme.dimens_10
 import com.app.dealspot.presentation.theme.dimens_20
@@ -59,6 +57,7 @@ import com.app.dealspot.presentation.theme.dimens_30
 import com.app.dealspot.presentation.theme.dimens_40
 import com.app.dealspot.presentation.theme.dimens_42
 import com.app.dealspot.presentation.theme.dimens_5
+import com.app.dealspot.presentation.theme.dimens_50
 import com.app.dealspot.presentation.theme.grey_50_transparent
 import com.app.dealspot.presentation.theme.grey_700
 import com.app.dealspot.presentation.theme.latoFontFamily
@@ -69,11 +68,9 @@ import com.app.dealspot.presentation.theme.white
 import com.app.dealspot.presentation.view.DealSpotDarkButton
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.ic_close
-import dealspot.composeapp.generated.resources.ic_deal_spot
 import dealspot.composeapp.generated.resources.ic_mail
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
 @Composable
@@ -82,7 +79,7 @@ fun EmailVerificationScreen(
     codeLength: Int = 6,
     viewModel: EmailVerificationScreenViewModel = koinInject(),
     onLogin: () -> Unit,
-    onDismissRequest: () -> Unit
+//    onDismissRequest: () -> Unit
 ) {
     val emailVerificationState: VerificationEmailState by viewModel.verificationEmailState.collectAsStateWithLifecycle()
     val resendVerificationCodeState: ResendVerificationCodeState by viewModel.resendConfirmationCodeState.collectAsStateWithLifecycle()
@@ -118,26 +115,12 @@ fun EmailVerificationScreen(
             verticalArrangement = Arrangement.Center
         ) {
 
-            Box(modifier = Modifier.fillMaxWidth()) {
-                IconButton(
-                    onClick = onDismissRequest,
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(top = dimens_5, end = dimens_5)
-                ) {
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_close),
-                        contentDescription = "",
-                        tint = Grey
-                    )
-                }
-            }
+            SpacerHeight15Dp()
 
             Icon(
                 painter = painterResource(Res.drawable.ic_mail),
                 contentDescription = null,
-                tint = blue,
-                modifier = Modifier.size(dimens_40)
+                modifier = Modifier.size(dimens_50)
             )
 
             SpacerHeight15Dp()

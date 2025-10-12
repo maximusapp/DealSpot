@@ -4,19 +4,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.dealspot.business.AppDataStore
 import com.app.dealspot.business.GenderType
+import com.app.dealspot.business.RegistrationState
 import com.app.dealspot.business.Step1
 import com.app.dealspot.business.Step2
 import com.app.dealspot.business.Step3
 import com.app.dealspot.business.constants.DataStoreKeys
+import com.app.dealspot.presentation.ui.auth.email_verification.EmailVerificationScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class RegistrationViewModel(
     private val dataStore: AppDataStore
 ) : ViewModel() {
-
-
+    private val _registrationState: MutableStateFlow<RegistrationState> = MutableStateFlow(RegistrationState.None)
+    val registrationState = _registrationState.asStateFlow()
 
     private val _activeStep = MutableStateFlow(1)
     val activeStep: StateFlow<Int> = _activeStep
@@ -81,18 +84,11 @@ class RegistrationViewModel(
     fun prevStep() { updateStep(_activeStep.value - 1) }
 
     fun completeRegistration() {
-        // Clear registration data and navigate to main screen
+        println("RegistrationViewModel. completeRegistration()")
+        // Clear registration data. Need call after success registration and validation of mail
+//        clearRegistrationData()
         viewModelScope.launch {
-            // Clear all registration data
-            dataStore.putString(DataStoreKeys.REG_ACTIVE_STEP, "0")
-            dataStore.putString(DataStoreKeys.REG_AVATAR_URI, "")
-            dataStore.putString(DataStoreKeys.REG_FULL_NAME, "")
-            dataStore.putString(DataStoreKeys.REG_AGE, "")
-            dataStore.putString(DataStoreKeys.REG_GENDER, "")
-            dataStore.putString(DataStoreKeys.REG_EMAIL, "")
-            dataStore.putString(DataStoreKeys.REG_PHONE, "")
-            dataStore.putString(DataStoreKeys.REG_PASSWORD, "")
-            dataStore.putString(DataStoreKeys.USER_PASSWORD, "")
+            _registrationState.value = RegistrationState.Success(email = "Test mail")
         }
     }
 
@@ -144,5 +140,24 @@ class RegistrationViewModel(
 
     private fun persistString(key: String, value: String) {
         viewModelScope.launch { dataStore.putString(key, value) }
+    }
+
+    fun clearRegistrationData() {
+        viewModelScope.launch {
+            // Clear all registration data
+            dataStore.putString(DataStoreKeys.REG_ACTIVE_STEP, "0")
+            dataStore.putString(DataStoreKeys.REG_AVATAR_URI, "")
+            dataStore.putString(DataStoreKeys.REG_FULL_NAME, "")
+            dataStore.putString(DataStoreKeys.REG_AGE, "")
+            dataStore.putString(DataStoreKeys.REG_GENDER, "")
+            dataStore.putString(DataStoreKeys.REG_EMAIL, "")
+            dataStore.putString(DataStoreKeys.REG_PHONE, "")
+            dataStore.putString(DataStoreKeys.REG_PASSWORD, "")
+            dataStore.putString(DataStoreKeys.USER_PASSWORD, "")
+        }
+    }
+
+    fun clearRegistrationState() {
+        _registrationState.value = RegistrationState.None
     }
 }

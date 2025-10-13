@@ -19,6 +19,30 @@
     <string name="password">Lozinka</string>
     <string name="forgot_password">Zaboravljena lozinka</string>
     <string name="do_not_have_account">Nemate račun?</string>
-    <string name="registration">Registration</string>
+    <string name="registration">Prijava</string>
+    <string name="male">Muški</string>
+    <string name="female">Žena</string>
+    <string name="full_name">Puno ime</string>
+    <string name="age">Starenje</string>
+    <string name="prev">Prev</string>
+    <string name="next">Sljedeći</string>
+    <string name="check">Provjeriti</string>
+    <string name="confirm_password">Potvrdite lozinku</string>
+    <string name="review_your_information">Pregledajte svoje podatke</string>
+    <string name="personal_information">Osobni podaci</string>
+    <string name="phone">Telefon</string>
+    <string name="gender">Spol</string>
+    <string name="contact_information">Kontakt podatke</string>
+    <string name="show_passwords">Prikaži lozinke</string>
+    <string name="check_your_email">Provjerite svoju e-poštu</string>
+    <string name="enter_verification_code">Unesite provjeru koda poslanog na</string>
+    <string name="enter_six_numbers_of_code">Unesite 6 znamenki koda za potvrdu molim!</string>
+    <string name="did_not_get_code">Niste dobili kod?</string>
+    <string name="send_new_code">Pošaljite novi kod</string>
+    <string name="verify_email">Provjerite e-poštu</string>
+    <string name="invalid_verification_code">Nevažeći verifikacijski kod</string>
+    <string name="confirmation_code_was_resent">Poslan je potvrdni kôd. Provjerite svoju e-poštu</string>
+    <string name="incorrect_username_or_password">Netočno korisničko ime ili lozinka</string>
+    <string name="confirmed_password">Potvrđena lozinka</string>
     <!--Croatian -->
 </resources>

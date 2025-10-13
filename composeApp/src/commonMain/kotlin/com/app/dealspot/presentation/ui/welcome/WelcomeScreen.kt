@@ -81,8 +81,7 @@ internal fun WelcomeScreen(
             Image(
                 painter = painterResource(Res.drawable.ic_deal_spot),
                 contentDescription = null,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
+                modifier = Modifier.clip(RoundedCornerShape(16.dp))
             )
 
             Spacer30Height()

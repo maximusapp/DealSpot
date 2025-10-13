@@ -19,6 +19,30 @@
     <string name="password">Heslo</string>
     <string name="forgot_password">Zapomenuté heslo</string>
     <string name="do_not_have_account">Nemáte účet?</string>
-    <string name="registration">Registration</string>
+    <string name="registration">Registrace</string>
+    <string name="male">Samec</string>
+    <string name="female">Žena</string>
+    <string name="full_name">Celé jméno</string>
+    <string name="age">Stáří</string>
+    <string name="prev">Předchozí</string>
+    <string name="next">Další</string>
+    <string name="check">Kontrola</string>
+    <string name="confirm_password">Potvrďte heslo</string>
+    <string name="review_your_information">Zkontrolujte své informace</string>
+    <string name="personal_information">Osobní údaje</string>
+    <string name="phone">Telefon</string>
+    <string name="gender">Pohlaví</string>
+    <string name="contact_information">Kontaktní informace</string>
+    <string name="show_passwords">Zobrazit hesla</string>
+    <string name="check_your_email">Zkontrolujte svůj e-mail</string>
+    <string name="enter_verification_code">Zadejte ověřovací kód odeslaný do</string>
+    <string name="enter_six_numbers_of_code">Zadejte 6 číslic potvrzovacího kódu prosím!</string>
+    <string name="did_not_get_code">Nedostal kód?</string>
+    <string name="send_new_code">Odeslat nový kód</string>
+    <string name="verify_email">Ověřte e-mail</string>
+    <string name="invalid_verification_code">Neplatný ověřovací kód</string>
+    <string name="confirmation_code_was_resent">Byl odeslán ověřovací kód. Zkontrolujte svůj e-mail</string>
+    <string name="incorrect_username_or_password">Nesprávné uživatelské jméno nebo heslo</string>
+    <string name="confirmed_password">Potvrzené heslo</string>
     <!--Czech -->
 </resources>

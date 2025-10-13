@@ -19,6 +19,30 @@
     <string name="password">Contraseña</string>
     <string name="forgot_password">Has olvidado tu contraseña</string>
     <string name="do_not_have_account">¿No tienes cuenta?</string>
-    <string name="registration">Registration</string>
+    <string name="registration">Registro</string>
+    <string name="male">Masculino</string>
+    <string name="female">Femenino</string>
+    <string name="full_name">Nombre completo</string>
+    <string name="age">Edad</string>
+    <string name="prev">Anterior</string>
+    <string name="next">Próximo</string>
+    <string name="check">Controlar</string>
+    <string name="confirm_password">Confirmar Contraseña</string>
+    <string name="review_your_information">Revisa tu información</string>
+    <string name="personal_information">Información personal</string>
+    <string name="phone">Teléfono</string>
+    <string name="gender">Género</string>
+    <string name="contact_information">Información del contacto</string>
+    <string name="show_passwords">Mostrar contraseñas</string>
+    <string name="check_your_email">Revise su correo electrónico</string>
+    <string name="enter_verification_code">Ingrese el código de verificación enviado a</string>
+    <string name="enter_six_numbers_of_code">Ingrese 6 dígitos de código de confirmación ¡Por favor!</string>
+    <string name="did_not_get_code">¿No obtuvo código?</string>
+    <string name="send_new_code">Enviar un nuevo código</string>
+    <string name="verify_email">Verificar correo electrónico</string>
+    <string name="invalid_verification_code">Código de verificación no válido</string>
+    <string name="confirmation_code_was_resent">Se envió el código de verificación. Revise su correo electrónico</string>
+    <string name="incorrect_username_or_password">Nombre de usuario o contraseña incorrectos</string>
+    <string name="confirmed_password">Contraseña confirmada</string>
     <!--Spanish -->
 </resources>

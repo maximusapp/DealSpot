@@ -42,35 +42,45 @@ import com.app.dealspot.business.VerificationEmailState
 import com.app.dealspot.business.constants.LENGTH_6
 import com.app.dealspot.business.constants.TIME_5_SEC
 import com.app.dealspot.presentation.theme.BorderColor
+import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.Grey
+import com.app.dealspot.presentation.theme.PrimaryVariantColor
 import com.app.dealspot.presentation.theme.SpacerHeight10Dp
 import com.app.dealspot.presentation.theme.SpacerHeight15Dp
 import com.app.dealspot.presentation.theme.SpacerHeight25Dp
 import com.app.dealspot.presentation.theme.SpacerWidth10Dp
 import com.app.dealspot.presentation.theme.SpacerWidth5Dp
-import com.app.dealspot.presentation.theme.blue
 import com.app.dealspot.presentation.theme.blueSplashText
 import com.app.dealspot.presentation.theme.dimens_1
 import com.app.dealspot.presentation.theme.dimens_10
 import com.app.dealspot.presentation.theme.dimens_20
 import com.app.dealspot.presentation.theme.dimens_30
-import com.app.dealspot.presentation.theme.dimens_40
 import com.app.dealspot.presentation.theme.dimens_42
 import com.app.dealspot.presentation.theme.dimens_5
 import com.app.dealspot.presentation.theme.dimens_50
 import com.app.dealspot.presentation.theme.grey_50_transparent
 import com.app.dealspot.presentation.theme.grey_700
 import com.app.dealspot.presentation.theme.latoFontFamily
+import com.app.dealspot.presentation.theme.text_size_12
 import com.app.dealspot.presentation.theme.text_size_16
 import com.app.dealspot.presentation.theme.text_size_20
 import com.app.dealspot.presentation.theme.text_size_22
 import com.app.dealspot.presentation.theme.white
 import com.app.dealspot.presentation.view.DealSpotDarkButton
 import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.check_your_email
+import dealspot.composeapp.generated.resources.confirmation_code_was_resent
+import dealspot.composeapp.generated.resources.did_not_get_code
+import dealspot.composeapp.generated.resources.enter_six_numbers_of_code
+import dealspot.composeapp.generated.resources.enter_verification_code
 import dealspot.composeapp.generated.resources.ic_close
 import dealspot.composeapp.generated.resources.ic_mail
+import dealspot.composeapp.generated.resources.invalid_verification_code
+import dealspot.composeapp.generated.resources.send_new_code
+import dealspot.composeapp.generated.resources.verify_email
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 
 @Composable
@@ -79,7 +89,7 @@ fun EmailVerificationScreen(
     codeLength: Int = 6,
     viewModel: EmailVerificationScreenViewModel = koinInject(),
     onLogin: () -> Unit,
-//    onDismissRequest: () -> Unit
+    onDismissRequest: () -> Unit
 ) {
     val emailVerificationState: VerificationEmailState by viewModel.verificationEmailState.collectAsStateWithLifecycle()
     val resendVerificationCodeState: ResendVerificationCodeState by viewModel.resendConfirmationCodeState.collectAsStateWithLifecycle()
@@ -115,6 +125,20 @@ fun EmailVerificationScreen(
             verticalArrangement = Arrangement.Center
         ) {
 
+            Box(modifier = Modifier.fillMaxWidth()) {
+                IconButton(
+                    onClick = onDismissRequest,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(top = dimens_5, end = dimens_5)
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_close),
+                        contentDescription = ""
+                    )
+                }
+            }
+
             SpacerHeight15Dp()
 
             Icon(
@@ -127,7 +151,7 @@ fun EmailVerificationScreen(
 
             Text(
                 modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
-                text = "check_your_email",
+                text = stringResource(Res.string.check_your_email),
                 fontSize = text_size_22,
                 color = Grey,
                 fontWeight = FontWeight.W600,
@@ -138,7 +162,7 @@ fun EmailVerificationScreen(
 
             Text(
                 modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
-                text = "enter_verification_code",
+                text = stringResource(Res.string.enter_verification_code),
                 color = Color.Gray,
             )
             Text(
@@ -213,15 +237,15 @@ fun EmailVerificationScreen(
 
                 when(errorType) {
                     VerificationCodeErrorType.ERROR_CODE_SHOULD_BE_6_DIGITS -> {
-//                        Text(text = stringResource(Res.string.enter_six_numbers_of_code), color = PrimaryVariantColor, style = TextStyle(fontSize = text_size_12))
+                        Text(text = stringResource(Res.string.enter_six_numbers_of_code), color = PrimaryVariantColor, style = TextStyle(fontSize = text_size_12))
                     }
 
                     VerificationCodeErrorType.CONFIRMATION_CODE_INCORRECT -> {
-//                        Text(text = stringResource(Res.string.invalid_verification_code), color = PrimaryVariantColor, style = TextStyle(fontSize = text_size_12))
+                        Text(text = stringResource(Res.string.invalid_verification_code), color = PrimaryVariantColor, style = TextStyle(fontSize = text_size_12))
                     }
 
                     VerificationCodeErrorType.CONFIRMATION_CODE_RESEND -> {
-//                        Text(text = stringResource(Res.string.confirmation_code_was_resent), color = PrimaryVariantColor, style = TextStyle(fontSize = text_size_12))
+                        Text(text = stringResource(Res.string.confirmation_code_was_resent), color = DealSpotDark, style = TextStyle(fontSize = text_size_12))
                     }
 
                     VerificationCodeErrorType.NONE -> {
@@ -239,12 +263,12 @@ fun EmailVerificationScreen(
                 SpacerHeight25Dp()
             } else {
                 Row {
-                    Text("did_not_get_code", color = Color.Gray)
+                    Text(stringResource(Res.string.did_not_get_code), color = Color.Gray)
                     SpacerHeight10Dp()
                     SpacerWidth10Dp()
 
                     Text(
-                        "send_new_code",
+                        stringResource(Res.string.send_new_code),
                         color = blueSplashText,
                         modifier = Modifier.clickable {
                             needShowLoading = true
@@ -257,7 +281,7 @@ fun EmailVerificationScreen(
 
                 DealSpotDarkButton (
                     modifier = Modifier.fillMaxWidth().padding(horizontal = dimens_20),
-                    buttonText = "verify_email"
+                    buttonText = stringResource(Res.string.verify_email)
                 ) {
                     println("EmailVerificationScreen. Verify code button clicked")
 

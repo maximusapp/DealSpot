@@ -69,7 +69,15 @@ import com.app.dealspot.presentation.view.DealSpotOutlineButton
 import com.app.dealspot.presentation.view.DealSpotTextInputField
 import com.app.dealspot.presentation.view.DialogErrorWithOkButton
 import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.age
 import dealspot.composeapp.generated.resources.app_name
+import dealspot.composeapp.generated.resources.check
+import dealspot.composeapp.generated.resources.confirm_password
+import dealspot.composeapp.generated.resources.confirmed_password
+import dealspot.composeapp.generated.resources.contact_information
+import dealspot.composeapp.generated.resources.email
+import dealspot.composeapp.generated.resources.full_name
+import dealspot.composeapp.generated.resources.gender
 import dealspot.composeapp.generated.resources.ic_back
 import dealspot.composeapp.generated.resources.ic_calendar_month
 import dealspot.composeapp.generated.resources.ic_deal_spot
@@ -79,7 +87,15 @@ import dealspot.composeapp.generated.resources.ic_mail
 import dealspot.composeapp.generated.resources.ic_male
 import dealspot.composeapp.generated.resources.ic_person
 import dealspot.composeapp.generated.resources.ic_phone
+import dealspot.composeapp.generated.resources.next
+import dealspot.composeapp.generated.resources.password
+import dealspot.composeapp.generated.resources.personal_information
+import dealspot.composeapp.generated.resources.phone
+import dealspot.composeapp.generated.resources.prev
 import dealspot.composeapp.generated.resources.registration
+import dealspot.composeapp.generated.resources.review_your_information
+import dealspot.composeapp.generated.resources.show_passwords
+import dealspot.composeapp.generated.resources.sign_up
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -183,7 +199,7 @@ fun RegistrationScreen(
             DealSpotOutlineButton(
                 modifier = Modifier.width(dimens_110),
                 enable = activeStep > 1,
-                buttonText = "Prev",
+                buttonText = stringResource(Res.string.prev),
                 textSize = text_size_14,
                 buttonHeight = dimens_40
             ) {
@@ -198,9 +214,9 @@ fun RegistrationScreen(
             }
 
             val buttonText = when (activeStep) {
-                1, 2 -> "Next"
-                3 -> "Check info"
-                else -> "Register"
+                1, 2 -> stringResource(Res.string.next)
+                3 -> stringResource(Res.string.check)
+                else -> stringResource(Res.string.sign_up)
             }
 
             DealSpotOutlineButton(
@@ -249,11 +265,11 @@ fun RegistrationScreen(
 //                    viewModel.loginAfterEmailVerified()
                     navigateToMain.invoke()
                 },
-//                onDismissRequest = {
-//                    println("RegistrationScreen. EmailVerificationScreen onDismiss clicked")
-//                    viewModel.clearRegistrationState()
-//                    backClicked.invoke()
-//                }
+                onDismissRequest = {
+                    println("RegistrationScreen. EmailVerificationScreen onDismiss clicked")
+                    viewModel.clearRegistrationState()
+                    backClicked.invoke()
+                }
             )
 
         }
@@ -301,7 +317,7 @@ private fun StepOneContent(
 
         DealSpotTextInputField(
             Modifier.fillMaxWidth(),
-            placeHolderText = "Full name",
+            placeHolderText = stringResource(Res.string.full_name),
             leftIcon = Res.drawable.ic_person,
             prevValue = state.fullName
         )
@@ -316,7 +332,7 @@ private fun StepOneContent(
 
         DealSpotTextInputField(
             Modifier.fillMaxWidth(),
-            placeHolderText = "Age",
+            placeHolderText = stringResource(Res.string.age),
             leftIcon = Res.drawable.ic_calendar_month,
             prevValue = state.age,
             keyboardType = KeyboardType.Number
@@ -392,7 +408,7 @@ private fun StepTwoContent(
     Column(modifier = Modifier.fillMaxWidth()) {
         DealSpotTextInputField(
             Modifier.fillMaxWidth(),
-            placeHolderText = "Email",
+            placeHolderText = stringResource(Res.string.email),
             leftIcon = Res.drawable.ic_mail,
             prevValue = state.email
         )
@@ -405,7 +421,7 @@ private fun StepTwoContent(
 
         DealSpotTextInputField(
             Modifier.fillMaxWidth(),
-            placeHolderText = "Phone",
+            placeHolderText = stringResource(Res.string.phone),
             leftIcon = Res.drawable.ic_phone,
             prevValue = state.phone,
             keyboardType = KeyboardType.Number
@@ -426,7 +442,7 @@ private fun StepThreeContent(
     Column(modifier = Modifier.fillMaxWidth()) {
         DealSpotTextInputField(
             Modifier.fillMaxWidth(),
-            placeHolderText = "Password",
+            placeHolderText = stringResource(Res.string.password),
             leftIcon = Res.drawable.ic_lock,
             prevValue = state.password,
             keyboardType = KeyboardType.Number
@@ -440,7 +456,7 @@ private fun StepThreeContent(
 
         DealSpotTextInputField(
             Modifier.fillMaxWidth(),
-            placeHolderText = "Confirm password",
+            placeHolderText = stringResource(Res.string.confirm_password),
             leftIcon = Res.drawable.ic_lock,
             prevValue = state.confirmPassword,
             keyboardType = KeyboardType.Number
@@ -462,7 +478,7 @@ private fun StepFourContent(
     
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "Review your information",
+            text = stringResource(Res.string.review_your_information),
             fontSize = text_size_18,
             color = Grey,
             fontWeight = FontWeight.W600,
@@ -475,11 +491,11 @@ private fun StepFourContent(
 
         // Personal Information Section
         ReviewSection(
-            title = "Personal Information",
+            title = stringResource(Res.string.personal_information),
             items = listOf(
-                Triple("Full Name", step1.fullName.ifEmpty { "Not provided" }, null),
-                Triple("Age", step1.age.ifEmpty { "Not provided" }, null),
-                Triple("Gender", step1.gender?.let { stringResource(it.displayName) }.toString(), step1.gender?.icon)
+                Triple(stringResource(Res.string.full_name), step1.fullName.ifEmpty { "Not provided" }, null),
+                Triple(stringResource(Res.string.age), step1.age.ifEmpty { "Not provided" }, null),
+                Triple(stringResource(Res.string.gender), step1.gender?.let { stringResource(it.displayName) }.toString(), step1.gender?.icon)
             )
         )
 
@@ -487,10 +503,10 @@ private fun StepFourContent(
 
         // Contact Information Section
         ReviewSection(
-            title = "Contact Information",
+            title = stringResource(Res.string.contact_information),
             items = listOf(
-                Triple("Email", step2.email.ifEmpty { "Not provided" }, null),
-                Triple("Phone", step2.phone.ifEmpty { "Not provided" }, null)
+                Triple(stringResource(Res.string.email), step2.email.ifEmpty { "Not provided" }, null),
+                Triple(stringResource(Res.string.phone), step2.phone.ifEmpty { "Not provided" }, null)
             )
         )
 
@@ -504,7 +520,7 @@ private fun StepFourContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Security",
+                    text = stringResource(Res.string.password),
                     fontSize = text_size_16,
                     color = DealSpotDark,
                     fontWeight = FontWeight.W600,
@@ -520,7 +536,7 @@ private fun StepFourContent(
                         onCheckedChange = { showPasswords = it }
                     )
                     Text(
-                        text = "Show passwords",
+                        text = stringResource(Res.string.show_passwords),
                         fontSize = text_size_14,
                         color = grey_700,
                         fontWeight = FontWeight.W400,
@@ -545,8 +561,8 @@ private fun StepFourContent(
 
             // Password Items
             listOf(
-                "Password" to passwordDisplay,
-                "Confirm Password" to confirmPasswordDisplay
+                stringResource(Res.string.password) to passwordDisplay,
+                stringResource(Res.string.confirmed_password) to confirmPasswordDisplay
             ).forEach { (label, value) ->
                 Row(
                     modifier = Modifier

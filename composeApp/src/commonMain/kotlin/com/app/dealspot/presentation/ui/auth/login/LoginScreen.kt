@@ -21,7 +21,6 @@ import com.app.dealspot.presentation.theme.SpacerHeight10Dp
 import com.app.dealspot.presentation.theme.SpacerHeight15Dp
 import com.app.dealspot.presentation.theme.SpacerHeight20Dp
 import com.app.dealspot.presentation.theme.SpacerHeight25Dp
-import com.app.dealspot.presentation.theme.SpacerHeight40Dp
 import com.app.dealspot.presentation.theme.SpacerHeight60Dp
 import com.app.dealspot.presentation.theme.SpacerWidth5Dp
 import com.app.dealspot.presentation.theme.dimens_20

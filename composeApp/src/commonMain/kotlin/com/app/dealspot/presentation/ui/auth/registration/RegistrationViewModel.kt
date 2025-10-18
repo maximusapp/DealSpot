@@ -9,14 +9,17 @@ import com.app.dealspot.business.Step1
 import com.app.dealspot.business.Step2
 import com.app.dealspot.business.Step3
 import com.app.dealspot.business.constants.DataStoreKeys
-import com.app.dealspot.presentation.ui.auth.email_verification.EmailVerificationScreen
+import com.app.dealspot.domain.SignUpUseCase
+import com.dealspot.network.printTestNetwork
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlin.invoke
 
 class RegistrationViewModel(
-    private val dataStore: AppDataStore
+    private val dataStore: AppDataStore,
+    private val signUpUseCase: SignUpUseCase
 ) : ViewModel() {
     private val _registrationState: MutableStateFlow<RegistrationState> = MutableStateFlow(RegistrationState.None)
     val registrationState = _registrationState.asStateFlow()
@@ -43,7 +46,6 @@ class RegistrationViewModel(
             _activeStep.value = savedStep.coerceIn(1, 4)
 
             val gender = dataStore.getString(DataStoreKeys.REG_GENDER) ?: "-1".ifEmpty { "-1" }
-            println("gender: $gender")
 
             _step1.value = Step1(
                 avatarUri = dataStore.getString(DataStoreKeys.REG_AVATAR_URI) ?: "",
@@ -85,10 +87,32 @@ class RegistrationViewModel(
 
     fun completeRegistration() {
         println("RegistrationViewModel. completeRegistration()")
-        // Clear registration data. Need call after success registration and validation of mail
-//        clearRegistrationData()
+        // Clear registration data. Need call after success registration
         viewModelScope.launch {
-            _registrationState.value = RegistrationState.Success(email = "Test mail")
+            val signUpResponse = signUpUseCase.invoke(
+                name = step1.value.fullName, email = step2.value.email,
+                password = step3.value.password, age = step1.value.age,
+                phoneNumber = step2.value.phone, gender = step1.value.gender?.ordinal ?: 0
+            )
+
+            println("Registration. Response: $signUpResponse")
+
+            if (signUpResponse.error != null) {
+                if (signUpResponse.error?.errorMsg != null) {
+                    _registrationState.value = RegistrationState.Error(message = signUpResponse.error?.errorMsg.orEmpty())
+                }
+            } else if (signUpResponse.email.orEmpty().isNotEmpty() && signUpResponse.password.orEmpty().isNotEmpty()) {
+                /* Need show verification dialog and store email and password to login after success verification */
+                /* Set user as registered after success response */
+                dataStore.putBoolean(key = DataStoreKeys.IS_USER_REGISTERED, value = true)
+                /* Store user email and password */
+                dataStore.putString(key = DataStoreKeys.EMAIL_THAT_NEED_VERIFY, value = signUpResponse.email.orEmpty())
+                dataStore.putString(key = DataStoreKeys.USER_EMAIL, value = signUpResponse.email.orEmpty())
+                dataStore.putString(key = DataStoreKeys.USER_PASSWORD, value = signUpResponse.password.orEmpty())
+                dataStore.putString(key = DataStoreKeys.USER_SUB, value = signUpResponse.userSub.orEmpty())
+
+                _registrationState.value = RegistrationState.Success(email = signUpResponse.email.orEmpty())
+            }
         }
     }
 
@@ -155,6 +179,12 @@ class RegistrationViewModel(
             dataStore.putString(DataStoreKeys.REG_PASSWORD, "")
             dataStore.putString(DataStoreKeys.USER_PASSWORD, "")
         }
+    }
+
+    fun clearStepsInfo() {
+        _step1.value = Step1()
+        _step2.value = Step2()
+        _step3.value = Step3()
     }
 
     fun clearRegistrationState() {

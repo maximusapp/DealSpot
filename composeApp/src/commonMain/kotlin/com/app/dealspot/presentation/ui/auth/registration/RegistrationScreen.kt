@@ -64,6 +64,7 @@ import com.app.dealspot.presentation.theme.text_size_14
 import com.app.dealspot.presentation.theme.text_size_16
 import com.app.dealspot.presentation.theme.text_size_18
 import com.app.dealspot.presentation.theme.text_size_24
+import com.app.dealspot.presentation.theme.white
 import com.app.dealspot.presentation.ui.auth.email_verification.EmailVerificationScreen
 import com.app.dealspot.presentation.view.DealSpotOutlineButton
 import com.app.dealspot.presentation.view.DealSpotTextInputField
@@ -195,7 +196,6 @@ fun RegistrationScreen(
         Spacer(modifier = Modifier.weight(1f))
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-
             DealSpotOutlineButton(
                 modifier = Modifier.width(dimens_110),
                 enable = activeStep > 1,
@@ -258,19 +258,44 @@ fun RegistrationScreen(
 
 //            viewModel.clearRegistrationState()
 
-            EmailVerificationScreen(
-                email = actualState.email,
-                onLogin = {
-                    /* Login after email verified */
+//            EmailVerificationScreen(
+//                email = actualState.email,
+//                onLogin = {
+//                    /* Login after email verified */
+////                    viewModel.loginAfterEmailVerified()
+//                    navigateToMain.invoke()
+//                },
+//                onDismissRequest = {
+//                    println("RegistrationScreen. EmailVerificationScreen onDismiss clicked")
+//                    viewModel.clearRegistrationState()
+//                    backClicked.invoke()
+//                }
+//            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = white)
+            ) {
+                EmailVerificationScreen(
+                    email = actualState.email,
+                    onLogin = {
+                        /* Login after email verified */
 //                    viewModel.loginAfterEmailVerified()
-                    navigateToMain.invoke()
-                },
-                onDismissRequest = {
-                    println("RegistrationScreen. EmailVerificationScreen onDismiss clicked")
-                    viewModel.clearRegistrationState()
-                    backClicked.invoke()
-                }
-            )
+                        viewModel.clearRegistrationState()
+                        viewModel.clearRegistrationData()
+                        viewModel.clearStepsInfo()
+                        navigateToMain.invoke()
+                    },
+                    onDismissRequest = {
+                        println("RegistrationScreen. EmailVerificationScreen onDismiss clicked")
+                        viewModel.clearRegistrationState()
+                        viewModel.clearRegistrationData()
+                        viewModel.clearStepsInfo()
+                        backClicked.invoke()
+                    }
+                )
+            }
 
         }
 
@@ -424,7 +449,7 @@ private fun StepTwoContent(
             placeHolderText = stringResource(Res.string.phone),
             leftIcon = Res.drawable.ic_phone,
             prevValue = state.phone,
-            keyboardType = KeyboardType.Number
+            keyboardType = KeyboardType.Phone
         )
         { phone ->
             println("RegistrationScreen. Phone: $phone")

@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -33,11 +32,14 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.accompanist.permissions)
+            implementation(projects.network)
             //DI
             implementation(libs.koin.android)
             implementation(libs.coil3.network.okhttp)
         }
         commonMain.dependencies {
+            implementation(projects.network)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

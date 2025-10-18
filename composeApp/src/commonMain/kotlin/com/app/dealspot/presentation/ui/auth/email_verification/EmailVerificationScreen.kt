@@ -86,6 +86,7 @@ import org.koin.compose.koinInject
 @Composable
 fun EmailVerificationScreen(
     email: String,
+    needShowCloseIcon: Boolean = true,
     codeLength: Int = 6,
     viewModel: EmailVerificationScreenViewModel = koinInject(),
     onLogin: () -> Unit,
@@ -125,21 +126,21 @@ fun EmailVerificationScreen(
             verticalArrangement = Arrangement.Center
         ) {
 
-            Box(modifier = Modifier.fillMaxWidth()) {
-                IconButton(
-                    onClick = onDismissRequest,
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(top = dimens_5, end = dimens_5)
-                ) {
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_close),
-                        contentDescription = ""
-                    )
+            if (needShowCloseIcon) {
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    IconButton(
+                        onClick = onDismissRequest,
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(top = dimens_5, end = dimens_5)
+                    ) {
+                        Icon(
+                            painter = painterResource(Res.drawable.ic_close),
+                            contentDescription = ""
+                        )
+                    }
                 }
             }
-
-            SpacerHeight15Dp()
 
             Icon(
                 painter = painterResource(Res.drawable.ic_mail),

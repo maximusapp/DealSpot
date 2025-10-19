@@ -4,12 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.dealspot.business.ResendVerificationCodeState
 import com.app.dealspot.business.VerificationEmailState
+import com.app.dealspot.domain.EmailVerificationUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class EmailVerificationScreenViewModel(
-//    private val emailVerificationUseCase: EmailVerificationUseCase
+    private val emailVerificationUseCase: EmailVerificationUseCase
 ) : ViewModel() {
 
     private val _verificationEmailState: MutableStateFlow<VerificationEmailState> = MutableStateFlow(VerificationEmailState.None)
@@ -22,24 +23,14 @@ class EmailVerificationScreenViewModel(
     fun verifyEmail(code: String) {
         println("EmailVerificationScreenViewModel. verifyEmail. Code: $code")
         viewModelScope.launch {
-//            _verificationEmailState.value = emailVerificationUseCase.verifyEmail(code = code)
-            _verificationEmailState.value = VerificationEmailState.Success
+            _verificationEmailState.value = emailVerificationUseCase.verifyEmail(code = code)
         }
     }
 
     fun setEmailVerified() {
         println("EmailVerificationScreenViewModel. setEmailVerified")
         viewModelScope.launch {
-//            emailVerificationUseCase.setEmailVerified()
-
-            resetEmailThatNeedToVerify()
-        }
-    }
-
-    private fun resetEmailThatNeedToVerify() {
-        println("EmailVerificationScreenViewModel. resetEmailThatNeedToVerify")
-        viewModelScope.launch {
-//            emailVerificationUseCase.resetEmailForVerification()
+            emailVerificationUseCase.setEmailVerified()
         }
     }
 
@@ -55,9 +46,8 @@ class EmailVerificationScreenViewModel(
         println("EmailVerificationScreenViewModel. resendCode")
 
         viewModelScope.launch {
-//            _resendConfirmationCodeState.value = emailVerificationUseCase.reSendVerificationCode()
+            _resendConfirmationCodeState.value = emailVerificationUseCase.reSendVerificationCode()
         }
-
     }
 
 }

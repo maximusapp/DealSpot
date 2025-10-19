@@ -44,5 +44,6 @@
     <string name="confirmation_code_was_resent">Byl odeslán ověřovací kód. Zkontrolujte svůj e-mail</string>
     <string name="incorrect_username_or_password">Nesprávné uživatelské jméno nebo heslo</string>
     <string name="confirmed_password">Potvrzené heslo</string>
+    <string name="ok">OK</string>
     <!--Czech -->
 </resources>

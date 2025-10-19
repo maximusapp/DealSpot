@@ -1,10 +1,13 @@
 package com.app.dealspot.data
 
+import com.app.dealspot.business.LoginState
 import com.app.dealspot.business.ResendVerificationCodeState
 import com.app.dealspot.business.VerificationEmailState
 import com.app.dealspot.common.AWSConfig.CLIENT_ID
 import com.app.dealspot.common.AWSConfig.REGION
+import com.app.dealspot.data.model.LoginResponse
 import com.app.dealspot.data.model.SignUpResponse
+import com.app.dealspot.data.model.TokenResponse
 import com.dealspot.network.IdentityProviderClient
 import com.dealspot.network.core_cognito.UserAttribute
 
@@ -44,39 +47,39 @@ class AuthRepositoryImpl() {
         return result
     }
 
-//    suspend fun login(email: String, password: String): LoginState {
-//        var result: LoginState = LoginState.None
-//
-//        provider.signIn(username = email, password = password).fold(
-//            onSuccess = {
-//                println("Log in. Success")
-//                println("Log in. accessToken: ${it.AuthenticationResult?.AccessToken.orEmpty()}")
-//                println("Log in. ExpiresIn: ${it.AuthenticationResult?.ExpiresIn}")
-//                println("Log in. IdToken: ${it.AuthenticationResult?.IdToken}")
-//                println("Log in. RefreshToken: ${it.AuthenticationResult?.RefreshToken}")
-//                println("Log in. TokenType: ${it.AuthenticationResult?.TokenType}")
-//                println("Log in. ==============")
-//                println("Log in. ChallengeParameters: ${it.ChallengeParameters}")
-//                println("Log in. ChallengeName: ${it.ChallengeName}")
-//                println("Log in. Session: ${it.Session}")
-//
-//                val tokenResponse = TokenResponse(
-//                    accessToken = it.AuthenticationResult?.AccessToken.orEmpty(),
-//                    expiresIn = it.AuthenticationResult?.ExpiresIn ?: 0,
-//                    idToken = it.AuthenticationResult?.IdToken.orEmpty(),
-//                    refreshToken = it.AuthenticationResult?.RefreshToken.orEmpty(),
-//                    tokenType = it.AuthenticationResult?.TokenType.orEmpty()
-//                )
-//                result = LoginState.Success(response = LoginResponse(tokenResponse = tokenResponse, error = null))
-//            },
-//            onFailure = {
-//                println("Log in. Failure. Response: $it")
-//                result = LoginState.Error(type = it)
-//            }
-//        )
-//
-//        return result
-//    }
+    suspend fun login(email: String, password: String): LoginState {
+        var result: LoginState = LoginState.None
+
+        provider.signIn(username = email, password = password).fold(
+            onSuccess = {
+                println("Log in. Success")
+                println("Log in. accessToken: ${it.AuthenticationResult?.AccessToken.orEmpty()}")
+                println("Log in. ExpiresIn: ${it.AuthenticationResult?.ExpiresIn}")
+                println("Log in. IdToken: ${it.AuthenticationResult?.IdToken}")
+                println("Log in. RefreshToken: ${it.AuthenticationResult?.RefreshToken}")
+                println("Log in. TokenType: ${it.AuthenticationResult?.TokenType}")
+                println("Log in. ==============")
+                println("Log in. ChallengeParameters: ${it.ChallengeParameters}")
+                println("Log in. ChallengeName: ${it.ChallengeName}")
+                println("Log in. Session: ${it.Session}")
+
+                val tokenResponse = TokenResponse(
+                    accessToken = it.AuthenticationResult?.AccessToken.orEmpty(),
+                    expiresIn = it.AuthenticationResult?.ExpiresIn ?: 0,
+                    idToken = it.AuthenticationResult?.IdToken.orEmpty(),
+                    refreshToken = it.AuthenticationResult?.RefreshToken.orEmpty(),
+                    tokenType = it.AuthenticationResult?.TokenType.orEmpty()
+                )
+                result = LoginState.Success(response = LoginResponse(tokenResponse = tokenResponse, error = null))
+            },
+            onFailure = {
+                println("Log in. Failure. Response: $it")
+                result = LoginState.Error(type = it)
+            }
+        )
+
+        return result
+    }
 
     suspend fun verifyEmail(email: String, code: String): VerificationEmailState {
         var result: VerificationEmailState = VerificationEmailState.None

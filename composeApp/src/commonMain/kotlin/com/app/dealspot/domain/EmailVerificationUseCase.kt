@@ -13,6 +13,7 @@ class EmailVerificationUseCase(
 ) {
     suspend fun setEmailVerified() {
         appDataStoreManager.putBoolean(key = DataStoreKeys.IS_EMAIL_VERIFIED, value = true)
+        resetEmailForVerification()
     }
 
     suspend fun emailThatNeedVerify(email: String) {
@@ -30,7 +31,7 @@ class EmailVerificationUseCase(
     suspend fun verifyEmail(code: String): VerificationEmailState {
         println("EmailVerificationUseCase. verifyEmail")
         val email = appDataStoreManager.getString(key = DataStoreKeys.EMAIL_THAT_NEED_VERIFY) ?: ""
-        println("verifyEmail. Email: $email")
+        println("verifyEmail. Email: $email, code: $code")
 
         val response = authRepositoryImpl.verifyEmail(email = email, code = code)
         return response

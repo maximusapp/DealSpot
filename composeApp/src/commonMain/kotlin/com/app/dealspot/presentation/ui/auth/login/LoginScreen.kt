@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.app.dealspot.business.LoginState
 import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.SpacerHeight10Dp
@@ -33,15 +34,20 @@ import com.app.dealspot.presentation.theme.text_size_24
 import com.app.dealspot.presentation.ui.auth.email_verification.EmailVerificationScreen
 import com.app.dealspot.presentation.view.DealSpotDarkButton
 import com.app.dealspot.presentation.view.DealSpotTextInputField
+import com.app.dealspot.presentation.view.DialogErrorWithOkButton
+import com.dealspot.network.core_cognito.IdentityProviderException
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.app_name
 import dealspot.composeapp.generated.resources.do_not_have_account
 import dealspot.composeapp.generated.resources.email
 import dealspot.composeapp.generated.resources.forgot_password
+import dealspot.composeapp.generated.resources.ic_error_red
 import dealspot.composeapp.generated.resources.ic_lock
 import dealspot.composeapp.generated.resources.ic_mail
+import dealspot.composeapp.generated.resources.incorrect_username_or_password
 import dealspot.composeapp.generated.resources.lets_get_started
 import dealspot.composeapp.generated.resources.login
+import dealspot.composeapp.generated.resources.ok
 import dealspot.composeapp.generated.resources.password
 import dealspot.composeapp.generated.resources.sign_up
 import org.jetbrains.compose.resources.stringResource
@@ -52,14 +58,15 @@ import org.koin.compose.koinInject
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = koinInject(),
-    navigateToRegister: () -> Unit = {}
+    navigateToRegister: () -> Unit = {},
+    navigateToMain: () -> Unit = {}
 ) {
 
     var isLoginButtonClicked by remember { mutableStateOf(false) }
 //    val loginDataValidationState: LoginDataValidation by viewModel.loginDataValidationState.collectAsStateWithLifecycle()
     val emailThatNeedToConfirm: String by viewModel.emailConfirmationState.collectAsStateWithLifecycle()
     var showEmailVerificationDialog by remember { mutableStateOf(true) }
-//    val loginState: LoginState by viewModel.loginState.collectAsStateWithLifecycle()
+    val loginState: LoginState by viewModel.loginState.collectAsStateWithLifecycle()
 
     viewModel.checkEmailConfirmationState()
 
@@ -231,7 +238,7 @@ fun LoginScreen(
             onLogin = {
                 /* Login after email verified */
                 showEmailVerificationDialog = false
-//                viewModel.loginAfterEmailVerified()
+                viewModel.loginAfterEmailVerified()
             },
             onDismissRequest = {
                 showEmailVerificationDialog = false // Close the dialog
@@ -239,44 +246,44 @@ fun LoginScreen(
         )
     }
 
-//    when (val loginStateResp = loginState) {
-//        is LoginState.Loading -> {
-//
-//        }
-//
-//        is LoginState.Success -> {
-//            println("loginStateResp. State: $loginStateResp")
-//            viewModel.saveUserCredentialsToDataStore(loginStateResp.response.tokenResponse)
-//            navigateToMain.invoke()
-//        }
-//
-//        is LoginState.Error -> {
+    when (val loginStateResp = loginState) {
+        is LoginState.Loading -> {
+
+        }
+
+        is LoginState.Success -> {
+            println("loginStateResp. State: $loginStateResp")
+            viewModel.saveUserCredentialsToDataStore(loginStateResp.response.tokenResponse)
+            navigateToMain.invoke()
+        }
+
+        is LoginState.Error -> {
 //            viewModel.state.value = viewModel.state.value.copy(isLoading = false)
-//            var message = ""
-//
-//            when (loginStateResp.type) {
-//                is IdentityProviderException.NotAuthorized -> {
-//                    message = stringResource(Res.string.incorrect_username_or_password)
-//                }
-//            }
-//
-//            DialogErrorWithOkButton(
-//                dialogTitle = "Opps!",
-//                dialogText = message,
-//                icon = Icons.Outlined.ErrorOutline,
-//                onOkClicked = {
-//                    println("DialogErrorWithOkButton. Ok button clicked")
-//
-//                    viewModel.clearLoginState()
-//                    isLoginButtonClicked = false
-//                },
-//                buttonText = stringResource(Res.string.ok)
-//            )
-//        }
-//
-//        is LoginState.None -> {
-//            /** Ignore **/
-//        }
-//    }
+            var message = ""
+
+            when (loginStateResp.type) {
+                is IdentityProviderException.NotAuthorized -> {
+                    message = stringResource(Res.string.incorrect_username_or_password)
+                }
+            }
+
+            DialogErrorWithOkButton(
+                dialogTitle = "Opps!",
+                dialogText = message,
+                icon = Res.drawable.ic_error_red,
+                onOkClicked = {
+                    println("DialogErrorWithOkButton. Ok button clicked")
+
+                    viewModel.clearLoginState()
+                    isLoginButtonClicked = false
+                },
+                buttonText = stringResource(Res.string.ok)
+            )
+        }
+
+        is LoginState.None -> {
+            /** Ignore **/
+        }
+    }
 
 }

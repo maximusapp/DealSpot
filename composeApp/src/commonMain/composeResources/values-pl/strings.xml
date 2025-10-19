@@ -44,5 +44,6 @@
     <string name="confirmation_code_was_resent">Kod weryfikacyjny został wysłany. Sprawdź swój e-mail</string>
     <string name="incorrect_username_or_password">Nieprawidłowa nazwa użytkownika lub hasło</string>
     <string name="confirmed_password">Potwierdzone hasło</string>
+    <string name="ok">OK</string>
     <!--Polish-->
 </resources>

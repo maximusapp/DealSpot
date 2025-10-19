@@ -3,14 +3,19 @@ package com.app.dealspot.presentation.ui.auth.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.dealspot.business.AppDataStore
+import com.app.dealspot.business.LoginState
 import com.app.dealspot.business.constants.DataStoreKeys
+import com.app.dealspot.data.model.TokenResponse
+import com.app.dealspot.domain.usesases.LoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 
 class LoginViewModel(
-    private val dataStore: AppDataStore
+    private val dataStore: AppDataStore,
+    private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
 
     private val _email = MutableStateFlow("")
@@ -30,6 +35,9 @@ class LoginViewModel(
 
     private val _emailConfirmationState: MutableStateFlow<String> = MutableStateFlow("")
     val emailConfirmationState = _emailConfirmationState.asStateFlow()
+
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.None)
+    val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
 
     fun setEmail(email: String) {
         _email.value = email
@@ -71,6 +79,39 @@ class LoginViewModel(
                 _emailConfirmationState.value = emailThatNeedToVerify
             }
         }
+    }
+
+    fun loginAfterEmailVerified() {
+        println("loginAfterEmailValidation")
+
+        viewModelScope.launch {
+            val email = dataStore.getString(key = DataStoreKeys.USER_EMAIL).orEmpty()
+            val password = dataStore.getString(key = DataStoreKeys.USER_PASSWORD).orEmpty()
+            println("loginAfterEmailValidation. Email: $email")
+            println("loginAfterEmailValidation. Password: $password")
+
+            val loginResponse = loginUseCase.invoke(email = email, password = password)
+
+            _loginState.value = loginResponse
+        }
+    }
+
+    fun saveUserCredentialsToDataStore(loginResponse: TokenResponse?) {
+        println("saveUserCredentialsToDataStore.")
+        println("loginResponse: $loginResponse")
+        viewModelScope.launch {
+            val loginResponseValue = Json.encodeToString(loginResponse)
+            println("loginResponseValue: $loginResponseValue")
+
+            dataStore.putString(key = DataStoreKeys.TOKEN_USER_DATA, value = loginResponseValue)
+            dataStore.putString(key = DataStoreKeys.IS_USER_LOGGED_IN, value = "1")
+
+            println("Stored user token data: ${dataStore.getString(key = DataStoreKeys.TOKEN_USER_DATA)}")
+        }
+    }
+
+    fun clearLoginState() {
+        _loginState.value = LoginState.None
     }
 }
 

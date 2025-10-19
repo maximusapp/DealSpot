@@ -27,4 +27,10 @@ class WelcomeScreenViewModel(
         val step = appDataStore.getString(DataStoreKeys.REG_ACTIVE_STEP)?.toIntOrNull() ?: 0
         return step in 1..4
     }
+
+    suspend fun isUserLoggedIn(): Boolean {
+//        viewModelScope.launch {
+            return appDataStore.getString(key = DataStoreKeys.IS_USER_LOGGED_IN) == "1"
+//        }
+    }
 }

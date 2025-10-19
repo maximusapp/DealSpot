@@ -44,4 +44,5 @@
     <string name="confirmation_code_was_resent">Der Verifizierungscode wurde gesendet. Überprüfen Sie Ihre E-Mail</string>
     <string name="incorrect_username_or_password">Falscher Benutzername oder Passwort</string>
     <string name="confirmed_password">Bestätigtes Passwort</string>
+    <string name="ok">OK</string>
 </resources>

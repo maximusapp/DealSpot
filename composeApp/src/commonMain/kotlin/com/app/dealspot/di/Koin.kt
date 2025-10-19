@@ -4,7 +4,9 @@ import com.app.dealspot.business.AppDataStore
 import com.app.dealspot.business.AppDataStoreManager
 import com.app.dealspot.common.Context
 import com.app.dealspot.data.AuthRepositoryImpl
+import com.app.dealspot.domain.EmailVerificationUseCase
 import com.app.dealspot.domain.SignUpUseCase
+import com.app.dealspot.domain.usesases.LoginUseCase
 import com.app.dealspot.presentation.SharedViewModel
 import com.app.dealspot.presentation.ui.SplashViewModel
 import com.app.dealspot.presentation.ui.auth.email_verification.EmailVerificationScreenViewModel
@@ -28,11 +30,11 @@ fun appModule(context: Context) = module {
 //    single { CheckIsAppOpenedFirstTimeUseCase(get()) }
 //    single { UpdateFirstTimeAppOpenedUseCase(get()) }
 //    single { EmailPasswordValidatorUseCase() }
-//    single { LoginUseCase(get()) }
+    single { LoginUseCase(get()) }
     single { SignUpUseCase(get()) }
 //    single { GetFlagByPhoneNumberUseCase() }
 //    single { RegistrationDataValidatorUseCase() }
-//    single { EmailVerificationUseCase(get(), get()) }
+    single { EmailVerificationUseCase(get(), get()) }
 
     /**PROFILE-USE-CASES*/
 //    single { LogoutUseCase(get()) }
@@ -48,9 +50,9 @@ fun appModule(context: Context) = module {
     factory { SharedViewModel(get()) }
     factory { WelcomeScreenViewModel(get()) }
     factory { RegistrationViewModel(get(), get()) }
-    factory { EmailVerificationScreenViewModel() }
+    factory { EmailVerificationScreenViewModel(get()) }
     factory { HomeScreenViewModel() }
-    factory { LoginViewModel(get()) }
+    factory { LoginViewModel(get(), get()) }
 //    factory { RegisterViewModel(get(), get(), get(), get()) }
 //    factory { EmailVerificationScreenViewModel(get()) }
 //    factory { HomeScreenViewModel(get(), get(), get(), get()) }

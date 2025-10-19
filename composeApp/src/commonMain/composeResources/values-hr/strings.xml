@@ -44,5 +44,6 @@
     <string name="confirmation_code_was_resent">Poslan je potvrdni kôd. Provjerite svoju e-poštu</string>
     <string name="incorrect_username_or_password">Netočno korisničko ime ili lozinka</string>
     <string name="confirmed_password">Potvrđena lozinka</string>
+    <string name="ok">OK</string>
     <!--Croatian -->
 </resources>

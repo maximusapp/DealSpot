@@ -44,5 +44,6 @@
     <string name="confirmation_code_was_resent">Se envió el código de verificación. Revise su correo electrónico</string>
     <string name="incorrect_username_or_password">Nombre de usuario o contraseña incorrectos</string>
     <string name="confirmed_password">Contraseña confirmada</string>
+    <string name="ok">OK</string>
     <!--Spanish -->
 </resources>

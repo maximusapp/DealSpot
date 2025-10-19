@@ -43,7 +43,7 @@ internal fun SplashNav(
         composable<SplashNavigation.Login> {
             LoginScreen(
 //                viewModel = loginViewModel,
-//                navigateToMain = navigateToMain,
+                navigateToMain = navigateToMain,
                 navigateToRegister = { navigator.navigate(SplashNavigation.Register) },
 //                state = loginViewModel.state.value,
 //                events = loginViewModel::onTriggerEvent

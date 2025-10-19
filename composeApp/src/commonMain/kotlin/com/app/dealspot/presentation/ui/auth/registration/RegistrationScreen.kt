@@ -336,10 +336,6 @@ private fun StepOneContent(
     var selectedGender by remember { mutableStateOf<GenderType?>(null) }
 
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-        AvatarPicker(currentUri = state.avatarUri, onPick = onAvatarPick)
-
-        SpacerHeight10Dp()
-
         DealSpotTextInputField(
             Modifier.fillMaxWidth(),
             placeHolderText = stringResource(Res.string.full_name),
@@ -350,8 +346,6 @@ private fun StepOneContent(
             println("RegistrationScreen. Full name: $fullName")
             onFullName.invoke(fullName)
         }
-
-        SpacerHeight10Dp()
 
         SpacerHeight10Dp()
 

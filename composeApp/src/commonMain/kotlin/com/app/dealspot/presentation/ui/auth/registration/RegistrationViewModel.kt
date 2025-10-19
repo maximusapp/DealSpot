@@ -177,7 +177,6 @@ class RegistrationViewModel(
             dataStore.putString(DataStoreKeys.REG_EMAIL, "")
             dataStore.putString(DataStoreKeys.REG_PHONE, "")
             dataStore.putString(DataStoreKeys.REG_PASSWORD, "")
-            dataStore.putString(DataStoreKeys.USER_PASSWORD, "")
         }
     }
 

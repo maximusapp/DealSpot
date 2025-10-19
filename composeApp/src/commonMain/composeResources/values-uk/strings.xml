@@ -44,4 +44,5 @@
     <string name="confirmation_code_was_resent">Код підтвердження надіслано. Перевірте свою електронну пошту.</string>
     <string name="incorrect_username_or_password">Неправильне ім'я користувача або пароль</string>
     <string name="confirmed_password">Підтверджений пароль</string>
+    <string name="ok">OK</string>
 </resources>

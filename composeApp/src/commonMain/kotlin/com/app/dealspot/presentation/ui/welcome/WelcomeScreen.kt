@@ -53,8 +53,9 @@ internal fun WelcomeScreen(
     val viewModel: WelcomeScreenViewModel = koinInject()
 
     var isFirstTimeOpened: Boolean? by remember { mutableStateOf(null) }
+    var isUserLoggedIn: Boolean? by remember { mutableStateOf(null) }
     var hasInProgressReg: Boolean? by remember { mutableStateOf(null) }
-    
+
     LaunchedEffect(Unit) {
         hasInProgressReg = viewModel.hasInProgressRegistration()
         if (hasInProgressReg == true) {
@@ -62,6 +63,7 @@ internal fun WelcomeScreen(
             return@LaunchedEffect
         }
         isFirstTimeOpened = viewModel.isAppFirstTimeOpened()
+        isUserLoggedIn = viewModel.isUserLoggedIn()
     }
 
     Box(
@@ -77,77 +79,79 @@ internal fun WelcomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-            // App Logo/Icon placeholder
-            Image(
-                painter = painterResource(Res.drawable.ic_deal_spot),
-                contentDescription = null,
-                modifier = Modifier.clip(RoundedCornerShape(16.dp))
-            )
-
-            Spacer30Height()
-
-            // Welcome Title
-            Text(
-                text = stringResource(Res.string.welcome),
-                fontSize = text_size_24,
-                color = Grey,
-                fontWeight = FontWeight.W700,
-                fontFamily = latoFontFamily(),
-                textAlign = TextAlign.Center
-            )
-
-            Spacer10Height()
-
-            // Subtitle
-            Text(
-                text = stringResource(Res.string.welcome_description),
-                fontSize = text_size_16,
-                color = grey_700,
-                fontWeight = FontWeight.W500,
-                fontFamily = latoFontFamily(),
-                textAlign = TextAlign.Center
-            )
-
-            Spacer50Height()
-
-            if (isFirstTimeOpened == true) {
-                // Get Started Button (first-time only)
-                DealSpotDarkButton(
-                    buttonText = stringResource(Res.string.get_started),
-                    onClick = {
-                        println("WelcomeScreen. Get started button clicked")
-
-                        viewModel.updateAppFirstTimeOpened()
-                        navigateToOnboarding.invoke()
-                    }
-                )
-            } else if (isFirstTimeOpened == false) {
-                // Login Button
-                DealSpotDarkButton(
-                    buttonText = stringResource(Res.string.login),
-                    onClick = {
-                        println("WelcomeScreen. Login button clicked")
-
-                        viewModel.updateAppFirstTimeOpened()
-                        navigateToLogin.invoke()
-                    }
+                // App Logo/Icon placeholder
+                Image(
+                    painter = painterResource(Res.drawable.ic_deal_spot),
+                    contentDescription = null,
+                    modifier = Modifier.clip(RoundedCornerShape(16.dp))
                 )
 
-                Spacer15Height()
+                Spacer30Height()
 
-                // Register Button
-                DealSpotOutlineButton(
-                    buttonText = stringResource(Res.string.sign_up),
-                    onClick = {
-                        println("WelcomeScreen. Sign Up button clicked")
-
-                        viewModel.updateAppFirstTimeOpened()
-                        navigateToRegister.invoke()
-                    }
+                // Welcome Title
+                Text(
+                    text = stringResource(Res.string.welcome),
+                    fontSize = text_size_24,
+                    color = Grey,
+                    fontWeight = FontWeight.W700,
+                    fontFamily = latoFontFamily(),
+                    textAlign = TextAlign.Center
                 )
-            }
+
+                Spacer10Height()
+
+                // Subtitle
+                Text(
+                    text = stringResource(Res.string.welcome_description),
+                    fontSize = text_size_16,
+                    color = grey_700,
+                    fontWeight = FontWeight.W500,
+                    fontFamily = latoFontFamily(),
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer50Height()
+
+                if (isUserLoggedIn == true) {
+                    println("WelcomeScreen. User logged in. Need navigate to main")
+                    navigateToMain.invoke()
+                } else if (isFirstTimeOpened == true) {
+                    // Get Started Button (first-time only)
+                    DealSpotDarkButton(
+                        buttonText = stringResource(Res.string.get_started),
+                        onClick = {
+                            println("WelcomeScreen. Get started button clicked")
+
+                            viewModel.updateAppFirstTimeOpened()
+                            navigateToOnboarding.invoke()
+                        }
+                    )
+                } else if (isFirstTimeOpened == false) {
+                    // Login Button
+                    DealSpotDarkButton(
+                        buttonText = stringResource(Res.string.login),
+                        onClick = {
+                            println("WelcomeScreen. Login button clicked")
+
+                            viewModel.updateAppFirstTimeOpened()
+                            navigateToLogin.invoke()
+                        }
+                    )
+
+                    Spacer15Height()
+
+                    // Register Button
+                    DealSpotOutlineButton(
+                        buttonText = stringResource(Res.string.sign_up),
+                        onClick = {
+                            println("WelcomeScreen. Sign Up button clicked")
+
+                            viewModel.updateAppFirstTimeOpened()
+                            navigateToRegister.invoke()
+                        }
+                    )
+                }
             }
         }
     }
-
 }

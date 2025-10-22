@@ -45,4 +45,6 @@
     <string name="incorrect_username_or_password">Nome utente o password errati</string>
     <string name="confirmed_password">Password confermata</string>
     <string name="ok">OK</string>
+    <string name="user_already_exists">L'utente esiste già</string>
+    <string name="something_went_wrong_try_again">Qualcosa è andato storto. Riprova</string>
 </resources>

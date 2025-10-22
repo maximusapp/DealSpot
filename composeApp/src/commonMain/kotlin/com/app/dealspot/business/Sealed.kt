@@ -1,6 +1,7 @@
 package com.app.dealspot.business
 
 import com.app.dealspot.data.model.LoginResponse
+import org.jetbrains.compose.resources.StringResource
 
 sealed class ResendVerificationCodeState {
     data object None: ResendVerificationCodeState()
@@ -17,7 +18,7 @@ sealed class VerificationEmailState {
 sealed class RegistrationState {
     data object None: RegistrationState()
     data class Success(val email: String) : RegistrationState()
-    data class Error(val message: String) : RegistrationState()
+    data class Error(val message: StringResource?) : RegistrationState()
 }
 
 sealed class LoginState {

@@ -62,4 +62,5 @@ internal object AWSException {
     const val UserLambdaValidation = "UserLambdaValidationException"
     const val UserNotConfirmed = "UserNotConfirmedException"
     const val UserNotFound = "UserNotFoundException"
+    const val UsernameExistsException = "UsernameExistsException"
 }

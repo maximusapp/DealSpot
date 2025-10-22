@@ -27,13 +27,8 @@ fun appModule(context: Context) = module {
 //    single<MainService> { MainServiceImpl(get()) }
     /**Use-cases*/
     /**AUTH-USE-CASES*/
-//    single { CheckIsAppOpenedFirstTimeUseCase(get()) }
-//    single { UpdateFirstTimeAppOpenedUseCase(get()) }
-//    single { EmailPasswordValidatorUseCase() }
     single { LoginUseCase(get()) }
     single { SignUpUseCase(get()) }
-//    single { GetFlagByPhoneNumberUseCase() }
-//    single { RegistrationDataValidatorUseCase() }
     single { EmailVerificationUseCase(get(), get()) }
 
     /**PROFILE-USE-CASES*/
@@ -49,16 +44,10 @@ fun appModule(context: Context) = module {
     factory { SplashViewModel() }
     factory { SharedViewModel(get()) }
     factory { WelcomeScreenViewModel(get()) }
-    factory { RegistrationViewModel(get(), get()) }
+    factory { RegistrationViewModel(get(), get(), get()) }
     factory { EmailVerificationScreenViewModel(get()) }
     factory { HomeScreenViewModel() }
     factory { LoginViewModel(get(), get()) }
-//    factory { RegisterViewModel(get(), get(), get(), get()) }
-//    factory { EmailVerificationScreenViewModel(get()) }
-//    factory { HomeScreenViewModel(get(), get(), get(), get()) }
-//    factory { HomeViewModel(get(), get()) }
-//    factory { AddressViewModel(get(), get()) }
-//    factory { CategoriesViewModel(get()) }
 //    factory { ProfileViewModel(get()) }
 //    factory { SettingsViewModel(get()) }
 //    factory { EditProfileViewModel(get(), get(), get()) }

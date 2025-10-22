@@ -4,25 +4,31 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.dealspot.business.AppDataStore
 import com.app.dealspot.business.GenderType
+import com.app.dealspot.business.LoginState
 import com.app.dealspot.business.RegistrationState
 import com.app.dealspot.business.Step1
 import com.app.dealspot.business.Step2
 import com.app.dealspot.business.Step3
 import com.app.dealspot.business.constants.DataStoreKeys
+import com.app.dealspot.data.model.TokenResponse
 import com.app.dealspot.domain.SignUpUseCase
-import com.dealspot.network.printTestNetwork
+import com.app.dealspot.domain.usesases.LoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlin.invoke
+import kotlinx.serialization.json.Json
 
 class RegistrationViewModel(
     private val dataStore: AppDataStore,
-    private val signUpUseCase: SignUpUseCase
+    private val signUpUseCase: SignUpUseCase,
+    private val loginUseCase: LoginUseCase
 ) : ViewModel() {
     private val _registrationState: MutableStateFlow<RegistrationState> = MutableStateFlow(RegistrationState.None)
     val registrationState = _registrationState.asStateFlow()
+
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.None)
+    val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
 
     private val _activeStep = MutableStateFlow(1)
     val activeStep: StateFlow<Int> = _activeStep
@@ -42,7 +48,7 @@ class RegistrationViewModel(
 
     private fun restoreFromDataStore() {
         viewModelScope.launch {
-            val savedStep = dataStore.getString(DataStoreKeys.REG_ACTIVE_STEP)?.toIntOrNull() ?: 1
+            val savedStep = dataStore.getString(DataStoreKeys.REG_ACTIVE_STEP)?.toIntOrNull() ?: 0
             _activeStep.value = savedStep.coerceIn(1, 4)
 
             val gender = dataStore.getString(DataStoreKeys.REG_GENDER) ?: "-1".ifEmpty { "-1" }
@@ -98,8 +104,8 @@ class RegistrationViewModel(
             println("Registration. Response: $signUpResponse")
 
             if (signUpResponse.error != null) {
-                if (signUpResponse.error?.errorMsg != null) {
-                    _registrationState.value = RegistrationState.Error(message = signUpResponse.error?.errorMsg.orEmpty())
+                if (signUpResponse.error != null) {
+                    _registrationState.value = RegistrationState.Error(message = signUpResponse.error)
                 }
             } else if (signUpResponse.email.orEmpty().isNotEmpty() && signUpResponse.password.orEmpty().isNotEmpty()) {
                 /* Need show verification dialog and store email and password to login after success verification */
@@ -113,6 +119,33 @@ class RegistrationViewModel(
 
                 _registrationState.value = RegistrationState.Success(email = signUpResponse.email.orEmpty())
             }
+        }
+    }
+
+    fun loginAfterEmailVerified() {
+        println("loginAfterEmailValidation")
+
+        viewModelScope.launch {
+            val email = dataStore.getString(key = DataStoreKeys.USER_EMAIL).orEmpty()
+            val password = dataStore.getString(key = DataStoreKeys.USER_PASSWORD).orEmpty()
+            println("loginAfterEmailValidation. Email: $email")
+            println("loginAfterEmailValidation. Password: $password")
+
+            val loginResponse = loginUseCase.invoke(email = email, password = password)
+
+            _loginState.value = loginResponse
+        }
+    }
+
+    fun saveUserCredentialsToDataStore(loginResponse: TokenResponse?) {
+        println("saveUserCredentialsToDataStore.")
+        println("loginResponse: $loginResponse")
+        viewModelScope.launch {
+            val loginResponseValue = Json.encodeToString(loginResponse)
+            println("loginResponseValue: $loginResponseValue")
+
+            dataStore.putString(key = DataStoreKeys.TOKEN_USER_DATA, value = loginResponseValue)
+            dataStore.putString(key = DataStoreKeys.IS_USER_LOGGED_IN, value = "1")
         }
     }
 

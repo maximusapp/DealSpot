@@ -5,11 +5,17 @@ import com.app.dealspot.business.ResendVerificationCodeState
 import com.app.dealspot.business.VerificationEmailState
 import com.app.dealspot.common.AWSConfig.CLIENT_ID
 import com.app.dealspot.common.AWSConfig.REGION
+import com.app.dealspot.data.model.Error
 import com.app.dealspot.data.model.LoginResponse
 import com.app.dealspot.data.model.SignUpResponse
 import com.app.dealspot.data.model.TokenResponse
 import com.dealspot.network.IdentityProviderClient
+import com.dealspot.network.core_cognito.IdentityProviderException
 import com.dealspot.network.core_cognito.UserAttribute
+import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.something_went_wrong_try_again
+import dealspot.composeapp.generated.resources.user_already_exists
+import org.jetbrains.compose.resources.StringResource
 
 class AuthRepositoryImpl() {
     private val provider = IdentityProviderClient(REGION, CLIENT_ID)
@@ -40,7 +46,7 @@ class AuthRepositoryImpl() {
             },
             onFailure = {
                 println("Sign up. Failure. Response: $it")
-
+                result.error = getRegistrationErrorMessage(it)
             }
         )
 
@@ -115,6 +121,17 @@ class AuthRepositoryImpl() {
         )
 
         return result
+    }
+
+    private fun getRegistrationErrorMessage(errorType: Throwable): StringResource {
+        return when(errorType) {
+            is IdentityProviderException.UsernameExistsException -> {
+                println("Sign up. Error type: UsernameExistsException")
+                Res.string.user_already_exists
+            }
+
+            else -> Res.string.something_went_wrong_try_again
+        }
     }
 
 }

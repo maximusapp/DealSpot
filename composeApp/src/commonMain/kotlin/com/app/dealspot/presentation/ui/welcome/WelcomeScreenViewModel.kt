@@ -29,8 +29,6 @@ class WelcomeScreenViewModel(
     }
 
     suspend fun isUserLoggedIn(): Boolean {
-//        viewModelScope.launch {
-            return appDataStore.getString(key = DataStoreKeys.IS_USER_LOGGED_IN) == "1"
-//        }
+        return appDataStore.getString(key = DataStoreKeys.IS_USER_LOGGED_IN) == "1"
     }
 }

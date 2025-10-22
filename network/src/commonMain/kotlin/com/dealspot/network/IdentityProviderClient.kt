@@ -348,6 +348,7 @@ open class IdentityProviderClient(region: String, clientId: String, engine: Http
 
     private suspend inline fun <reified T> ResponseException.toIdentityProviderException(): Result<T> = try {
         json.decodeFromString<RequestError>(response.body()).run {
+            println("AWSException type: $type")
             Result.failure(
                 when(type) {
                     AWSException.CodeMismatch -> IdentityProviderException.CodeMismatch(response.status, message)
@@ -370,6 +371,7 @@ open class IdentityProviderClient(region: String, clientId: String, engine: Http
                     AWSException.UserLambdaValidation -> IdentityProviderException.UserLambdaValidation(response.status, message)
                     AWSException.UserNotConfirmed -> IdentityProviderException.UserNotConfirmed(response.status, message)
                     AWSException.UserNotFound -> IdentityProviderException.UserNotFound(response.status, message)
+                    AWSException.UsernameExistsException -> IdentityProviderException.UsernameExistsException(response.status, message)
                     else -> IdentityProviderException.Unknown(response.status, type, message)
                 }
             )

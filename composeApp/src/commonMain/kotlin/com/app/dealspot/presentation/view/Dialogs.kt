@@ -57,12 +57,12 @@ fun DialogErrorWithOkButton(
     onOkClicked: () -> Unit,
     dialogTitle: String,
     dialogText: String,
-    icon: DrawableResource,
+    icon: DrawableResource? = null,
     buttonText: String = "OK"
 ) {
     AlertDialog(
         icon = {
-            Icon(painterResource(icon), contentDescription = "Example Icon")
+            if (icon != null) Icon(painterResource(icon), contentDescription = "Example Icon")
         },
         title = {
             Text(text = dialogTitle)

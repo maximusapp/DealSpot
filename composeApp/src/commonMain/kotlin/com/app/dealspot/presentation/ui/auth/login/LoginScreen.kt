@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,7 +15,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.app.dealspot.business.LoginState
 import com.app.dealspot.presentation.theme.DealSpotDark
@@ -74,6 +80,8 @@ fun LoginScreen(
         modifier = Modifier.padding(horizontal = dimens_20).fillMaxSize(),
         contentAlignment = Alignment.TopCenter,
     ) {
+        val focusRequester = remember { FocusRequester() }
+        val focusManager = LocalFocusManager.current
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -109,10 +117,16 @@ fun LoginScreen(
             SpacerHeight25Dp()
 
             DealSpotTextInputField(
-                modifier = Modifier,
+                modifier = Modifier.focusRequester(focusRequester),
                 placeHolderText = stringResource(Res.string.email),
                 isPasswordField = false,
-                leftIcon = Res.drawable.ic_mail
+                leftIcon = Res.drawable.ic_mail,
+                imeAction = ImeAction.Next,
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Down)
+                    }
+                )
             ) { email ->
                 println("Login screen. Email is: $email")
 //                events(AuthEvent.OnUpdateEmailLogin(email))

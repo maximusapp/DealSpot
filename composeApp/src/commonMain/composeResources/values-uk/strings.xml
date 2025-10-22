@@ -45,4 +45,6 @@
     <string name="incorrect_username_or_password">Неправильне ім'я користувача або пароль</string>
     <string name="confirmed_password">Підтверджений пароль</string>
     <string name="ok">OK</string>
+    <string name="user_already_exists">Користувач вже існує</string>
+    <string name="something_went_wrong_try_again">Щось пішло не так. Спробуй ще раз</string>
 </resources>

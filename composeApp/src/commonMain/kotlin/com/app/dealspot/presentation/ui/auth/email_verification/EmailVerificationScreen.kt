@@ -66,6 +66,7 @@ import com.app.dealspot.presentation.theme.text_size_16
 import com.app.dealspot.presentation.theme.text_size_20
 import com.app.dealspot.presentation.theme.text_size_22
 import com.app.dealspot.presentation.theme.white
+import com.app.dealspot.presentation.view.CircularLoadingIndicator
 import com.app.dealspot.presentation.view.DealSpotDarkButton
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.check_your_email
@@ -81,8 +82,10 @@ import dealspot.composeapp.generated.resources.verify_email
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 
+@Preview
 @Composable
 fun EmailVerificationScreen(
     email: String,
@@ -109,6 +112,7 @@ fun EmailVerificationScreen(
     }
 
     println("EmailVerificationScreen. Launch")
+
     Box(
         modifier = Modifier
             .clickable(enabled = false) { }
@@ -166,6 +170,7 @@ fun EmailVerificationScreen(
                 text = stringResource(Res.string.enter_verification_code),
                 color = Color.Gray,
             )
+
             Text(
                 modifier = Modifier.align(alignment = Alignment.CenterHorizontally),
                 text = email,
@@ -260,7 +265,7 @@ fun EmailVerificationScreen(
             /* Loading indicator */
             if (needShowLoading) {
                 SpacerHeight15Dp()
-//                CircularLoadingIndicator(iconDrawableId = Res.drawable.ic_loading_grey)
+                CircularLoadingIndicator()
                 SpacerHeight25Dp()
             } else {
                 Row {

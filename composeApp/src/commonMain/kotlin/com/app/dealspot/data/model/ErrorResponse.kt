@@ -1,7 +1,9 @@
 package com.app.dealspot.data.model
 
+import com.dealspot.network.core_cognito.IdentityProviderException
+
 
 data class Error(
-    val errorType: String,
-    val errorMsg: String
+    var errorType: IdentityProviderException,
+    var errorMsg: String
 )

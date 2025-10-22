@@ -74,6 +74,7 @@ internal fun WelcomeScreen(
         contentAlignment = Alignment.Center
     ) {
         // Only show content if there's no in-progress registration
+        println("hasInProgressReg: $hasInProgressReg")
         if (hasInProgressReg != true) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

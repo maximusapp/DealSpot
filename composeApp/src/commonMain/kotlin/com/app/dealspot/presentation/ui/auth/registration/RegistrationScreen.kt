@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
@@ -28,13 +29,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.app.dealspot.business.GenderType
+import com.app.dealspot.business.LoginState
 import com.app.dealspot.business.RegistrationState
 import com.app.dealspot.business.Step1
 import com.app.dealspot.business.Step2
@@ -66,6 +73,8 @@ import com.app.dealspot.presentation.theme.text_size_18
 import com.app.dealspot.presentation.theme.text_size_24
 import com.app.dealspot.presentation.theme.white
 import com.app.dealspot.presentation.ui.auth.email_verification.EmailVerificationScreen
+import com.app.dealspot.presentation.view.BlurWhite80Background
+import com.app.dealspot.presentation.view.CircularLoadingIndicator
 import com.app.dealspot.presentation.view.DealSpotOutlineButton
 import com.app.dealspot.presentation.view.DealSpotTextInputField
 import com.app.dealspot.presentation.view.DialogErrorWithOkButton
@@ -81,7 +90,6 @@ import dealspot.composeapp.generated.resources.full_name
 import dealspot.composeapp.generated.resources.gender
 import dealspot.composeapp.generated.resources.ic_back
 import dealspot.composeapp.generated.resources.ic_calendar_month
-import dealspot.composeapp.generated.resources.ic_deal_spot
 import dealspot.composeapp.generated.resources.ic_female
 import dealspot.composeapp.generated.resources.ic_lock
 import dealspot.composeapp.generated.resources.ic_mail
@@ -116,7 +124,8 @@ fun RegistrationScreen(
     val step3 by viewModel.step3.collectAsState()
 
     val registrationState: RegistrationState by viewModel.registrationState.collectAsStateWithLifecycle()
-    var isRegistrationButtonClicked by remember { mutableStateOf(false) }
+    val loginState: LoginState by viewModel.loginState.collectAsStateWithLifecycle()
+    var needShowLoading by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -228,7 +237,10 @@ fun RegistrationScreen(
             ) {
                 when (activeStep) {
                     1, 2, 3 -> viewModel.nextStep()
-                    else -> viewModel.completeRegistration()
+                    else -> {
+                        needShowLoading = true
+                        viewModel.completeRegistration()
+                    }
                 }
             }
         }
@@ -240,15 +252,15 @@ fun RegistrationScreen(
         is RegistrationState.Error -> {
             println("registrationState. State: $actualState")
 
+            needShowLoading = false
+
             DialogErrorWithOkButton(
                 dialogTitle = "Opps!",
-                dialogText = actualState.message,
-                icon = Res.drawable.ic_deal_spot,
+                dialogText = if (actualState.message != null) stringResource(actualState.message) else "Ooops!",
                 onOkClicked = {
                     println("DialogErrorWithOkButton. Ok button clicked")
 
-//                    viewModel.clearRegistrationState()
-                    isRegistrationButtonClicked = false
+                    viewModel.clearRegistrationState()
                 }
             )
         }
@@ -256,21 +268,7 @@ fun RegistrationScreen(
         is RegistrationState.Success -> {
             println("registrationState. State: $actualState")
 
-//            viewModel.clearRegistrationState()
-
-//            EmailVerificationScreen(
-//                email = actualState.email,
-//                onLogin = {
-//                    /* Login after email verified */
-////                    viewModel.loginAfterEmailVerified()
-//                    navigateToMain.invoke()
-//                },
-//                onDismissRequest = {
-//                    println("RegistrationScreen. EmailVerificationScreen onDismiss clicked")
-//                    viewModel.clearRegistrationState()
-//                    backClicked.invoke()
-//                }
-//            )
+            needShowLoading = false
 
             Box(
                 modifier = Modifier
@@ -280,12 +278,9 @@ fun RegistrationScreen(
                 EmailVerificationScreen(
                     email = actualState.email,
                     onLogin = {
+                        println("RegistrationScreen. EmailVerificationScreen onLogin clicked")
                         /* Login after email verified */
-//                    viewModel.loginAfterEmailVerified()
-                        viewModel.clearRegistrationState()
-                        viewModel.clearRegistrationData()
-                        viewModel.clearStepsInfo()
-                        navigateToMain.invoke()
+                        viewModel.loginAfterEmailVerified()
                     },
                     onDismissRequest = {
                         println("RegistrationScreen. EmailVerificationScreen onDismiss clicked")
@@ -300,6 +295,35 @@ fun RegistrationScreen(
         }
 
         is RegistrationState.None -> { /** Ignore **/ }
+    }
+
+    if (needShowLoading) {
+        BlurWhite80Background()
+        CircularLoadingIndicator()
+    }
+
+    when (val loginStateResp = loginState) {
+        is LoginState.Loading -> {
+
+        }
+
+        is LoginState.Success -> {
+            println("loginStateResp. State: $loginStateResp")
+            viewModel.saveUserCredentialsToDataStore(loginStateResp.response.tokenResponse)
+            viewModel.clearRegistrationState()
+            viewModel.clearRegistrationData()
+            viewModel.clearStepsInfo()
+
+            navigateToMain.invoke()
+        }
+
+        is LoginState.Error -> {
+
+        }
+
+        is LoginState.None -> {
+            /** Ignore **/
+        }
     }
 }
 
@@ -324,6 +348,7 @@ private fun StepProgress(activeStep: Int) {
     }
 }
 
+@Preview
 @Composable
 private fun StepOneContent(
     state: Step1,
@@ -334,13 +359,21 @@ private fun StepOneContent(
 ) {
     val genders = GenderType.entries.toList()
     var selectedGender by remember { mutableStateOf<GenderType?>(null) }
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
 
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         DealSpotTextInputField(
-            Modifier.fillMaxWidth(),
+            Modifier.fillMaxWidth().focusRequester(focusRequester),
             placeHolderText = stringResource(Res.string.full_name),
             leftIcon = Res.drawable.ic_person,
-            prevValue = state.fullName
+            prevValue = state.fullName,
+            imeAction = ImeAction.Next,
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
+            )
         )
         { fullName ->
             println("RegistrationScreen. Full name: $fullName")
@@ -418,18 +451,28 @@ private fun StepOneContent(
     }
 }
 
+@Preview
 @Composable
 private fun StepTwoContent(
     state: Step2,
     onEmail: (String) -> Unit,
     onPhone: (String) -> Unit
 ) {
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+
     Column(modifier = Modifier.fillMaxWidth()) {
         DealSpotTextInputField(
-            Modifier.fillMaxWidth(),
+            Modifier.fillMaxWidth().focusRequester(focusRequester),
             placeHolderText = stringResource(Res.string.email),
             leftIcon = Res.drawable.ic_mail,
-            prevValue = state.email
+            prevValue = state.email,
+            imeAction = ImeAction.Next,
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
+            )
         )
         { email ->
             println("RegistrationScreen. Email: $email")
@@ -452,19 +495,29 @@ private fun StepTwoContent(
     }
 }
 
+@Preview
 @Composable
 private fun StepThreeContent(
     state: Step3,
     onPassword: (String) -> Unit,
     onConfirm: (String) -> Unit
 ) {
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+
     Column(modifier = Modifier.fillMaxWidth()) {
         DealSpotTextInputField(
-            Modifier.fillMaxWidth(),
+            Modifier.fillMaxWidth().focusRequester(focusRequester),
             placeHolderText = stringResource(Res.string.password),
             leftIcon = Res.drawable.ic_lock,
             prevValue = state.password,
-            keyboardType = KeyboardType.Number
+            keyboardType = KeyboardType.Number,
+            imeAction = ImeAction.Next,
+            keyboardActions = KeyboardActions(
+                onNext = {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
+            )
         )
         { password ->
             println("RegistrationScreen. Password: $password")
@@ -487,6 +540,7 @@ private fun StepThreeContent(
     }
 }
 
+@Preview
 @Composable
 private fun StepFourContent(
     step1: Step1,
@@ -610,6 +664,7 @@ private fun StepFourContent(
     }
 }
 
+@Preview
 @Composable
 private fun ReviewSection(
     title: String,
@@ -665,6 +720,3 @@ private fun ReviewSection(
             }
     }
 }
-
-@Composable
-expect fun AvatarPicker(currentUri: String, onPick: (String) -> Unit)

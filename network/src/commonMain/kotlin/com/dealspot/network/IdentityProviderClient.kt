@@ -51,8 +51,6 @@ import io.ktor.http.contentType
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 
-/** Don't forget [IdentityProviderClientJS] when doing changes here :) */
-
 /**
  * AWS Cognito Identity Provider client.
  * Provides common request methods.
@@ -343,7 +341,20 @@ open class IdentityProviderClient(region: String, clientId: String, engine: Http
     } catch (e: ResponseException) {
         e.toIdentityProviderException()
     } catch (t: Throwable) {
-        Result.failure(t)
+        println("Request response. Throwable. $t")
+        // Handle network connectivity issues
+        when {
+            t::class.simpleName == "UnknownHostException" -> {
+                Result.failure(IdentityProviderException.NetworkConnectivityException("Network connection failed: ${t.message}"))
+            }
+            t::class.simpleName == "ConnectException" -> {
+                Result.failure(IdentityProviderException.NetworkConnectivityException("Unable to connect to server: ${t.message}"))
+            }
+            t::class.simpleName == "SocketTimeoutException" -> {
+                Result.failure(IdentityProviderException.NetworkConnectivityException("Connection timeout: ${t.message}"))
+            }
+            else -> Result.failure(t)
+        }
     }
 
     private suspend inline fun <reified T> ResponseException.toIdentityProviderException(): Result<T> = try {

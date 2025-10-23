@@ -52,6 +52,7 @@ import com.app.dealspot.presentation.theme.SpacerHeight10Dp
 import com.app.dealspot.presentation.theme.SpacerHeight15Dp
 import com.app.dealspot.presentation.theme.SpacerHeight20Dp
 import com.app.dealspot.presentation.theme.SpacerHeight25Dp
+import com.app.dealspot.presentation.theme.SpacerHeight5Dp
 import com.app.dealspot.presentation.theme.SpacerHeight60Dp
 import com.app.dealspot.presentation.theme.SpacerWidth10Dp
 import com.app.dealspot.presentation.theme.dimens_10
@@ -67,6 +68,7 @@ import com.app.dealspot.presentation.theme.grey_700
 import com.app.dealspot.presentation.theme.grey_light
 import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.textLatoDisplayLargeDarkW600
+import com.app.dealspot.presentation.theme.text_size_12
 import com.app.dealspot.presentation.theme.text_size_14
 import com.app.dealspot.presentation.theme.text_size_16
 import com.app.dealspot.presentation.theme.text_size_18
@@ -78,6 +80,7 @@ import com.app.dealspot.presentation.view.CircularLoadingIndicator
 import com.app.dealspot.presentation.view.DealSpotOutlineButton
 import com.app.dealspot.presentation.view.DealSpotTextInputField
 import com.app.dealspot.presentation.view.DialogErrorWithOkButton
+import com.app.dealspot.presentation.view.GreyLightLineHeight1DpDivider
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.age
 import dealspot.composeapp.generated.resources.app_name
@@ -98,8 +101,10 @@ import dealspot.composeapp.generated.resources.ic_person
 import dealspot.composeapp.generated.resources.ic_phone
 import dealspot.composeapp.generated.resources.next
 import dealspot.composeapp.generated.resources.password
+import dealspot.composeapp.generated.resources.password_info
 import dealspot.composeapp.generated.resources.personal_information
 import dealspot.composeapp.generated.resources.phone
+import dealspot.composeapp.generated.resources.phone_format
 import dealspot.composeapp.generated.resources.prev
 import dealspot.composeapp.generated.resources.registration
 import dealspot.composeapp.generated.resources.review_your_information
@@ -185,16 +190,19 @@ fun RegistrationScreen(
                 onAge = viewModel::setAge,
                 onGender = viewModel::setGender
             )
+
             2 -> StepTwoContent(
                 state = step2,
                 onEmail = viewModel::setEmail,
                 onPhone = viewModel::setPhone
             )
+
             3 -> StepThreeContent(
                 state = step3,
                 onPassword = viewModel::setPassword,
                 onConfirm = viewModel::setConfirmPassword
             )
+
             else -> StepFourContent(
                 step1 = step1,
                 step2 = step2,
@@ -294,7 +302,9 @@ fun RegistrationScreen(
 
         }
 
-        is RegistrationState.None -> { /** Ignore **/ }
+        is RegistrationState.None -> {
+            /** Ignore **/
+        }
     }
 
     if (needShowLoading) {
@@ -396,7 +406,10 @@ private fun StepOneContent(
 
         SpacerHeight20Dp()
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             val selected = state.gender?.ordinal
             if (selected != null) {
                 selectedGender = genders[selected]
@@ -405,7 +418,7 @@ private fun StepOneContent(
             // Debug: Print genders once when the composable is created/recomposed
             println("Available genders: ${genders.joinToString { it.name }}")
 
-            for(gender in genders) {
+            for (gender in genders) {
                 Surface(
                     modifier = Modifier
                         .weight(1f)
@@ -492,6 +505,18 @@ private fun StepTwoContent(
             println("RegistrationScreen. Phone: $phone")
             onPhone.invoke(phone)
         }
+
+        SpacerHeight5Dp()
+
+        Text(
+            text = "${stringResource(Res.string.phone_format)} +12136210002",
+            fontSize = text_size_12,
+            color = grey_700,
+            fontWeight = FontWeight.W600,
+            fontFamily = latoFontFamily(),
+            textAlign = TextAlign.Start,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 
@@ -537,6 +562,18 @@ private fun StepThreeContent(
             println("RegistrationScreen. Confirm password: $confirmPassword")
             onConfirm.invoke(confirmPassword)
         }
+
+        SpacerHeight5Dp()
+
+        Text(
+            text = stringResource(Res.string.password_info),
+            fontSize = text_size_12,
+            color = grey_700,
+            fontWeight = FontWeight.W600,
+            fontFamily = latoFontFamily(),
+            textAlign = TextAlign.Start,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 
@@ -548,7 +585,7 @@ private fun StepFourContent(
     step3: Step3
 ) {
     var showPasswords by remember { mutableStateOf(false) }
-    
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = stringResource(Res.string.review_your_information),
@@ -566,9 +603,17 @@ private fun StepFourContent(
         ReviewSection(
             title = stringResource(Res.string.personal_information),
             items = listOf(
-                Triple(stringResource(Res.string.full_name), step1.fullName.ifEmpty { "Not provided" }, null),
+                Triple(
+                    stringResource(Res.string.full_name),
+                    step1.fullName.ifEmpty { "Not provided" },
+                    null
+                ),
                 Triple(stringResource(Res.string.age), step1.age.ifEmpty { "Not provided" }, null),
-                Triple(stringResource(Res.string.gender), step1.gender?.let { stringResource(it.displayName) }.toString(), step1.gender?.icon)
+                Triple(
+                    stringResource(Res.string.gender),
+                    step1.gender?.let { stringResource(it.displayName) }.toString(),
+                    step1.gender?.icon
+                )
             )
         )
 
@@ -578,8 +623,16 @@ private fun StepFourContent(
         ReviewSection(
             title = stringResource(Res.string.contact_information),
             items = listOf(
-                Triple(stringResource(Res.string.email), step2.email.ifEmpty { "Not provided" }, null),
-                Triple(stringResource(Res.string.phone), step2.phone.ifEmpty { "Not provided" }, null)
+                Triple(
+                    stringResource(Res.string.email),
+                    step2.email.ifEmpty { "Not provided" },
+                    null
+                ),
+                Triple(
+                    stringResource(Res.string.phone),
+                    step2.phone.ifEmpty { "Not provided" },
+                    null
+                )
             )
         )
 
@@ -599,7 +652,7 @@ private fun StepFourContent(
                     fontWeight = FontWeight.W600,
                     fontFamily = latoFontFamily()
                 )
-                
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -612,11 +665,13 @@ private fun StepFourContent(
                         text = stringResource(Res.string.show_passwords),
                         fontSize = text_size_14,
                         color = grey_700,
-                        fontWeight = FontWeight.W400,
+                        fontWeight = FontWeight.W600,
                         fontFamily = latoFontFamily()
                     )
                 }
             }
+
+            GreyLightLineHeight1DpDivider()
 
             SpacerHeight10Dp()
 
@@ -647,15 +702,15 @@ private fun StepFourContent(
                         text = label,
                         fontSize = text_size_14,
                         color = grey_700,
-                        fontWeight = FontWeight.W500,
+                        fontWeight = FontWeight.W600,
                         fontFamily = latoFontFamily()
                     )
-                    
+
                     Text(
                         text = value,
                         fontSize = text_size_14,
-                        color = Grey,
-                        fontWeight = FontWeight.W400,
+                        color = grey_700,
+                        fontWeight = FontWeight.W600,
                         fontFamily = latoFontFamily()
                     )
                 }
@@ -680,43 +735,45 @@ private fun ReviewSection(
             modifier = Modifier.padding(bottom = dimens_10)
         )
 
-                items.forEach { (label, value, icon) ->
+        GreyLightLineHeight1DpDivider()
+
+        items.forEach { (label, value, icon) ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = dimens_8),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = label,
+                    fontSize = text_size_14,
+                    color = grey_700,
+                    fontWeight = FontWeight.W600,
+                    fontFamily = latoFontFamily()
+                )
+
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = dimens_8),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = label,
+                        text = value,
                         fontSize = text_size_14,
                         color = grey_700,
-                        fontWeight = FontWeight.W500,
+                        fontWeight = FontWeight.W600,
                         fontFamily = latoFontFamily()
                     )
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Text(
-                            text = value,
-                            fontSize = text_size_14,
-                            color = Grey,
-                            fontWeight = FontWeight.W400,
-                            fontFamily = latoFontFamily()
+                    if (icon != null) {
+                        Icon(
+                            painter = painterResource(icon),
+                            contentDescription = "Gender icon",
+                            modifier = Modifier.size(dimens_25),
+                            tint = grey_700
                         )
-
-                        if (icon != null) {
-                            Icon(
-                                painter = painterResource(icon),
-                                contentDescription = "Gender icon",
-                                modifier = Modifier.size(dimens_25),
-                                tint = Grey
-                            )
-                        }
                     }
                 }
             }
+        }
     }
 }

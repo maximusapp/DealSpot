@@ -47,4 +47,7 @@
     <string name="ok">OK</string>
     <string name="user_already_exists">Користувач вже існує</string>
     <string name="something_went_wrong_try_again">Щось пішло не так. Спробуй ще раз</string>
+    <string name="check_internet_connection">Перевірте, будь ласка, підключення до Інтерне</string>
+    <string name="phone_format">Формат телефону:</string>
+    <string name="password_info">Пароль повинен складатися з 8 і більше символів</string>
 </resources>

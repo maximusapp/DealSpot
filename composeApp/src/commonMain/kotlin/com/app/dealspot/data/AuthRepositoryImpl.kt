@@ -13,6 +13,7 @@ import com.dealspot.network.IdentityProviderClient
 import com.dealspot.network.core_cognito.IdentityProviderException
 import com.dealspot.network.core_cognito.UserAttribute
 import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.check_internet_connection
 import dealspot.composeapp.generated.resources.something_went_wrong_try_again
 import dealspot.composeapp.generated.resources.user_already_exists
 import org.jetbrains.compose.resources.StringResource
@@ -128,6 +129,11 @@ class AuthRepositoryImpl() {
             is IdentityProviderException.UsernameExistsException -> {
                 println("Sign up. Error type: UsernameExistsException")
                 Res.string.user_already_exists
+            }
+
+            is IdentityProviderException.NetworkConnectivityException -> {
+                println("Sign up. Error type: UnknownHostException")
+                Res.string.check_internet_connection
             }
 
             else -> Res.string.something_went_wrong_try_again

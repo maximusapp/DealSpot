@@ -67,7 +67,7 @@ class RegistrationViewModel(
 
             _step3.value = Step3(
                 password = dataStore.getString(DataStoreKeys.REG_PASSWORD) ?: "",
-                confirmPassword = dataStore.getString(DataStoreKeys.USER_PASSWORD) ?: ""
+                confirmPassword = dataStore.getString(DataStoreKeys.REG_CONFIRM_PASSWORD) ?: ""
             )
         }
     }
@@ -190,7 +190,7 @@ class RegistrationViewModel(
 
     fun setConfirmPassword(value: String) {
         _step3.value = _step3.value.copy(confirmPassword = value)
-        persistString(DataStoreKeys.USER_PASSWORD, value)
+        persistString(DataStoreKeys.REG_CONFIRM_PASSWORD, value)
     }
 
     private fun persistActiveStep(step: Int) { persistString(DataStoreKeys.REG_ACTIVE_STEP, step.toString()) }
@@ -210,6 +210,7 @@ class RegistrationViewModel(
             dataStore.putString(DataStoreKeys.REG_EMAIL, "")
             dataStore.putString(DataStoreKeys.REG_PHONE, "")
             dataStore.putString(DataStoreKeys.REG_PASSWORD, "")
+            dataStore.putString(DataStoreKeys.REG_CONFIRM_PASSWORD, "")
         }
     }
 

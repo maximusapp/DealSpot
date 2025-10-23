@@ -47,5 +47,8 @@
     <string name="ok">OK</string>
     <string name="user_already_exists">Korisnik već postoji</string>
     <string name="something_went_wrong_try_again">Nešto je pošlo po zlu. Pokušaj ponovo</string>
+    <string name="check_internet_connection">Provjerite internetsku vezu</string>
+    <string name="phone_format">Format telefona:</string>
+    <string name="password_info">Lozinka treba imati 8 ili više simbola</string>
     <!--Croatian -->
 </resources>

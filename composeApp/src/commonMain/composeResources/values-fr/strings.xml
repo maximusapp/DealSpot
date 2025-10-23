@@ -47,4 +47,7 @@
     <string name="ok">OK</string>
     <string name="user_already_exists">L’utilisateur existe déjà</string>
     <string name="something_went_wrong_try_again">Quelque chose a mal tourné. Réessayez</string>
+    <string name="check_internet_connection">Vérifiez la connexion Internet s’il vous plaît</string>
+    <string name="phone_format">Format du téléphone:</string>
+    <string name="password_info">Le mot de passe doit comporter 8 symboles ou plus</string>
 </resources>

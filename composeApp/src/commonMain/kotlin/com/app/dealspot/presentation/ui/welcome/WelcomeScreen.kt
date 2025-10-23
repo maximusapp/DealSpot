@@ -43,7 +43,6 @@ internal fun WelcomeScreen(
 //    viewModel: SplashViewModel,
 //    loginViewModel: LoginViewModel,
 //    registerViewModel: RegisterViewModel,
-//    state: AuthState = AuthState(),
 //    events: (AuthEvent) -> Unit = {},
     navigateToMain: () -> Unit = {},
     navigateToLogin: () -> Unit = {},
@@ -80,43 +79,13 @@ internal fun WelcomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                // App Logo/Icon placeholder
-                Image(
-                    painter = painterResource(Res.drawable.ic_deal_spot),
-                    contentDescription = null,
-                    modifier = Modifier.clip(RoundedCornerShape(16.dp))
-                )
-
-                Spacer30Height()
-
-                // Welcome Title
-                Text(
-                    text = stringResource(Res.string.welcome),
-                    fontSize = text_size_24,
-                    color = Grey,
-                    fontWeight = FontWeight.W700,
-                    fontFamily = latoFontFamily(),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer10Height()
-
-                // Subtitle
-                Text(
-                    text = stringResource(Res.string.welcome_description),
-                    fontSize = text_size_16,
-                    color = grey_700,
-                    fontWeight = FontWeight.W500,
-                    fontFamily = latoFontFamily(),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer50Height()
 
                 if (isUserLoggedIn == true) {
                     println("WelcomeScreen. User logged in. Need navigate to main")
                     navigateToMain.invoke()
                 } else if (isFirstTimeOpened == true) {
+                    AppIntro()
+
                     // Get Started Button (first-time only)
                     DealSpotDarkButton(
                         buttonText = stringResource(Res.string.get_started),
@@ -128,6 +97,8 @@ internal fun WelcomeScreen(
                         }
                     )
                 } else if (isFirstTimeOpened == false) {
+                    AppIntro()
+
                     // Login Button
                     DealSpotDarkButton(
                         buttonText = stringResource(Res.string.login),
@@ -155,4 +126,40 @@ internal fun WelcomeScreen(
             }
         }
     }
+}
+
+@Composable
+private fun AppIntro() {
+    // App Logo/Icon placeholder
+    Image(
+        painter = painterResource(Res.drawable.ic_deal_spot),
+        contentDescription = null,
+        modifier = Modifier.clip(RoundedCornerShape(16.dp))
+    )
+
+    Spacer30Height()
+
+    // Welcome Title
+    Text(
+        text = stringResource(Res.string.welcome),
+        fontSize = text_size_24,
+        color = Grey,
+        fontWeight = FontWeight.W700,
+        fontFamily = latoFontFamily(),
+        textAlign = TextAlign.Center
+    )
+
+    Spacer10Height()
+
+    // Subtitle
+    Text(
+        text = stringResource(Res.string.welcome_description),
+        fontSize = text_size_16,
+        color = grey_700,
+        fontWeight = FontWeight.W500,
+        fontFamily = latoFontFamily(),
+        textAlign = TextAlign.Center
+    )
+
+    Spacer50Height()
 }

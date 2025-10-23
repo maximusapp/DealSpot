@@ -32,5 +32,5 @@ data class Step3(
     val confirmPassword: String = ""
 ) {
     val isValid: Boolean
-        get() = password.length >= 6 && password == confirmPassword
+        get() = password.length >= 8 && password == confirmPassword
 }

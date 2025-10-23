@@ -46,4 +46,7 @@
     <string name="ok">OK</string>
     <string name="user_already_exists">User already exists</string>
     <string name="something_went_wrong_try_again">Something went wrong. Try again</string>
+    <string name="check_internet_connection">Check Internet connection please</string>
+    <string name="phone_format">Phone format:</string>
+    <string name="password_info">Password should be 8 or more symbols</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.app.dealspot.domain
+package com.app.dealspot.domain.use_cases
 
 import com.app.dealspot.business.AppDataStore
 import com.app.dealspot.business.ResendVerificationCodeState

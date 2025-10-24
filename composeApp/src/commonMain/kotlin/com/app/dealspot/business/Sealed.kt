@@ -25,5 +25,5 @@ sealed class LoginState {
     data object None : LoginState()
     data object Loading : LoginState()
     data class Success(val response: LoginResponse) : LoginState()
-    data class Error(val type: Throwable) : LoginState()
+    data class Error(val message: StringResource) : LoginState()
 }

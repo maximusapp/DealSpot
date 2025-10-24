@@ -50,5 +50,6 @@
     <string name="check_internet_connection">Sprawdź połączenie internetowe</string>
     <string name="phone_format">Format telefonu:</string>
     <string name="password_info">Hasło powinno składać się z 8 lub więcej znaków</string>
+    <string name="incorrect_email">Format wiadomości e-mail jest nieprawidłowy</string>
     <!--Polish-->
 </resources>

@@ -38,10 +38,11 @@ import com.app.dealspot.presentation.theme.textLatoDisplayLargeDarkW600
 import com.app.dealspot.presentation.theme.text_size_14
 import com.app.dealspot.presentation.theme.text_size_24
 import com.app.dealspot.presentation.ui.auth.email_verification.EmailVerificationScreen
+import com.app.dealspot.presentation.view.BlurWhite80Background
+import com.app.dealspot.presentation.view.CircularLoadingIndicator
 import com.app.dealspot.presentation.view.DealSpotDarkButton
 import com.app.dealspot.presentation.view.DealSpotTextInputField
 import com.app.dealspot.presentation.view.DialogErrorWithOkButton
-import com.dealspot.network.core_cognito.IdentityProviderException
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.app_name
 import dealspot.composeapp.generated.resources.do_not_have_account
@@ -50,7 +51,6 @@ import dealspot.composeapp.generated.resources.forgot_password
 import dealspot.composeapp.generated.resources.ic_error_red
 import dealspot.composeapp.generated.resources.ic_lock
 import dealspot.composeapp.generated.resources.ic_mail
-import dealspot.composeapp.generated.resources.incorrect_username_or_password
 import dealspot.composeapp.generated.resources.lets_get_started
 import dealspot.composeapp.generated.resources.login
 import dealspot.composeapp.generated.resources.ok
@@ -68,8 +68,6 @@ fun LoginScreen(
     navigateToMain: () -> Unit = {}
 ) {
 
-    var isLoginButtonClicked by remember { mutableStateOf(false) }
-//    val loginDataValidationState: LoginDataValidation by viewModel.loginDataValidationState.collectAsStateWithLifecycle()
     val emailThatNeedToConfirm: String by viewModel.emailConfirmationState.collectAsStateWithLifecycle()
     var showEmailVerificationDialog by remember { mutableStateOf(true) }
     val loginState: LoginState by viewModel.loginState.collectAsStateWithLifecycle()
@@ -89,9 +87,7 @@ fun LoginScreen(
         ) {
 
             SpacerHeight60Dp()
-
             textLatoDisplayLargeDarkW600(text = stringResource(Res.string.app_name))
-
             SpacerHeight25Dp()
 
             Text(
@@ -129,7 +125,8 @@ fun LoginScreen(
                 )
             ) { email ->
                 println("Login screen. Email is: $email")
-//                events(AuthEvent.OnUpdateEmailLogin(email))
+
+                viewModel.setEmail(email)
             }
 
             SpacerHeight10Dp()
@@ -141,7 +138,8 @@ fun LoginScreen(
                 leftIcon = Res.drawable.ic_lock
             ) { password ->
                 println("Login screen. Password is: $password")
-//                events(AuthEvent.OnUpdatePasswordLogin(password))
+
+                viewModel.setPassword(password)
             }
 
             SpacerHeight15Dp()
@@ -149,7 +147,8 @@ fun LoginScreen(
             Text(
                 modifier = Modifier.align(Alignment.End).clickable {
                     println("Login screen. Forgot password text clicked.")
-//                        navigateToMaingateToRegister.invoke()
+
+                    viewModel.forgotPassword()
                 },
                 text = stringResource(Res.string.forgot_password),
                 fontSize = text_size_14,
@@ -165,7 +164,7 @@ fun LoginScreen(
                 onClick = {
                     println("LoginScreen. Login button clicked")
 
-                    isLoginButtonClicked = true
+                    viewModel.login()
                 }
             )
 
@@ -195,53 +194,7 @@ fun LoginScreen(
                     fontFamily = latoFontFamily()
                 )
             }
-
-            if (isLoginButtonClicked) {
-                isLoginButtonClicked = false
-//                viewModel.checkDataValidationState()
-            }
-
-//            when (val actualState = loginDataValidationState) {
-//                is LoginDataValidation.FAILURE -> {
-//                    println("loginDataValidationState. State: $actualState")
-//
-//                    DialogErrorWithOkButton(
-//                        dialogTitle = "Opps!",
-//                        dialogText = actualState.message,
-//                        icon = Icons.Outlined.ErrorOutline,
-//                        onOkClicked = {
-//                            println("DialogErrorWithOkButton. Ok button clicked")
-//
-//                            viewModel.clearDataValidationState()
-//                            isLoginButtonClicked = false
-//
-//                            viewModel.state.value = viewModel.state.value.copy(isLoading = false)
-//                        },
-//                        buttonText = stringResource(Res.string.ok)
-//                    )
-//                }
-//
-//                is LoginDataValidation.SUCCESS -> {
-//                    println("loginDataValidationState. State: $actualState")
-//
-//                    viewModel.state.value = viewModel.state.value.copy(isLoading = true)
-//
-//                    viewModel.clearDataValidationState()
-//                    viewModel.login(viewModel.state.value.emailLogin, viewModel.state.value.passwordLogin)
-//                }
-//
-//                is LoginDataValidation.NONE -> {
-//                    /** Ignore **/
-//                }
-//            }
-
-//            println("state.isLoading: ${state.isLoading}")
-//            if (state.isLoading) {
-//                CircularLoadingIndicator(iconDrawableId = Res.drawable.ic_loading_grey, paddingBottom = dimens_40)
-//            }
-
         }
-
     }
 
     if (emailThatNeedToConfirm.isNotEmpty() && showEmailVerificationDialog) {
@@ -262,7 +215,8 @@ fun LoginScreen(
 
     when (val loginStateResp = loginState) {
         is LoginState.Loading -> {
-
+            BlurWhite80Background()
+            CircularLoadingIndicator()
         }
 
         is LoginState.Success -> {
@@ -272,24 +226,14 @@ fun LoginScreen(
         }
 
         is LoginState.Error -> {
-//            viewModel.state.value = viewModel.state.value.copy(isLoading = false)
-            var message = ""
-
-            when (loginStateResp.type) {
-                is IdentityProviderException.NotAuthorized -> {
-                    message = stringResource(Res.string.incorrect_username_or_password)
-                }
-            }
-
             DialogErrorWithOkButton(
                 dialogTitle = "Opps!",
-                dialogText = message,
+                dialogText = stringResource(loginStateResp.message),
                 icon = Res.drawable.ic_error_red,
                 onOkClicked = {
                     println("DialogErrorWithOkButton. Ok button clicked")
 
                     viewModel.clearLoginState()
-                    isLoginButtonClicked = false
                 },
                 buttonText = stringResource(Res.string.ok)
             )
@@ -299,5 +243,4 @@ fun LoginScreen(
             /** Ignore **/
         }
     }
-
 }

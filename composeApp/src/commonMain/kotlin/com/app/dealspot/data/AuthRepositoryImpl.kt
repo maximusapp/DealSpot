@@ -14,6 +14,7 @@ import com.dealspot.network.core_cognito.IdentityProviderException
 import com.dealspot.network.core_cognito.UserAttribute
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.check_internet_connection
+import dealspot.composeapp.generated.resources.incorrect_username_or_password
 import dealspot.composeapp.generated.resources.something_went_wrong_try_again
 import dealspot.composeapp.generated.resources.user_already_exists
 import org.jetbrains.compose.resources.StringResource
@@ -47,7 +48,7 @@ class AuthRepositoryImpl() {
             },
             onFailure = {
                 println("Sign up. Failure. Response: $it")
-                result.error = getRegistrationErrorMessage(it)
+                result.error = getAuthErrorMessage(it)
             }
         )
 
@@ -81,7 +82,7 @@ class AuthRepositoryImpl() {
             },
             onFailure = {
                 println("Log in. Failure. Response: $it")
-                result = LoginState.Error(type = it)
+                result = LoginState.Error(message = getAuthErrorMessage(it))
             }
         )
 
@@ -124,16 +125,36 @@ class AuthRepositoryImpl() {
         return result
     }
 
-    private fun getRegistrationErrorMessage(errorType: Throwable): StringResource {
+    suspend fun forgotPassword(email: String) {
+        println("Forgot password. Email: $email")
+
+        provider.forgotPassword(username = email).fold(
+            onSuccess = {
+                println("Forgot password. onSuccess: $it")
+
+            },
+            onFailure = {
+                println("Forgot password. onFailure: $it")
+
+            }
+        )
+    }
+
+    private fun getAuthErrorMessage(errorType: Throwable): StringResource {
         return when(errorType) {
             is IdentityProviderException.UsernameExistsException -> {
-                println("Sign up. Error type: UsernameExistsException")
+                println("Auth Error. Error type: UsernameExistsException")
                 Res.string.user_already_exists
             }
 
             is IdentityProviderException.NetworkConnectivityException -> {
-                println("Sign up. Error type: UnknownHostException")
+                println("Auth Error. Error type: UnknownHostException")
                 Res.string.check_internet_connection
+            }
+
+            is IdentityProviderException.NotAuthorized -> {
+                println("Auth Error. Error type: NotAuthorized")
+                Res.string.incorrect_username_or_password
             }
 
             else -> Res.string.something_went_wrong_try_again

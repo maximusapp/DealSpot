@@ -50,5 +50,6 @@
     <string name="check_internet_connection">Provjerite internetsku vezu</string>
     <string name="phone_format">Format telefona:</string>
     <string name="password_info">Lozinka treba imati 8 ili više simbola</string>
+    <string name="incorrect_email">Format e-pošte je netočan</string>
     <!--Croatian -->
 </resources>

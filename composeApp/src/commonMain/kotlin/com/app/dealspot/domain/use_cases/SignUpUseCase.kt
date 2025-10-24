@@ -1,4 +1,4 @@
-package com.app.dealspot.domain
+package com.app.dealspot.domain.use_cases
 
 import com.app.dealspot.data.AuthRepositoryImpl
 import com.app.dealspot.data.model.SignUpResponse

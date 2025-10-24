@@ -19,3 +19,9 @@ enum class VerificationCodeErrorType {
     CONFIRMATION_CODE_RESEND,
     NONE
 }
+
+enum class EmailPasswordDataValidationState {
+    OK,
+    EMAIL_INCORRECT,
+    PASSWORD_LENGTH_INCORRECT
+}

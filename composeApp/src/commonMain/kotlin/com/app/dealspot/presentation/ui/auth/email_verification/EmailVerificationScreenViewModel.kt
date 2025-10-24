@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.dealspot.business.ResendVerificationCodeState
 import com.app.dealspot.business.VerificationEmailState
-import com.app.dealspot.domain.EmailVerificationUseCase
+import com.app.dealspot.domain.use_cases.EmailVerificationUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

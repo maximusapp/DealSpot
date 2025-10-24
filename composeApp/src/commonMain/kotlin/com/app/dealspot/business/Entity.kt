@@ -16,7 +16,7 @@ data class Step1(
     val gender: GenderType? = null // male | female
 ) {
     val isValid: Boolean
-        get() = fullName.isNotBlank() && age.toIntOrNull()?.let { it in 1..120 } == true && gender in setOf(GenderType.MALE, GenderType.FEMALE)
+        get() = fullName.isNotBlank() && age.toIntOrNull()?.let { it in 16..100 } == true && gender in setOf(GenderType.MALE, GenderType.FEMALE)
 }
 
 data class Step2(

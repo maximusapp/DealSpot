@@ -50,5 +50,6 @@
     <string name="check_internet_connection">Zkontrolujte prosím připojení k internetu</string>
     <string name="phone_format">Formát telefonu:</string>
     <string name="password_info">Heslo by mělo obsahovat 8 nebo více symbolů</string>
+    <string name="incorrect_email">Formát e-mailu je nesprávný</string>
     <!--Czech -->
 </resources>

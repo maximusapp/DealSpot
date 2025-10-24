@@ -49,4 +49,5 @@
     <string name="check_internet_connection">Check Internet connection please</string>
     <string name="phone_format">Phone format:</string>
     <string name="password_info">Password should be 8 or more symbols</string>
+    <string name="incorrect_email">Email format is incorrect</string>
 </resources>

@@ -50,4 +50,5 @@
     <string name="check_internet_connection">Controlla la connessione Internet per favore</string>
     <string name="phone_format">Formato del telefono:</string>
     <string name="password_info">La password deve essere composta da 8 o più simboli</string>
+    <string name="incorrect_email">Il formato dell'e-mail non è corretto</string>
 </resources>

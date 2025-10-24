@@ -3,35 +3,29 @@ package com.app.dealspot.presentation.ui.auth.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.dealspot.business.AppDataStore
+import com.app.dealspot.business.EmailPasswordDataValidationState
 import com.app.dealspot.business.LoginState
 import com.app.dealspot.business.constants.DataStoreKeys
 import com.app.dealspot.data.model.TokenResponse
-import com.app.dealspot.domain.usesases.LoginUseCase
+import com.app.dealspot.domain.use_cases.ForgotPasswordUseCase
+import com.app.dealspot.domain.use_cases.LoginUseCase
+import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.incorrect_email
+import dealspot.composeapp.generated.resources.password_info
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
 class LoginViewModel(
     private val dataStore: AppDataStore,
     private val loginUseCase: LoginUseCase,
+    private val forgotPasswordUseCase: ForgotPasswordUseCase
 ) : ViewModel() {
-
-    private val _email = MutableStateFlow("")
-    val email: StateFlow<String> = _email
-
-    private val _password = MutableStateFlow("")
-    val password: StateFlow<String> = _password
-
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading
-
-    private val _loginError = MutableStateFlow<String?>(null)
-    val loginError: StateFlow<String?> = _loginError
-
-    private val _loginSuccess = MutableStateFlow(false)
-    val loginSuccess: StateFlow<Boolean> = _loginSuccess
+    private var email: String = ""
+    private var password: String = ""
 
     private val _emailConfirmationState: MutableStateFlow<String> = MutableStateFlow("")
     val emailConfirmationState = _emailConfirmationState.asStateFlow()
@@ -40,33 +34,33 @@ class LoginViewModel(
     val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
 
     fun setEmail(email: String) {
-        _email.value = email
+        this.email = email
     }
 
     fun setPassword(password: String) {
-        _password.value = password
+        this.password = password
     }
 
     fun login() {
         viewModelScope.launch {
-            _isLoading.value = true
-            _loginError.value = null
+            _loginState.update { LoginState.Loading }
 
-            try {
+            _loginState.update {
+                when(dataValidationState()) {
+                    EmailPasswordDataValidationState.OK -> {
+                        loginUseCase.invoke(email = email, password = password)
+                    }
 
-            } catch (e: Exception) {
-                _loginError.value = e.message ?: "An unexpected error occurred"
-                _isLoading.value = false
+                    EmailPasswordDataValidationState.EMAIL_INCORRECT  -> {
+                        LoginState.Error(message = Res.string.incorrect_email)
+                    }
+
+                    EmailPasswordDataValidationState.PASSWORD_LENGTH_INCORRECT -> {
+                        LoginState.Error(message = Res.string.password_info)
+                    }
+                }
             }
         }
-    }
-
-    fun clearError() {
-        _loginError.value = null
-    }
-
-    fun isValid(): Boolean {
-        return _email.value.contains("@") && _password.value.length >= 6
     }
 
     fun checkEmailConfirmationState() {
@@ -112,6 +106,23 @@ class LoginViewModel(
 
     fun clearLoginState() {
         _loginState.value = LoginState.None
+    }
+
+    fun forgotPassword() {
+        viewModelScope.launch {
+            val email = dataStore.getString(key = DataStoreKeys.USER_EMAIL).orEmpty()
+            forgotPasswordUseCase.invoke(email = email)
+        }
+    }
+
+    private fun dataValidationState(): EmailPasswordDataValidationState {
+        return if (!email.contains("@")) {
+            EmailPasswordDataValidationState.EMAIL_INCORRECT
+        } else if (password.length < 8) {
+            EmailPasswordDataValidationState.PASSWORD_LENGTH_INCORRECT
+        } else {
+            EmailPasswordDataValidationState.OK
+        }
     }
 }
 

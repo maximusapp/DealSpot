@@ -11,8 +11,8 @@ import com.app.dealspot.business.Step2
 import com.app.dealspot.business.Step3
 import com.app.dealspot.business.constants.DataStoreKeys
 import com.app.dealspot.data.model.TokenResponse
-import com.app.dealspot.domain.SignUpUseCase
-import com.app.dealspot.domain.usesases.LoginUseCase
+import com.app.dealspot.domain.use_cases.SignUpUseCase
+import com.app.dealspot.domain.use_cases.LoginUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

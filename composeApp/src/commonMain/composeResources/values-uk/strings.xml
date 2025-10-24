@@ -50,4 +50,5 @@
     <string name="check_internet_connection">Перевірте, будь ласка, підключення до Інтерне</string>
     <string name="phone_format">Формат телефону:</string>
     <string name="password_info">Пароль повинен складатися з 8 і більше символів</string>
+    <string name="incorrect_email">Неправильний формат електронної пошти</string>
 </resources>

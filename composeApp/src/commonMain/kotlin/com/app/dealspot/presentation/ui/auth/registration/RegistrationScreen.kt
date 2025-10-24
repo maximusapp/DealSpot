@@ -119,10 +119,10 @@ import org.koin.compose.koinInject
 @Preview
 @Composable
 fun RegistrationScreen(
+    viewModel: RegistrationViewModel = koinInject(),
     navigateToMain: () -> Unit = {},
     backClicked: () -> Unit = {}
 ) {
-    val viewModel: RegistrationViewModel = koinInject()
     val activeStep by viewModel.activeStep.collectAsState()
     val step1 by viewModel.step1.collectAsState()
     val step2 by viewModel.step2.collectAsState()

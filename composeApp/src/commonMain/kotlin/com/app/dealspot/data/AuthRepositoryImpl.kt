@@ -5,10 +5,12 @@ import com.app.dealspot.business.ResendVerificationCodeState
 import com.app.dealspot.business.VerificationEmailState
 import com.app.dealspot.common.AWSConfig.CLIENT_ID
 import com.app.dealspot.common.AWSConfig.REGION
-import com.app.dealspot.data.model.Error
 import com.app.dealspot.data.model.LoginResponse
 import com.app.dealspot.data.model.SignUpResponse
 import com.app.dealspot.data.model.TokenResponse
+import com.app.dealspot.presentation.ui.auth.forgot_password.ForgotPasswordState
+import com.app.dealspot.presentation.ui.auth.forgot_password.ResetPasswordState
+import com.app.dealspot.presentation.ui.auth.forgot_password.VerificationCodeState
 import com.dealspot.network.IdentityProviderClient
 import com.dealspot.network.core_cognito.IdentityProviderException
 import com.dealspot.network.core_cognito.UserAttribute
@@ -125,19 +127,41 @@ class AuthRepositoryImpl() {
         return result
     }
 
-    suspend fun forgotPassword(email: String) {
+    suspend fun forgotPassword(email: String): ForgotPasswordState {
         println("Forgot password. Email: $email")
+        var result: ForgotPasswordState = ForgotPasswordState.None
 
         provider.forgotPassword(username = email).fold(
             onSuccess = {
                 println("Forgot password. onSuccess: $it")
-
+                result = ForgotPasswordState.Success
             },
             onFailure = {
                 println("Forgot password. onFailure: $it")
-
+                result = ForgotPasswordState.Error(message = it.message ?: "Something went wrong")
             }
         )
+        
+        return result
+    }
+
+    suspend fun resetPassword(email: String, confirmationCode: String, newPassword: String): ResetPasswordState {
+        println("Reset password. Email: $email, confirmationCode: $confirmationCode, newPassword: $newPassword")
+        var result: ResetPasswordState = ResetPasswordState.None
+
+        provider.confirmForgotPassword(confirmationCode = confirmationCode, username = email, password = newPassword).fold(
+            onSuccess = {
+                println("Reset password. onSuccess")
+                result = ResetPasswordState.Success
+            },
+            onFailure = {
+                println("Reset password. onFailure")
+                result = ResetPasswordState.Error(message = getAuthErrorMessage(it).toString())
+            }
+        )
+
+
+        return result
     }
 
     private fun getAuthErrorMessage(errorType: Throwable): StringResource {

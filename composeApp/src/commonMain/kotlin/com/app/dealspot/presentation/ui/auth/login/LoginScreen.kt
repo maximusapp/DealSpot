@@ -65,7 +65,8 @@ import org.koin.compose.koinInject
 fun LoginScreen(
     viewModel: LoginViewModel = koinInject(),
     navigateToRegister: () -> Unit = {},
-    navigateToMain: () -> Unit = {}
+    navigateToMain: () -> Unit = {},
+    navigateToForgotPassword: () -> Unit = {}
 ) {
 
     val emailThatNeedToConfirm: String by viewModel.emailConfirmationState.collectAsStateWithLifecycle()
@@ -147,8 +148,7 @@ fun LoginScreen(
             Text(
                 modifier = Modifier.align(Alignment.End).clickable {
                     println("Login screen. Forgot password text clicked.")
-
-                    viewModel.forgotPassword()
+                    navigateToForgotPassword()
                 },
                 text = stringResource(Res.string.forgot_password),
                 fontSize = text_size_14,

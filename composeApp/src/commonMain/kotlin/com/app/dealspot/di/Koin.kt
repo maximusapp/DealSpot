@@ -4,6 +4,7 @@ import com.app.dealspot.business.AppDataStore
 import com.app.dealspot.business.AppDataStoreManager
 import com.app.dealspot.common.Context
 import com.app.dealspot.data.AuthRepositoryImpl
+import com.app.dealspot.domain.use_cases.ConfirmForgotPasswordUseCase
 import com.app.dealspot.domain.use_cases.EmailVerificationUseCase
 import com.app.dealspot.domain.use_cases.ForgotPasswordUseCase
 import com.app.dealspot.domain.use_cases.SignUpUseCase
@@ -11,6 +12,9 @@ import com.app.dealspot.domain.use_cases.LoginUseCase
 import com.app.dealspot.presentation.SharedViewModel
 import com.app.dealspot.presentation.ui.SplashViewModel
 import com.app.dealspot.presentation.ui.auth.email_verification.EmailVerificationScreenViewModel
+import com.app.dealspot.presentation.ui.auth.forgot_password.ForgotPasswordViewModel
+import com.app.dealspot.presentation.ui.auth.forgot_password.ResetPasswordViewModel
+import com.app.dealspot.presentation.ui.auth.forgot_password.VerificationCodeViewModel
 import com.app.dealspot.presentation.ui.auth.login.LoginViewModel
 import com.app.dealspot.presentation.ui.auth.registration.RegistrationViewModel
 import com.app.dealspot.presentation.ui.home.HomeScreenViewModel
@@ -32,6 +36,10 @@ fun appModule(context: Context) = module {
     single { SignUpUseCase(get()) }
     single { EmailVerificationUseCase(get(), get()) }
     single { ForgotPasswordUseCase(get()) }
+    single { ConfirmForgotPasswordUseCase(get()) }
+    single { ForgotPasswordViewModel(get()) }
+    single { VerificationCodeViewModel() }
+    single { ResetPasswordViewModel(get()) }
 
     /**PROFILE-USE-CASES*/
 //    single { LogoutUseCase(get()) }

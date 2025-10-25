@@ -6,17 +6,17 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.koin.compose.koinInject
+import androidx.navigation.toRoute
 import com.app.dealspot.presentation.navigation.SplashNavigation
+import com.app.dealspot.presentation.ui.auth.forgot_password.ForgotPasswordScreen
+import com.app.dealspot.presentation.ui.auth.forgot_password.ResetPasswordScreen
+import com.app.dealspot.presentation.ui.auth.forgot_password.VerificationCodeScreen
 import com.app.dealspot.presentation.ui.auth.login.LoginScreen
 import com.app.dealspot.presentation.ui.auth.registration.RegistrationScreen
 import com.app.dealspot.presentation.ui.welcome.WelcomeScreen
 
 @Composable
 internal fun SplashNav(
-    splashViewModel: SplashViewModel = koinInject(),
-//    loginViewModel: LoginViewModel = koinInject(),
-//    registerViewModel: RegisterViewModel = koinInject(),
     navigateToMain: () -> Unit
 ) {
     val navigator = rememberNavController()
@@ -42,20 +42,52 @@ internal fun SplashNav(
         }
         composable<SplashNavigation.Login> {
             LoginScreen(
-//                viewModel = loginViewModel,
                 navigateToMain = navigateToMain,
                 navigateToRegister = { navigator.navigate(SplashNavigation.Register) },
-//                state = loginViewModel.state.value,
-//                events = loginViewModel::onTriggerEvent
+                navigateToForgotPassword = { navigator.navigate(SplashNavigation.ForgotPassword) }
             )
         }
         composable<SplashNavigation.Register> {
             RegistrationScreen(
-//                viewModel = registerViewModel,
                 navigateToMain = navigateToMain,
                 backClicked = { navigator.popBackStack() }
-//                state = registerViewModel.state.value,
-//                events = registerViewModel::onTriggerEvent
+            )
+        }
+        composable<SplashNavigation.ForgotPassword> {
+            ForgotPasswordScreen(
+                onBackToLogin = { navigator.popBackStack() },
+                onCodeSent = { email -> navigator.navigate(SplashNavigation.VerificationCode(email = email)) }
+            )
+        }
+        composable<SplashNavigation.VerificationCode> { backStackEntry ->
+            val email = backStackEntry.toRoute<SplashNavigation.VerificationCode>().email
+            VerificationCodeScreen(
+                email = email,
+                onBackToLogin = { 
+                    navigator.popBackStack()
+                    navigator.popBackStack()
+                },
+                onCodeVerified = { email, code -> 
+                    navigator.navigate(SplashNavigation.ResetPassword(email = email, code = code))
+                }
+            )
+        }
+        composable<SplashNavigation.ResetPassword> { backStackEntry ->
+            val email = backStackEntry.toRoute<SplashNavigation.ResetPassword>().email
+            val code = backStackEntry.toRoute<SplashNavigation.ResetPassword>().code
+            ResetPasswordScreen(
+                email = email,
+                verificationCode = code,
+                onBackToLogin = { 
+                    navigator.popBackStack()
+                    navigator.popBackStack()
+                    navigator.popBackStack()
+                },
+                onPasswordReset = {
+                    navigator.popBackStack()
+                    navigator.popBackStack()
+                    navigator.popBackStack()
+                }
             )
         }
     }

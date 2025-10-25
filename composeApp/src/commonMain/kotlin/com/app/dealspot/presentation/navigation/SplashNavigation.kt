@@ -17,5 +17,14 @@ sealed interface SplashNavigation {
     @Serializable
     data object Register : SplashNavigation
 
+    @Serializable
+    data object ForgotPassword : SplashNavigation
+
+    @Serializable
+    data class VerificationCode(val email: String) : SplashNavigation
+
+    @Serializable
+    data class ResetPassword(val email: String, val code: String) : SplashNavigation
+
 }
 

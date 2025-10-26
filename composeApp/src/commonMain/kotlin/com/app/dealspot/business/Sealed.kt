@@ -27,3 +27,17 @@ sealed class LoginState {
     data class Success(val response: LoginResponse) : LoginState()
     data class Error(val message: StringResource) : LoginState()
 }
+
+sealed class VerificationCodeState {
+    object None : VerificationCodeState()
+    object Loading : VerificationCodeState()
+    object Success : VerificationCodeState()
+    data class Error(val type: VerificationCodeErrorType) : VerificationCodeState()
+}
+
+sealed class ResetPasswordState {
+    object None : ResetPasswordState()
+    object Loading : ResetPasswordState()
+    object Success : ResetPasswordState()
+    data class Error(val message: StringResource) : ResetPasswordState()
+}

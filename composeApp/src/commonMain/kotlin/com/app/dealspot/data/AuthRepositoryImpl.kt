@@ -2,15 +2,13 @@ package com.app.dealspot.data
 
 import com.app.dealspot.business.LoginState
 import com.app.dealspot.business.ResendVerificationCodeState
+import com.app.dealspot.business.ResetPasswordState
 import com.app.dealspot.business.VerificationEmailState
 import com.app.dealspot.common.AWSConfig.CLIENT_ID
 import com.app.dealspot.common.AWSConfig.REGION
 import com.app.dealspot.data.model.LoginResponse
 import com.app.dealspot.data.model.SignUpResponse
 import com.app.dealspot.data.model.TokenResponse
-import com.app.dealspot.presentation.ui.auth.forgot_password.ForgotPasswordState
-import com.app.dealspot.presentation.ui.auth.forgot_password.ResetPasswordState
-import com.app.dealspot.presentation.ui.auth.forgot_password.VerificationCodeState
 import com.dealspot.network.IdentityProviderClient
 import com.dealspot.network.core_cognito.IdentityProviderException
 import com.dealspot.network.core_cognito.UserAttribute
@@ -127,18 +125,18 @@ class AuthRepositoryImpl() {
         return result
     }
 
-    suspend fun forgotPassword(email: String): ForgotPasswordState {
+    suspend fun forgotPassword(email: String): ResetPasswordState {
         println("Forgot password. Email: $email")
-        var result: ForgotPasswordState = ForgotPasswordState.None
+        var result: ResetPasswordState = ResetPasswordState.None
 
         provider.forgotPassword(username = email).fold(
             onSuccess = {
                 println("Forgot password. onSuccess: $it")
-                result = ForgotPasswordState.Success
+                result = ResetPasswordState.Success
             },
             onFailure = {
                 println("Forgot password. onFailure: $it")
-                result = ForgotPasswordState.Error(message = it.message ?: "Something went wrong")
+                result = ResetPasswordState.Error(message = getAuthErrorMessage(it))
             }
         )
         
@@ -156,7 +154,7 @@ class AuthRepositoryImpl() {
             },
             onFailure = {
                 println("Reset password. onFailure")
-                result = ResetPasswordState.Error(message = getAuthErrorMessage(it).toString())
+                result = ResetPasswordState.Error(message = getAuthErrorMessage(it))
             }
         )
 

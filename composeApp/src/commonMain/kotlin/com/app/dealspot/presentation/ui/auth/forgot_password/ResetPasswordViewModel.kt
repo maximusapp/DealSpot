@@ -2,7 +2,11 @@ package com.app.dealspot.presentation.ui.auth.forgot_password
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.dealspot.business.ResetPasswordState
 import com.app.dealspot.domain.use_cases.ConfirmForgotPasswordUseCase
+import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.password_info
+import dealspot.composeapp.generated.resources.passwords_do_not_match
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -35,29 +39,24 @@ class ResetPasswordViewModel(
     fun setVerificationCode(code: String) {
         this.verificationCode = code
     }
-    
+
     fun resetPassword() {
         viewModelScope.launch {
             _resetPasswordState.value = ResetPasswordState.Loading
             
-            // Validate passwords
             if (newPassword.length < 8) {
-                _resetPasswordState.value = ResetPasswordState.Error("Password must be at least 8 characters")
-                return@launch
-            }
-            
-            if (newPassword != confirmPassword) {
-                _resetPasswordState.value = ResetPasswordState.Error("Passwords do not match")
-                return@launch
-            }
-            
-            val result = confirmForgotPasswordUseCase.invoke(
-                email = email,
-                confirmationCode = verificationCode,
-                newPassword = newPassword
-            )
+                _resetPasswordState.value = ResetPasswordState.Error(Res.string.password_info)
+            } else if (newPassword != confirmPassword) {
+                _resetPasswordState.value = ResetPasswordState.Error(Res.string.passwords_do_not_match)
+            } else {
+                val result = confirmForgotPasswordUseCase.invoke(
+                    email = email,
+                    confirmationCode = verificationCode,
+                    newPassword = newPassword
+                )
 
-            _resetPasswordState.value = result
+                _resetPasswordState.value = result
+            }
         }
     }
     
@@ -65,4 +64,3 @@ class ResetPasswordViewModel(
         _resetPasswordState.value = ResetPasswordState.None
     }
 }
-

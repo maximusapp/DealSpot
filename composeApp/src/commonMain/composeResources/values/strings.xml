@@ -34,7 +34,7 @@
     <string name="contact_information">Contact Information</string>
     <string name="show_passwords">Show passwords</string>
     <string name="check_your_email">Check your email</string>
-    <string name="enter_verification_code">Enter the verification code sent to</string>
+    <string name="enter_verification_code_sent_to">Enter the verification code sent to</string>
     <string name="enter_six_numbers_of_code">Enter 6 digits of confirmation code please!</string>
     <string name="did_not_get_code">Did not get code?</string>
     <string name="send_new_code">Send a new code</string>
@@ -50,4 +50,18 @@
     <string name="phone_format">Phone format:</string>
     <string name="password_info">Password should be 8 or more symbols</string>
     <string name="incorrect_email">Email format is incorrect</string>
+
+    <string name="forgot_password_description">Enter your email address and we'll send you verification code to reset your password</string>
+    <string name="send_code">Send code</string>
+    <string name="enter_verification_code">Enter verification code</string>
+    <string name="verification_code_description">We sent a verification code to your email</string>
+    <string name="verify_code">Verify Code</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="password_reset_success">Password reset successfully</string>
+    <string name="password_reset_success_description">Your password has been reset successfully. You can now login with your new password.</string>
+    <string name="verification_code_info">Verification code must be at least 6 digits</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="congratulations">Congratulations!</string>
 </resources>

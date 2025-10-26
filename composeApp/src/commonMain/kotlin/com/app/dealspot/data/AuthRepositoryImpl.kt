@@ -14,6 +14,7 @@ import com.dealspot.network.core_cognito.IdentityProviderException
 import com.dealspot.network.core_cognito.UserAttribute
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.check_internet_connection
+import dealspot.composeapp.generated.resources.code_mismatch
 import dealspot.composeapp.generated.resources.incorrect_username_or_password
 import dealspot.composeapp.generated.resources.something_went_wrong_try_again
 import dealspot.composeapp.generated.resources.user_already_exists
@@ -179,8 +180,12 @@ class AuthRepositoryImpl() {
                 Res.string.incorrect_username_or_password
             }
 
+            is IdentityProviderException.CodeMismatch -> {
+                println("Auth Error. Error type: CodeMismatch")
+                Res.string.code_mismatch
+            }
+
             else -> Res.string.something_went_wrong_try_again
         }
     }
-
 }

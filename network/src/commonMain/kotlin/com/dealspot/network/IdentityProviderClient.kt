@@ -359,7 +359,7 @@ open class IdentityProviderClient(region: String, clientId: String, engine: Http
 
     private suspend inline fun <reified T> ResponseException.toIdentityProviderException(): Result<T> = try {
         json.decodeFromString<RequestError>(response.body()).run {
-            println("AWSException type: $type")
+            println("AWSException type: $type, message: $message")
             Result.failure(
                 when(type) {
                     AWSException.CodeMismatch -> IdentityProviderException.CodeMismatch(response.status, message)

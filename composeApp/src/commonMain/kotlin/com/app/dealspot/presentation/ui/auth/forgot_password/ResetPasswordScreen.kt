@@ -226,6 +226,7 @@ fun ResetPasswordScreen(
                 onOkClicked = {
                     showErrorDialog = false
                     viewModel.clearState()
+                    onBackToLogin.invoke()
                 }
             )
         }

@@ -139,10 +139,12 @@ fun ForgotPasswordScreen(
 
     when (val state = forgotPasswordState) {
         is ResetPasswordState.Success -> {
+            viewModel.clearState()
             onCodeSent(viewModel.email)
         }
 
         is ResetPasswordState.Error -> {
+            viewModel.clearState()
             errorMessage = state.message
             showErrorDialog = true
         }

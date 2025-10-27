@@ -9,7 +9,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.app.dealspot.presentation.navigation.SplashNavigation
 import com.app.dealspot.presentation.ui.auth.forgot_password.ForgotPasswordScreen
-import com.app.dealspot.presentation.ui.auth.forgot_password.ResetPasswordScreen
 import com.app.dealspot.presentation.ui.auth.forgot_password.VerificationCodeScreen
 import com.app.dealspot.presentation.ui.auth.login.LoginScreen
 import com.app.dealspot.presentation.ui.auth.registration.RegistrationScreen
@@ -60,36 +59,15 @@ internal fun SplashNav(
             )
         }
         composable<SplashNavigation.VerificationCode> { backStackEntry ->
-            val email = backStackEntry.toRoute<SplashNavigation.VerificationCode>().email
+            val route = backStackEntry.toRoute<SplashNavigation.VerificationCode>()
+            val email = route.email
             VerificationCodeScreen(
                 email = email,
-                onBackToLogin = { 
-                    navigator.popBackStack()
-                    navigator.popBackStack()
-                },
-                onCodeVerified = { email, code -> 
-                    navigator.navigate(SplashNavigation.ResetPassword(email = email, code = code))
-                }
-            )
-        }
-        composable<SplashNavigation.ResetPassword> { backStackEntry ->
-            val email = backStackEntry.toRoute<SplashNavigation.ResetPassword>().email
-            val code = backStackEntry.toRoute<SplashNavigation.ResetPassword>().code
-            ResetPasswordScreen(
-                email = email,
-                verificationCode = code,
-                onBackToLogin = { 
-                    navigator.popBackStack()
-                    navigator.popBackStack()
-                    navigator.popBackStack()
-                },
-                onPasswordReset = {
-                    navigator.popBackStack()
+                onBackToLogin = {
                     navigator.popBackStack()
                     navigator.popBackStack()
                 }
             )
         }
     }
-
 }

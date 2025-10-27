@@ -2,55 +2,83 @@ package com.app.dealspot.presentation.ui.auth.forgot_password
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.dealspot.business.VerificationCodeErrorType
-import com.app.dealspot.business.VerificationCodeState
-import dealspot.composeapp.generated.resources.Res
-import dealspot.composeapp.generated.resources.enter_six_numbers_of_code
-import dealspot.composeapp.generated.resources.invalid_verification_code
+import com.app.dealspot.business.ResetPasswordState
+import com.app.dealspot.business.ResetPasswordVerificationDataState
+import com.app.dealspot.domain.use_cases.ConfirmForgotPasswordUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.StringResource
 
-class VerificationCodeViewModel() : ViewModel() {
+class VerificationCodeViewModel(
+    private val confirmForgotPasswordUseCase: ConfirmForgotPasswordUseCase
+) : ViewModel() {
+    private var email: String = ""
+    private var newPassword: String = ""
+    private var confirmPassword: String = ""
     var verificationCode: String = ""
     private set
 
-    private val _verificationState = MutableStateFlow<VerificationCodeState>(VerificationCodeState.None)
-    val verificationState: StateFlow<VerificationCodeState> = _verificationState.asStateFlow()
+    private val _resetPasswordState = MutableStateFlow<ResetPasswordState>(ResetPasswordState.None)
+    val resetPasswordState: StateFlow<ResetPasswordState> = _resetPasswordState.asStateFlow()
 
+    private val _verifiedDataState = MutableStateFlow<ResetPasswordVerificationDataState>(ResetPasswordVerificationDataState.None)
+    val verifiedDataState: StateFlow<ResetPasswordVerificationDataState> = _verifiedDataState.asStateFlow()
+
+    fun setEmail(email: String) {
+        this.email = email
+    }
     fun setVerificationCode(code: String) {
         this.verificationCode = code
     }
+
+    fun setNewPassword(password: String) {
+        this.newPassword = password
+    }
+
+    fun setConfirmPassword(password: String) {
+        this.confirmPassword = password
+    }
     
-    fun verifyCode() {
+    fun resetPassword() {
+        println("VerificationCodeViewModel. resetPassword()")
+
         viewModelScope.launch {
-            _verificationState.value = VerificationCodeState.Loading
-            
-            if (verificationCode.length < 6) {
-                _verificationState.value = VerificationCodeState.Error(type = VerificationCodeErrorType.ERROR_CODE_SHOULD_BE_6_DIGITS)
-                return@launch
-            }
-            
-            _verificationState.value = VerificationCodeState.Success
+            _resetPasswordState.value = ResetPasswordState.Loading
+
+            val result: ResetPasswordState = confirmForgotPasswordUseCase.invoke(
+                email = email,
+                confirmationCode = verificationCode,
+                newPassword = newPassword
+            )
+
+            _resetPasswordState.value = result
         }
     }
 
-    fun getErrorTypeMessage(errorType: VerificationCodeErrorType): StringResource? {
-        return when (errorType) {
-            VerificationCodeErrorType.ERROR_CODE_SHOULD_BE_6_DIGITS -> {
-                Res.string.enter_six_numbers_of_code
-            }
+    fun verifyEnteredData() {
+        println("VerificationCodeViewModel. verifyEnteredData()")
 
-            VerificationCodeErrorType.CONFIRMATION_CODE_INCORRECT -> {
-                Res.string.invalid_verification_code
-            }
+        if (newPassword.length < 8) {
+            _verifiedDataState.value = ResetPasswordVerificationDataState.InvalidPassword()
+        } else if (newPassword != confirmPassword) {
+            _verifiedDataState.value = ResetPasswordVerificationDataState.PasswordsMismatch()
+        } else if (verificationCode.length < 6) {
+            _verifiedDataState.value = ResetPasswordVerificationDataState.InvalidVerificationCode()
+        } else {
+            _verifiedDataState.value = ResetPasswordVerificationDataState.Ok
+        }
+    }
 
-            else -> {
-                null
-            }
+    fun resetState() {
+        viewModelScope.launch {
+            _resetPasswordState.value = ResetPasswordState.None
+        }
+    }
+
+    fun resetVerificationDataState() {
+        viewModelScope.launch {
+            _verifiedDataState.value = ResetPasswordVerificationDataState.None
         }
     }
 }
-

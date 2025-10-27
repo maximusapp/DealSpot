@@ -13,7 +13,6 @@ import com.app.dealspot.presentation.SharedViewModel
 import com.app.dealspot.presentation.ui.SplashViewModel
 import com.app.dealspot.presentation.ui.auth.email_verification.EmailVerificationScreenViewModel
 import com.app.dealspot.presentation.ui.auth.forgot_password.ForgotPasswordViewModel
-import com.app.dealspot.presentation.ui.auth.forgot_password.ResetPasswordViewModel
 import com.app.dealspot.presentation.ui.auth.forgot_password.VerificationCodeViewModel
 import com.app.dealspot.presentation.ui.auth.login.LoginViewModel
 import com.app.dealspot.presentation.ui.auth.registration.RegistrationViewModel
@@ -38,8 +37,7 @@ fun appModule(context: Context) = module {
     single { ForgotPasswordUseCase(get()) }
     single { ConfirmForgotPasswordUseCase(get()) }
     single { ForgotPasswordViewModel(get()) }
-    single { VerificationCodeViewModel() }
-    single { ResetPasswordViewModel(get()) }
+    single { VerificationCodeViewModel(get()) }
 
     /**PROFILE-USE-CASES*/
 //    single { LogoutUseCase(get()) }

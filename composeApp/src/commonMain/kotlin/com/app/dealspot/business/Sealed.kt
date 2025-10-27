@@ -1,6 +1,11 @@
 package com.app.dealspot.business
 
 import com.app.dealspot.data.model.LoginResponse
+import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.invalid_verification_code
+import dealspot.composeapp.generated.resources.password_info
+import dealspot.composeapp.generated.resources.passwords_do_not_match
+import dealspot.composeapp.generated.resources.verification_code_info
 import org.jetbrains.compose.resources.StringResource
 
 sealed class ResendVerificationCodeState {
@@ -28,16 +33,17 @@ sealed class LoginState {
     data class Error(val message: StringResource) : LoginState()
 }
 
-sealed class VerificationCodeState {
-    object None : VerificationCodeState()
-    object Loading : VerificationCodeState()
-    object Success : VerificationCodeState()
-    data class Error(val type: VerificationCodeErrorType) : VerificationCodeState()
-}
-
 sealed class ResetPasswordState {
     object None : ResetPasswordState()
     object Loading : ResetPasswordState()
     object Success : ResetPasswordState()
     data class Error(val message: StringResource) : ResetPasswordState()
+}
+
+sealed class ResetPasswordVerificationDataState() {
+    data class InvalidVerificationCode(val message: StringResource = Res.string.verification_code_info): ResetPasswordVerificationDataState()
+    data class InvalidPassword(val message: StringResource = Res.string.password_info): ResetPasswordVerificationDataState()
+    data class PasswordsMismatch(val message: StringResource = Res.string.passwords_do_not_match): ResetPasswordVerificationDataState()
+    object Ok: ResetPasswordVerificationDataState()
+    object None: ResetPasswordVerificationDataState()
 }

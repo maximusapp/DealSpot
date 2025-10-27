@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -12,12 +13,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.app.dealspot.business.VerificationCodeErrorType
-import com.app.dealspot.business.VerificationCodeState
-import com.app.dealspot.business.constants.LENGTH_6
+import com.app.dealspot.business.ResetPasswordState
+import com.app.dealspot.business.ResetPasswordVerificationDataState
 import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.PrimaryVariantColor
@@ -35,11 +41,20 @@ import com.app.dealspot.presentation.ui.auth.forgot_password.base.TopBackButtonA
 import com.app.dealspot.presentation.view.BlurWhite80Background
 import com.app.dealspot.presentation.view.CircularLoadingIndicator
 import com.app.dealspot.presentation.view.DealSpotDarkButton
+import com.app.dealspot.presentation.view.DealSpotTextInputField
+import com.app.dealspot.presentation.view.DialogErrorWithOkButton
 import com.app.dealspot.presentation.view.SixDigitsView
 import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.confirm_new_password
+import dealspot.composeapp.generated.resources.congratulations
 import dealspot.composeapp.generated.resources.enter_verification_code
+import dealspot.composeapp.generated.resources.ic_lock
+import dealspot.composeapp.generated.resources.ic_verified_green
+import dealspot.composeapp.generated.resources.new_password
+import dealspot.composeapp.generated.resources.password_reset_success_description
+import dealspot.composeapp.generated.resources.reset_password
 import dealspot.composeapp.generated.resources.verification_code_description
-import dealspot.composeapp.generated.resources.verify_code
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
@@ -50,33 +65,77 @@ fun VerificationCodeScreen(
     viewModel: VerificationCodeViewModel = koinInject(),
     email: String = "",
     onBackToLogin: () -> Unit = {},
-    onCodeVerified: (String, String) -> Unit
 ) {
-    val verificationState: VerificationCodeState by viewModel.verificationState.collectAsStateWithLifecycle()
+    val resetPasswordState: ResetPasswordState by viewModel.resetPasswordState.collectAsStateWithLifecycle()
+    val verifiedDataState: ResetPasswordVerificationDataState by viewModel.verifiedDataState.collectAsStateWithLifecycle()
     var needShowInfoMessage by remember { mutableStateOf(false) }
     var needShowLoading by remember { mutableStateOf(false) }
-    var errorType by remember { mutableStateOf(VerificationCodeErrorType.NONE) }
+    var showSuccessDialog by remember { mutableStateOf(false) }
+    var message: StringResource? = null
 
-    var code by remember { mutableStateOf(List(6) { "" }) }
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
 
     println("VerificationCodeScreen. Email: $email")
+    if (email.isNotEmpty()) {
+        viewModel.setEmail(email)
+    }
+
+    // Handle data validation state
+    when (val state = verifiedDataState) {
+       is ResetPasswordVerificationDataState.InvalidVerificationCode -> {
+           message = state.message
+           needShowInfoMessage = true
+           viewModel.resetVerificationDataState()
+        }
+        is ResetPasswordVerificationDataState.InvalidPassword -> {
+            message = state.message
+            needShowInfoMessage = true
+            viewModel.resetVerificationDataState()
+        }
+        is ResetPasswordVerificationDataState.PasswordsMismatch -> {
+            message = state.message
+            needShowInfoMessage = true
+            viewModel.resetVerificationDataState()
+        }
+        is ResetPasswordVerificationDataState.Ok -> {
+            needShowInfoMessage = false
+            viewModel.resetVerificationDataState()
+            viewModel.resetPassword()
+        }
+        else -> { /** Ignore */ }
+    }
 
     // Handle state changes
-    when (val state = verificationState) {
-        is VerificationCodeState.Success -> {
-            onCodeVerified(email, viewModel.verificationCode)
+    when (val state = resetPasswordState) {
+        is ResetPasswordState.Success -> {
+            viewModel.resetState()
+            showSuccessDialog = true
         }
-        is VerificationCodeState.Error -> {
-            errorType = state.type
+        is ResetPasswordState.Error -> {
+            message = state.message
             needShowInfoMessage = true
             needShowLoading = false
         }
-        is VerificationCodeState.Loading -> {
+        is ResetPasswordState.Loading -> {
             needShowLoading = true
         }
         else -> {
             needShowLoading = false
         }
+    }
+
+    if (showSuccessDialog) {
+        DialogErrorWithOkButton(
+            dialogTitle = stringResource(Res.string.congratulations),
+            dialogText = stringResource(Res.string.password_reset_success_description),
+            icon = Res.drawable.ic_verified_green,
+            onOkClicked = {
+                showSuccessDialog = false
+                viewModel.resetState()
+                onBackToLogin.invoke()
+            }
+        )
     }
 
     Box(
@@ -138,16 +197,54 @@ fun VerificationCodeScreen(
             // 6-digit input fields
             SixDigitsView { newCode ->
                 println("SixDigitsView. Code: $newCode")
-                code = newCode
+//                code = newCode
+                val finalCode = newCode.joinToString("")
+                viewModel.setVerificationCode(finalCode)
+            }
+
+            SpacerHeight25Dp()
+
+            // New password input field
+            DealSpotTextInputField(
+                modifier = Modifier.focusRequester(focusRequester),
+                placeHolderText = stringResource(Res.string.new_password),
+                isPasswordField = true,
+                leftIcon = Res.drawable.ic_lock,
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Next,
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Down)
+                    }
+                )
+            ) { password ->
+                viewModel.setNewPassword(password)
+            }
+
+            SpacerHeight10Dp()
+
+            // Confirm password input field
+            DealSpotTextInputField(
+                modifier = Modifier,
+                placeHolderText = stringResource(Res.string.confirm_new_password),
+                isPasswordField = true,
+                leftIcon = Res.drawable.ic_lock,
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done,
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                    }
+                )
+            ) { confirmPassword ->
+                viewModel.setConfirmPassword(confirmPassword)
             }
 
             // Error text when entered code is not full
             if (needShowInfoMessage) {
                 SpacerHeight10Dp()
                 println("needShowInfoMessage: $needShowInfoMessage")
-                println("errorType: $errorType")
 
-                val message = viewModel.getErrorTypeMessage(errorType)
                 message?.let {
                     Text(
                         text = stringResource(it),
@@ -161,19 +258,11 @@ fun VerificationCodeScreen(
 
             // Verify Code button
             DealSpotDarkButton(
-                buttonText = stringResource(Res.string.verify_code),
+                buttonText = stringResource(Res.string.reset_password),
                 onClick = {
-                    println("VerificationCodeScreen. Verify code button clicked")
+                    println("VerificationCodeScreen. Reset password button clicked")
 
-                    val finalCode = code.joinToString("")
-                    if (finalCode.isNotEmpty() && finalCode.length == LENGTH_6) {
-                        viewModel.setVerificationCode(finalCode)
-                        viewModel.verifyCode()
-                        needShowLoading = true
-                    } else {
-                        errorType = VerificationCodeErrorType.ERROR_CODE_SHOULD_BE_6_DIGITS
-                        needShowInfoMessage = true
-                    }
+                    viewModel.verifyEnteredData()
                 }
             )
         }

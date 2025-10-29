@@ -35,7 +35,7 @@
     <string name="contact_information">Coordonnées</string>
     <string name="show_passwords">Afficher les mots de passe</string>
     <string name="check_your_email">Vérifiez votre e-mail</string>
-    <string name="enter_verification_code">Entrez le code de vérification envoyé à</string>
+    <string name="enter_verification_code_sent_to">Entrez le code de vérification envoyé à</string>
     <string name="enter_six_numbers_of_code">Entrez 6 chiffres du code de confirmation s'il vous plaît!</string>
     <string name="did_not_get_code">Vous n'avez pas eu de code?</string>
     <string name="send_new_code">Envoyer un nouveau code</string>
@@ -51,4 +51,18 @@
     <string name="phone_format">Format du téléphone:</string>
     <string name="password_info">Le mot de passe doit comporter 8 symboles ou plus</string>
     <string name="incorrect_email">Le format de l’e-mail est incorrect</string>
+    <string name="forgot_password_description">Entrez votre adresse e-mail et nous vous enverrons le code de vérification pour réinitialiser votre mot de passe</string>
+    <string name="send_code">Envoyer le code</string>
+    <string name="enter_verification_code">Entrez le code de vérification</string>
+    <string name="verification_code_description">Nous avons envoyé un code de vérification à votre adresse e-mail</string>
+    <string name="reset_password">Réinitialiser le mot de passe</string>
+    <string name="new_password">Nouveau mot de passe</string>
+    <string name="confirm_new_password">Confirmer le nouveau mot de passe</string>
+    <string name="password_reset_success">Réinitialisation du mot de passe réussie</string>
+    <string name="password_reset_success_description">Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.</string>
+    <string name="verification_code_info">Le code de vérification doit comporter au moins 6 chiffres</string>
+    <string name="passwords_do_not_match">Les mots de passe ne correspondent pas</string>
+    <string name="congratulations">Félicitations!</string>
+    <string name="code_mismatch">Le code fourni ne correspond pas à ce qui a été envoyé à votre adresse e-mail</string>
+    <string name="something_went_wrong">Quelque chose s’est mal passé</string>
 </resources>

@@ -35,7 +35,7 @@
     <string name="contact_information">Kontaktinformationen</string>
     <string name="show_passwords">Passwörter anzeigen</string>
     <string name="check_your_email">Überprüfen Sie Ihre E-Mail</string>
-    <string name="enter_verification_code">Geben Sie den an gesendeten Verifizierungscode ein</string>
+    <string name="enter_verification_code_sent_to">Geben Sie den an gesendeten Verifizierungscode ein</string>
     <string name="enter_six_numbers_of_code">Geben Sie bitte 6 Ziffern Bestätigungscode ein!</string>
     <string name="did_not_get_code">Habe keinen Code bekommen?</string>
     <string name="send_new_code">Senden Sie einen neuen Code</string>
@@ -51,4 +51,18 @@
     <string name="phone_format">Format des Telefons:</string>
     <string name="password_info">Das Passwort sollte aus 8 oder mehr Symbolen bestehen</string>
     <string name="incorrect_email">Das E-Mail-Format ist falsch</string>
+    <string name="forgot_password_description">Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Bestätigungscode, mit dem Sie Ihr Passwort zurücksetzen können</string>
+    <string name="send_code">Code senden</string>
+    <string name="enter_verification_code">Verifizierungscode eingeben</string>
+    <string name="verification_code_description">Wir haben einen Bestätigungscode an Ihre E-Mail-Adresse gesendet</string>
+    <string name="reset_password">Passwort zurücksetzen</string>
+    <string name="new_password">Neues Passwort</string>
+    <string name="confirm_new_password">Neues Passwort bestätigen</string>
+    <string name="password_reset_success">Zurücksetzen des Kennworts erfolgreich</string>
+    <string name="password_reset_success_description">Ihr Passwort wurde erfolgreich zurückgesetzt. Sie können sich nun mit Ihrem neuen Passwort anmelden.</string>
+    <string name="verification_code_info">Der Verifizierungscode muss mindestens 6 Ziffern lang sein</string>
+    <string name="passwords_do_not_match">Passwörter stimmen nicht überein</string>
+    <string name="congratulations">Glückwunsch!</string>
+    <string name="code_mismatch">Der bereitgestellte Code stimmt nicht mit dem überein, was an Ihre E-Mail gesendet wurde</string>
+    <string name="something_went_wrong">Etwas ist schief gelaufen</string>
 </resources>

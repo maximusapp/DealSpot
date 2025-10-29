@@ -35,7 +35,7 @@
     <string name="contact_information">Informacje kontaktowe</string>
     <string name="show_passwords">Pokaż hasła</string>
     <string name="check_your_email">Sprawdź swój e-mail</string>
-    <string name="enter_verification_code">Wprowadź kod weryfikacyjny wysłany na adres</string>
+    <string name="enter_verification_code_sent_to">Wprowadź kod weryfikacyjny wysłany na adres</string>
     <string name="enter_six_numbers_of_code">Wprowadź 6 cyfr kodu potwierdzającego!</string>
     <string name="did_not_get_code">Nie dostałeś kodu?</string>
     <string name="send_new_code">Wyślij nowy kod</string>
@@ -51,5 +51,19 @@
     <string name="phone_format">Format telefonu:</string>
     <string name="password_info">Hasło powinno składać się z 8 lub więcej znaków</string>
     <string name="incorrect_email">Format wiadomości e-mail jest nieprawidłowy</string>
+    <string name="forgot_password_description">Wpisz swój adres e-mail, a my wyślemy Ci kod weryfikacyjny, aby zresetować hasło</string>
+    <string name="send_code">Wyślij kod</string>
+    <string name="enter_verification_code">Wprowadź kod weryfikacyjny</string>
+    <string name="verification_code_description">Wysłaliśmy kod weryfikacyjny na Twój adres e-mail</string>
+    <string name="reset_password">Zresetuj hasło</string>
+    <string name="new_password">Nowe hasło</string>
+    <string name="confirm_new_password">Potwierdź nowe hasło</string>
+    <string name="password_reset_success">Resetowanie hasła zakończyło się pomyślnie</string>
+    <string name="password_reset_success_description">Twoje hasło zostało pomyślnie zresetowane. Możesz teraz zalogować się przy użyciu nowego hasła.</string>
+    <string name="verification_code_info">Kod weryfikacyjny musi składać się z co najmniej 6 cyfr</string>
+    <string name="passwords_do_not_match">Hasła nie są zgodne</string>
+    <string name="congratulations">Gratulacje!</string>
+    <string name="code_mismatch">Podany kod nie zgadza się z tym, co zostało wysłane na Twój adres e-mail</string>
+    <string name="something_went_wrong">Coś poszło nie tak</string>
     <!--Polish-->
 </resources>

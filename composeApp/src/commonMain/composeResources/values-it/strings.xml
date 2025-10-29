@@ -35,7 +35,7 @@
     <string name="contact_information">Informazioni sui contatti</string>
     <string name="show_passwords">Mostra password</string>
     <string name="check_your_email">Controlla la tua email</string>
-    <string name="enter_verification_code">Immettere il codice di verifica inviato a</string>
+    <string name="enter_verification_code_sent_to">Immettere il codice di verifica inviato a</string>
     <string name="enter_six_numbers_of_code">Immettere 6 cifre del codice di conferma per favore!</string>
     <string name="did_not_get_code">Non hai ottenuto il codice?</string>
     <string name="send_new_code">Invia un nuovo codice</string>
@@ -51,4 +51,18 @@
     <string name="phone_format">Formato del telefono:</string>
     <string name="password_info">La password deve essere composta da 8 o più simboli</string>
     <string name="incorrect_email">Il formato dell'e-mail non è corretto</string>
+    <string name="forgot_password_description">Inserisci il tuo indirizzo e-mail e ti invieremo il codice di verifica per reimpostare la password</string>
+    <string name="send_code">Invia codice</string>
+    <string name="enter_verification_code">Inserisci il codice di verifica</string>
+    <string name="verification_code_description">Abbiamo inviato un codice di verifica alla tua email</string>
+    <string name="reset_password">Reimposta password</string>
+    <string name="new_password">Nuova password</string>
+    <string name="confirm_new_password">Conferma nuova password</string>
+    <string name="password_reset_success">Reimpostazione della password riuscita</string>
+    <string name="password_reset_success_description">La password è stata reimpostata correttamente. Ora puoi accedere con la tua nuova password.</string>
+    <string name="verification_code_info">Il codice di verifica deve essere composto da almeno 6 cifre</string>
+    <string name="passwords_do_not_match">Le password non corrispondono</string>
+    <string name="congratulations">Felicitazioni!</string>
+    <string name="code_mismatch">Il codice fornito non corrisponde a quello inviato alla tua email</string>
+    <string name="something_went_wrong">Qualcosa è andato storto</string>
 </resources>

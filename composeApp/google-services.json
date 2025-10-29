@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "924619747319",
+    "project_id": "dealspot-ba78e",
+    "storage_bucket": "dealspot-ba78e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924619747319:android:55900ce302c980eabf08f2",
+        "android_client_info": {
+          "package_name": "com.app.dealspot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDHMsXBYAVeEyh3nq9MWccPrTx_tF_Q1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

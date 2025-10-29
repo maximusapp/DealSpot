@@ -35,7 +35,7 @@
     <string name="contact_information">Informações de contato</string>
     <string name="show_passwords">Mostrar senhas</string>
     <string name="check_your_email">Verifique seu e-mail</string>
-    <string name="enter_verification_code">Digite o código de verificação enviado para</string>
+    <string name="enter_verification_code_sent_to">Digite o código de verificação enviado para</string>
     <string name="enter_six_numbers_of_code">Digite 6 dígitos do código de confirmação, por favor!</string>
     <string name="did_not_get_code">Não obteve código?</string>
     <string name="send_new_code">Envie um novo código</string>
@@ -51,5 +51,19 @@
     <string name="phone_format">Formato do telefone:</string>
     <string name="password_info">A palavra-passe deve ter 8 ou mais símbolos</string>
     <string name="incorrect_email">O formato do e-mail está incorreto</string>
+    <string name="forgot_password_description">Introduza o seu endereço de e-mail e enviar-lhe-emos o código de verificação para repor a sua palavra-passe</string>
+    <string name="send_code">Enviar código</string>
+    <string name="enter_verification_code">Insira o código de verificação</string>
+    <string name="verification_code_description">Enviámos um código de verificação para o seu e-mail</string>
+    <string name="reset_password">Redefinir senha</string>
+    <string name="new_password">Nova palavra-passe</string>
+    <string name="confirm_new_password">Confirmar nova palavra-passe</string>
+    <string name="password_reset_success">Redefinição de senha bem-sucedida</string>
+    <string name="password_reset_success_description">A sua palavra-passe foi reposta com sucesso. Agora você pode fazer login com sua nova senha.</string>
+    <string name="verification_code_info">O código de verificação deve ter, pelo menos, 6 dígitos</string>
+    <string name="passwords_do_not_match">As palavras-passe não correspondem</string>
+    <string name="congratulations">Parabéns;!</string>
+    <string name="code_mismatch">O código fornecido não corresponde ao que foi enviado para o seu e-mail</string>
+    <string name="something_went_wrong">Algo correu mal</string>
     <!--Portuguese -->
 </resources>

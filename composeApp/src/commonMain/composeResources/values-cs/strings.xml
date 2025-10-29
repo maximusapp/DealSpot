@@ -35,7 +35,7 @@
     <string name="contact_information">Kontaktní informace</string>
     <string name="show_passwords">Zobrazit hesla</string>
     <string name="check_your_email">Zkontrolujte svůj e-mail</string>
-    <string name="enter_verification_code">Zadejte ověřovací kód odeslaný do</string>
+    <string name="enter_verification_code_sent_to">Zadejte ověřovací kód odeslaný do</string>
     <string name="enter_six_numbers_of_code">Zadejte 6 číslic potvrzovacího kódu prosím!</string>
     <string name="did_not_get_code">Nedostal kód?</string>
     <string name="send_new_code">Odeslat nový kód</string>
@@ -51,5 +51,19 @@
     <string name="phone_format">Formát telefonu:</string>
     <string name="password_info">Heslo by mělo obsahovat 8 nebo více symbolů</string>
     <string name="incorrect_email">Formát e-mailu je nesprávný</string>
+    <string name="forgot_password_description">Zadejte svou e-mailovou adresu a my vám zašleme ověřovací kód pro obnovení hesla</string>
+    <string name="send_code">Odeslat kód</string>
+    <string name="enter_verification_code">Zadejte ověřovací kód</string>
+    <string name="verification_code_description">Na váš e-mail jsme vám zaslali ověřovací kód</string>
+    <string name="reset_password">Obnovit heslo</string>
+    <string name="new_password">Nové heslo</string>
+    <string name="confirm_new_password">Potvrdit nové heslo</string>
+    <string name="password_reset_success">Obnovení hesla proběhlo úspěšně</string>
+    <string name="password_reset_success_description">Vaše heslo bylo úspěšně resetováno. Nyní se můžete přihlásit pomocí nového hesla.</string>
+    <string name="verification_code_info">Ověřovací kód musí mít alespoň 6 číslic</string>
+    <string name="passwords_do_not_match">Hesla se neshodují</string>
+    <string name="congratulations">Blahopřejeme!</string>
+    <string name="code_mismatch">Poskytnutý kód se neshoduje s tím, co bylo odesláno na váš e-mail</string>
+    <string name="something_went_wrong">Něco se pokazilo</string>
     <!--Czech -->
 </resources>

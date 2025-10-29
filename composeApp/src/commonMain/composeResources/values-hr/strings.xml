@@ -35,7 +35,7 @@
     <string name="contact_information">Kontakt podatke</string>
     <string name="show_passwords">Prikaži lozinke</string>
     <string name="check_your_email">Provjerite svoju e-poštu</string>
-    <string name="enter_verification_code">Unesite provjeru koda poslanog na</string>
+    <string name="enter_verification_code_sent_to">Unesite provjeru koda poslanog na</string>
     <string name="enter_six_numbers_of_code">Unesite 6 znamenki koda za potvrdu molim!</string>
     <string name="did_not_get_code">Niste dobili kod?</string>
     <string name="send_new_code">Pošaljite novi kod</string>
@@ -51,5 +51,19 @@
     <string name="phone_format">Format telefona:</string>
     <string name="password_info">Lozinka treba imati 8 ili više simbola</string>
     <string name="incorrect_email">Format e-pošte je netočan</string>
+    <string name="forgot_password_description">Unesite svoju adresu e-pošte i poslat ćemo vam kontrolni kod za ponovno postavljanje lozinke</string>
+    <string name="send_code">Pošalji kod</string>
+    <string name="enter_verification_code">Unesite kontrolni kod</string>
+    <string name="verification_code_description">Poslali smo kontrolni kod na vašu e-poštu</string>
+    <string name="reset_password">Poništi lozinku</string>
+    <string name="new_password">Nova lozinka</string>
+    <string name="confirm_new_password">Potvrdite novu lozinku</string>
+    <string name="password_reset_success">Uspješno poništavanje lozinke</string>
+    <string name="password_reset_success_description">Vaša lozinka je uspješno poništena. Sada se možete prijaviti s novom lozinkom.</string>
+    <string name="verification_code_info">Kontrolni kod mora imati najmanje 6 znamenki</string>
+    <string name="passwords_do_not_match">Lozinke se ne podudaraju</string>
+    <string name="congratulations">Čestitam!</string>
+    <string name="code_mismatch">Navedeni kod ne odgovara onome što je poslano na vašu e-poštu</string>
+    <string name="something_went_wrong">Nešto je pošlo po zlu</string>
     <!--Croatian -->
 </resources>

@@ -50,12 +50,10 @@
     <string name="phone_format">Phone format:</string>
     <string name="password_info">Password should be 8 or more symbols</string>
     <string name="incorrect_email">Email format is incorrect</string>
-
     <string name="forgot_password_description">Enter your email address and we'll send you verification code to reset your password</string>
     <string name="send_code">Send code</string>
     <string name="enter_verification_code">Enter verification code</string>
     <string name="verification_code_description">We sent a verification code to your email</string>
-    <string name="verify_code">Verify Code</string>
     <string name="reset_password">Reset Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
@@ -66,5 +64,4 @@
     <string name="congratulations">Congratulations!</string>
     <string name="code_mismatch">The provided code doesn't match what was sent to your email</string>
     <string name="something_went_wrong">Something went wrong</string>
-    <string name="empty_string"> </string>
 </resources>

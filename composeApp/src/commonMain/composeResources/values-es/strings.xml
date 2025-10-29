@@ -35,7 +35,7 @@
     <string name="contact_information">Información del contacto</string>
     <string name="show_passwords">Mostrar contraseñas</string>
     <string name="check_your_email">Revise su correo electrónico</string>
-    <string name="enter_verification_code">Ingrese el código de verificación enviado a</string>
+    <string name="enter_verification_code_sent_to">Ingrese el código de verificación enviado a</string>
     <string name="enter_six_numbers_of_code">Ingrese 6 dígitos de código de confirmación ¡Por favor!</string>
     <string name="did_not_get_code">¿No obtuvo código?</string>
     <string name="send_new_code">Enviar un nuevo código</string>
@@ -51,5 +51,19 @@
     <string name="phone_format">Formato del teléfono:</string>
     <string name="password_info">La contraseña debe tener 8 o más símbolos</string>
     <string name="incorrect_email">El formato del correo electrónico es incorrecto</string>
+    <string name="forgot_password_description">Introduce tu dirección de correo electrónico y te enviaremos un código de verificación para restablecer tu contraseña</string>
+    <string name="send_code">Enviar código</string>
+    <string name="enter_verification_code">Ingrese el código de verificación</string>
+    <string name="verification_code_description">Enviamos un código de verificación a tu correo electrónico</string>
+    <string name="reset_password">Restablecer contraseña</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="confirm_new_password">Confirmar nueva contraseña</string>
+    <string name="password_reset_success">Restablecimiento de contraseña con éxito</string>
+    <string name="password_reset_success_description">Su contraseña se ha restablecido correctamente. Ahora puede iniciar sesión con su nueva contraseña.</string>
+    <string name="verification_code_info">El código de verificación debe tener al menos 6 dígitos</string>
+    <string name="passwords_do_not_match">Las contraseñas no coinciden</string>
+    <string name="congratulations">Felicidades!</string>
+    <string name="code_mismatch">El código proporcionado no coincide con lo que se envió a su correo electrónico</string>
+    <string name="something_went_wrong">Algo salió mal</string>
     <!--Spanish -->
 </resources>

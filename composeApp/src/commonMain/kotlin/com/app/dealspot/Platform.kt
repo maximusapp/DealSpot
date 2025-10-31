@@ -8,5 +8,5 @@ interface Platform {
 
 expect fun getPlatform(): Platform
 
-@Composable
-expect fun AvatarPicker(currentUri: String, onPick: (String) -> Unit)
+//@Composable
+//expect fun AvatarPicker(currentUri: String, onPick: (String) -> Unit)

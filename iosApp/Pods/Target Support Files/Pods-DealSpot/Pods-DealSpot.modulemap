@@ -1,0 +1,6 @@
+framework module Pods_DealSpot {
+  umbrella header "Pods-DealSpot-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,20 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		006E39B49E09D9D933895B63 /* Pods_DealSpot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1516B7EA3377595034198ED7 /* Pods_DealSpot.framework */; };
 		8ECE77B0C5039712E9E86E32 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE77AAC5039712E9E86E2C /* iOSApp.swift */; };
 		8ECE77B1C5039712E9E86E33 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECE77ABC5039712E9E86E2D /* ContentView.swift */; };
 		8ECE77B2C5039712E9E86E34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ECE77ACC5039712E9E86E2E /* Assets.xcassets */; };
 		8ECE77B3C5039712E9E86E35 /* Preview Content in Resources */ = {isa = PBXBuildFile; fileRef = 8ECE77ADC5039712E9E86E2F /* Preview Content */; };
-		B40D96C12E78A68D00D472AB /* ComposeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ECE77AFC5039712E9E86E31 /* ComposeApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1516B7EA3377595034198ED7 /* Pods_DealSpot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DealSpot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F9FF7023C37FA245C66A2F1 /* Pods-DealSpot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealSpot.debug.xcconfig"; path = "Target Support Files/Pods-DealSpot/Pods-DealSpot.debug.xcconfig"; sourceTree = "<group>"; };
 		8ECE77A9C5039712E9E86E2B /* DealSpot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DealSpot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ECE77AAC5039712E9E86E2C /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		8ECE77ABC5039712E9E86E2D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8ECE77ACC5039712E9E86E2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8ECE77AEC5039712E9E86E30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8ECE77AFC5039712E9E86E31 /* ComposeApp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ComposeApp.framework; path = "../composeApp/build/xcode-frameworks/Debug/iphonesimulator17.5/ComposeApp.framework"; sourceTree = "<group>"; };
+		F37381C7DF653E5285F49DB9 /* Pods-DealSpot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealSpot.release.xcconfig"; path = "Target Support Files/Pods-DealSpot/Pods-DealSpot.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,7 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B40D96C12E78A68D00D472AB /* ComposeApp.framework in Frameworks */,
+				006E39B49E09D9D933895B63 /* Pods_DealSpot.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +43,7 @@
 				8ECE77ABC5039712E9E86E2B /* iosApp */,
 				8ECE77AAC5039712E9E86E2A /* Products */,
 				8ECE77AFC5039712E9E86E37 /* Frameworks */,
+				B33360247F9996AE32170FED /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,9 +77,19 @@
 		8ECE77AFC5039712E9E86E37 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8ECE77AFC5039712E9E86E31 /* ComposeApp.framework */,
+				1516B7EA3377595034198ED7 /* Pods_DealSpot.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B33360247F9996AE32170FED /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1F9FF7023C37FA245C66A2F1 /* Pods-DealSpot.debug.xcconfig */,
+				F37381C7DF653E5285F49DB9 /* Pods-DealSpot.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,10 +99,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8ECE77B5C5039712E9E86E38 /* Build configuration list for PBXNativeTarget "DealSpot" */;
 			buildPhases = (
+				498227E36EF30E2FB0FD5EBB /* [CP] Check Pods Manifest.lock */,
 				B41BC4612E78AB4C00AD6205 /* Run Script */,
 				8ECE77A5C5039712E9E86E26 /* Sources */,
 				8ECE77A6C5039712E9E86E2A /* Frameworks */,
 				8ECE77A7C5039712E9E86E2B /* Resources */,
+				B3B8EC1D3B6C60C3B9E14DD0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -146,6 +161,45 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		498227E36EF30E2FB0FD5EBB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DealSpot-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B3B8EC1D3B6C60C3B9E14DD0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DealSpot/Pods-DealSpot-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DealSpot/Pods-DealSpot-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DealSpot/Pods-DealSpot-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B41BC4612E78AB4C00AD6205 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -163,7 +217,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Move to the root of your Kotlin Multiplatform project (adjust if your structure is different)\ncd \"$SRCROOT/..\" \n# Clean and build the framework for Xcode\n# The specific task might vary slightly based on KMP version and setup\n# embedAndSignAppleFrameworkForXcode is a common one that handles multiple architectures\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "echo 'Using CocoaPods integration; no embedAndSign needed.'\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -299,6 +353,7 @@
 		};
 		8ECE77B2C5039712E9E86E31 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F9FF7023C37FA245C66A2F1 /* Pods-DealSpot.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -307,10 +362,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/../composeApp/build/xcode-frameworks/Debug/iphonesimulator17.5/composeApp.framework",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -337,6 +389,7 @@
 		};
 		8ECE77B3C5039712E9E86E32 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F37381C7DF653E5285F49DB9 /* Pods-DealSpot.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -345,10 +398,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/../composeApp/build/xcode-frameworks/Debug/iphonesimulator17.5/composeApp.framework",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

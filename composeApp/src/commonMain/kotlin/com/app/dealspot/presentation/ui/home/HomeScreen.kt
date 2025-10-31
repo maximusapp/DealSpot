@@ -3,33 +3,37 @@ package com.app.dealspot.presentation.ui.home
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import com.app.dealspot.presentation.theme.Grey
+import com.app.dealspot.presentation.theme.SpacerHeight100Dp
 import com.app.dealspot.presentation.theme.dimens_20
-import com.app.dealspot.presentation.theme.latoFontFamily
-import com.app.dealspot.presentation.theme.text_size_24
+import com.app.dealspot.presentation.ui.components.AppMap
+import com.app.dealspot.presentation.ui.components.BottomBar
 
 @Composable
 internal fun HomeScreen(
 
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = dimens_20),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize()
     ) {
-        Text(
-            text = "Welcome to Home screen",
-            fontSize = text_size_24,
-            color = Grey,
-            fontWeight = FontWeight.W700,
-            fontFamily = latoFontFamily()
-        )
-    }
+        AppMap(modifier = Modifier.fillMaxSize())
 
+        Box(
+            modifier = Modifier
+                .padding(bottom = dimens_20)
+                .align(Alignment.BottomCenter)
+                .wrapContentSize()
+        ) {
+            BottomBar(
+                homeSelected = true,
+                onHomeClick = { /* already on Home */ },
+                onPlusClick = { /* TODO: handle */ }
+            )
+
+            SpacerHeight100Dp()
+        }
+    }
 }

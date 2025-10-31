@@ -6,9 +6,34 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlin.serialization)
+//    id("org.jetbrains.kotlin.native.cocoapods")
+    alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {
+    cocoapods {
+        version = "1.0.0"
+        name = "ComposeApp"
+        summary = "ComposeApp"
+        homepage = "https://example.com"
+        ios.deploymentTarget = "14.0"
+        framework {
+            baseName = "ComposeApp"
+            isStatic = true
+        }
+        // Generate cinterop for Google Maps so platform.GoogleMaps is available in Kotlin
+//        pod("GoogleMaps")
+        pod("GoogleMaps") {
+            version = libs.versions.pods.google.maps.get()
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+
+        pod("Google-Maps-iOS-Utils") {
+            moduleName = "GoogleMapsUtils"
+            version = libs.versions.pods.google.ios.maps.utils.get()
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+    }
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
@@ -36,6 +61,7 @@ kotlin {
             //DI
             implementation(libs.koin.android)
             implementation(libs.coil3.network.okhttp)
+            implementation(libs.play.services.maps)
         }
         commonMain.dependencies {
             implementation(projects.network)
@@ -43,6 +69,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)

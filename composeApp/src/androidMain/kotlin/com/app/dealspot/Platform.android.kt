@@ -25,45 +25,45 @@ class AndroidPlatform : Platform {
 
 actual fun getPlatform(): Platform = AndroidPlatform()
 
-@Composable
-actual fun AvatarPicker(currentUri: String, onPick: (String) -> Unit) {
-    val context = LocalContext.current
-    val hasImage = currentUri.isNotBlank()
-
-    val imagePicker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
-        onResult = { uri: Uri? -> uri?.toString()?.let(onPick) }
-    )
-
-    val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions(),
-        onResult = { grantedMap ->
-            val granted = grantedMap.values.any { it }
-            if (granted) {
-                imagePicker.launch("image/*")
-            }
-        }
-    )
-
-    Box(
-        modifier = Modifier
-            .size(96.dp)
-            .clip(CircleShape)
-            .background(Color(0xFFE0E0E0))
-            .clickable {
-                permissionLauncher.launch(arrayOf(
-                    Manifest.permission.READ_MEDIA_IMAGES,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ))
-            }
-    ) {
-        if (hasImage) {
-            AsyncImage(
-                model = currentUri,
-                contentDescription = null,
-                modifier = Modifier.matchParentSize(),
-                contentScale = ContentScale.Crop
-            )
-        }
-    }
-}
+//@Composable
+//actual fun AvatarPicker(currentUri: String, onPick: (String) -> Unit) {
+//    val context = LocalContext.current
+//    val hasImage = currentUri.isNotBlank()
+//
+//    val imagePicker = rememberLauncherForActivityResult(
+//        contract = ActivityResultContracts.GetContent(),
+//        onResult = { uri: Uri? -> uri?.toString()?.let(onPick) }
+//    )
+//
+//    val permissionLauncher = rememberLauncherForActivityResult(
+//        contract = ActivityResultContracts.RequestMultiplePermissions(),
+//        onResult = { grantedMap ->
+//            val granted = grantedMap.values.any { it }
+//            if (granted) {
+//                imagePicker.launch("image/*")
+//            }
+//        }
+//    )
+//
+//    Box(
+//        modifier = Modifier
+//            .size(96.dp)
+//            .clip(CircleShape)
+//            .background(Color(0xFFE0E0E0))
+//            .clickable {
+//                permissionLauncher.launch(arrayOf(
+//                    Manifest.permission.READ_MEDIA_IMAGES,
+//                    Manifest.permission.READ_EXTERNAL_STORAGE
+//                ))
+//            }
+//    ) {
+//        if (hasImage) {
+//            AsyncImage(
+//                model = currentUri,
+//                contentDescription = null,
+//                modifier = Modifier.matchParentSize(),
+//                contentScale = ContentScale.Crop
+//            )
+//        }
+//    }
+//}

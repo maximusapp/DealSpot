@@ -48,6 +48,21 @@ fun SpacerHeight60Dp() {
     Spacer(modifier = Modifier.height(dimens_60))
 }
 
+@Composable
+fun SpacerHeight70Dp() {
+    Spacer(modifier = Modifier.height(dimens_70))
+}
+
+@Composable
+fun SpacerHeight80Dp() {
+    Spacer(modifier = Modifier.height(dimens_80))
+}
+
+@Composable
+fun SpacerHeight100Dp() {
+    Spacer(modifier = Modifier.height(dimens_100))
+}
+
 /** Horizontal Spacer */
 @Composable
 fun SpacerWidth5Dp() {

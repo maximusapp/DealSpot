@@ -1,16 +1,20 @@
 package com.app.dealspot.presentation.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.koin.compose.koinInject
-import presentation.navigation.MainNavigation
 import com.app.dealspot.presentation.ui.home.HomeScreen
 import com.app.dealspot.presentation.ui.home.HomeScreenViewModel
+import com.app.dealspot.presentation.ui.home.chats.ChatsScreen
+import com.app.dealspot.presentation.ui.home.settings.SettingsScreen
+import org.koin.compose.koinInject
+import presentation.navigation.MainNavigation
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MainNav(
     homeViewModel: HomeScreenViewModel = koinInject(),
@@ -25,7 +29,8 @@ internal fun MainNav(
     ) {
         composable<MainNavigation.Main> {
             HomeScreen(
-
+                onOpenSettings = { navigator.navigate(MainNavigation.Settings) },
+                onOpenChats = { navigator.navigate(MainNavigation.Chats) }
             )
         }
 
@@ -34,11 +39,15 @@ internal fun MainNav(
         }
 
         composable<MainNavigation.Settings> {
-//            SettingsScreen()
+            SettingsScreen(
+                onBackClicked = { navigator.popBackStack() }
+            )
         }
 
-        composable<MainNavigation.About> {
-//            AboutScreen()
+        composable<MainNavigation.Chats> {
+            ChatsScreen(
+                onBackClicked = { navigator.popBackStack() }
+            )
         }
 
     }

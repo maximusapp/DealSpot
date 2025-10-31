@@ -9,6 +9,12 @@ import cocoapods.GoogleMaps.GMSCameraUpdate
 import cocoapods.GoogleMaps.GMSMapStyle
 import cocoapods.GoogleMaps.GMSMapView
 import cocoapods.GoogleMaps.GMSCameraPosition
+import kotlinx.cinterop.useContents
+import platform.CoreLocation.CLLocation
+import platform.CoreLocation.CLLocationManager
+import platform.CoreLocation.CLLocationManagerDelegateProtocol
+import platform.darwin.NSObject
+import platform.UIKit.UIEdgeInsetsMake
 
 @Composable
 actual fun AppMap(modifier: Modifier) {
@@ -33,12 +39,30 @@ actual fun AppMap(modifier: Modifier) {
             """.trimIndent()
             val style = GMSMapStyle()
             mapView.setMapStyle(style)
-            val cameraUpdate = GMSCameraUpdate.setCamera(cameraPosition)
-            mapView.moveCamera(cameraUpdate)
+            mapView.setPadding(UIEdgeInsetsMake(0.0, 0.0, 96.0, 0.0))
+
+            val locationManager = CLLocationManager()
+            class DelegateImpl: NSObject(), CLLocationManagerDelegateProtocol {
+                override fun locationManager(manager: CLLocationManager, didUpdateLocations: List<*>) {
+                    val last = (didUpdateLocations.lastOrNull() as? CLLocation) ?: return
+                    last.coordinate.useContents {
+                        val camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude, 14.0f)
+                        val update = GMSCameraUpdate.setCamera(camera)
+                        mapView.moveCamera(update)
+                    }
+
+                    manager.stopUpdatingLocation()
+                }
+            }
+            val delegate = DelegateImpl()
+            locationManager.delegate = delegate
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
             mapView
         },
         update = { _ -> }
     )
 }
+
 
 

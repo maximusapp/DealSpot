@@ -9,6 +9,12 @@ import cocoapods.GoogleMaps.GMSCameraPosition
 import cocoapods.GoogleMaps.GMSCameraUpdate
 import cocoapods.GoogleMaps.GMSMapStyle
 import cocoapods.GoogleMaps.GMSMapView
+import kotlinx.cinterop.useContents
+import platform.UIKit.UIEdgeInsetsMake
+import platform.CoreLocation.CLLocation
+import platform.CoreLocation.CLLocationManager
+import platform.CoreLocation.CLLocationManagerDelegateProtocol
+import platform.darwin.NSObject
 
 @Composable
 actual fun AppMap(modifier: Modifier) {
@@ -16,11 +22,7 @@ actual fun AppMap(modifier: Modifier) {
         modifier = modifier,
         factory = {
             val mapView = GMSMapView()
-            val cameraPosition = GMSCameraPosition.cameraWithLatitude(
-                1.3588227,
-                103.8742114,
-                6.0F
-            )
+            mapView.myLocationEnabled = true
 
             val json = """
             [
@@ -33,14 +35,33 @@ actual fun AppMap(modifier: Modifier) {
             """.trimIndent()
             val style = GMSMapStyle()
             mapView.mapStyle = style
+            // Move built-in controls up from the bottom to clear bottom navigation
+            mapView.setPadding(UIEdgeInsetsMake(0.0, 0.0, 96.0, 0.0))
 
-            val cameraUpdate = GMSCameraUpdate.setCamera(cameraPosition)
-            mapView.moveCamera(cameraUpdate)
+            // Setup location manager to zoom to user's current location
+            val locationManager = CLLocationManager()
+            class DelegateImpl: NSObject(), CLLocationManagerDelegateProtocol {
+                override fun locationManager(manager: CLLocationManager, didUpdateLocations: List<*>) {
+                    val last = (didUpdateLocations.lastOrNull() as? CLLocation) ?: return
+                    last.coordinate.useContents {
+                        val camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude, 14.0f)
+                        val update = GMSCameraUpdate.setCamera(camera)
+                        mapView.moveCamera(update)
+                    }
+
+                    manager.stopUpdatingLocation()
+                }
+            }
+            val delegate = DelegateImpl()
+            locationManager.delegate = delegate
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
 
             mapView
         },
         update = { _ -> }
     )
 }
+
 
 

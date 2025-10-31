@@ -14,5 +14,8 @@ sealed interface MainNavigation {
     data object Settings : MainNavigation
 
     @Serializable
+    data object Chats : MainNavigation
+
+    @Serializable
     data object About : MainNavigation
 }

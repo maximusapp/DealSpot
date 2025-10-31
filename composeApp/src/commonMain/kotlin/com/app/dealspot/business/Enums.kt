@@ -25,3 +25,7 @@ enum class EmailPasswordDataValidationState {
     EMAIL_INCORRECT,
     PASSWORD_LENGTH_INCORRECT
 }
+
+enum class ScreenType {
+    CHATS, SETTINGS
+}

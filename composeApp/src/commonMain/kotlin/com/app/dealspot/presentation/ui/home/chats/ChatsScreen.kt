@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.ui.home.settings
+package com.app.dealspot.presentation.ui.home.chats
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.app.dealspot.business.ScreenType
 import com.app.dealspot.presentation.theme.Grey
+import com.app.dealspot.presentation.theme.SpacerHeight25Dp
 import com.app.dealspot.presentation.theme.dimens_20
 import com.app.dealspot.presentation.theme.dimens_60
 import com.app.dealspot.presentation.theme.dimens_80
@@ -22,10 +23,9 @@ import dealspot.composeapp.generated.resources.settings
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun SettingsScreen(
-    onBackClicked:() -> Unit = {}
+fun ChatsScreen(
+    onBackClicked: () -> Unit = {}
 ) {
-    // Main Content Area
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -36,22 +36,24 @@ fun SettingsScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Your main content goes here
             TopBar(
                 title = stringResource(Res.string.settings),
-                screenType = ScreenType.SETTINGS,
+                screenType = ScreenType.CHATS,
                 onBackClicked = {
                     onBackClicked.invoke()
                 }
             )
 
+            SpacerHeight25Dp()
+
             Text(
-                text = "Welcome to Settings screen",
+                text = "Chats",
                 fontSize = text_size_24,
                 color = Grey,
                 fontWeight = FontWeight.W700,
                 fontFamily = latoFontFamily()
             )
         }
+
     }
 }

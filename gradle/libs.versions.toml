@@ -29,6 +29,7 @@ compose-navigation-ver = "2.9.0"
 coil3 = "3.0.0"
 jetbrainsKotlinJvm = "2.2.20"
 playServicesMaps = "19.2.0"
+playServicesLocation = "21.3.0"
 pods-google-maps = "8.4.0"
 pods-google-ios-maps-utils = "5.0.0"
 
@@ -63,6 +64,7 @@ coil3-core = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
 coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
 coil3-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil3" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -72,6 +72,54 @@ fun textLatoHeadlineLargeW700HeadlineSmall(
 
 @Suppress("ComposableNaming")
 @Composable
+fun titleSmallW700HeadlineSmall(
+    text: String = "",
+    modifier: Modifier = Modifier
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        style = MaterialTheme.typography.titleSmall,
+        color = grey_700,
+        fontWeight = FontWeight.W700,
+        fontFamily = latoFontFamily()
+    )
+}
+
+@Suppress("ComposableNaming")
+@Composable
+fun titleSmallW700HeadlineMedium(
+    text: String = "",
+    modifier: Modifier = Modifier
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        style = MaterialTheme.typography.titleMedium,
+        color = grey_700,
+        fontWeight = FontWeight.W700,
+        fontFamily = latoFontFamily()
+    )
+}
+
+@Suppress("ComposableNaming")
+@Composable
+fun titleSmallW700HeadlineLarge(
+    text: String = "",
+    modifier: Modifier = Modifier
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        style = MaterialTheme.typography.titleLarge,
+        color = grey_700,
+        fontWeight = FontWeight.W700,
+        fontFamily = latoFontFamily()
+    )
+}
+
+@Suppress("ComposableNaming")
+@Composable
 fun textLatoSmall(
     text: String = "",
     modifier: Modifier = Modifier

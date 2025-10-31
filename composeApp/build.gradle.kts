@@ -62,6 +62,7 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.coil3.network.okhttp)
             implementation(libs.play.services.maps)
+            implementation(libs.play.services.location)
         }
         commonMain.dependencies {
             implementation(projects.network)

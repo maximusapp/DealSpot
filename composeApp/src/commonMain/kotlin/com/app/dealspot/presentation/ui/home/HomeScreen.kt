@@ -14,7 +14,8 @@ import com.app.dealspot.presentation.ui.components.BottomBar
 
 @Composable
 internal fun HomeScreen(
-
+    onOpenSettings: () -> Unit,
+    onOpenChats: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -29,7 +30,11 @@ internal fun HomeScreen(
         ) {
             BottomBar(
                 homeSelected = true,
+                settingsSelected = false,
+                chatsSelected = false,
                 onHomeClick = { /* already on Home */ },
+                onSettingsClick = onOpenSettings,
+                onChatsClick = onOpenChats,
                 onPlusClick = { /* TODO: handle */ }
             )
 

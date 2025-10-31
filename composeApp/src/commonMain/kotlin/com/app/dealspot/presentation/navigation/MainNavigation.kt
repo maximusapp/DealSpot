@@ -1,4 +1,4 @@
-package presentation.navigation
+package com.app.dealspot.presentation.navigation
 
 import kotlinx.serialization.Serializable
 

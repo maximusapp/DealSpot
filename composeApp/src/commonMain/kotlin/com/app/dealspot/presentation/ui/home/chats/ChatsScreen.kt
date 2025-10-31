@@ -19,6 +19,7 @@ import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.text_size_24
 import com.app.dealspot.presentation.ui.components.TopBar
 import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.chats
 import dealspot.composeapp.generated.resources.settings
 import org.jetbrains.compose.resources.stringResource
 
@@ -37,7 +38,7 @@ fun ChatsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TopBar(
-                title = stringResource(Res.string.settings),
+                title = stringResource(Res.string.chats),
                 screenType = ScreenType.CHATS,
                 onBackClicked = {
                     onBackClicked.invoke()

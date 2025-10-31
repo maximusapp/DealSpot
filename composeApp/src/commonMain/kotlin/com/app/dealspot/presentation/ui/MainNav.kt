@@ -12,7 +12,8 @@ import com.app.dealspot.presentation.ui.home.HomeScreenViewModel
 import com.app.dealspot.presentation.ui.home.chats.ChatsScreen
 import com.app.dealspot.presentation.ui.home.settings.SettingsScreen
 import org.koin.compose.koinInject
-import presentation.navigation.MainNavigation
+import com.app.dealspot.presentation.navigation.MainNavigation
+import com.app.dealspot.presentation.ui.home.profile.ProfileScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,12 +31,15 @@ internal fun MainNav(
         composable<MainNavigation.Main> {
             HomeScreen(
                 onOpenSettings = { navigator.navigate(MainNavigation.Settings) },
-                onOpenChats = { navigator.navigate(MainNavigation.Chats) }
+                onOpenChats = { navigator.navigate(MainNavigation.Chats) },
+                onOpenProfile = { navigator.navigate(MainNavigation.Profile) }
             )
         }
 
         composable<MainNavigation.Profile> {
-//            ProfileScreen()
+            ProfileScreen(
+                onBackClicked = { navigator.popBackStack() }
+            )
         }
 
         composable<MainNavigation.Settings> {

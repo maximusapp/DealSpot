@@ -54,7 +54,7 @@ fun appModule(context: Context) = module {
     factory { WelcomeScreenViewModel(get()) }
     factory { RegistrationViewModel(get(), get(), get()) }
     factory { EmailVerificationScreenViewModel(get()) }
-    factory { HomeScreenViewModel() }
+    single { HomeScreenViewModel() }
     factory { LoginViewModel(get(), get(), get()) }
 //    factory { ProfileViewModel(get()) }
 //    factory { SettingsViewModel(get()) }

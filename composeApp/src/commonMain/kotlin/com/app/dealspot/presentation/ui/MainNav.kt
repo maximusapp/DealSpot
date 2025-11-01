@@ -13,9 +13,17 @@ import com.app.dealspot.presentation.ui.home.chats.ChatsScreen
 import com.app.dealspot.presentation.ui.home.settings.SettingsScreen
 import org.koin.compose.koinInject
 import com.app.dealspot.presentation.navigation.MainNavigation
+import com.app.dealspot.presentation.ui.home.notifications.NotificationsScreen
 import com.app.dealspot.presentation.ui.home.profile.ProfileScreen
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
+import androidx.compose.runtime.getValue
+import androidx.navigation.compose.currentBackStackEntryAsState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 internal fun MainNav(
     homeViewModel: HomeScreenViewModel = koinInject(),
@@ -23,37 +31,52 @@ internal fun MainNav(
 ) {
     val navigator = rememberNavController()
 
-    NavHost(
-        startDestination = MainNavigation.Main,
-        navController = navigator,
-        modifier = Modifier.fillMaxSize()
+    val backStackEntry by navigator.currentBackStackEntryAsState()
+
+    AnimatedContent(
+        targetState = backStackEntry?.destination?.route,
+        transitionSpec = { fadeIn() togetherWith fadeOut() },
+        label = "main-nav-transition"
     ) {
-        composable<MainNavigation.Main> {
-            HomeScreen(
-                onOpenSettings = { navigator.navigate(MainNavigation.Settings) },
-                onOpenChats = { navigator.navigate(MainNavigation.Chats) },
-                onOpenProfile = { navigator.navigate(MainNavigation.Profile) }
-            )
-        }
+        NavHost(
+            startDestination = MainNavigation.Main,
+            navController = navigator,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            composable<MainNavigation.Main> {
+                HomeScreen(
+                    onOpenNotification = { navigator.navigate(MainNavigation.Notifications) },
+                    onOpenSettings = { navigator.navigate(MainNavigation.Settings) },
+                    onOpenChats = { navigator.navigate(MainNavigation.Chats) },
+                    onOpenProfile = { navigator.navigate(MainNavigation.Profile) }
+                )
+            }
 
-        composable<MainNavigation.Profile> {
-            ProfileScreen(
-                onBackClicked = { navigator.popBackStack() }
-            )
-        }
+            composable<MainNavigation.Notifications> {
+                NotificationsScreen (
+                    onBackClicked = { navigator.popBackStack() }
+                )
+            }
 
-        composable<MainNavigation.Settings> {
-            SettingsScreen(
-                onBackClicked = { navigator.popBackStack() }
-            )
-        }
+            composable<MainNavigation.Profile> {
+                ProfileScreen(
+                    onBackClicked = { navigator.popBackStack() }
+                )
+            }
 
-        composable<MainNavigation.Chats> {
-            ChatsScreen(
-                onBackClicked = { navigator.popBackStack() }
-            )
-        }
+            composable<MainNavigation.Settings> {
+                SettingsScreen(
+                    onBackClicked = { navigator.popBackStack() }
+                )
+            }
 
+            composable<MainNavigation.Chats> {
+                ChatsScreen(
+                    onBackClicked = { navigator.popBackStack() }
+                )
+            }
+
+        }
     }
 
 }

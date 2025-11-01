@@ -27,5 +27,5 @@ enum class EmailPasswordDataValidationState {
 }
 
 enum class ScreenType {
-    CHATS, SETTINGS, PROFILE
+    CHATS, SETTINGS, PROFILE, NOTIFICATIONS
 }

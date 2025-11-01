@@ -9,6 +9,7 @@ import cocoapods.GoogleMaps.GMSCameraUpdate
 import cocoapods.GoogleMaps.GMSMapStyle
 import cocoapods.GoogleMaps.GMSMapView
 import cocoapods.GoogleMaps.GMSCameraPosition
+import com.app.dealspot.data.model.MapCameraState
 import kotlinx.cinterop.useContents
 import platform.CoreLocation.CLLocation
 import platform.CoreLocation.CLLocationManager
@@ -17,29 +18,27 @@ import platform.darwin.NSObject
 import platform.UIKit.UIEdgeInsetsMake
 
 @Composable
-actual fun AppMap(modifier: Modifier) {
+actual fun AppMap(
+    modifier: Modifier,
+    initialCamera: MapCameraState?,
+    onCameraChanged: (MapCameraState) -> Unit
+) {
+    println("AppMap.iosX64")
     UIKitView(
         modifier = modifier,
         factory = {
             val mapView = GMSMapView()
-            val cameraPosition = GMSCameraPosition.cameraWithLatitude(
-                1.3588227,
-                103.8742114,
-                6.0F
-            )
-
-            val json = """
-            [
-              { "elementType": "geometry", "stylers": [{ "saturation": -100 }, { "lightness": 10 }] },
-              { "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] },
-              { "featureType": "road", "elementType": "geometry", "stylers": [{ "saturation": -100 }] },
-              { "featureType": "poi", "elementType": "geometry", "stylers": [{ "saturation": -100 }] },
-              { "featureType": "water", "elementType": "geometry", "stylers": [{ "saturation": -100 }] }
-            ]
-            """.trimIndent()
+            var didCenter = initialCamera != null
             val style = GMSMapStyle()
             mapView.setMapStyle(style)
-            mapView.setPadding(UIEdgeInsetsMake(0.0, 0.0, 96.0, 0.0))
+            mapView.setPadding(UIEdgeInsetsMake(96.0, 0.0, 0.0, 0.0))
+
+            if (initialCamera != null) {
+                val cam = GMSCameraPosition.cameraWithLatitude(initialCamera.latitude, initialCamera.longitude, initialCamera.zoom)
+                val update = GMSCameraUpdate.setCamera(cam)
+                mapView.moveCamera(update)
+                didCenter = true
+            }
 
             val locationManager = CLLocationManager()
             class DelegateImpl: NSObject(), CLLocationManagerDelegateProtocol {
@@ -48,7 +47,18 @@ actual fun AppMap(modifier: Modifier) {
                     last.coordinate.useContents {
                         val camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude, 14.0f)
                         val update = GMSCameraUpdate.setCamera(camera)
-                        mapView.moveCamera(update)
+                        if (!didCenter) {
+                            mapView.moveCamera(update)
+                            didCenter = true
+                        }
+
+                        onCameraChanged(
+                            MapCameraState(
+                                latitude = latitude,
+                                longitude = longitude,
+                                zoom = 14.0f
+                            )
+                        )
                     }
 
                     manager.stopUpdatingLocation()
@@ -58,11 +68,23 @@ actual fun AppMap(modifier: Modifier) {
             locationManager.delegate = delegate
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
+
+            class MapDelegate: NSObject(), cocoapods.GoogleMaps.GMSMapViewDelegateProtocol {
+                override fun mapView(mapView: GMSMapView, didChangeCameraPosition: GMSCameraPosition) {
+                    didChangeCameraPosition.target.useContents {
+                        onCameraChanged(
+                            MapCameraState(
+                                latitude = this.latitude,
+                                longitude = this.longitude,
+                                zoom = didChangeCameraPosition.zoom
+                            )
+                        )
+                    }
+                }
+            }
+            mapView.delegate = MapDelegate()
             mapView
         },
         update = { _ -> }
     )
 }
-
-
-

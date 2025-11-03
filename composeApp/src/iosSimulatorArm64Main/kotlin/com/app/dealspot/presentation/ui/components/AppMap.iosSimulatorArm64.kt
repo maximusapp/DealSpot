@@ -9,14 +9,35 @@ import cocoapods.GoogleMaps.GMSCameraPosition
 import cocoapods.GoogleMaps.GMSCameraUpdate
 import cocoapods.GoogleMaps.GMSMapStyle
 import cocoapods.GoogleMaps.GMSMapView
+import cocoapods.GoogleMaps.GMSMarker
+import cocoapods.GoogleMaps.CLLocationCoordinate2D
+import com.app.dealspot.data.model.LatLngEntity
 import com.app.dealspot.data.model.MapCameraState
 import com.app.dealspot.presentation.utils.zeroIfNull
+import kotlinx.cinterop.*
 import kotlinx.cinterop.useContents
-import platform.UIKit.UIEdgeInsetsMake
+import platform.CoreGraphics.*
 import platform.CoreLocation.CLLocation
 import platform.CoreLocation.CLLocationManager
 import platform.CoreLocation.CLLocationManagerDelegateProtocol
 import platform.darwin.NSObject
+import platform.UIKit.*
+
+/**
+ * Creates a marker image from asset, scaled similar to Android
+ */
+private fun createCustomLocationMarker(): UIImage? {
+    val original = UIImage.imageNamed("ic_marker_my_location_3") ?: return null
+    val baseWidth = 56.0
+    val baseHeight = 72.0
+    val scale = 0.85
+    val targetSize = CGSizeMake((baseWidth * scale).coerceAtLeast(20.0), (baseHeight * scale).coerceAtLeast(20.0))
+    UIGraphicsBeginImageContextWithOptions(targetSize, false, 0.0)
+    original.drawInRect(CGRectMake(0.0, 0.0, targetSize.useContents { width }, targetSize.useContents { height }))
+    val resized = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return resized
+}
 
 @Composable
 actual fun AppMap(
@@ -29,15 +50,38 @@ actual fun AppMap(
         modifier = modifier,
         factory = {
             val mapView = GMSMapView()
-            mapView.myLocationEnabled = true
+            mapView.myLocationEnabled = false // Use custom marker instead
+            var didCenter = initialCamera?.latitude?.zeroIfNull() ?: -1.0 > 0.0 || initialCamera?.longitude?.zeroIfNull() ?: -1.0 > 0.0
 
             val style = GMSMapStyle()
             mapView.mapStyle = style
-            // Move built-in controls up from the bottom to clear bottom navigation
-            mapView.setPadding(UIEdgeInsetsMake(96.0, 0.0, 0.0, 0.0))
+            mapView.setPadding(UIEdgeInsetsMake(0.0, 0.0, 96.0, 0.0))
 
-            // Apply initial camera if provided, else will center on first location update
-            if (initialCamera?.latitude.zeroIfNull() < 0.0 || initialCamera?.longitude.zeroIfNull() < 0.0) {
+            // Custom location marker
+            var locationMarker: GMSMarker? = null
+
+            // Helper to update custom location marker
+            fun updateLocationMarker(lat: Double, lng: Double) {
+                locationMarker?.map = null
+                val marker = GMSMarker()
+                memScoped {
+                    val coordPtr = alloc<cocoapods.GoogleMaps.CLLocationCoordinate2D>()
+                    coordPtr.latitude = lat
+                    coordPtr.longitude = lng
+                    marker.position = coordPtr.readValue()
+                }
+                val customIcon = createCustomLocationMarker()
+                if (customIcon != null) {
+                    marker.icon = customIcon
+                    marker.groundAnchor = CGPointMake(0.5, 1.0)
+                }
+                marker.map = mapView
+                marker.title = "My Location"
+                locationMarker = marker
+            }
+
+            // Apply initial camera if provided
+            if (initialCamera?.latitude?.zeroIfNull() ?: -1.0 > 0.0 && initialCamera?.longitude?.zeroIfNull() ?: -1.0 > 0.0) {
                 val cam = GMSCameraPosition.cameraWithLatitude(initialCamera?.latitude.zeroIfNull(), initialCamera?.longitude.zeroIfNull(), initialCamera?.zoom.zeroIfNull())
                 val update = GMSCameraUpdate.setCamera(cam)
                 mapView.moveCamera(update)
@@ -49,17 +93,20 @@ actual fun AppMap(
                 override fun locationManager(manager: CLLocationManager, didUpdateLocations: List<*>) {
                     val last = (didUpdateLocations.lastOrNull() as? CLLocation) ?: return
                     last.coordinate.useContents {
+                        updateLocationMarker(latitude.toDouble(), longitude.toDouble())
+                        
                         val camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude, 14.0f)
                         val update = GMSCameraUpdate.setCamera(camera)
 
-                        if (initialCamera?.latitude.zeroIfNull() > 0.0 || initialCamera?.longitude.zeroIfNull() > 0.0) {
+                        if (!didCenter) {
                             mapView.moveCamera(update)
+                            didCenter = true
                         }
 
                         onCameraChanged(
                             MapCameraState(
-                                latitude = latitude,
-                                longitude = longitude,
+                                latitude = latitude.toDouble(),
+                                longitude = longitude.toDouble(),
                                 zoom = 14.0f
                             )
                         )

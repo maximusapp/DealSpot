@@ -9,13 +9,37 @@ import cocoapods.GoogleMaps.GMSMapStyle
 import cocoapods.GoogleMaps.GMSMapView
 import cocoapods.GoogleMaps.GMSCameraPosition
 import cocoapods.GoogleMaps.GMSCameraUpdate
+import cocoapods.GoogleMaps.GMSMarker
+import cocoapods.GoogleMaps.CLLocationCoordinate2D
+import com.app.dealspot.data.model.LatLngEntity
 import com.app.dealspot.data.model.MapCameraState
-import kotlinx.cinterop.useContents
+import kotlinx.cinterop.*
+import platform.CoreGraphics.*
 import platform.CoreLocation.CLLocation
 import platform.CoreLocation.CLLocationManager
 import platform.CoreLocation.CLLocationManagerDelegateProtocol
 import platform.darwin.NSObject
-import platform.UIKit.UIEdgeInsetsMake
+import platform.UIKit.*
+
+private fun createCustomLocationMarker(): UIImage? {
+    // Use image asset directly, scaled similarly to Android (base 56x72pt, ~85%)
+    val name = "ic_marker_my_location_3"
+    val original = UIImage.imageNamed(name) ?: return null
+
+    val baseWidth = 56.0
+    val baseHeight = 72.0
+    val scale = 0.85
+    val targetSize = CGSizeMake(
+        (baseWidth * scale).coerceAtLeast(20.0),
+        (baseHeight * scale).coerceAtLeast(20.0)
+    )
+
+    UIGraphicsBeginImageContextWithOptions(targetSize, false, 0.0)
+    original.drawInRect(CGRectMake(0.0, 0.0, targetSize.useContents { width }, targetSize.useContents { height }))
+    val resized = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return resized
+}
 
 @Composable
 actual fun AppMap(
@@ -28,10 +52,38 @@ actual fun AppMap(
         factory = {
             val mapView = GMSMapView()
             var didCenter = initialCamera != null
+            // Disable default location dot - using custom marker
+            mapView.myLocationEnabled = false
 
             val style = GMSMapStyle()
             mapView.mapStyle = style
             mapView.setPadding(UIEdgeInsetsMake(0.0, 0.0, 96.0, 0.0))
+
+            // Custom location marker
+            var locationMarker: GMSMarker? = null
+
+            // Helper to update custom location marker
+            fun updateLocationMarker(lat: Double, lng: Double) {
+                locationMarker?.map = null // Remove old marker
+                val marker = GMSMarker()
+                memScoped {
+                    val coordPtr = alloc<cocoapods.GoogleMaps.CLLocationCoordinate2D>()
+                    coordPtr.latitude = lat
+                    coordPtr.longitude = lng
+                    marker.position = coordPtr.readValue()
+                }
+                
+                // Set custom icon
+                val customIcon = createCustomLocationMarker()
+                if (customIcon != null) {
+                    marker.icon = customIcon
+                    marker.groundAnchor = CGPointMake(0.5, 1.0) // Anchor at bottom center (tip of pin)
+                }
+                
+                marker.map = mapView
+                marker.title = "My Location"
+                locationMarker = marker
+            }
 
             if (initialCamera != null) {
                 val cam = GMSCameraPosition.cameraWithLatitude(initialCamera.latitude, initialCamera.longitude, initialCamera.zoom)
@@ -47,6 +99,9 @@ actual fun AppMap(
                     val last = (didUpdateLocations.lastOrNull() as? CLLocation) ?: return
 
                     last.coordinate.useContents {
+                        // Update custom location marker
+                        updateLocationMarker(latitude.toDouble(), longitude.toDouble())
+                        
                         val camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude, 14.0f)
                         val update = GMSCameraUpdate.setCamera(camera)
                         if (!didCenter) {

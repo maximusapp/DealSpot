@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
 import com.app.dealspot.R
 import com.app.dealspot.data.model.MapCameraState
+import com.app.dealspot.extensions.dpToPx
 import com.app.dealspot.presentation.utils.zeroIfNull
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -34,6 +35,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.CancellationTokenSource
+import kotlinx.coroutines.delay
 
 @SuppressLint("LocalContextResourcesRead")
 @Composable
@@ -49,7 +51,6 @@ actual fun AppMap(
     var userLocationMarker by remember { mutableStateOf<Marker?>(null) }
     val currentUserMarker by lazy { createCustomLocationMarker(context) }
     val fused by lazy { LocationServices.getFusedLocationProviderClient(context) }
-    var currentUserLocation by remember { mutableStateOf<LatLng?>(null) }
 
     val permissionsState = rememberMultiplePermissionsState(
         listOf(
@@ -67,80 +68,58 @@ actual fun AppMap(
     LaunchedEffect(permissionsState.allPermissionsGranted) {
         println("allPermissionsGranted")
         println("allPermissionsGranted. latitude: ${initialCamera?.latitude}, longitude: ${initialCamera?.longitude}")
+        delay(300)
+
         val map = googleMapRef
         val fineGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val coarseGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
         println("fineGranted: $fineGranted, coarseGranted: $coarseGranted")
         if (fineGranted || coarseGranted) {
-            if (initialCamera?.latitude.zeroIfNull() < 0.0 || initialCamera?.longitude.zeroIfNull() < 0.0) {
-                println("allPermissionsGranted animateCamera: $initialCamera")
+            if (initialCamera?.latitude.zeroIfNull() <= 0.0 || initialCamera?.longitude.zeroIfNull() <= 0.0) {
+                println("latitude and longitude <= 0")
 
                 fused.lastLocation.addOnSuccessListener { location ->
                     if (location != null) {
+                        println("lastLocation: is not null: $location")
+
                         val latLng = LatLng(location.latitude, location.longitude)
                         // Update custom location marker
                         userLocationMarker?.remove()
-                        userLocationMarker = map?.addMarker(
-                            MarkerOptions()
-                                .position(latLng)
-                                .icon(currentUserMarker)
-                                .anchor(0.5f, 1.0f) // Anchor at bottom center (tip of pin)
-                                .flat(false)
-                                .title("My Location")
-                        )
+                        userLocationMarker = updateCurrentUserMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
 
-                        map?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+                        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
                     } else {
+                        println("lastLocation: is null. ELSE case")
                         val cts = CancellationTokenSource()
                         fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
                             .addOnSuccessListener { current ->
                                 if (current != null) {
                                     val latLng = LatLng(current.latitude, current.longitude)
-
-                                    if (currentUserLocation?.latitude.zeroIfNull() != latLng.latitude || currentUserLocation?.longitude.zeroIfNull() != latLng.longitude) {
-                                        currentUserLocation = latLng
-                                    }
-
                                     // Update custom location marker
                                     userLocationMarker?.remove()
-                                    userLocationMarker = map?.addMarker(
-                                        MarkerOptions()
-                                            .position(latLng)
-                                            .icon(currentUserMarker)
-                                            .anchor(0.5f, 1.0f) // Anchor at bottom center (tip of pin)
-                                            .flat(false)
-                                            .title("My Location")
-                                    )
+                                    userLocationMarker = updateCurrentUserMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
 
-                                    map?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+                                    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
                                 }
                             }
                     }
                 }
+            } else {
+                println("latitude and longitude <= 0. ELSE case")
+
+                val cts = CancellationTokenSource()
+                fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
+                    .addOnSuccessListener { current ->
+                        if (current != null) {
+                            val latLng = LatLng(current.latitude, current.longitude)
+                            // Update custom location marker
+                            userLocationMarker?.remove()
+                            userLocationMarker = updateCurrentUserMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
+                        }
+                    }
             }
         }
-    }
-
-    LaunchedEffect(currentUserLocation) {
-        println("currentUserLocation: $currentUserLocation")
-        val cts = CancellationTokenSource()
-        fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
-            .addOnSuccessListener { current ->
-                if (current != null) {
-                    val latLng = LatLng(current.latitude, current.longitude)
-                    // Update custom location marker
-                    userLocationMarker?.remove()
-                    userLocationMarker = googleMapRef?.addMarker(
-                        MarkerOptions()
-                            .position(latLng)
-                            .icon(currentUserMarker)
-                            .anchor(0.5f, 1.0f) // Anchor at bottom center (tip of pin)
-                            .flat(false)
-                            .title("My Location")
-                    )
-                }
-            }
     }
 
     AndroidView(
@@ -179,33 +158,6 @@ actual fun AppMap(
                     if (initialCamera?.latitude.zeroIfNull() > 0.0 || initialCamera?.longitude.zeroIfNull() > 0.0) {
                         val latLng = LatLng(initialCamera?.latitude.zeroIfNull(), initialCamera?.longitude.zeroIfNull())
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, initialCamera?.zoom.zeroIfNull()))
-                    } else {
-                        println("setOnMapLoadedCallback. else case")
-                        val fineGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                        val coarseGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-
-                        if (fineGranted || coarseGranted) {
-                            fused.lastLocation.addOnSuccessListener { location ->
-                                if (location != null) {
-                                    val latLng = LatLng(location.latitude, location.longitude)
-                                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
-                                } else {
-                                    val cts = CancellationTokenSource()
-                                    fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
-                                        .addOnSuccessListener { current ->
-                                            if (current != null) {
-                                                val latLng = LatLng(current.latitude, current.longitude)
-
-                                                if (currentUserLocation?.latitude.zeroIfNull() != latLng.latitude || currentUserLocation?.longitude.zeroIfNull() != latLng.longitude) {
-                                                    currentUserLocation = latLng
-                                                }
-
-                                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
-                                            }
-                                        }
-                                    }
-                            }
-                        }
                     }
                 }
             }
@@ -258,9 +210,13 @@ private fun createCustomLocationMarker(context: Context): BitmapDescriptor? {
     }
 }
 
-/**
- * Converts density-independent pixels to pixels
- */
-private fun Int.dpToPx(context: Context): Int {
-    return (this * context.resources.displayMetrics.density).toInt()
+private fun updateCurrentUserMarker(map: GoogleMap?, latLng: LatLng, currentUserMarker: BitmapDescriptor?): Marker? {
+    return map?.addMarker(
+        MarkerOptions()
+            .position(latLng)
+            .icon(currentUserMarker)
+            .anchor(0.5f, 1.0f) // Anchor at bottom center (tip of pin)
+            .flat(false)
+            .title("My Location")
+    )
 }

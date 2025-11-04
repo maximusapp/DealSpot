@@ -23,9 +23,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.app.dealspot.presentation.theme.SpacerWidth15Dp
 import dealspot.composeapp.generated.resources.Res
-import dealspot.composeapp.generated.resources.ic_chat_bold_300
-import dealspot.composeapp.generated.resources.ic_person_bold_300
-import dealspot.composeapp.generated.resources.ic_settings_bold_300
+import dealspot.composeapp.generated.resources.ic_menu_chat
+import dealspot.composeapp.generated.resources.ic_menu_profile
+import dealspot.composeapp.generated.resources.ic_menu_settings
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -73,7 +73,7 @@ fun BottomBar(
             ) {
                 val chatsColor = if (chatsSelected) MaterialTheme.colorScheme.primary else Color.Gray
                 Icon(
-                    painter = painterResource(Res.drawable.ic_chat_bold_300),
+                    painter = painterResource(Res.drawable.ic_menu_chat),
                     contentDescription = "Chats",
                     tint = chatsColor,
                     modifier = Modifier
@@ -90,7 +90,7 @@ fun BottomBar(
             ) {
                 val settingsColor = if (settingsSelected) MaterialTheme.colorScheme.primary else Color.Gray
                 Icon(
-                    painter = painterResource(Res.drawable.ic_settings_bold_300),
+                    painter = painterResource(Res.drawable.ic_menu_settings),
                     contentDescription = "Settings",
                     tint = settingsColor,
                     modifier = Modifier
@@ -107,7 +107,7 @@ fun BottomBar(
             ) {
                 val settingsColor = if (settingsSelected) MaterialTheme.colorScheme.primary else Color.Gray
                 Icon(
-                    painter = painterResource(Res.drawable.ic_person_bold_300),
+                    painter = painterResource(Res.drawable.ic_menu_profile),
                     contentDescription = "Profile",
                     tint = settingsColor,
                     modifier = Modifier

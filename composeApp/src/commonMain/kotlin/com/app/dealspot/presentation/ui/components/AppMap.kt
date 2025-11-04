@@ -9,7 +9,8 @@ import com.app.dealspot.data.model.MapCameraState
 expect fun AppMap(
     modifier: Modifier,
     initialCamera: MapCameraState? = null,
-    onCameraChanged: (MapCameraState) -> Unit = {}
+    onCameraChanged: (MapCameraState) -> Unit = {},
+    goToCurrentLocationTrigger: Int = 0
 )
 
 

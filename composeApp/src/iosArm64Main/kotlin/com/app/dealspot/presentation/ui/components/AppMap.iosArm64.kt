@@ -3,6 +3,9 @@
 package com.app.dealspot.presentation.ui.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
 import cocoapods.GoogleMaps.GMSMapStyle
@@ -45,12 +48,65 @@ private fun createCustomLocationMarker(): UIImage? {
 actual fun AppMap(
     modifier: Modifier,
     initialCamera: MapCameraState?,
-    onCameraChanged: (MapCameraState) -> Unit
+    onCameraChanged: (MapCameraState) -> Unit,
+    goToCurrentLocationTrigger: Int
 ) {
+    val mapViewState = remember { mutableStateOf<GMSMapView?>(null) }
+    val locationMarkerState = remember { mutableStateOf<GMSMarker?>(null) }
+    
+    // Handle "go to current location" trigger
+    LaunchedEffect(goToCurrentLocationTrigger) {
+        val mapView = mapViewState.value
+        if (goToCurrentLocationTrigger > 0 && mapView != null) {
+            val locationManager = CLLocationManager()
+            
+            class DelegateImpl: NSObject(), CLLocationManagerDelegateProtocol {
+                override fun locationManager(manager: CLLocationManager, didUpdateLocations: List<*>) {
+                    val last = (didUpdateLocations.lastOrNull() as? CLLocation) ?: return
+                    
+                    last.coordinate.useContents {
+                        val map = mapViewState.value ?: return@useContents
+                        
+                        // Update custom location marker
+                        locationMarkerState.value?.map = null
+                        val marker = GMSMarker()
+                        memScoped {
+                            val coordPtr = alloc<cocoapods.GoogleMaps.CLLocationCoordinate2D>()
+                            coordPtr.latitude = latitude.toDouble()
+                            coordPtr.longitude = longitude.toDouble()
+                            marker.position = coordPtr.readValue()
+                        }
+                        
+                        val customIcon = createCustomLocationMarker()
+                        if (customIcon != null) {
+                            marker.icon = customIcon
+                            marker.groundAnchor = CGPointMake(0.5, 1.0)
+                        }
+                        marker.map = map
+                        marker.title = "My Location"
+                        locationMarkerState.value = marker
+                        
+                        // Animate camera to current location
+                        val camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude, 14.0f)
+                        val update = GMSCameraUpdate.setCamera(camera)
+                        map.animateWithCameraUpdate(update)
+                    }
+                    
+                    manager.stopUpdatingLocation()
+                }
+            }
+            val delegate = DelegateImpl()
+            locationManager.delegate = delegate
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
     UIKitView(
         modifier = modifier,
         factory = {
             val mapView = GMSMapView()
+            mapViewState.value = mapView
             var didCenter = initialCamera != null
             // Disable default location dot - using custom marker
             mapView.myLocationEnabled = false
@@ -61,10 +117,12 @@ actual fun AppMap(
 
             // Custom location marker
             var locationMarker: GMSMarker? = null
+            locationMarkerState.value = locationMarker
 
             // Helper to update custom location marker
             fun updateLocationMarker(lat: Double, lng: Double) {
                 locationMarker?.map = null // Remove old marker
+                locationMarkerState.value?.map = null
                 val marker = GMSMarker()
                 memScoped {
                     val coordPtr = alloc<cocoapods.GoogleMaps.CLLocationCoordinate2D>()
@@ -83,6 +141,7 @@ actual fun AppMap(
                 marker.map = mapView
                 marker.title = "My Location"
                 locationMarker = marker
+                locationMarkerState.value = marker
             }
 
             if (initialCamera != null) {
@@ -144,6 +203,8 @@ actual fun AppMap(
             mapView.delegate = MapDelegate()
             mapView
         },
-        update = { _ -> }
+        update = { view ->
+            mapViewState.value = view
+        }
     )
 }

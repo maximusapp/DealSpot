@@ -43,7 +43,8 @@ import kotlinx.coroutines.delay
 actual fun AppMap(
     modifier: Modifier,
     initialCamera: MapCameraState?,
-    onCameraChanged: (MapCameraState) -> Unit
+    onCameraChanged: (MapCameraState) -> Unit,
+    goToCurrentLocationTrigger: Int
 ) {
     val mapView = rememberMapViewWithLifecycle()
     val context = LocalContext.current
@@ -51,6 +52,37 @@ actual fun AppMap(
     var userLocationMarker by remember { mutableStateOf<Marker?>(null) }
     val currentUserMarker by lazy { createCustomLocationMarker(context) }
     val fused by lazy { LocationServices.getFusedLocationProviderClient(context) }
+    
+    // Handle "go to current location" action when trigger changes
+    LaunchedEffect(goToCurrentLocationTrigger) {
+        if (goToCurrentLocationTrigger > 0) {
+            val map = googleMapRef
+            val fineGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            val coarseGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            
+            if ((fineGranted || coarseGranted) && map != null) {
+                fused.lastLocation.addOnSuccessListener { location ->
+                    if (location != null) {
+                        val latLng = LatLng(location.latitude, location.longitude)
+                        userLocationMarker?.remove()
+                        userLocationMarker = updateCurrentUserMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
+                        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+                    } else {
+                        val cts = CancellationTokenSource()
+                        fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
+                            .addOnSuccessListener { current ->
+                                if (current != null) {
+                                    val latLng = LatLng(current.latitude, current.longitude)
+                                    userLocationMarker?.remove()
+                                    userLocationMarker = updateCurrentUserMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
+                                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+                                }
+                            }
+                    }
+                }
+            }
+        }
+    }
 
     val permissionsState = rememberMultiplePermissionsState(
         listOf(

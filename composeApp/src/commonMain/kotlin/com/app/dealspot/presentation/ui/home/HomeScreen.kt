@@ -5,12 +5,17 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -41,38 +46,62 @@ internal fun HomeScreen(
     ) {
         val viewModel: HomeScreenViewModel = koinInject()
         val camera = viewModel.cameraState.collectAsState().value
+        val goToLocationTrigger = viewModel.goToCurrentLocationTrigger.collectAsState().value
         AppMap(
             modifier = Modifier.fillMaxSize(),
             initialCamera = camera,
-            onCameraChanged = { viewModel.updateCamera(it) }
+            onCameraChanged = { viewModel.updateCamera(it) },
+            goToCurrentLocationTrigger = goToLocationTrigger
         )
 
-        Box(
+        // Top right icons: Notifications and Location
+        Column(
             modifier = Modifier
                 .wrapContentSize()
                 .padding(top = 50.dp, end = 12.dp)
-                .align(Alignment.TopEnd)
-                .clip(RoundedCornerShape(50.dp))
-                .clickable {
-                    onOpenNotification.invoke()
-                },
-            contentAlignment = Alignment.Center
+                .align(Alignment.TopEnd),
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Row(
+            // Notifications icon
+            Box(
                 modifier = Modifier
+                    .wrapContentSize()
                     .clip(RoundedCornerShape(25.dp))
                     .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(25.dp))
                     .background(MaterialTheme.colorScheme.surface)
+                    .clickable {
+                        onOpenNotification.invoke()
+                    }
                     .padding(horizontal = 5.dp, vertical = 5.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                contentAlignment = Alignment.Center
             ) {
                 Icon(
                     painter = painterResource(Res.drawable.ic_notifications_bold_500),
-                    contentDescription = "Chats",
+                    contentDescription = "Notifications",
                     tint = Color.Gray,
-                    modifier = Modifier
-                        .size(30.dp)
+                    modifier = Modifier.size(30.dp)
+                )
+            }
+            
+            // Location icon (go to current location)
+            Box(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .clip(RoundedCornerShape(25.dp))
+                    .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(25.dp))
+                    .background(MaterialTheme.colorScheme.surface)
+                    .clickable {
+                        viewModel.goToCurrentLocation()
+                    }
+                    .padding(horizontal = 5.dp, vertical = 5.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.MyLocation,
+                    contentDescription = "Go to current location",
+                    tint = Color.Gray,
+                    modifier = Modifier.size(30.dp)
                 )
             }
         }

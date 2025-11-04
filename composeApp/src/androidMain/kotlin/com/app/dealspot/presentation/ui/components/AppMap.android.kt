@@ -164,6 +164,11 @@ actual fun AppMap(
                 runCatching {
                     googleMap.isMyLocationEnabled = false
                     googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(view.context, R.raw.map_style))
+                    
+                    // Disable system icons on Map when click on my marker
+                    val uiSettings = googleMap.uiSettings
+                    uiSettings.isMapToolbarEnabled = false // Disables toolbar with system icons
+                    uiSettings.isMyLocationButtonEnabled = false // Already disabled but ensure it's off
                 }.onFailure { e ->
                     println("Error occur when try: INIT_MAP, Error: ${e.message}")
                 }

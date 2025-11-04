@@ -136,6 +136,13 @@ actual fun AppMap(
                     println("Error occur when try: INIT_MAP, Error: ${e.message}")
                 }
 
+                // Restore initial camera position immediately if available (before map renders)
+                // This prevents the visible zoom effect when navigating back to the map
+                if (initialCamera?.latitude.zeroIfNull() > 0.0 && initialCamera?.longitude.zeroIfNull() > 0.0) {
+                    val latLng = LatLng(initialCamera?.latitude.zeroIfNull(), initialCamera?.longitude.zeroIfNull())
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, initialCamera?.zoom.zeroIfNull()))
+                }
+
                 googleMap.setOnCameraIdleListener {
                     val cam = googleMap.cameraPosition
                     println("setOnCameraIdleListener. latitude: ${cam.target.latitude}, longitude: ${cam.target.longitude}")
@@ -154,11 +161,8 @@ actual fun AppMap(
                 }
 
                 googleMap.setOnMapLoadedCallback {
-                    println("setOnMapLoadedCallback. latitude: ${initialCamera?.latitude}, longitude: ${initialCamera?.longitude}")
-                    if (initialCamera?.latitude.zeroIfNull() > 0.0 || initialCamera?.longitude.zeroIfNull() > 0.0) {
-                        val latLng = LatLng(initialCamera?.latitude.zeroIfNull(), initialCamera?.longitude.zeroIfNull())
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, initialCamera?.zoom.zeroIfNull()))
-                    }
+                    println("setOnMapLoadedCallback. Map loaded")
+                    // We can load here another users Deal markers
                 }
             }
         }

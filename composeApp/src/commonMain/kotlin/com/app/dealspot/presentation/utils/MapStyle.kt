@@ -1,0 +1,31 @@
+package com.app.dealspot.presentation.utils
+
+fun mapStyle(): String {
+    return """
+                [
+                  {
+                    "elementType": "geometry",
+                    "stylers": [{ "saturation": -100 }, { "lightness": 10 }]
+                  },
+                  {
+                    "elementType": "labels.icon",
+                    "stylers": [{ "visibility": "off" }]
+                  },
+                  {
+                    "featureType": "road",
+                    "elementType": "geometry",
+                    "stylers": [{ "saturation": -100 }]
+                  },
+                  {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [{ "saturation": -100 }]
+                  },
+                  {
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [{ "saturation": -100 }]
+                  }
+                ]
+            """.trimIndent()
+}

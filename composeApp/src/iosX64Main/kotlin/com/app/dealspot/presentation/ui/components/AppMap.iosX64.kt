@@ -15,6 +15,7 @@ import cocoapods.GoogleMaps.GMSMapView
 import cocoapods.GoogleMaps.GMSMarker
 import cocoapods.GoogleMaps.animateWithCameraUpdate
 import com.app.dealspot.data.model.MapCameraState
+import com.app.dealspot.presentation.utils.mapStyle
 import com.app.dealspot.presentation.utils.zeroIfNull
 import kotlinx.cinterop.useContents
 import kotlinx.coroutines.delay
@@ -154,8 +155,14 @@ actual fun AppMap(
             // Disable system icons - matches Android's uiSettings.isMapToolbarEnabled = false
             mapView.settings.myLocationButton = false
 
-            val style = GMSMapStyle()
-            mapView.mapStyle = style
+            // Load map style (matches Android's grey style)
+            // Using embedded JSON string to avoid bundle dependency
+            val style = GMSMapStyle.styleWithJSONString(mapStyle(), null)
+            if (style != null) {
+                mapView.mapStyle = style
+            } else {
+                println("Failed to load map style from JSON string")
+            }
 
             // Restore initial camera position immediately if available (before map renders)
             // This prevents the visible zoom effect when navigating back to the map - matches Android

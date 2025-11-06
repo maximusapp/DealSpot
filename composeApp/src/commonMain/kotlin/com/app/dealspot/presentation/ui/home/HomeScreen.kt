@@ -71,6 +71,7 @@ internal fun HomeScreen(
                     .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(25.dp))
                     .background(MaterialTheme.colorScheme.surface)
                     .clickable {
+                        viewModel.resetCurrentLocationTrigger()
                         onOpenNotification.invoke()
                     }
                     .padding(horizontal = 5.dp, vertical = 5.dp),
@@ -117,9 +118,18 @@ internal fun HomeScreen(
                 settingsSelected = false,
                 chatsSelected = false,
                 onHomeClick = { /* already on Home */ },
-                onSettingsClick = onOpenSettings,
-                onChatsClick = onOpenChats,
-                onProfileClick = onOpenProfile,
+                onSettingsClick =  {
+                    viewModel.resetCurrentLocationTrigger()
+                    onOpenSettings.invoke()
+                },
+                onChatsClick =  {
+                    viewModel.resetCurrentLocationTrigger()
+                    onOpenChats.invoke()
+                },
+                onProfileClick = {
+                    viewModel.resetCurrentLocationTrigger()
+                    onOpenProfile.invoke()
+                },
                 onPlusClick = { /* TODO: handle */ }
             )
 

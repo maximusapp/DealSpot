@@ -23,4 +23,8 @@ class HomeScreenViewModel(
         _goToCurrentLocationTrigger.value++
     }
 
+    fun resetCurrentLocationTrigger() {
+        _goToCurrentLocationTrigger.value = 0
+    }
+
 }

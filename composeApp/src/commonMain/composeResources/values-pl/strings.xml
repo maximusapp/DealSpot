@@ -65,5 +65,13 @@
     <string name="congratulations">Gratulacje!</string>
     <string name="code_mismatch">Podany kod nie zgadza się z tym, co zostało wysłane na Twój adres e-mail</string>
     <string name="something_went_wrong">Coś poszło nie tak</string>
+    <string name="chat">Pogawędzić</string>
+    <string name="settings">Ustawienia</string>
+    <string name="profile">Profil</string>
+    <string name="notifications">Powiadomienia</string>
+    <string name="looking_for_service">Szukam usługi</string>
+    <string name="looking_for_service_description">Odkryj specjalistów w Twojej okolicy</string>
+    <string name="provide_service">Świadczę usługę</string>
+    <string name="provide_service_description">Podziel się swoimi umiejętnościami</string>
     <!--Polish-->
 </resources>

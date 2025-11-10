@@ -105,6 +105,8 @@ fun DealSpotOutlineButton(
 fun DealSpotTextButton(
     modifier: Modifier = Modifier,
     buttonText: String = "Some text",
+    fontWeight: FontWeight = FontWeight.W500,
+    textColor: Color = grey_700,
     onClick: () -> Unit = {}
 ) {
     TextButton(
@@ -114,8 +116,8 @@ fun DealSpotTextButton(
         Text(
             text = buttonText,
             fontSize = text_size_16,
-            color = grey_700,
-            fontWeight = FontWeight.W500,
+            color = textColor,
+            fontWeight = fontWeight,
             fontFamily = latoFontFamily()
         )
     }

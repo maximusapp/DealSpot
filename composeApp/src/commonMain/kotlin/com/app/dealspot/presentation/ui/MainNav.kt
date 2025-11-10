@@ -11,11 +11,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.app.dealspot.presentation.navigation.MainNavigation
-import com.app.dealspot.presentation.ui.home.HomeScreen
-import com.app.dealspot.presentation.ui.home.HomeScreenViewModel
+import com.app.dealspot.presentation.ui.home.home.HomeScreen
+import com.app.dealspot.presentation.ui.home.home.HomeScreenViewModel
 import com.app.dealspot.presentation.ui.home.chats.ChatsScreen
 import com.app.dealspot.presentation.ui.home.notifications.NotificationsScreen
 import com.app.dealspot.presentation.ui.home.profile.ProfileScreen
+import com.app.dealspot.presentation.ui.home.search_provide_for_service.looking_for_service.LookingForServiceScreen
+import com.app.dealspot.presentation.ui.home.search_provide_for_service.provide_service.ProvideServiceScreen
 import com.app.dealspot.presentation.ui.home.settings.SettingsScreen
 import com.app.dealspot.presentation.utils.defaultEnterTransition
 import com.app.dealspot.presentation.utils.defaultExitTransition
@@ -41,7 +43,9 @@ internal fun MainNav(
                 onOpenNotification = { navigator.navigate(MainNavigation.Notifications) },
                 onOpenSettings = { navigator.navigate(MainNavigation.Settings) },
                 onOpenChats = { navigator.navigate(MainNavigation.Chats) },
-                onOpenProfile = { navigator.navigate(MainNavigation.Profile) }
+                onOpenProfile = { navigator.navigate(MainNavigation.Profile) },
+                onLookingService = { navigator.navigate(MainNavigation.LookingForService) },
+                onProvideService = { navigator.navigate(MainNavigation.ProvideService) }
             )
         }
 
@@ -80,5 +84,23 @@ internal fun MainNav(
                     onBackClicked = { navigator.popBackStack() }
                 )
             }
+
+        composable<MainNavigation.LookingForService>(
+            enterTransition = { defaultEnterTransition() },
+            exitTransition = { defaultExitTransition() }
+        ) {
+            LookingForServiceScreen(
+                onBackClicked = { navigator.popBackStack() }
+            )
+        }
+
+        composable<MainNavigation.ProvideService>(
+            enterTransition = { defaultEnterTransition() },
+            exitTransition = { defaultExitTransition() }
+        ) {
+            ProvideServiceScreen(
+                onBackClicked = { navigator.popBackStack() }
+            )
+        }
     }
 }

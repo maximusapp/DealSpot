@@ -68,14 +68,16 @@ fun DealSpotTextInputField(
         modifier = modifier.height(dimens_58).fillMaxWidth(),
         singleLine = true,
         shape = RoundedCornerShape(dimens_5),
-        leadingIcon = {
-            leftIcon?.let {
+        leadingIcon = if (leftIcon != null) {
+            {
                 Icon(
-                    painter = painterResource(it),
+                    painter = painterResource(leftIcon),
                     contentDescription = "Some Icon",
                     tint = leftIconTint
                 )
             }
+        } else {
+            null
         },
         trailingIcon = if (isPasswordField) trailingPasswordIcon else null,
         colors = OutlinedTextFieldDefaults.colors(

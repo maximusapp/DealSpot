@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.ui.home
+package com.app.dealspot.presentation.ui.home.home
 
 import androidx.lifecycle.ViewModel
 import com.app.dealspot.data.model.MapCameraState

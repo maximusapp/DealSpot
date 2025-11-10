@@ -65,5 +65,13 @@
     <string name="congratulations">Čestitam!</string>
     <string name="code_mismatch">Navedeni kod ne odgovara onome što je poslano na vašu e-poštu</string>
     <string name="something_went_wrong">Nešto je pošlo po zlu</string>
+    <string name="chat">Čavrljanje</string>
+    <string name="settings">Postavkama</string>
+    <string name="profile">Profil</string>
+    <string name="notifications">Obavijesti</string>
+    <string name="looking_for_service">Tražite uslugu</string>
+    <string name="looking_for_service_description">Otkrijte profesionalce u svojoj blizini</string>
+    <string name="provide_service">Pružam uslugu</string>
+    <string name="provide_service_description">Podijelite svoje vještine</string>
     <!--Croatian -->
 </resources>

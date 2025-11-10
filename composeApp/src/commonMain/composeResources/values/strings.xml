@@ -64,9 +64,12 @@
     <string name="congratulations">Congratulations!</string>
     <string name="code_mismatch">The provided code doesn't match what was sent to your email</string>
     <string name="something_went_wrong">Something went wrong</string>
-
-    <string name="chats">Chats</string>
+    <string name="chat">Chat</string>
     <string name="settings">Settings</string>
     <string name="profile">Profile</string>
     <string name="notifications">Notifications</string>
+    <string name="looking_for_service">Looking for a service</string>
+    <string name="looking_for_service_description">Discover professionals near you</string>
+    <string name="provide_service">I provide a service</string>
+    <string name="provide_service_description">Share your skills</string>
 </resources>

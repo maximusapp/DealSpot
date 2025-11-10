@@ -65,4 +65,12 @@
     <string name="congratulations">Félicitations!</string>
     <string name="code_mismatch">Le code fourni ne correspond pas à ce qui a été envoyé à votre adresse e-mail</string>
     <string name="something_went_wrong">Quelque chose s’est mal passé</string>
+    <string name="chat">Bavarder</string>
+    <string name="settings">Paramètres</string>
+    <string name="profile">Profil</string>
+    <string name="notifications">Notifications</string>
+    <string name="looking_for_service">À la recherche d’un service</string>
+    <string name="looking_for_service_description">Découvrez des professionnels près de chez vous</string>
+    <string name="provide_service">Je fournis un service</string>
+    <string name="provide_service_description">Partagez vos compétences</string>
 </resources>

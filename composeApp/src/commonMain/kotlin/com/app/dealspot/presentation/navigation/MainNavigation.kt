@@ -21,4 +21,10 @@ sealed interface MainNavigation {
 
     @Serializable
     data object Notifications : MainNavigation
+
+    @Serializable
+    data object LookingForService : MainNavigation
+
+    @Serializable
+    data object ProvideService : MainNavigation
 }

@@ -65,4 +65,12 @@
     <string name="congratulations">Вітаємо!</string>
     <string name="code_mismatch">Наданий код не збігається з тим, що було надіслано на вашу електронну пошту</string>
     <string name="something_went_wrong">Щось пішло не так</string>
+    <string name="chat">Чат</string>
+    <string name="settings">Налаштування</string>
+    <string name="profile">Профіль</string>
+    <string name="notifications">Нотифікації</string>
+    <string name="looking_for_service">Шукаю послугу</string>
+    <string name="looking_for_service_description">Знайдіть професіоналів поруч із вами</string>
+    <string name="provide_service">Надаю послугу</string>
+    <string name="provide_service_description">Поділіться своїми навичками</string>
 </resources>

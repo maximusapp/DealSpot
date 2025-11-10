@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.ui.home.chats
+package com.app.dealspot.presentation.ui.home.search_provide_for_service.provide_service
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,10 +19,12 @@ import com.app.dealspot.presentation.theme.text_size_24
 import com.app.dealspot.presentation.ui.components.TopBar
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.chat
+import dealspot.composeapp.generated.resources.looking_for_service
+import dealspot.composeapp.generated.resources.provide_service
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun ChatsScreen(
+fun ProvideServiceScreen(
     onBackClicked: () -> Unit = {}
 ) {
     Box(
@@ -36,7 +38,7 @@ fun ChatsScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TopBar(
-                title = stringResource(Res.string.chat),
+                title = stringResource(Res.string.provide_service),
                 screenType = ScreenType.CHATS,
                 onBackClicked = {
                     onBackClicked.invoke()
@@ -46,7 +48,7 @@ fun ChatsScreen(
             SpacerHeight25Dp()
 
             Text(
-                text = "Chats",
+                text = "Here you can create service you provided",
                 fontSize = text_size_24,
                 color = Grey,
                 fontWeight = FontWeight.W700,

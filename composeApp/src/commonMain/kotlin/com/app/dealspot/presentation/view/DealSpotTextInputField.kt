@@ -44,6 +44,7 @@ fun DealSpotTextInputField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Unspecified,
     prevValue: String = "",
+    labelTextColor: Color = DealSpotDark,
     inputText: (String) -> Unit
 ) {
 
@@ -60,7 +61,7 @@ fun DealSpotTextInputField(
 
     OutlinedTextField(
         value = prevValue.ifEmpty { text },
-        label = { Text(text = placeHolderText, color = DealSpotDark) },
+        label = { Text(text = placeHolderText, color = labelTextColor) },
         onValueChange = {
             text = it
             inputText.invoke(it)

@@ -1,28 +1,20 @@
 package com.app.dealspot.presentation.view
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Icon
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
 import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.dimens_1
@@ -32,11 +24,8 @@ import com.app.dealspot.presentation.theme.grey_700
 import com.app.dealspot.presentation.theme.grey_light
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
-import com.app.dealspot.presentation.theme.text_size_14
 import com.app.dealspot.presentation.theme.text_size_16
 import com.app.dealspot.presentation.theme.text_size_18
-import dealspot.composeapp.generated.resources.Res
-import dealspot.composeapp.generated.resources.ic_circle_check
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -74,21 +63,27 @@ fun DealSpotOutlineButton(
     enable: Boolean = true,
     textSize: TextUnit = text_size_16,
     buttonHeight: Dp = dimens_50,
+    fillWidth: Boolean = true,
+    shape: Shape = RoundedCornerShape(dimens_12),
+    containerColor: Color = Color.Transparent,
+    borderColor: Color = if (enable) DealSpotDark else grey_light,
     onClick: () -> Unit = {}
 ) {
+    val appliedModifier = if (fillWidth) modifier.fillMaxWidth() else modifier
+
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth()
+        modifier = appliedModifier
             .height(buttonHeight),
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = if (enable) DealSpotDark else grey_middle
+            contentColor = if (enable) DealSpotDark else grey_middle,
+            containerColor = containerColor
         ),
         border = BorderStroke(
             width = dimens_1,
-            color = if (enable) DealSpotDark else grey_light
+            color = borderColor
         ),
-        shape = RoundedCornerShape(dimens_12),
+        shape = shape,
         enabled = enable
     ) {
         Text(

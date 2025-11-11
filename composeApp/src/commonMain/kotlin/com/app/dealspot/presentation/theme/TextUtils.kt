@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 
 @Suppress("ComposableNaming")
@@ -106,13 +107,14 @@ fun titleSmallW700HeadlineMedium(
 @Composable
 fun titleSmallW700HeadlineLarge(
     text: String = "",
+    textColor: Color = grey_700,
     modifier: Modifier = Modifier
 ) {
     Text(
         modifier = modifier,
         text = text,
         style = MaterialTheme.typography.titleLarge,
-        color = grey_700,
+        color = textColor,
         fontWeight = FontWeight.W700,
         fontFamily = latoFontFamily()
     )

@@ -1,4 +1,4 @@
-package com.app.dealspot.presentation.ui.home.search_provide_for_service.looking_for_service.selection
+package com.app.dealspot.presentation.ui.home.search_provide_for_service.selection
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -33,6 +33,7 @@ import androidx.compose.material.icons.outlined.Brush
 import androidx.compose.material.icons.outlined.CleaningServices
 import androidx.compose.material.icons.outlined.Computer
 import androidx.compose.material.icons.outlined.Construction
+import androidx.compose.material.icons.outlined.DevicesOther
 import androidx.compose.material.icons.outlined.DirectionsCar
 import androidx.compose.material.icons.outlined.Eco
 import androidx.compose.material.icons.outlined.ExpandLess
@@ -62,7 +63,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.app.dealspot.presentation.theme.BorderColor
 import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.SpacerHeight12Dp
@@ -77,7 +77,9 @@ import com.app.dealspot.presentation.view.DealSpotTextInputField
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.ic_search
 import androidx.compose.ui.text.input.ImeAction
+import com.app.dealspot.presentation.theme.SpacerWidth15Dp
 import com.app.dealspot.presentation.theme.dimens_1
+import com.app.dealspot.presentation.theme.grey_middle
 
 private val SheetShape = RoundedCornerShape(dimens_20)
 
@@ -92,42 +94,40 @@ private val serviceCategories = listOf(
         name = "Skilled Trades & Technical Services",
         icon = Icons.Outlined.Construction,
         services = listOf(
-            "Electrician", "Plumber", "Carpenter", "Mason / Bricklayer", "Roofer", "Welder",
-            "Blacksmith", "Sheet Metal Worker", "HVAC Technician", "Pipefitter / Steamfitter",
-            "Boilermaker", "Insulator", "Tiler", "Drywaller", "Painter", "Floor Layer", "Glazier",
-            "Locksmith", "Scaffold Builder", "Concrete Finisher", "Heavy Equipment Operator",
-            "Crane Operator", "Surveyor", "Construction Worker", "Solar Panel Installer",
-            "Telecommunications Technician", "Appliance Repair Technician", "Maintenance Technician",
-            "Handyman", "Facility Manager", "Building Inspector"
+            "Electrician", "Plumber", "Carpenter", "Welder",
+            "Painter", "Locksmith", "Solar Panel", "Handyman",
+            "Heating, Ventilation & Air Conditioning", "Gas Fitter", "Refrigeration Mechanic",
+            "Boiler Technician", "Water Treatment Installer", "Fire Protection Installer",
+            "Elevator installer", "Smart Home Technician", "Security System Installer", "Network Installer",
+            "Wind Renewable Energy Technician", "Woodcarver", "Paving Installer (Asphalt, Concrete, Pavers)", "Lighting",
+            "Household appliance repair"
         )
     ),
     ServiceCategory(
-        name = "Building, Cleaning & Environmental Services",
+        name = "Building & Cleaning Services",
         icon = Icons.Outlined.CleaningServices,
         services = listOf(
-            "Janitor", "Custodian", "Housekeeper", "Hotel Cleaner", "Window Cleaner", "Pest Control Technician",
-            "Waste Collector", "Landscaper", "Gardener", "Tree Surgeon / Arborist", "Lawn Care Specialist",
-            "Pool Maintenance Technician", "Snow Removal Operator"
+            "Janitor", "Housekeeper", "Hotel Cleaner", "Window Cleaner", "Pest Control Technician",
+            "Waste Collector", "Landscaper", "Gardener", "Tree Surgeon", "Lawn Care Specialist",
+            "Pool Maintenance Technician", "Snow Removal", "Interior Designer", "Interior Decorator",
+            "Bricklayer / Mason", "Rebar Installer (Steel Fixer)", "Formwork Carpenter", "Construction Worker",
+            "Framer (Wood or Metal Stud)", "Drywaller", "Roofer", "Tiler (Roof, Floor, or Wall)", "Demolition Worker",
+            "Plasterer", "Wallpaper Installer", "Floor Layer (Vinyl, Laminate, Hardwood)", "Ceiling Installer (Drop, Stretch)",
+            "Window Installer", "Door Installer", "Glazier (Glass Installer)", "Joiner", "Kitchen Fitter",
+            "Bathroom Fitter", "Countertop Fabricator (Stone / Quartz)", "Stone Mason", "Stair Installer",
+            "Fence Installer", "Irrigation System Installer", "Epoxy Floor Installer"
         )
     ),
     ServiceCategory(
         name = "Health & Human Services",
         icon = Icons.Outlined.HealthAndSafety,
         services = listOf(
-            "Doctor", "Nurse", "Paramedic", "Dentist", "Pharmacist", "Physical Therapist", "Occupational Therapist",
-            "Speech Therapist", "Radiologic Technologist", "Optometrist", "Psychologist", "Psychiatrist",
-            "Social Worker", "Counselor", "Addiction Counselor", "Child Protection Worker", "Home Health Aide",
-            "Nutritionist / Dietitian", "Fitness Trainer", "Massage Therapist", "Veterinarian"
+            "Doctor", "Nurse", "Physical Therapist", "Speech Therapist", "Psychologist", "Psychiatrist",
+            "Housekeeping assistant", "Nutritionist / Dietitian", "Fitness Trainer", "Massage Therapist", "Veterinarian"
         )
     ),
-    ServiceCategory(
-        name = "Education & Training Services",
-        icon = Icons.Outlined.School,
-        services = listOf(
-            "Teaching Assistant", "Special Education Teacher", "Educational Aide",
-            "School Counselor", "Coach", "Corporate Trainer", "Librarian", "Archivist", "Childcare Worker", "Nanny"
-        )
-    ),
+
+    // TODO() ЗУПИНИВСЯ ТУТ
     ServiceCategory(
         name = "Personal & Lifestyle Services",
         icon = Icons.Outlined.Person,
@@ -170,12 +170,9 @@ private val serviceCategories = listOf(
         )
     ),
     ServiceCategory(
-        name = "Transportation & Logistics Services",
+        name = "Auto Services",
         icon = Icons.Outlined.DirectionsCar,
-        services = listOf(
-            "Truck Driver", "Delivery Driver", "Taxi Driver", "Pilot", "Flight Attendant", "Train Conductor",
-            "Bus Driver", "Ship Captain", "Dock Worker", "Logistics Coordinator", "Courier"
-        )
+        services = listOf("Auto mechanic", "Auto electrician", "Other")
     ),
     ServiceCategory(
         name = "Creative, Cultural & Media Services",
@@ -198,6 +195,13 @@ private val serviceCategories = listOf(
         icon = Icons.Outlined.FavoriteBorder,
         services = listOf(
             "Funeral Director", "Mortician", "Embalmer", "Crematorium Operator", "Bereavement Counselor"
+        )
+    ),
+    ServiceCategory(
+        name = "Other Services",
+        icon = Icons.Outlined.DevicesOther,
+        services = listOf(
+            "Walking pets", "Take out the trash"
         )
     )
 )
@@ -358,7 +362,7 @@ fun ServiceSelectionSheet(
                         fillWidth = false,
                         shape = RoundedCornerShape(18.dp),
                         containerColor = white,
-                        borderColor = BorderColor
+                        borderColor = grey_middle
                     ) {
                         onDismissRequest()
                     }
@@ -410,13 +414,14 @@ private fun CategoryRow(
                 Text(
                     text = category.name,
                     style = MaterialTheme.typography.titleMedium.copy(fontFamily = latoFontFamily()),
+                    fontWeight = FontWeight.W600,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
                 if (isExpanded) {
                     Text(
                         text = "Select a service",
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodySmall.copy(fontFamily = latoFontFamily()),
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
@@ -460,7 +465,7 @@ private fun ServiceResultRow(
             )
         }
 
-        Spacer(modifier = Modifier.width(16.dp))
+        SpacerWidth15Dp()
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
@@ -470,7 +475,7 @@ private fun ServiceResultRow(
             )
             Text(
                 text = category.name,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodySmall.copy(fontFamily = latoFontFamily()),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -499,6 +504,7 @@ fun ServiceSelectionField(
             if (selectedService != null) {
                 Text(
                     text = selectedService,
+                    fontWeight = FontWeight.W600,
                     style = MaterialTheme.typography.titleMedium.copy(fontFamily = latoFontFamily())
                 )
                 selectedCategory?.let {

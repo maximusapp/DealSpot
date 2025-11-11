@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import com.app.dealspot.business.ScreenType
-import com.app.dealspot.presentation.theme.DealSpotDark
+import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.SpacerHeight10Dp
 import com.app.dealspot.presentation.theme.SpacerHeight25Dp
 import com.app.dealspot.presentation.theme.dimens_20
@@ -24,8 +24,8 @@ import com.app.dealspot.presentation.theme.dimens_60
 import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.text_size_16
 import com.app.dealspot.presentation.ui.components.TopBar
-import com.app.dealspot.presentation.ui.home.search_provide_for_service.looking_for_service.selection.ServiceSelectionField
-import com.app.dealspot.presentation.ui.home.search_provide_for_service.looking_for_service.selection.ServiceSelectionSheet
+import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionField
+import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionSheet
 import com.app.dealspot.presentation.view.DealSpotTextInputField
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.looking_for_service
@@ -57,7 +57,7 @@ fun LookingForServiceScreen(
             ) {
                 TopBar(
                     title = stringResource(Res.string.looking_for_service),
-                    screenType = ScreenType.CHATS,
+                    screenType = ScreenType.LOOKING_FOR_SERVICE,
                     onBackClicked = {
                         onBackClicked.invoke()
                     }
@@ -69,12 +69,10 @@ fun LookingForServiceScreen(
                     modifier = Modifier.align(Alignment.Start),
                     text = "Describe the problem that needs to be solved",
                     fontSize = text_size_16,
-                    color = DealSpotDark,
+                    color = Grey,
                     fontWeight = FontWeight.W600,
                     fontFamily = latoFontFamily()
                 )
-
-                SpacerHeight10Dp()
 
                 DealSpotTextInputField(
                     modifier = Modifier,
@@ -90,7 +88,7 @@ fun LookingForServiceScreen(
                     modifier = Modifier.align(Alignment.Start),
                     text = "What service do you need?",
                     fontSize = text_size_16,
-                    color = DealSpotDark,
+                    color = Grey,
                     fontWeight = FontWeight.W600,
                     fontFamily = latoFontFamily()
                 )
@@ -102,31 +100,7 @@ fun LookingForServiceScreen(
                     selectedService = selectedService,
                     onClick = { showSelectionSheet = true }
                 )
-
-//            ServiceSelectionSheet(
-//                visible = showSelectionSheet,
-//                selectedCategory = selectedCategory,
-//                selectedService = selectedService,
-//                onDismissRequest = { showSelectionSheet = false },
-//                onServiceSelected = { category, service ->
-//                    selectedCategory = category
-//                    selectedService = service
-//                    showSelectionSheet = false
-//                }
-//            )
             }
-
-//            ServiceSelectionSheet(
-//                visible = showSelectionSheet,
-//                selectedCategory = selectedCategory,
-//                selectedService = selectedService,
-//                onDismissRequest = { showSelectionSheet = false },
-//                onServiceSelected = { category, service ->
-//                    selectedCategory = category
-//                    selectedService = service
-//                    showSelectionSheet = false
-//                }
-//            )
         }
 
         ServiceSelectionSheet(

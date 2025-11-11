@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import com.app.dealspot.business.ScreenType
+import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.dimens_30
 import com.app.dealspot.presentation.theme.titleSmallW700HeadlineLarge
@@ -45,6 +46,6 @@ fun TopBar(
             tint = Grey
         )
 
-        titleSmallW700HeadlineLarge(text = title)
+        titleSmallW700HeadlineLarge(text = title, textColor = DealSpotDark)
     }
 }

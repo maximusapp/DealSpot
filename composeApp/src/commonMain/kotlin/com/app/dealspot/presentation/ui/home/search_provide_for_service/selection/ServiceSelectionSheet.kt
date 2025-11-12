@@ -85,7 +85,9 @@ private val SheetShape = RoundedCornerShape(dimens_16)
 
 @Composable
 private fun getServiceCategories(): List<ServiceCategoryEntity> {
+    // Categories ordered by priority - most popular and frequently needed first
     return listOf(
+    // 1. Household appliances - Most common daily repairs (washing machines, refrigerators, etc.)
     ServiceCategoryEntity(
         id = 1,
         name = stringResource(Res.string.category_household_appliances),
@@ -149,6 +151,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
             ServiceEntity(id = 58, categoryId = 1, name = stringResource(Res.string.service_boiler_dismantling))
         )
     ),
+    // 2. Skilled Trades & Technical Services - Electricians, plumbers, handymen (very common)
     ServiceCategoryEntity(
         id = 2,
         name = stringResource(Res.string.category_skilled_trades_technical_services),
@@ -178,6 +181,18 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
             ServiceEntity(id = 80, categoryId = 2, name = stringResource(Res.string.service_lighting_specialist))
         )
     ),
+    // 3. Auto Services - Car repairs are very common
+    ServiceCategoryEntity(
+        id = 10,
+        name = stringResource(Res.string.category_auto_services),
+        icon = Icons.Outlined.DirectionsCar,
+        services = listOf(
+            ServiceEntity(id = 163, categoryId = 10, name = stringResource(Res.string.service_auto_mechanic)),
+            ServiceEntity(id = 164, categoryId = 10, name = stringResource(Res.string.service_auto_electrician)),
+            ServiceEntity(id = 165, categoryId = 10, name = stringResource(Res.string.service_other))
+        )
+    ),
+    // 4. Building & Cleaning Services - Cleaning, maintenance, construction
     ServiceCategoryEntity(
         id = 3,
         name = stringResource(Res.string.category_building_cleaning_services),
@@ -224,6 +239,35 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
             ServiceEntity(id = 120, categoryId = 3, name = stringResource(Res.string.service_upholstered_furniture_carpet_cleaning))
         )
     ),
+    // 5. Technology & Information Services - IT support, computer repairs
+    ServiceCategoryEntity(
+        id = 9,
+        name = stringResource(Res.string.category_technology_information_services),
+        icon = Icons.Outlined.Computer,
+        services = listOf(
+            ServiceEntity(id = 159, categoryId = 9, name = stringResource(Res.string.service_network_administrator)),
+            ServiceEntity(id = 160, categoryId = 9, name = stringResource(Res.string.service_cybersecurity_specialist)),
+            ServiceEntity(id = 161, categoryId = 9, name = stringResource(Res.string.service_software_engineer)),
+            ServiceEntity(id = 162, categoryId = 9, name = stringResource(Res.string.service_repair_maintenance_computer_equipment))
+        )
+    ),
+    // 6. Personal & Lifestyle Services - Haircuts, personal care
+    ServiceCategoryEntity(
+        id = 5,
+        name = stringResource(Res.string.category_personal_lifestyle_services),
+        icon = Icons.Outlined.Person,
+        services = listOf(
+            ServiceEntity(id = 132, categoryId = 5, name = stringResource(Res.string.service_barber)),
+            ServiceEntity(id = 133, categoryId = 5, name = stringResource(Res.string.service_hair_stylist)),
+            ServiceEntity(id = 134, categoryId = 5, name = stringResource(Res.string.service_makeup_artist)),
+            ServiceEntity(id = 135, categoryId = 5, name = stringResource(Res.string.service_nail_technician)),
+            ServiceEntity(id = 136, categoryId = 5, name = stringResource(Res.string.service_cosmetologist)),
+            ServiceEntity(id = 137, categoryId = 5, name = stringResource(Res.string.service_tattoo_artist)),
+            ServiceEntity(id = 138, categoryId = 5, name = stringResource(Res.string.service_seamstress)),
+            ServiceEntity(id = 139, categoryId = 5, name = stringResource(Res.string.service_personal_trainer))
+        )
+    ),
+    // 7. Health & Human Services - Medical services
     ServiceCategoryEntity(
         id = 4,
         name = stringResource(Res.string.category_health_human_services),
@@ -242,21 +286,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
             ServiceEntity(id = 131, categoryId = 4, name = stringResource(Res.string.service_veterinarian))
         )
     ),
-    ServiceCategoryEntity(
-        id = 5,
-        name = stringResource(Res.string.category_personal_lifestyle_services),
-        icon = Icons.Outlined.Person,
-        services = listOf(
-            ServiceEntity(id = 132, categoryId = 5, name = stringResource(Res.string.service_barber)),
-            ServiceEntity(id = 133, categoryId = 5, name = stringResource(Res.string.service_hair_stylist)),
-            ServiceEntity(id = 134, categoryId = 5, name = stringResource(Res.string.service_makeup_artist)),
-            ServiceEntity(id = 135, categoryId = 5, name = stringResource(Res.string.service_nail_technician)),
-            ServiceEntity(id = 136, categoryId = 5, name = stringResource(Res.string.service_cosmetologist)),
-            ServiceEntity(id = 137, categoryId = 5, name = stringResource(Res.string.service_tattoo_artist)),
-            ServiceEntity(id = 138, categoryId = 5, name = stringResource(Res.string.service_seamstress)),
-            ServiceEntity(id = 139, categoryId = 5, name = stringResource(Res.string.service_personal_trainer))
-        )
-    ),
+    // 8. Food & Hospitality Services
     ServiceCategoryEntity(
         id = 6,
         name = stringResource(Res.string.category_food_hospitality_services),
@@ -274,6 +304,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
             ServiceEntity(id = 150, categoryId = 6, name = stringResource(Res.string.service_tour_guide))
         )
     ),
+    // 9. Business, Finance & Administrative Services
     ServiceCategoryEntity(
         id = 7,
         name = stringResource(Res.string.category_business_finance_administrative_services),
@@ -284,6 +315,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
             ServiceEntity(id = 153, categoryId = 7, name = stringResource(Res.string.service_real_estate_agent))
         )
     ),
+    // 10. Legal & Protective Services
     ServiceCategoryEntity(
         id = 8,
         name = stringResource(Res.string.category_legal_protective_services),
@@ -295,27 +327,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
             ServiceEntity(id = 157, categoryId = 8, name = stringResource(Res.string.service_security_guard))
         )
     ),
-    ServiceCategoryEntity(
-        id = 9,
-        name = stringResource(Res.string.category_technology_information_services),
-        icon = Icons.Outlined.Computer,
-        services = listOf(
-            ServiceEntity(id = 159, categoryId = 9, name = stringResource(Res.string.service_network_administrator)),
-            ServiceEntity(id = 160, categoryId = 9, name = stringResource(Res.string.service_cybersecurity_specialist)),
-            ServiceEntity(id = 161, categoryId = 9, name = stringResource(Res.string.service_software_engineer)),
-            ServiceEntity(id = 162, categoryId = 9, name = stringResource(Res.string.service_repair_maintenance_computer_equipment))
-        )
-    ),
-    ServiceCategoryEntity(
-        id = 10,
-        name = stringResource(Res.string.category_auto_services),
-        icon = Icons.Outlined.DirectionsCar,
-        services = listOf(
-            ServiceEntity(id = 163, categoryId = 10, name = stringResource(Res.string.service_auto_mechanic)),
-            ServiceEntity(id = 164, categoryId = 10, name = stringResource(Res.string.service_auto_electrician)),
-            ServiceEntity(id = 165, categoryId = 10, name = stringResource(Res.string.service_other))
-        )
-    ),
+    // 11. Creative, Cultural & Media Services
     ServiceCategoryEntity(
         id = 11,
         name = stringResource(Res.string.category_creative_cultural_media_services),
@@ -334,6 +346,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
             ServiceEntity(id = 177, categoryId = 11, name = stringResource(Res.string.service_translator))
         )
     ),
+    // 12. Other Services - Catch-all category (last)
     ServiceCategoryEntity(
         id = 12,
         name = stringResource(Res.string.category_other_services),

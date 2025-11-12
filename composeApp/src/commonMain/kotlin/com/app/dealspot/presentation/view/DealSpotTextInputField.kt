@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.dimens_5
 import com.app.dealspot.presentation.theme.dimens_58
+import com.app.dealspot.presentation.theme.grey_700
 import com.app.dealspot.presentation.theme.grey_light
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.transparent
@@ -45,9 +46,74 @@ fun DealSpotTextInputField(
     imeAction: ImeAction = ImeAction.Unspecified,
     prevValue: String = "",
     labelTextColor: Color = DealSpotDark,
+    isSingleLine: Boolean = true,
     inputText: (String) -> Unit
 ) {
+    BaseDealSpotTextField(
+        modifier = modifier,
+        value = prevValue,
+        onValueChange = inputText,
+        isPasswordField = isPasswordField,
+        leftIcon = leftIcon,
+        leftIconTint = leftIconTint,
+        keyboardType = keyboardType,
+        keyboardActions = keyboardActions,
+        imeAction = imeAction,
+        isSingleLine = isSingleLine,
+        labelTextColor = labelTextColor,
+        placeHolderText = placeHolderText,
+        useFloatingLabel = true
+    )
+}
 
+@Composable
+fun DealSpotTextInputFieldWithInnerPlaceholderText(
+    modifier: Modifier,
+    placeHolderText: String = "Test placeholder",
+    isPasswordField: Boolean = false,
+    leftIcon: DrawableResource? = null,
+    leftIconTint: Color = grey_middle,
+    keyboardType: KeyboardType = KeyboardType.Unspecified,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    imeAction: ImeAction = ImeAction.Unspecified,
+    prevValue: String = "",
+    labelTextColor: Color = grey_700,
+    isSingleLine: Boolean = true,
+    inputText: (String) -> Unit
+) {
+    BaseDealSpotTextField(
+        modifier = modifier,
+        value = prevValue,
+        onValueChange = inputText,
+        isPasswordField = isPasswordField,
+        leftIcon = leftIcon,
+        leftIconTint = leftIconTint,
+        keyboardType = keyboardType,
+        keyboardActions = keyboardActions,
+        imeAction = imeAction,
+        isSingleLine = isSingleLine,
+        labelTextColor = labelTextColor,
+        placeHolderText = placeHolderText,
+        useFloatingLabel = false
+    )
+}
+
+@Composable
+private fun BaseDealSpotTextField(
+    modifier: Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    isPasswordField: Boolean,
+    leftIcon: DrawableResource?,
+    leftIconTint: Color,
+    keyboardType: KeyboardType,
+    keyboardActions: KeyboardActions,
+    imeAction: ImeAction,
+    isSingleLine: Boolean,
+    labelTextColor: Color,
+    placeHolderText: String,
+    useFloatingLabel: Boolean
+) {
     var text by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
@@ -59,26 +125,37 @@ fun DealSpotTextInputField(
         }
     }
 
+    val currentValue = value.ifEmpty { text }
+
     OutlinedTextField(
-        value = prevValue.ifEmpty { text },
-        label = { Text(text = placeHolderText, color = labelTextColor) },
+        value = currentValue,
+        placeholder = if (!useFloatingLabel) {
+            {
+                if (currentValue.isEmpty()) {
+                    Text(text = placeHolderText, color = labelTextColor)
+                }
+            }
+        } else null,
+        label = if (useFloatingLabel) {
+            { Text(text = placeHolderText, color = labelTextColor) }
+        } else null,
         onValueChange = {
             text = it
-            inputText.invoke(it)
+            onValueChange.invoke(it)
         },
-        modifier = modifier.height(dimens_58).fillMaxWidth(),
-        singleLine = true,
+        modifier = modifier
+            .height(dimens_58)
+            .fillMaxWidth(),
+        singleLine = isSingleLine,
         shape = RoundedCornerShape(dimens_5),
-        leadingIcon = if (leftIcon != null) {
+        leadingIcon = leftIcon?.let {
             {
                 Icon(
-                    painter = painterResource(leftIcon),
+                    painter = painterResource(it),
                     contentDescription = "Some Icon",
                     tint = leftIconTint
                 )
             }
-        } else {
-            null
         },
         trailingIcon = if (isPasswordField) trailingPasswordIcon else null,
         colors = OutlinedTextFieldDefaults.colors(
@@ -92,7 +169,7 @@ fun DealSpotTextInputField(
         } else {
             VisualTransformation.None
         },
-        isError = false, // Set true if needed to indicate an error state
+        isError = false,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = keyboardActions
     )

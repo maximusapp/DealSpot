@@ -73,5 +73,228 @@
     <string name="looking_for_service_description">Otkrijte profesionalce u svojoj blizini</string>
     <string name="provide_service">Pružam uslugu</string>
     <string name="provide_service_description">Podijelite svoje vještine</string>
+    
+    <!-- Service Categories -->
+    <string name="category_household_appliances">Kućni aparati</string>
+    <string name="category_skilled_trades_technical_services">Stručni zanati i tehničke usluge</string>
+    <string name="category_building_cleaning_services">Građevinske i čistačke usluge</string>
+    <string name="category_health_human_services">Zdravstvene i ljudske usluge</string>
+    <string name="category_personal_lifestyle_services">Osobne i lifestyle usluge</string>
+    <string name="category_food_hospitality_services">Prehrambene i ugostiteljske usluge</string>
+    <string name="category_business_finance_administrative_services">Poslovne, financijske i administrativne usluge</string>
+    <string name="category_legal_protective_services">Pravne i zaštitne usluge</string>
+    <string name="category_technology_information_services">Tehnološke i informacijske usluge</string>
+    <string name="category_auto_services">Auto usluge</string>
+    <string name="category_creative_cultural_media_services">Kreativne, kulturne i medijske usluge</string>
+    <string name="category_other_services">Ostale usluge</string>
+    
+    <!-- Services - Household appliances -->
+    <string name="service_all_home_appliance_repair_services">Sve usluge popravke kućnih aparata</string>
+    <string name="service_deep_fryer_repair">Popravak friteze</string>
+    <string name="service_kitchen_hood_repair">Popravak kuhinjske nape</string>
+    <string name="service_grill_repair">Popravak roštilja</string>
+    <string name="service_water_cooler_cleaning">Čišćenje hladnjaka za vodu</string>
+    <string name="service_air_conditioner_cleaning">Čišćenje klima uređaja</string>
+    <string name="service_water_heater_boiler_cleaning">Čišćenje bojlera</string>
+    <string name="service_sewing_machine_repair">Popravak šivaćeg stroja</string>
+    <string name="service_refrigeration_equipment_display_case_repair">Popravak rashladne opreme i vitrina</string>
+    <string name="service_refrigerator_repair">Popravak hladnjaka</string>
+    <string name="service_bread_maker_repair">Popravak stroja za kruh</string>
+    <string name="service_camera_repair">Popravak kamere</string>
+    <string name="service_hair_dryer_repair">Popravak fen za kosu</string>
+    <string name="service_dough_mixer_repair">Popravak mješalice za tijesto</string>
+    <string name="service_telephone_repair">Popravak telefona</string>
+    <string name="service_television_repair">Popravak televizora</string>
+    <string name="service_dryer_repair">Popravak sušilice</string>
+    <string name="service_pressure_cooker_repair">Popravak ekspres lonca</string>
+    <string name="service_tv_remote_control_repair">Popravak TV daljinskog upravljača</string>
+    <string name="service_projector_repair">Popravak projektora</string>
+    <string name="service_iron_repair">Popravak peglice</string>
+    <string name="service_washing_machine_repair">Popravak perilice rublja</string>
+    <string name="service_dishwasher_repair">Popravak perilice posuđa</string>
+    <string name="service_vacuum_cleaner_repair">Popravak usisavača</string>
+    <string name="service_overlock_machine_repair">Popravak overlock stroja</string>
+    <string name="service_instant_water_heater_repair">Popravak protočnog grijača vode</string>
+    <string name="service_multicooker_repair">Popravak multicookera</string>
+    <string name="service_music_center_repair">Popravak glazbenog centra</string>
+    <string name="service_freezer_repair">Popravak zamrzivača</string>
+    <string name="service_microwave_oven_repair">Popravak mikrovalne pećnice</string>
+    <string name="service_ice_maker_repair">Popravak proizvođača leda</string>
+    <string name="service_kitchen_food_processor_repair">Popravak kuhinjskog procesora hrane</string>
+    <string name="service_water_cooler_repair">Popravak hladnjaka za vodu</string>
+    <string name="service_air_conditioner_repair">Popravak klima uređaja</string>
+    <string name="service_space_heater_repair">Popravak prijenosnog grijača</string>
+    <string name="service_coffee_maker_repair">Popravak aparata za kavu</string>
+    <string name="service_induction_cooktop_repair">Popravak indukcijske ploče</string>
+    <string name="service_electric_stove_repair">Popravak električnog štednjaka</string>
+    <string name="service_electric_cooktop_repair">Popravak električne ploče za kuhanje</string>
+    <string name="service_electric_meat_grinder_repair">Popravak električnog mljevenja mesa</string>
+    <string name="service_electric_fireplace_repair">Popravak električnog kamina</string>
+    <string name="service_oven_repair">Popravak pećnice</string>
+    <string name="service_home_audio_system_repair">Popravak kućnog audio sustava</string>
+    <string name="service_home_theater_repair">Popravak kućnog kina</string>
+    <string name="service_cooktop_repair">Popravak ploče za kuhanje</string>
+    <string name="service_boiler_repair">Popravak bojlera</string>
+    <string name="service_blender_repair">Popravak miješalice</string>
+    <string name="service_antenna_repair">Popravak antene</string>
+    <string name="service_tuner_firmware_update">Ažuriranje firmware tunera</string>
+    <string name="service_television_dismantling">Rastavljanje televizora</string>
+    <string name="service_dryer_dismantling">Rastavljanje sušilice</string>
+    <string name="service_washing_machine_dismantling">Rastavljanje perilice rublja</string>
+    <string name="service_dishwasher_dismantling">Rastavljanje perilice posuđa</string>
+    <string name="service_air_conditioner_dismantling">Rastavljanje klima uređaja</string>
+    <string name="service_cooktop_dismantling">Rastavljanje ploče za kuhanje</string>
+    <string name="service_boiler_dismantling">Rastavljanje bojlera</string>
+    
+    <!-- Services - Skilled Trades & Technical Services -->
+    <string name="service_electrician">Električar</string>
+    <string name="service_plumber">Vodoinstalater</string>
+    <string name="service_carpenter">Stolar</string>
+    <string name="service_welder">Zavarivač</string>
+    <string name="service_painter">Slikar</string>
+    <string name="service_locksmith">Bravar</string>
+    <string name="service_solar_panel">Solarni panel</string>
+    <string name="service_handyman">Majstor</string>
+    <string name="service_heating_ventilation_air_conditioning">Grijanje, ventilacija i klima</string>
+    <string name="service_gas_fitter">Instalater plina</string>
+    <string name="service_refrigeration_mechanic">Mehaničar za hlađenje</string>
+    <string name="service_boiler_technician">Tehničar bojlera</string>
+    <string name="service_water_treatment_installer">Instalater tretmana vode</string>
+    <string name="service_fire_protection_installer">Instalater protupožarne zaštite</string>
+    <string name="service_elevator_specialist">Specijalist za dizala</string>
+    <string name="service_smart_home_technician">Tehničar pametnog doma</string>
+    <string name="service_security_system_specialist">Specijalist sigurnosnih sustava</string>
+    <string name="service_network_installer">Instalater mreže</string>
+    <string name="service_wind_renewable_energy_technician">Tehničar vjetroenergije</string>
+    <string name="service_woodcarver">Drvorezbari</string>
+    <string name="service_road_surface_installer">Instalater cestovne površine (asfalt, beton, kaldrma)</string>
+    <string name="service_lighting_specialist">Specijalist rasvjete</string>
+    
+    <!-- Services - Building & Cleaning Services -->
+    <string name="service_janitor">Domar</string>
+    <string name="service_housekeeper">Kućna pomoćnica</string>
+    <string name="service_hotel_cleaner">Hotelski čistač</string>
+    <string name="service_window_cleaner">Čistač prozora</string>
+    <string name="service_pest_control_technician">Tehničar za suzbijanje štetnika</string>
+    <string name="service_waste_collector">Skupljač otpada</string>
+    <string name="service_landscaper">Vrtlar</string>
+    <string name="service_gardener">Vrtlar</string>
+    <string name="service_tree_surgeon">Arborist</string>
+    <string name="service_lawn_care_specialist">Specijalist za njegu travnjaka</string>
+    <string name="service_pool_maintenance_technician">Tehničar održavanja bazena</string>
+    <string name="service_snow_removal">Uklanjanje snijega</string>
+    <string name="service_interior_designer">Dizajner interijera</string>
+    <string name="service_interior_decorator">Dekorater interijera</string>
+    <string name="service_bricklayer_mason">Zidar / Klesar</string>
+    <string name="service_rebar_installer">Instalater armature (čelični fiksator)</string>
+    <string name="service_construction_worker">Građevinski radnik</string>
+    <string name="service_framer">Okvirar (drveni ili metalni nosač)</string>
+    <string name="service_drywaller">Instalater suhozida</string>
+    <string name="service_roofer">Krovopokrivač</string>
+    <string name="service_tiler">Keramičar (krov, pod ili zid)</string>
+    <string name="service_demolition_worker">Radnik za rušenje</string>
+    <string name="service_plasterer">Žbuka</string>
+    <string name="service_wallpaper_installer">Instalater tapeta</string>
+    <string name="service_floor_layer">Polažač podova (vinil, laminat, parket)</string>
+    <string name="service_ceiling_installer">Instalater stropova (spušteni, zategnuti)</string>
+    <string name="service_window_installer">Instalater prozora</string>
+    <string name="service_door_installer">Instalater vrata</string>
+    <string name="service_glazier">Staklar (instalater stakla)</string>
+    <string name="service_joiner">Stolar</string>
+    <string name="service_kitchen_fitter">Instalater kuhinja</string>
+    <string name="service_bathroom_fitter">Instalater kupaonica</string>
+    <string name="service_countertop_fabricator">Proizvođač radnih ploča (kamen / kvarc)</string>
+    <string name="service_stone_mason">Klesar</string>
+    <string name="service_stair_installer">Instalater stepenica</string>
+    <string name="service_fence_installer">Instalater ograda</string>
+    <string name="service_irrigation_system_installer">Instalater sustava za navodnjavanje</string>
+    <string name="service_epoxy_floor_installer">Instalater epoksidnih podova</string>
+    <string name="service_upholstered_furniture_carpet_cleaning">Čišćenje tapaciranog namještaja i tepiha</string>
+    
+    <!-- Services - Health & Human Services -->
+    <string name="service_doctor">Liječnik</string>
+    <string name="service_nurse">Medicinska sestra</string>
+    <string name="service_physical_therapist">Fizioterapeut</string>
+    <string name="service_speech_therapist">Logoped</string>
+    <string name="service_psychologist">Psiholog</string>
+    <string name="service_psychiatrist">Psihijatar</string>
+    <string name="service_housekeeping_assistant">Asistent za kućne poslove</string>
+    <string name="service_nutritionist_dietitian">Nutricionist / Dijetetičar</string>
+    <string name="service_fitness_trainer">Fitness trener</string>
+    <string name="service_massage_therapist">Maser</string>
+    <string name="service_veterinarian">Veterinar</string>
+    
+    <!-- Services - Personal & Lifestyle Services -->
+    <string name="service_barber">Brijač</string>
+    <string name="service_hair_stylist">Frizer</string>
+    <string name="service_makeup_artist">Make-up umjetnik</string>
+    <string name="service_nail_technician">Tehničar za nokte</string>
+    <string name="service_cosmetologist">Kozmetičar</string>
+    <string name="service_tattoo_artist">Tatuažer</string>
+    <string name="service_seamstress">Švelja</string>
+    <string name="service_personal_trainer">Osobni trener</string>
+    
+    <!-- Services - Food & Hospitality Services -->
+    <string name="service_chef">Kuhar</string>
+    <string name="service_cook">Kuhar</string>
+    <string name="service_baker">Pekar</string>
+    <string name="service_butcher">Mesar</string>
+    <string name="service_waiter_waitress">Konobar / Konobarica</string>
+    <string name="service_bartender">Barmen</string>
+    <string name="service_barista">Barista</string>
+    <string name="service_event_planner">Organizator događaja</string>
+    <string name="service_wedding_planner">Organizator vjenčanja</string>
+    <string name="service_tour_guide">Turistički vodič</string>
+    
+    <!-- Services - Business, Finance & Administrative Services -->
+    <string name="service_accountant">Računovođa</string>
+    <string name="service_financial_advisor">Financijski savjetnik</string>
+    <string name="service_real_estate_agent">Nekretninski agent</string>
+    
+    <!-- Services - Legal & Protective Services -->
+    <string name="service_lawyer">Odvjetnik</string>
+    <string name="service_paralegal">Pravni asistent</string>
+    <string name="service_notary_public">Javni bilježnik</string>
+    <string name="service_security_guard">Zaštitar</string>
+    
+    <!-- Services - Technology & Information Services -->
+    <string name="service_network_administrator">Mrežni administrator</string>
+    <string name="service_cybersecurity_specialist">Specijalist kibernetičke sigurnosti</string>
+    <string name="service_software_engineer">Softverski inženjer</string>
+    <string name="service_repair_maintenance_computer_equipment">Popravak i održavanje računalne opreme</string>
+    
+    <!-- Services - Auto Services -->
+    <string name="service_auto_mechanic">Automehaničar</string>
+    <string name="service_auto_electrician">Auto električar</string>
+    <string name="service_other">Ostalo</string>
+    
+    <!-- Services - Creative, Cultural & Media Services -->
+    <string name="service_photographer">Fotograf</string>
+    <string name="service_videographer">Videograf</string>
+    <string name="service_graphic_designer">Grafički dizajner</string>
+    <string name="service_illustrator">Ilustrator</string>
+    <string name="service_animator">Animator</string>
+    <string name="service_actor">Glumac</string>
+    <string name="service_musician">Glazbenik</string>
+    <string name="service_sound_engineer">Zvučni inženjer</string>
+    <string name="service_writer">Pisac</string>
+    <string name="service_journalist">Novinar</string>
+    <string name="service_translator">Prevoditelj</string>
+    
+    <!-- Services - Other Services -->
+    <string name="service_walking_pets">Šetanje kućnih ljubimaca</string>
+    <string name="service_take_out_trash">Iznos smeća</string>
+    <string name="service_loader_services">Usluge utovara</string>
+    <string name="service_cargo_transportation_services">Usluge prijevoza tereta</string>
+    <string name="service_furniture_reupholstery_restoration">Tapaciranje i restauracija namještaja</string>
+    <string name="service_sports_equipment_repair">Popravak sportske opreme</string>
+    <string name="service_other_service">Ostala usluga</string>
+    <string name="service_emergency_opening_locks">Hitno otvaranje brava</string>
+    
+    <!-- Service Selection Sheet -->
+    <string name="search_for_service">Traži uslugu</string>
+    <string name="select_service">Odaberite uslugu</string>
+    <string name="tap_to_choose_service">Dodirnite za odabir usluge</string>
+    <string name="cancel">Odustani</string>
     <!--Croatian -->
 </resources>

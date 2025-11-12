@@ -74,5 +74,228 @@
     <string name="looking_for_service_description">Objevte profesionály ve vašem okolí</string>
     <string name="provide_service">Poskytuji službu</string>
     <string name="provide_service_description">Podělte se o své dovednosti</string>
+    
+    <!-- Service Categories -->
+    <string name="category_household_appliances">Domácí spotřebiče</string>
+    <string name="category_skilled_trades_technical_services">Řemeslné a technické služby</string>
+    <string name="category_building_cleaning_services">Stavební a čisticí služby</string>
+    <string name="category_health_human_services">Zdravotní a lidské služby</string>
+    <string name="category_personal_lifestyle_services">Osobní a životní styl služby</string>
+    <string name="category_food_hospitality_services">Potravinářské a pohostinské služby</string>
+    <string name="category_business_finance_administrative_services">Obchodní, finanční a administrativní služby</string>
+    <string name="category_legal_protective_services">Právní a ochranné služby</string>
+    <string name="category_technology_information_services">Technologické a informační služby</string>
+    <string name="category_auto_services">Auto služby</string>
+    <string name="category_creative_cultural_media_services">Kreativní, kulturní a mediální služby</string>
+    <string name="category_other_services">Jiné služby</string>
+    
+    <!-- Services - Household appliances -->
+    <string name="service_all_home_appliance_repair_services">Všechny služby opravy domácích spotřebičů</string>
+    <string name="service_deep_fryer_repair">Oprava fritézy</string>
+    <string name="service_kitchen_hood_repair">Oprava digestoře</string>
+    <string name="service_grill_repair">Oprava grilu</string>
+    <string name="service_water_cooler_cleaning">Čištění vodního chladiče</string>
+    <string name="service_air_conditioner_cleaning">Čištění klimatizace</string>
+    <string name="service_water_heater_boiler_cleaning">Čištění ohřívače vody (kotle)</string>
+    <string name="service_sewing_machine_repair">Oprava šicího stroje</string>
+    <string name="service_refrigeration_equipment_display_case_repair">Oprava chladicího zařízení a vitrín</string>
+    <string name="service_refrigerator_repair">Oprava ledničky</string>
+    <string name="service_bread_maker_repair">Oprava pekárny na chléb</string>
+    <string name="service_camera_repair">Oprava fotoaparátu</string>
+    <string name="service_hair_dryer_repair">Oprava fénu</string>
+    <string name="service_dough_mixer_repair">Oprava hnětače těsta</string>
+    <string name="service_telephone_repair">Oprava telefonu</string>
+    <string name="service_television_repair">Oprava televize</string>
+    <string name="service_dryer_repair">Oprava sušičky</string>
+    <string name="service_pressure_cooker_repair">Oprava tlakového hrnce</string>
+    <string name="service_tv_remote_control_repair">Oprava dálkového ovladače TV</string>
+    <string name="service_projector_repair">Oprava projektoru</string>
+    <string name="service_iron_repair">Oprava žehličky</string>
+    <string name="service_washing_machine_repair">Oprava pračky</string>
+    <string name="service_dishwasher_repair">Oprava myčky nádobí</string>
+    <string name="service_vacuum_cleaner_repair">Oprava vysavače</string>
+    <string name="service_overlock_machine_repair">Oprava overlocku</string>
+    <string name="service_instant_water_heater_repair">Oprava průtokového ohřívače vody</string>
+    <string name="service_multicooker_repair">Oprava multicookeru</string>
+    <string name="service_music_center_repair">Oprava hudebního centra</string>
+    <string name="service_freezer_repair">Oprava mrazáku</string>
+    <string name="service_microwave_oven_repair">Oprava mikrovlnné trouby</string>
+    <string name="service_ice_maker_repair">Oprava výrobníku ledu</string>
+    <string name="service_kitchen_food_processor_repair">Oprava kuchyňského robotu</string>
+    <string name="service_water_cooler_repair">Oprava vodního chladiče</string>
+    <string name="service_air_conditioner_repair">Oprava klimatizace</string>
+    <string name="service_space_heater_repair">Oprava přenosného topidla</string>
+    <string name="service_coffee_maker_repair">Oprava kávovaru</string>
+    <string name="service_induction_cooktop_repair">Oprava indukční desky</string>
+    <string name="service_electric_stove_repair">Oprava elektrického sporáku</string>
+    <string name="service_electric_cooktop_repair">Oprava elektrické varné desky</string>
+    <string name="service_electric_meat_grinder_repair">Oprava elektrického mlýnku na maso</string>
+    <string name="service_electric_fireplace_repair">Oprava elektrického krbu</string>
+    <string name="service_oven_repair">Oprava trouby</string>
+    <string name="service_home_audio_system_repair">Oprava domácího audio systému</string>
+    <string name="service_home_theater_repair">Oprava domácího kina</string>
+    <string name="service_cooktop_repair">Oprava varné desky</string>
+    <string name="service_boiler_repair">Oprava kotle</string>
+    <string name="service_blender_repair">Oprava mixéru</string>
+    <string name="service_antenna_repair">Oprava antény</string>
+    <string name="service_tuner_firmware_update">Aktualizace firmwaru tuneru</string>
+    <string name="service_television_dismantling">Demontáž televize</string>
+    <string name="service_dryer_dismantling">Demontáž sušičky</string>
+    <string name="service_washing_machine_dismantling">Demontáž pračky</string>
+    <string name="service_dishwasher_dismantling">Demontáž myčky nádobí</string>
+    <string name="service_air_conditioner_dismantling">Demontáž klimatizace</string>
+    <string name="service_cooktop_dismantling">Demontáž varné desky</string>
+    <string name="service_boiler_dismantling">Demontáž kotle</string>
+    
+    <!-- Services - Skilled Trades & Technical Services -->
+    <string name="service_electrician">Elektrikář</string>
+    <string name="service_plumber">Instalatér</string>
+    <string name="service_carpenter">Tesař</string>
+    <string name="service_welder">Svářeč</string>
+    <string name="service_painter">Malíř</string>
+    <string name="service_locksmith">Zámečník</string>
+    <string name="service_solar_panel">Solární panel</string>
+    <string name="service_handyman">Kutil</string>
+    <string name="service_heating_ventilation_air_conditioning">Vytápění, ventilace a klimatizace</string>
+    <string name="service_gas_fitter">Instalatér plynu</string>
+    <string name="service_refrigeration_mechanic">Chladicí mechanik</string>
+    <string name="service_boiler_technician">Technik kotlů</string>
+    <string name="service_water_treatment_installer">Instalatér úpravy vody</string>
+    <string name="service_fire_protection_installer">Instalatér protipožární ochrany</string>
+    <string name="service_elevator_specialist">Specialista na výtahy</string>
+    <string name="service_smart_home_technician">Technik chytré domácnosti</string>
+    <string name="service_security_system_specialist">Specialista na bezpečnostní systémy</string>
+    <string name="service_network_installer">Instalatér sítí</string>
+    <string name="service_wind_renewable_energy_technician">Technik větrné obnovitelné energie</string>
+    <string name="service_woodcarver">Řezbář</string>
+    <string name="service_road_surface_installer">Instalatér povrchu silnic (asfalt, beton, dlažební kostky)</string>
+    <string name="service_lighting_specialist">Specialista na osvětlení</string>
+    
+    <!-- Services - Building & Cleaning Services -->
+    <string name="service_janitor">Uklízeč</string>
+    <string name="service_housekeeper">Domovník</string>
+    <string name="service_hotel_cleaner">Hotelový uklízeč</string>
+    <string name="service_window_cleaner">Čistič oken</string>
+    <string name="service_pest_control_technician">Technik deratizace</string>
+    <string name="service_waste_collector">Sběrač odpadu</string>
+    <string name="service_landscaper">Zahradní architekt</string>
+    <string name="service_gardener">Zahradník</string>
+    <string name="service_tree_surgeon">Arborista</string>
+    <string name="service_lawn_care_specialist">Specialista na péči o trávník</string>
+    <string name="service_pool_maintenance_technician">Technik údržby bazénů</string>
+    <string name="service_snow_removal">Odklízení sněhu</string>
+    <string name="service_interior_designer">Interiérový designér</string>
+    <string name="service_interior_decorator">Interiérový dekoratér</string>
+    <string name="service_bricklayer_mason">Zedník / Kameník</string>
+    <string name="service_rebar_installer">Instalatér výztuže (ocelový fixér)</string>
+    <string name="service_construction_worker">Stavební dělník</string>
+    <string name="service_framer">Rámovač (dřevěné nebo kovové sloupky)</string>
+    <string name="service_drywaller">Instalatér sádrokartonu</string>
+    <string name="service_roofer">Pokrývač</string>
+    <string name="service_tiler">Obkladač (střecha, podlaha nebo zeď)</string>
+    <string name="service_demolition_worker">Demoliční dělník</string>
+    <string name="service_plasterer">Omítkář</string>
+    <string name="service_wallpaper_installer">Instalatér tapet</string>
+    <string name="service_floor_layer">Pokladač podlah (vinyl, laminát, dřevo)</string>
+    <string name="service_ceiling_installer">Instalatér stropů (podhled, napínací)</string>
+    <string name="service_window_installer">Instalatér oken</string>
+    <string name="service_door_installer">Instalatér dveří</string>
+    <string name="service_glazier">Sklář (instalatér skla)</string>
+    <string name="service_joiner">Truhlář</string>
+    <string name="service_kitchen_fitter">Instalatér kuchyní</string>
+    <string name="service_bathroom_fitter">Instalatér koupelen</string>
+    <string name="service_countertop_fabricator">Výrobce pracovních desek (kámen / křemen)</string>
+    <string name="service_stone_mason">Kameník</string>
+    <string name="service_stair_installer">Instalatér schodišť</string>
+    <string name="service_fence_installer">Instalatér plotů</string>
+    <string name="service_irrigation_system_installer">Instalatér zavlažovacích systémů</string>
+    <string name="service_epoxy_floor_installer">Instalatér epoxidových podlah</string>
+    <string name="service_upholstered_furniture_carpet_cleaning">Čištění čalouněného nábytku a koberců</string>
+    
+    <!-- Services - Health & Human Services -->
+    <string name="service_doctor">Lékař</string>
+    <string name="service_nurse">Sestra</string>
+    <string name="service_physical_therapist">Fyzioterapeut</string>
+    <string name="service_speech_therapist">Logoped</string>
+    <string name="service_psychologist">Psycholog</string>
+    <string name="service_psychiatrist">Psychiatr</string>
+    <string name="service_housekeeping_assistant">Asistent domácnosti</string>
+    <string name="service_nutritionist_dietitian">Výživový poradce / Dietolog</string>
+    <string name="service_fitness_trainer">Fitness trenér</string>
+    <string name="service_massage_therapist">Masér</string>
+    <string name="service_veterinarian">Veterinář</string>
+    
+    <!-- Services - Personal & Lifestyle Services -->
+    <string name="service_barber">Holič</string>
+    <string name="service_hair_stylist">Kadeřník</string>
+    <string name="service_makeup_artist">Vizážista</string>
+    <string name="service_nail_technician">Manikérka</string>
+    <string name="service_cosmetologist">Kosmetička</string>
+    <string name="service_tattoo_artist">Tetovací umělec</string>
+    <string name="service_seamstress">Švadlena</string>
+    <string name="service_personal_trainer">Osobní trenér</string>
+    
+    <!-- Services - Food & Hospitality Services -->
+    <string name="service_chef">Šéfkuchař</string>
+    <string name="service_cook">Kuchař</string>
+    <string name="service_baker">Pekař</string>
+    <string name="service_butcher">Řezník</string>
+    <string name="service_waiter_waitress">Číšník / Číšnice</string>
+    <string name="service_bartender">Barman</string>
+    <string name="service_barista">Barista</string>
+    <string name="service_event_planner">Plánovač akcí</string>
+    <string name="service_wedding_planner">Plánovač svateb</string>
+    <string name="service_tour_guide">Průvodce</string>
+    
+    <!-- Services - Business, Finance & Administrative Services -->
+    <string name="service_accountant">Účetní</string>
+    <string name="service_financial_advisor">Finanční poradce</string>
+    <string name="service_real_estate_agent">Realitní makléř</string>
+    
+    <!-- Services - Legal & Protective Services -->
+    <string name="service_lawyer">Advokát</string>
+    <string name="service_paralegal">Paralegal</string>
+    <string name="service_notary_public">Notář</string>
+    <string name="service_security_guard">Bezpečnostní stráž</string>
+    
+    <!-- Services - Technology & Information Services -->
+    <string name="service_network_administrator">Správce sítě</string>
+    <string name="service_cybersecurity_specialist">Specialista kybernetické bezpečnosti</string>
+    <string name="service_software_engineer">Softwarový inženýr</string>
+    <string name="service_repair_maintenance_computer_equipment">Oprava a údržba počítačového vybavení</string>
+    
+    <!-- Services - Auto Services -->
+    <string name="service_auto_mechanic">Automechanik</string>
+    <string name="service_auto_electrician">Autoelektrikář</string>
+    <string name="service_other">Jiné</string>
+    
+    <!-- Services - Creative, Cultural & Media Services -->
+    <string name="service_photographer">Fotograf</string>
+    <string name="service_videographer">Videograf</string>
+    <string name="service_graphic_designer">Grafický designér</string>
+    <string name="service_illustrator">Ilustrátor</string>
+    <string name="service_animator">Animátor</string>
+    <string name="service_actor">Herec</string>
+    <string name="service_musician">Hudebník</string>
+    <string name="service_sound_engineer">Zvukař</string>
+    <string name="service_writer">Spisovatel</string>
+    <string name="service_journalist">Novinář</string>
+    <string name="service_translator">Překladatel</string>
+    
+    <!-- Services - Other Services -->
+    <string name="service_walking_pets">Venčení domácích mazlíčků</string>
+    <string name="service_take_out_trash">Vynesení odpadků</string>
+    <string name="service_loader_services">Nakládací služby</string>
+    <string name="service_cargo_transportation_services">Služby přepravy nákladu</string>
+    <string name="service_furniture_reupholstery_restoration">Čalounění a restaurování nábytku</string>
+    <string name="service_sports_equipment_repair">Oprava sportovního vybavení</string>
+    <string name="service_other_service">Jiná služba</string>
+    <string name="service_emergency_opening_locks">Nouzové otevření zámků</string>
+    
+    <!-- Service Selection Sheet -->
+    <string name="search_for_service">Hledat službu</string>
+    <string name="select_service">Vyberte službu</string>
+    <string name="tap_to_choose_service">Klepněte pro výběr služby</string>
+    <string name="cancel">Zrušit</string>
     <!--Czech -->
 </resources>

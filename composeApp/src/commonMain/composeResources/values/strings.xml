@@ -72,4 +72,227 @@
     <string name="looking_for_service_description">Discover professionals near you</string>
     <string name="provide_service">I provide a service</string>
     <string name="provide_service_description">Share your skills</string>
+    
+    <!-- Service Categories -->
+    <string name="category_household_appliances">Household appliances</string>
+    <string name="category_skilled_trades_technical_services">Skilled Trades &amp; Technical Services</string>
+    <string name="category_building_cleaning_services">Building &amp; Cleaning Services</string>
+    <string name="category_health_human_services">Health &amp; Human Services</string>
+    <string name="category_personal_lifestyle_services">Personal &amp; Lifestyle Services</string>
+    <string name="category_food_hospitality_services">Food &amp; Hospitality Services</string>
+    <string name="category_business_finance_administrative_services">Business, Finance &amp; Administrative Services</string>
+    <string name="category_legal_protective_services">Legal &amp; Protective Services</string>
+    <string name="category_technology_information_services">Technology &amp; Information Services</string>
+    <string name="category_auto_services">Auto Services</string>
+    <string name="category_creative_cultural_media_services">Creative, Cultural &amp; Media Services</string>
+    <string name="category_other_services">Other Services</string>
+    
+    <!-- Services - Household appliances -->
+    <string name="service_all_home_appliance_repair_services">All home appliance repair services</string>
+    <string name="service_deep_fryer_repair">Deep fryer repair</string>
+    <string name="service_kitchen_hood_repair">Kitchen hood repair</string>
+    <string name="service_grill_repair">Grill repair</string>
+    <string name="service_water_cooler_cleaning">Water cooler cleaning</string>
+    <string name="service_air_conditioner_cleaning">Air conditioner cleaning</string>
+    <string name="service_water_heater_boiler_cleaning">Water heater (boiler) cleaning</string>
+    <string name="service_sewing_machine_repair">Sewing machine repair</string>
+    <string name="service_refrigeration_equipment_display_case_repair">Refrigeration equipment and display case repair</string>
+    <string name="service_refrigerator_repair">Refrigerator repair</string>
+    <string name="service_bread_maker_repair">Bread maker repair</string>
+    <string name="service_camera_repair">Camera repair</string>
+    <string name="service_hair_dryer_repair">Hair dryer repair</string>
+    <string name="service_dough_mixer_repair">Dough mixer repair</string>
+    <string name="service_telephone_repair">Telephone repair</string>
+    <string name="service_television_repair">Television repair</string>
+    <string name="service_dryer_repair">Dryer repair</string>
+    <string name="service_pressure_cooker_repair">Pressure cooker repair</string>
+    <string name="service_tv_remote_control_repair">TV remote control repair</string>
+    <string name="service_projector_repair">Projector repair</string>
+    <string name="service_iron_repair">Iron repair</string>
+    <string name="service_washing_machine_repair">Washing machine repair</string>
+    <string name="service_dishwasher_repair">Dishwasher repair</string>
+    <string name="service_vacuum_cleaner_repair">Vacuum cleaner repair</string>
+    <string name="service_overlock_machine_repair">Overlock machine repair</string>
+    <string name="service_instant_water_heater_repair">Instant water heater repair</string>
+    <string name="service_multicooker_repair">Multicooker repair</string>
+    <string name="service_music_center_repair">Music center repair</string>
+    <string name="service_freezer_repair">Freezer repair</string>
+    <string name="service_microwave_oven_repair">Microwave oven repair</string>
+    <string name="service_ice_maker_repair">Ice maker repair</string>
+    <string name="service_kitchen_food_processor_repair">Kitchen food processor repair</string>
+    <string name="service_water_cooler_repair">Water cooler repair</string>
+    <string name="service_air_conditioner_repair">Air conditioner repair</string>
+    <string name="service_space_heater_repair">Space heater repair</string>
+    <string name="service_coffee_maker_repair">Coffee maker repair</string>
+    <string name="service_induction_cooktop_repair">Induction cooktop repair</string>
+    <string name="service_electric_stove_repair">Electric stove repair</string>
+    <string name="service_electric_cooktop_repair">Electric cooktop repair</string>
+    <string name="service_electric_meat_grinder_repair">Electric meat grinder repair</string>
+    <string name="service_electric_fireplace_repair">Electric fireplace repair</string>
+    <string name="service_oven_repair">Oven repair</string>
+    <string name="service_home_audio_system_repair">Home audio system repair</string>
+    <string name="service_home_theater_repair">Home theater repair</string>
+    <string name="service_cooktop_repair">Cooktop repair</string>
+    <string name="service_boiler_repair">Boiler repair</string>
+    <string name="service_blender_repair">Blender repair</string>
+    <string name="service_antenna_repair">Antenna repair</string>
+    <string name="service_tuner_firmware_update">Tuner firmware update</string>
+    <string name="service_television_dismantling">Television dismantling</string>
+    <string name="service_dryer_dismantling">Dryer dismantling</string>
+    <string name="service_washing_machine_dismantling">Washing machine dismantling</string>
+    <string name="service_dishwasher_dismantling">Dishwasher dismantling</string>
+    <string name="service_air_conditioner_dismantling">Air conditioner dismantling</string>
+    <string name="service_cooktop_dismantling">Cooktop dismantling</string>
+    <string name="service_boiler_dismantling">Boiler dismantling</string>
+    
+    <!-- Services - Skilled Trades & Technical Services -->
+    <string name="service_electrician">Electrician</string>
+    <string name="service_plumber">Plumber</string>
+    <string name="service_carpenter">Carpenter</string>
+    <string name="service_welder">Welder</string>
+    <string name="service_painter">Painter</string>
+    <string name="service_locksmith">Locksmith</string>
+    <string name="service_solar_panel">Solar Panel</string>
+    <string name="service_handyman">Handyman</string>
+    <string name="service_heating_ventilation_air_conditioning">Heating, Ventilation &amp; Air Conditioning</string>
+    <string name="service_gas_fitter">Gas Fitter</string>
+    <string name="service_refrigeration_mechanic">Refrigeration Mechanic</string>
+    <string name="service_boiler_technician">Boiler Technician</string>
+    <string name="service_water_treatment_installer">Water Treatment Installer</string>
+    <string name="service_fire_protection_installer">Fire Protection Installer</string>
+    <string name="service_elevator_specialist">Elevator Specialist</string>
+    <string name="service_smart_home_technician">Smart Home Technician</string>
+    <string name="service_security_system_specialist">Security System Specialist</string>
+    <string name="service_network_installer">Network Installer</string>
+    <string name="service_wind_renewable_energy_technician">Wind Renewable Energy Technician</string>
+    <string name="service_woodcarver">Woodcarver</string>
+    <string name="service_road_surface_installer">Road surface installer (asphalt, concrete, paving stones)</string>
+    <string name="service_lighting_specialist">Lighting Specialist</string>
+    
+    <!-- Services - Building & Cleaning Services -->
+    <string name="service_janitor">Janitor</string>
+    <string name="service_housekeeper">Housekeeper</string>
+    <string name="service_hotel_cleaner">Hotel Cleaner</string>
+    <string name="service_window_cleaner">Window Cleaner</string>
+    <string name="service_pest_control_technician">Pest Control Technician</string>
+    <string name="service_waste_collector">Waste Collector</string>
+    <string name="service_landscaper">Landscaper</string>
+    <string name="service_gardener">Gardener</string>
+    <string name="service_tree_surgeon">Tree Surgeon</string>
+    <string name="service_lawn_care_specialist">Lawn Care Specialist</string>
+    <string name="service_pool_maintenance_technician">Pool Maintenance Technician</string>
+    <string name="service_snow_removal">Snow Removal</string>
+    <string name="service_interior_designer">Interior Designer</string>
+    <string name="service_interior_decorator">Interior Decorator</string>
+    <string name="service_bricklayer_mason">Bricklayer / Mason</string>
+    <string name="service_rebar_installer">Rebar Installer (Steel Fixer)</string>
+    <string name="service_construction_worker">Construction Worker</string>
+    <string name="service_framer">Framer (Wood or Metal Stud)</string>
+    <string name="service_drywaller">Drywaller</string>
+    <string name="service_roofer">Roofer</string>
+    <string name="service_tiler">Tiler (Roof, Floor, or Wall)</string>
+    <string name="service_demolition_worker">Demolition Worker</string>
+    <string name="service_plasterer">Plasterer</string>
+    <string name="service_wallpaper_installer">Wallpaper Installer</string>
+    <string name="service_floor_layer">Floor Layer (Vinyl, Laminate, Hardwood)</string>
+    <string name="service_ceiling_installer">Ceiling Installer (Drop, Stretch)</string>
+    <string name="service_window_installer">Window Installer</string>
+    <string name="service_door_installer">Door Installer</string>
+    <string name="service_glazier">Glazier (Glass Installer)</string>
+    <string name="service_joiner">Joiner</string>
+    <string name="service_kitchen_fitter">Kitchen Fitter</string>
+    <string name="service_bathroom_fitter">Bathroom Fitter</string>
+    <string name="service_countertop_fabricator">Countertop Fabricator (Stone / Quartz)</string>
+    <string name="service_stone_mason">Stone Mason</string>
+    <string name="service_stair_installer">Stair Installer</string>
+    <string name="service_fence_installer">Fence Installer</string>
+    <string name="service_irrigation_system_installer">Irrigation System Installer</string>
+    <string name="service_epoxy_floor_installer">Epoxy Floor Installer</string>
+    <string name="service_upholstered_furniture_carpet_cleaning">Upholstered furniture and carpet cleaning</string>
+    
+    <!-- Services - Health & Human Services -->
+    <string name="service_doctor">Doctor</string>
+    <string name="service_nurse">Nurse</string>
+    <string name="service_physical_therapist">Physical Therapist</string>
+    <string name="service_speech_therapist">Speech Therapist</string>
+    <string name="service_psychologist">Psychologist</string>
+    <string name="service_psychiatrist">Psychiatrist</string>
+    <string name="service_housekeeping_assistant">Housekeeping assistant</string>
+    <string name="service_nutritionist_dietitian">Nutritionist / Dietitian</string>
+    <string name="service_fitness_trainer">Fitness Trainer</string>
+    <string name="service_massage_therapist">Massage Therapist</string>
+    <string name="service_veterinarian">Veterinarian</string>
+    
+    <!-- Services - Personal & Lifestyle Services -->
+    <string name="service_barber">Barber</string>
+    <string name="service_hair_stylist">Hair Stylist</string>
+    <string name="service_makeup_artist">Makeup Artist</string>
+    <string name="service_nail_technician">Nail Technician</string>
+    <string name="service_cosmetologist">Cosmetologist</string>
+    <string name="service_tattoo_artist">Tattoo Artist</string>
+    <string name="service_seamstress">Seamstress</string>
+    <string name="service_personal_trainer">Personal Trainer</string>
+    
+    <!-- Services - Food & Hospitality Services -->
+    <string name="service_chef">Chef</string>
+    <string name="service_cook">Cook</string>
+    <string name="service_baker">Baker</string>
+    <string name="service_butcher">Butcher</string>
+    <string name="service_waiter_waitress">Waiter / Waitress</string>
+    <string name="service_bartender">Bartender</string>
+    <string name="service_barista">Barista</string>
+    <string name="service_event_planner">Event Planner</string>
+    <string name="service_wedding_planner">Wedding Planner</string>
+    <string name="service_tour_guide">Tour Guide</string>
+    
+    <!-- Services - Business, Finance & Administrative Services -->
+    <string name="service_accountant">Accountant</string>
+    <string name="service_financial_advisor">Financial Advisor</string>
+    <string name="service_real_estate_agent">Real Estate Agent</string>
+    
+    <!-- Services - Legal & Protective Services -->
+    <string name="service_lawyer">Lawyer</string>
+    <string name="service_paralegal">Paralegal</string>
+    <string name="service_notary_public">Notary Public</string>
+    <string name="service_security_guard">Security Guard</string>
+    
+    <!-- Services - Technology & Information Services -->
+    <string name="service_network_administrator">Network Administrator</string>
+    <string name="service_cybersecurity_specialist">Cybersecurity Specialist</string>
+    <string name="service_software_engineer">Software Engineer</string>
+    <string name="service_repair_maintenance_computer_equipment">Repair and maintenance of computer equipment</string>
+    
+    <!-- Services - Auto Services -->
+    <string name="service_auto_mechanic">Auto mechanic</string>
+    <string name="service_auto_electrician">Auto electrician</string>
+    <string name="service_other">Other</string>
+    
+    <!-- Services - Creative, Cultural & Media Services -->
+    <string name="service_photographer">Photographer</string>
+    <string name="service_videographer">Videographer</string>
+    <string name="service_graphic_designer">Graphic Designer</string>
+    <string name="service_illustrator">Illustrator</string>
+    <string name="service_animator">Animator</string>
+    <string name="service_actor">Actor</string>
+    <string name="service_musician">Musician</string>
+    <string name="service_sound_engineer">Sound Engineer</string>
+    <string name="service_writer">Writer</string>
+    <string name="service_journalist">Journalist</string>
+    <string name="service_translator">Translator</string>
+    
+    <!-- Services - Other Services -->
+    <string name="service_walking_pets">Walking pets</string>
+    <string name="service_take_out_trash">Take out the trash</string>
+    <string name="service_loader_services">Loader services</string>
+    <string name="service_cargo_transportation_services">Cargo transportation services</string>
+    <string name="service_furniture_reupholstery_restoration">Furniture reupholstery and restoration</string>
+    <string name="service_sports_equipment_repair">Sports equipment repair</string>
+    <string name="service_other_service">Other service</string>
+    <string name="service_emergency_opening_locks">Emergency opening of locks</string>
+    
+    <!-- Service Selection Sheet -->
+    <string name="search_for_service">Search for a service</string>
+    <string name="select_service">Select a service</string>
+    <string name="tap_to_choose_service">Tap to choose a service</string>
+    <string name="cancel">Cancel</string>
 </resources>

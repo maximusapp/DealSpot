@@ -73,5 +73,228 @@
     <string name="looking_for_service_description">Odkryj specjalistów w Twojej okolicy</string>
     <string name="provide_service">Świadczę usługę</string>
     <string name="provide_service_description">Podziel się swoimi umiejętnościami</string>
+    
+    <!-- Service Categories -->
+    <string name="category_household_appliances">Sprzęt AGD</string>
+    <string name="category_skilled_trades_technical_services">Rzemiosło i usługi techniczne</string>
+    <string name="category_building_cleaning_services">Usługi budowlane i czyszczące</string>
+    <string name="category_health_human_services">Usługi zdrowotne i społeczne</string>
+    <string name="category_personal_lifestyle_services">Usługi osobiste i lifestyle</string>
+    <string name="category_food_hospitality_services">Usługi gastronomiczne i hotelarskie</string>
+    <string name="category_business_finance_administrative_services">Usługi biznesowe, finansowe i administracyjne</string>
+    <string name="category_legal_protective_services">Usługi prawne i ochronne</string>
+    <string name="category_technology_information_services">Usługi technologiczne i informatyczne</string>
+    <string name="category_auto_services">Usługi motoryzacyjne</string>
+    <string name="category_creative_cultural_media_services">Usługi kreatywne, kulturalne i medialne</string>
+    <string name="category_other_services">Inne usługi</string>
+    
+    <!-- Services - Household appliances -->
+    <string name="service_all_home_appliance_repair_services">Wszystkie usługi naprawy sprzętu AGD</string>
+    <string name="service_deep_fryer_repair">Naprawa frytkownicy</string>
+    <string name="service_kitchen_hood_repair">Naprawa okapu kuchennego</string>
+    <string name="service_grill_repair">Naprawa grilla</string>
+    <string name="service_water_cooler_cleaning">Czyszczenie chłodziarki do wody</string>
+    <string name="service_air_conditioner_cleaning">Czyszczenie klimatyzatora</string>
+    <string name="service_water_heater_boiler_cleaning">Czyszczenie podgrzewacza wody (kotła)</string>
+    <string name="service_sewing_machine_repair">Naprawa maszyny do szycia</string>
+    <string name="service_refrigeration_equipment_display_case_repair">Naprawa urządzeń chłodniczych i witryn</string>
+    <string name="service_refrigerator_repair">Naprawa lodówki</string>
+    <string name="service_bread_maker_repair">Naprawa maszyny do chleba</string>
+    <string name="service_camera_repair">Naprawa aparatu</string>
+    <string name="service_hair_dryer_repair">Naprawa suszarki do włosów</string>
+    <string name="service_dough_mixer_repair">Naprawa mieszarki do ciasta</string>
+    <string name="service_telephone_repair">Naprawa telefonu</string>
+    <string name="service_television_repair">Naprawa telewizora</string>
+    <string name="service_dryer_repair">Naprawa suszarki</string>
+    <string name="service_pressure_cooker_repair">Naprawa szybkowaru</string>
+    <string name="service_tv_remote_control_repair">Naprawa pilota TV</string>
+    <string name="service_projector_repair">Naprawa projektora</string>
+    <string name="service_iron_repair">Naprawa żelazka</string>
+    <string name="service_washing_machine_repair">Naprawa pralki</string>
+    <string name="service_dishwasher_repair">Naprawa zmywarki</string>
+    <string name="service_vacuum_cleaner_repair">Naprawa odkurzacza</string>
+    <string name="service_overlock_machine_repair">Naprawa maszyny overlock</string>
+    <string name="service_instant_water_heater_repair">Naprawa przepływowego podgrzewacza wody</string>
+    <string name="service_multicooker_repair">Naprawa multicookera</string>
+    <string name="service_music_center_repair">Naprawa wieży audio</string>
+    <string name="service_freezer_repair">Naprawa zamrażarki</string>
+    <string name="service_microwave_oven_repair">Naprawa kuchenki mikrofalowej</string>
+    <string name="service_ice_maker_repair">Naprawa maszyny do lodu</string>
+    <string name="service_kitchen_food_processor_repair">Naprawa robota kuchennego</string>
+    <string name="service_water_cooler_repair">Naprawa chłodziarki do wody</string>
+    <string name="service_air_conditioner_repair">Naprawa klimatyzatora</string>
+    <string name="service_space_heater_repair">Naprawa grzejnika przenośnego</string>
+    <string name="service_coffee_maker_repair">Naprawa ekspresu do kawy</string>
+    <string name="service_induction_cooktop_repair">Naprawa płyty indukcyjnej</string>
+    <string name="service_electric_stove_repair">Naprawa kuchenki elektrycznej</string>
+    <string name="service_electric_cooktop_repair">Naprawa płyty elektrycznej</string>
+    <string name="service_electric_meat_grinder_repair">Naprawa elektrycznego maszynki do mięsa</string>
+    <string name="service_electric_fireplace_repair">Naprawa kominka elektrycznego</string>
+    <string name="service_oven_repair">Naprawa piekarnika</string>
+    <string name="service_home_audio_system_repair">Naprawa domowego systemu audio</string>
+    <string name="service_home_theater_repair">Naprawa kina domowego</string>
+    <string name="service_cooktop_repair">Naprawa płyty grzejnej</string>
+    <string name="service_boiler_repair">Naprawa kotła</string>
+    <string name="service_blender_repair">Naprawa blendera</string>
+    <string name="service_antenna_repair">Naprawa anteny</string>
+    <string name="service_tuner_firmware_update">Aktualizacja oprogramowania tunera</string>
+    <string name="service_television_dismantling">Demontaż telewizora</string>
+    <string name="service_dryer_dismantling">Demontaż suszarki</string>
+    <string name="service_washing_machine_dismantling">Demontaż pralki</string>
+    <string name="service_dishwasher_dismantling">Demontaż zmywarki</string>
+    <string name="service_air_conditioner_dismantling">Demontaż klimatyzatora</string>
+    <string name="service_cooktop_dismantling">Demontaż płyty grzejnej</string>
+    <string name="service_boiler_dismantling">Demontaż kotła</string>
+    
+    <!-- Services - Skilled Trades & Technical Services -->
+    <string name="service_electrician">Elektryk</string>
+    <string name="service_plumber">Hydraulik</string>
+    <string name="service_carpenter">Stolarz</string>
+    <string name="service_welder">Spawacz</string>
+    <string name="service_painter">Malarz</string>
+    <string name="service_locksmith">Ślusarz</string>
+    <string name="service_solar_panel">Panel słoneczny</string>
+    <string name="service_handyman">Złota rączka</string>
+    <string name="service_heating_ventilation_air_conditioning">Ogrzewanie, wentylacja i klimatyzacja</string>
+    <string name="service_gas_fitter">Instalator gazu</string>
+    <string name="service_refrigeration_mechanic">Mechanik chłodnictwa</string>
+    <string name="service_boiler_technician">Technik kotłów</string>
+    <string name="service_water_treatment_installer">Instalator uzdatniania wody</string>
+    <string name="service_fire_protection_installer">Instalator ochrony przeciwpożarowej</string>
+    <string name="service_elevator_specialist">Specjalista wind</string>
+    <string name="service_smart_home_technician">Technik inteligentnego domu</string>
+    <string name="service_security_system_specialist">Specjalista systemów bezpieczeństwa</string>
+    <string name="service_network_installer">Instalator sieci</string>
+    <string name="service_wind_renewable_energy_technician">Technik energii wiatrowej</string>
+    <string name="service_woodcarver">Rzeźbiarz w drewnie</string>
+    <string name="service_road_surface_installer">Instalator nawierzchni drogowej (asfalt, beton, kostka)</string>
+    <string name="service_lighting_specialist">Specjalista oświetlenia</string>
+    
+    <!-- Services - Building & Cleaning Services -->
+    <string name="service_janitor">Woźny</string>
+    <string name="service_housekeeper">Gospodyni domowa</string>
+    <string name="service_hotel_cleaner">Pracownik sprzątający hotel</string>
+    <string name="service_window_cleaner">Mycie okien</string>
+    <string name="service_pest_control_technician">Technik zwalczania szkodników</string>
+    <string name="service_waste_collector">Śmieciarz</string>
+    <string name="service_landscaper">Ogrodnik krajobrazowy</string>
+    <string name="service_gardener">Ogrodnik</string>
+    <string name="service_tree_surgeon">Arborysta</string>
+    <string name="service_lawn_care_specialist">Specjalista pielęgnacji trawnika</string>
+    <string name="service_pool_maintenance_technician">Technik konserwacji basenów</string>
+    <string name="service_snow_removal">Odśnieżanie</string>
+    <string name="service_interior_designer">Projektant wnętrz</string>
+    <string name="service_interior_decorator">Dekorator wnętrz</string>
+    <string name="service_bricklayer_mason">Murarz / Kamieniarz</string>
+    <string name="service_rebar_installer">Instalator zbrojenia (montażysta stali)</string>
+    <string name="service_construction_worker">Robotnik budowlany</string>
+    <string name="service_framer">Cieśla (szkielet drewniany lub metalowy)</string>
+    <string name="service_drywaller">Instalator płyt gipsowych</string>
+    <string name="service_roofer">Dekarz</string>
+    <string name="service_tiler">Płytkarz (dach, podłoga lub ściana)</string>
+    <string name="service_demolition_worker">Robotnik rozbiórkowy</string>
+    <string name="service_plasterer">Tynkarz</string>
+    <string name="service_wallpaper_installer">Instalator tapet</string>
+    <string name="service_floor_layer">Płytkarz podłogowy (winyl, laminat, parkiet)</string>
+    <string name="service_ceiling_installer">Instalator sufitów (podwieszany, naciągany)</string>
+    <string name="service_window_installer">Instalator okien</string>
+    <string name="service_door_installer">Instalator drzwi</string>
+    <string name="service_glazier">Szkło (instalator szkła)</string>
+    <string name="service_joiner">Stolarz</string>
+    <string name="service_kitchen_fitter">Instalator kuchni</string>
+    <string name="service_bathroom_fitter">Instalator łazienek</string>
+    <string name="service_countertop_fabricator">Producent blatów (kamień / kwarc)</string>
+    <string name="service_stone_mason">Kamieniarz</string>
+    <string name="service_stair_installer">Instalator schodów</string>
+    <string name="service_fence_installer">Instalator ogrodzeń</string>
+    <string name="service_irrigation_system_installer">Instalator systemów nawadniania</string>
+    <string name="service_epoxy_floor_installer">Instalator podłóg epoksydowych</string>
+    <string name="service_upholstered_furniture_carpet_cleaning">Czyszczenie mebli tapicerowanych i dywanów</string>
+    
+    <!-- Services - Health & Human Services -->
+    <string name="service_doctor">Lekarz</string>
+    <string name="service_nurse">Pielęgniarka</string>
+    <string name="service_physical_therapist">Fizjoterapeuta</string>
+    <string name="service_speech_therapist">Logopeda</string>
+    <string name="service_psychologist">Psycholog</string>
+    <string name="service_psychiatrist">Psychiatra</string>
+    <string name="service_housekeeping_assistant">Asystent gospodyni domowej</string>
+    <string name="service_nutritionist_dietitian">Dietetyk / Dietetyk</string>
+    <string name="service_fitness_trainer">Trener fitness</string>
+    <string name="service_massage_therapist">Masażysta</string>
+    <string name="service_veterinarian">Weterynarz</string>
+    
+    <!-- Services - Personal & Lifestyle Services -->
+    <string name="service_barber">Fryzjer męski</string>
+    <string name="service_hair_stylist">Fryzjer</string>
+    <string name="service_makeup_artist">Makijażysta</string>
+    <string name="service_nail_technician">Technik paznokci</string>
+    <string name="service_cosmetologist">Kosmetyczka</string>
+    <string name="service_tattoo_artist">Tatuator</string>
+    <string name="service_seamstress">Krawcowa</string>
+    <string name="service_personal_trainer">Trener personalny</string>
+    
+    <!-- Services - Food & Hospitality Services -->
+    <string name="service_chef">Szef kuchni</string>
+    <string name="service_cook">Kucharz</string>
+    <string name="service_baker">Piekarz</string>
+    <string name="service_butcher">Rzeźnik</string>
+    <string name="service_waiter_waitress">Kelner / Kelnerka</string>
+    <string name="service_bartender">Barman</string>
+    <string name="service_barista">Barista</string>
+    <string name="service_event_planner">Organizator wydarzeń</string>
+    <string name="service_wedding_planner">Organizator ślubów</string>
+    <string name="service_tour_guide">Przewodnik turystyczny</string>
+    
+    <!-- Services - Business, Finance & Administrative Services -->
+    <string name="service_accountant">Księgowy</string>
+    <string name="service_financial_advisor">Doradca finansowy</string>
+    <string name="service_real_estate_agent">Agent nieruchomości</string>
+    
+    <!-- Services - Legal & Protective Services -->
+    <string name="service_lawyer">Prawnik</string>
+    <string name="service_paralegal">Asystent prawny</string>
+    <string name="service_notary_public">Notariusz</string>
+    <string name="service_security_guard">Ochroniarz</string>
+    
+    <!-- Services - Technology & Information Services -->
+    <string name="service_network_administrator">Administrator sieci</string>
+    <string name="service_cybersecurity_specialist">Specjalista cyberbezpieczeństwa</string>
+    <string name="service_software_engineer">Inżynier oprogramowania</string>
+    <string name="service_repair_maintenance_computer_equipment">Naprawa i konserwacja sprzętu komputerowego</string>
+    
+    <!-- Services - Auto Services -->
+    <string name="service_auto_mechanic">Mechanik samochodowy</string>
+    <string name="service_auto_electrician">Elektryk samochodowy</string>
+    <string name="service_other">Inne</string>
+    
+    <!-- Services - Creative, Cultural & Media Services -->
+    <string name="service_photographer">Fotograf</string>
+    <string name="service_videographer">Wideograf</string>
+    <string name="service_graphic_designer">Grafik</string>
+    <string name="service_illustrator">Ilustrator</string>
+    <string name="service_animator">Animator</string>
+    <string name="service_actor">Aktor</string>
+    <string name="service_musician">Muzyk</string>
+    <string name="service_sound_engineer">Inżynier dźwięku</string>
+    <string name="service_writer">Pisarz</string>
+    <string name="service_journalist">Dziennikarz</string>
+    <string name="service_translator">Tłumacz</string>
+    
+    <!-- Services - Other Services -->
+    <string name="service_walking_pets">Wyprowadzanie zwierząt</string>
+    <string name="service_take_out_trash">Wynoszenie śmieci</string>
+    <string name="service_loader_services">Usługi załadunkowe</string>
+    <string name="service_cargo_transportation_services">Usługi transportu ładunków</string>
+    <string name="service_furniture_reupholstery_restoration">Tapicerowanie i restauracja mebli</string>
+    <string name="service_sports_equipment_repair">Naprawa sprzętu sportowego</string>
+    <string name="service_other_service">Inna usługa</string>
+    <string name="service_emergency_opening_locks">Awaryjne otwieranie zamków</string>
+    
+    <!-- Service Selection Sheet -->
+    <string name="search_for_service">Szukaj usługi</string>
+    <string name="select_service">Wybierz usługę</string>
+    <string name="tap_to_choose_service">Dotknij, aby wybrać usługę</string>
+    <string name="cancel">Anuluj</string>
     <!--Polish-->
 </resources>

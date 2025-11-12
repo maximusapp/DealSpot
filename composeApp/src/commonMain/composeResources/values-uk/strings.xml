@@ -73,4 +73,227 @@
     <string name="looking_for_service_description">Знайдіть професіоналів поруч із вами</string>
     <string name="provide_service">Надаю послугу</string>
     <string name="provide_service_description">Поділіться своїми навичками</string>
+    
+    <!-- Service Categories -->
+    <string name="category_household_appliances">Побутова техніка</string>
+    <string name="category_skilled_trades_technical_services">Кваліфіковані ремесла та технічні послуги</string>
+    <string name="category_building_cleaning_services">Будівельні та прибиральні послуги</string>
+    <string name="category_health_human_services">Охорона здоров'я та соціальні послуги</string>
+    <string name="category_personal_lifestyle_services">Особисті та послуги стилю життя</string>
+    <string name="category_food_hospitality_services">Харчові та гостинні послуги</string>
+    <string name="category_business_finance_administrative_services">Бізнес, фінансові та адміністративні послуги</string>
+    <string name="category_legal_protective_services">Юридичні та охоронні послуги</string>
+    <string name="category_technology_information_services">Технологічні та інформаційні послуги</string>
+    <string name="category_auto_services">Автомобільні послуги</string>
+    <string name="category_creative_cultural_media_services">Творчі, культурні та медійні послуги</string>
+    <string name="category_other_services">Інші послуги</string>
+    
+    <!-- Services - Household appliances -->
+    <string name="service_all_home_appliance_repair_services">Всі послуги з ремонту побутової техніки</string>
+    <string name="service_deep_fryer_repair">Ремонт фритюрниці</string>
+    <string name="service_kitchen_hood_repair">Ремонт витяжки</string>
+    <string name="service_grill_repair">Ремонт гриля</string>
+    <string name="service_water_cooler_cleaning">Чищення кулера для води</string>
+    <string name="service_air_conditioner_cleaning">Чищення кондиціонера</string>
+    <string name="service_water_heater_boiler_cleaning">Чищення водонагрівача (котла)</string>
+    <string name="service_sewing_machine_repair">Ремонт швейної машини</string>
+    <string name="service_refrigeration_equipment_display_case_repair">Ремонт холодильного обладнання та вітрин</string>
+    <string name="service_refrigerator_repair">Ремонт холодильника</string>
+    <string name="service_bread_maker_repair">Ремонт хлібопічки</string>
+    <string name="service_camera_repair">Ремонт камери</string>
+    <string name="service_hair_dryer_repair">Ремонт фена</string>
+    <string name="service_dough_mixer_repair">Ремонт місильної машини</string>
+    <string name="service_telephone_repair">Ремонт телефону</string>
+    <string name="service_television_repair">Ремонт телевізора</string>
+    <string name="service_dryer_repair">Ремонт сушарки</string>
+    <string name="service_pressure_cooker_repair">Ремонт скороварки</string>
+    <string name="service_tv_remote_control_repair">Ремонт пульта TV</string>
+    <string name="service_projector_repair">Ремонт проектора</string>
+    <string name="service_iron_repair">Ремонт праски</string>
+    <string name="service_washing_machine_repair">Ремонт пральної машини</string>
+    <string name="service_dishwasher_repair">Ремонт посудомийної машини</string>
+    <string name="service_vacuum_cleaner_repair">Ремонт пилососа</string>
+    <string name="service_overlock_machine_repair">Ремонт оверлоку</string>
+    <string name="service_instant_water_heater_repair">Ремонт проточного водонагрівача</string>
+    <string name="service_multicooker_repair">Ремонт мультиварки</string>
+    <string name="service_music_center_repair">Ремонт музичного центру</string>
+    <string name="service_freezer_repair">Ремонт морозильної камери</string>
+    <string name="service_microwave_oven_repair">Ремонт мікрохвильовки</string>
+    <string name="service_ice_maker_repair">Ремонт льодогенератора</string>
+    <string name="service_kitchen_food_processor_repair">Ремонт кухонного комбайна</string>
+    <string name="service_water_cooler_repair">Ремонт кулера для води</string>
+    <string name="service_air_conditioner_repair">Ремонт кондиціонера</string>
+    <string name="service_space_heater_repair">Ремонт переносного обігрівача</string>
+    <string name="service_coffee_maker_repair">Ремонт кавоварки</string>
+    <string name="service_induction_cooktop_repair">Ремонт індукційної плити</string>
+    <string name="service_electric_stove_repair">Ремонт електроплити</string>
+    <string name="service_electric_cooktop_repair">Ремонт електроплити</string>
+    <string name="service_electric_meat_grinder_repair">Ремонт електром'ясорубки</string>
+    <string name="service_electric_fireplace_repair">Ремонт електрокаміна</string>
+    <string name="service_oven_repair">Ремонт духовки</string>
+    <string name="service_home_audio_system_repair">Ремонт домашньої аудіосистеми</string>
+    <string name="service_home_theater_repair">Ремонт домашнього кінотеатру</string>
+    <string name="service_cooktop_repair">Ремонт варильної поверхні</string>
+    <string name="service_boiler_repair">Ремонт котла</string>
+    <string name="service_blender_repair">Ремонт блендера</string>
+    <string name="service_antenna_repair">Ремонт антени</string>
+    <string name="service_tuner_firmware_update">Оновлення прошивки тюнера</string>
+    <string name="service_television_dismantling">Демонтаж телевізора</string>
+    <string name="service_dryer_dismantling">Демонтаж сушарки</string>
+    <string name="service_washing_machine_dismantling">Демонтаж пральної машини</string>
+    <string name="service_dishwasher_dismantling">Демонтаж посудомийної машини</string>
+    <string name="service_air_conditioner_dismantling">Демонтаж кондиціонера</string>
+    <string name="service_cooktop_dismantling">Демонтаж варильної поверхні</string>
+    <string name="service_boiler_dismantling">Демонтаж котла</string>
+    
+    <!-- Services - Skilled Trades & Technical Services -->
+    <string name="service_electrician">Електрик</string>
+    <string name="service_plumber">Сантехнік</string>
+    <string name="service_carpenter">Тесляр</string>
+    <string name="service_welder">Зварювальник</string>
+    <string name="service_painter">Мальяр</string>
+    <string name="service_locksmith">Слюсар</string>
+    <string name="service_solar_panel">Спеціаліст зі сонячнтх панелей</string>
+    <string name="service_handyman">Майстер на всі руки</string>
+    <string name="service_heating_ventilation_air_conditioning">Опалення, вентиляція та кондиціонування</string>
+    <string name="service_gas_fitter">Газовий монтажник</string>
+    <string name="service_refrigeration_mechanic">Механік холодильного обладнання</string>
+    <string name="service_boiler_technician">Технік котлів</string>
+    <string name="service_water_treatment_installer">Монтажник систем очищення води</string>
+    <string name="service_fire_protection_installer">Монтажник протипожежного захисту</string>
+    <string name="service_elevator_specialist">Спеціаліст з ліфтів</string>
+    <string name="service_smart_home_technician">Технік розумного будинку</string>
+    <string name="service_security_system_specialist">Спеціаліст систем безпеки</string>
+    <string name="service_network_installer">Монтажник мереж</string>
+    <string name="service_wind_renewable_energy_technician">Технік вітрової енергії</string>
+    <string name="service_woodcarver">Різьбяр по дереву</string>
+    <string name="service_road_surface_installer">Монтажник дорожнього покриття (асфальт, бетон, бруківка)</string>
+    <string name="service_lighting_specialist">Спеціаліст з освітлення</string>
+    
+    <!-- Services - Building & Cleaning Services -->
+    <string name="service_janitor">Двірник</string>
+    <string name="service_housekeeper">Домробітниця</string>
+    <string name="service_hotel_cleaner">Прибиральник готелю</string>
+    <string name="service_window_cleaner">Мийник вікон</string>
+    <string name="service_pest_control_technician">Технік з дезінсекції</string>
+    <string name="service_waste_collector">Сміттяр</string>
+    <string name="service_landscaper">Ландшафтний дизайнер</string>
+    <string name="service_gardener">Садовник</string>
+    <string name="service_tree_surgeon">Арборист</string>
+    <string name="service_lawn_care_specialist">Спеціаліст з догляду за газоном</string>
+    <string name="service_pool_maintenance_technician">Технік з обслуговування басейнів</string>
+    <string name="service_snow_removal">Прибирання снігу</string>
+    <string name="service_interior_designer">Дизайнер інтер'єру</string>
+    <string name="service_interior_decorator">Декоратор інтер'єру</string>
+    <string name="service_bricklayer_mason">Муляр / Каменяр</string>
+    <string name="service_rebar_installer">Монтажник арматури (сталевий каркас)</string>
+    <string name="service_construction_worker">Будівельний робітник</string>
+    <string name="service_framer">Каркасник (дерев'яний або металевий каркас)</string>
+    <string name="service_drywaller">Монтажник гіпсокартону</string>
+    <string name="service_roofer">Покрівельник</string>
+    <string name="service_tiler">Плиточник (дах, підлога або стіна)</string>
+    <string name="service_demolition_worker">Робітник з демонтажу</string>
+    <string name="service_plasterer">Штукатур</string>
+    <string name="service_wallpaper_installer">Поклейка шпалер</string>
+    <string name="service_floor_layer">Укладач підлог (вініл, ламінат, паркет)</string>
+    <string name="service_ceiling_installer">Монтажник стель (підвісна, натяжна)</string>
+    <string name="service_window_installer">Монтажник вікон</string>
+    <string name="service_door_installer">Монтажник дверей</string>
+    <string name="service_glazier">Скляр (монтажник скла)</string>
+    <string name="service_joiner">Столяр</string>
+    <string name="service_kitchen_fitter">Монтажник кухонь</string>
+    <string name="service_bathroom_fitter">Монтажник ванних кімнат</string>
+    <string name="service_countertop_fabricator">Виробник стільниць (камінь / кварц)</string>
+    <string name="service_stone_mason">Каменяр</string>
+    <string name="service_stair_installer">Монтажник сходів</string>
+    <string name="service_fence_installer">Монтажник огорож</string>
+    <string name="service_irrigation_system_installer">Монтажник систем зрошення</string>
+    <string name="service_epoxy_floor_installer">Монтажник епоксидних підлог</string>
+    <string name="service_upholstered_furniture_carpet_cleaning">Чищення м'яких меблів та килимів</string>
+    
+    <!-- Services - Health & Human Services -->
+    <string name="service_doctor">Лікар</string>
+    <string name="service_nurse">Медсестра</string>
+    <string name="service_physical_therapist">Фізіотерапевт</string>
+    <string name="service_speech_therapist">Логопед</string>
+    <string name="service_psychologist">Психолог</string>
+    <string name="service_psychiatrist">Психіатр</string>
+    <string name="service_housekeeping_assistant">Помічник по господарству</string>
+    <string name="service_nutritionist_dietitian">Нутриціоніст / Дієтолог</string>
+    <string name="service_fitness_trainer">Фітнес-тренер</string>
+    <string name="service_massage_therapist">Масажист</string>
+    <string name="service_veterinarian">Ветеринар</string>
+    
+    <!-- Services - Personal & Lifestyle Services -->
+    <string name="service_barber">Перукар</string>
+    <string name="service_hair_stylist">Стиліст</string>
+    <string name="service_makeup_artist">Візажист</string>
+    <string name="service_nail_technician">Майстер манікюру</string>
+    <string name="service_cosmetologist">Косметолог</string>
+    <string name="service_tattoo_artist">Тату майстер</string>
+    <string name="service_seamstress">Кравчиня</string>
+    <string name="service_personal_trainer">Персональний тренер</string>
+    
+    <!-- Services - Food & Hospitality Services -->
+    <string name="service_chef">Шеф-кухар</string>
+    <string name="service_cook">Кухар</string>
+    <string name="service_baker">Пекар</string>
+    <string name="service_butcher">М'ясник</string>
+    <string name="service_waiter_waitress">Офіціант / Офіціантка</string>
+    <string name="service_bartender">Бармен</string>
+    <string name="service_barista">Бариста</string>
+    <string name="service_event_planner">Організатор подій</string>
+    <string name="service_wedding_planner">Організатор весіль</string>
+    <string name="service_tour_guide">Гід</string>
+    
+    <!-- Services - Business, Finance & Administrative Services -->
+    <string name="service_accountant">Бухгалтер</string>
+    <string name="service_financial_advisor">Фінансовий радник</string>
+    <string name="service_real_estate_agent">Ріелтор</string>
+    
+    <!-- Services - Legal & Protective Services -->
+    <string name="service_lawyer">Адвокат</string>
+    <string name="service_paralegal">Помічник юриста</string>
+    <string name="service_notary_public">Нотаріус</string>
+    <string name="service_security_guard">Охоронець</string>
+    
+    <!-- Services - Technology & Information Services -->
+    <string name="service_network_administrator">Мережевий адміністратор</string>
+    <string name="service_cybersecurity_specialist">Спеціаліст кібербезпеки</string>
+    <string name="service_software_engineer">Інженер-програміст</string>
+    <string name="service_repair_maintenance_computer_equipment">Ремонт та обслуговування комп'ютерного обладнання</string>
+    
+    <!-- Services - Auto Services -->
+    <string name="service_auto_mechanic">Автомеханік</string>
+    <string name="service_auto_electrician">Автоелектрик</string>
+    <string name="service_other">Інше</string>
+    
+    <!-- Services - Creative, Cultural & Media Services -->
+    <string name="service_photographer">Фотограф</string>
+    <string name="service_videographer">Відеограф</string>
+    <string name="service_graphic_designer">Графічний дизайнер</string>
+    <string name="service_illustrator">Ілюстратор</string>
+    <string name="service_animator">Аніматор</string>
+    <string name="service_actor">Актор</string>
+    <string name="service_musician">Музикант</string>
+    <string name="service_sound_engineer">Звукорежисер</string>
+    <string name="service_writer">Письменник</string>
+    <string name="service_journalist">Журналіст</string>
+    <string name="service_translator">Перекладач</string>
+    
+    <!-- Services - Other Services -->
+    <string name="service_walking_pets">Вигул домашніх тварин</string>
+    <string name="service_take_out_trash">Винесення сміття</string>
+    <string name="service_loader_services">Послуги вантажника</string>
+    <string name="service_cargo_transportation_services">Послуги перевезення вантажів</string>
+    <string name="service_furniture_reupholstery_restoration">Перетяжка та реставрація меблів</string>
+    <string name="service_sports_equipment_repair">Ремонт спортивного обладнання</string>
+    <string name="service_emergency_opening_locks">Аварійне відкриття замків</string>
+    <string name="service_other_service">Інша послуга</string>
+    
+    <!-- Service Selection Sheet -->
+    <string name="search_for_service">Пошук послуги</string>
+    <string name="select_service">Виберіть послугу</string>
+    <string name="tap_to_choose_service">Натисніть, щоб вибрати послугу</string>
+    <string name="cancel">Скасувати</string>
 </resources>

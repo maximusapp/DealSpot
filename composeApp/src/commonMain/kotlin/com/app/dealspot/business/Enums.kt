@@ -29,3 +29,7 @@ enum class EmailPasswordDataValidationState {
 enum class ScreenType {
     CHATS, SETTINGS, PROFILE, NOTIFICATIONS, LOOKING_FOR_SERVICE, PROVIDE_SERVICE
 }
+
+enum class DealType {
+    LOOKING_FOR_SERVICE, PROVIDE_SERVICE
+}

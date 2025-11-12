@@ -296,4 +296,11 @@
     <string name="select_service">Виберіть послугу</string>
     <string name="tap_to_choose_service">Натисніть, щоб вибрати послугу</string>
     <string name="cancel">Скасувати</string>
+    
+    <!-- Looking For Service Screen -->
+    <string name="problem_that_needs_to_be_solved">Проблема, яку потрібно вирішити</string>
+    <string name="problem_example_washing_machine">напр. Пральна машина зламалася</string>
+    <string name="what_service_do_you_need">Виберіть категорію послуги</string>
+    <string name="describe_the_problem">Опишіть проблему</string>
+    <string name="problem_description_example">напр. Пральна машина показує мені помилку OEF01</string>
 </resources>

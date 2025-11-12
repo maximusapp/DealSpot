@@ -33,6 +33,7 @@ import com.app.dealspot.presentation.ui.home.search_provide_for_service.selectio
 import com.app.dealspot.presentation.view.DealSpotTextInputFieldWithInnerPlaceholderText
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.looking_for_service
+import dealspot.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -72,7 +73,7 @@ fun LookingForServiceScreen(
 
                 Text(
                     modifier = Modifier.align(Alignment.Start),
-                    text = "Problem that needs to be solved",
+                    text = stringResource(Res.string.problem_that_needs_to_be_solved),
                     fontSize = text_size_16,
                     color = Grey,
                     fontWeight = FontWeight.W600,
@@ -83,7 +84,7 @@ fun LookingForServiceScreen(
 
                 DealSpotTextInputFieldWithInnerPlaceholderText(
                     modifier = Modifier,
-                    placeHolderText = "e.g.The washing machine broke down",
+                    placeHolderText = stringResource(Res.string.problem_example_washing_machine),
                     imeAction = ImeAction.Done,
                     labelTextColor = grey_700_70_transparent
                 ) { name ->
@@ -94,7 +95,7 @@ fun LookingForServiceScreen(
 
                 Text(
                     modifier = Modifier.align(Alignment.Start),
-                    text = "What service do you need?",
+                    text = stringResource(Res.string.what_service_do_you_need),
                     fontSize = text_size_16,
                     color = Grey,
                     fontWeight = FontWeight.W600,
@@ -113,7 +114,7 @@ fun LookingForServiceScreen(
 
                 Text(
                     modifier = Modifier.align(Alignment.Start),
-                    text = "Describe the problem",
+                    text = stringResource(Res.string.describe_the_problem),
                     fontSize = text_size_16,
                     color = Grey,
                     fontWeight = FontWeight.W600,
@@ -124,7 +125,7 @@ fun LookingForServiceScreen(
 
                 DealSpotTextInputFieldWithInnerPlaceholderText(
                     modifier = Modifier.height(dimens_100),
-                    placeHolderText = "e.g. The wash machine show me error OEF01",
+                    placeHolderText = stringResource(Res.string.problem_description_example),
                     isSingleLine = false,
                     labelTextColor = grey_700_70_transparent,
                     imeAction = ImeAction.Done

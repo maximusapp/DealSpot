@@ -303,4 +303,5 @@
     <string name="what_service_do_you_need">Seleziona una categoria di servizio</string>
     <string name="describe_the_problem">Descrivi il problema</string>
     <string name="problem_description_example">es. La lavatrice mi mostra l\'errore OEF01</string>
+    <string name="urgent_problem">Problema urgente</string>
 </resources>

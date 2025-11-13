@@ -303,5 +303,6 @@
     <string name="what_service_do_you_need">Selecione uma categoria de serviço</string>
     <string name="describe_the_problem">Descreva o problema</string>
     <string name="problem_description_example">ex. A máquina de lavar me mostra o erro OEF01</string>
+    <string name="urgent_problem">Problema urgente</string>
     <!--Portuguese -->
 </resources>

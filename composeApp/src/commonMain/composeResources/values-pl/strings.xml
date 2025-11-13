@@ -303,5 +303,6 @@
     <string name="what_service_do_you_need">Wybierz kategorię usługi</string>
     <string name="describe_the_problem">Opisz problem</string>
     <string name="problem_description_example">np. Pralka pokazuje mi błąd OEF01</string>
+    <string name="urgent_problem">Pilny problem</string>
     <!--Polish-->
 </resources>

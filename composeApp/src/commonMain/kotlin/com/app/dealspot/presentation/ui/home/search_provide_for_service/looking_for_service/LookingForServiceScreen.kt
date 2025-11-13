@@ -3,6 +3,7 @@ package com.app.dealspot.presentation.ui.home.search_provide_for_service.looking
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -31,9 +32,15 @@ import com.app.dealspot.presentation.ui.components.TopBar
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionField
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionSheet
 import com.app.dealspot.presentation.view.DealSpotTextInputFieldWithInnerPlaceholderText
+import com.app.dealspot.presentation.view.ToggleWithLeftText
 import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.describe_the_problem
 import dealspot.composeapp.generated.resources.looking_for_service
-import dealspot.composeapp.generated.resources.*
+import dealspot.composeapp.generated.resources.problem_description_example
+import dealspot.composeapp.generated.resources.problem_example_washing_machine
+import dealspot.composeapp.generated.resources.problem_that_needs_to_be_solved
+import dealspot.composeapp.generated.resources.urgent_problem
+import dealspot.composeapp.generated.resources.what_service_do_you_need
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -45,6 +52,7 @@ fun LookingForServiceScreen(
     var selectedCategory by remember { mutableStateOf<String?>(null) }
     var selectedService by remember { mutableStateOf<String?>(null) }
     var showSelectionSheet by remember { mutableStateOf(false) }
+    var isUrgent by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -131,6 +139,18 @@ fun LookingForServiceScreen(
                     imeAction = ImeAction.Done
                 ) { description ->
                     problemDescription = description
+                }
+
+                SpacerHeight10Dp()
+
+                ToggleWithLeftText(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Start),
+                    toggleText = stringResource(Res.string.urgent_problem)
+                ) { isServiceUrgent ->
+                    println("ToggleWithLeftText. isServiceUrgent: $isServiceUrgent")
+                    isUrgent = isServiceUrgent
                 }
 
                 SpacerHeight25Dp()

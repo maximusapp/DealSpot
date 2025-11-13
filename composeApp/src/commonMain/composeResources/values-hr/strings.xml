@@ -303,5 +303,6 @@
     <string name="what_service_do_you_need">Odaberite kategoriju usluge</string>
     <string name="describe_the_problem">Opišite problem</string>
     <string name="problem_description_example">npr. Perilica rublja mi prikazuje grešku OEF01</string>
+    <string name="urgent_problem">Hitno problem</string>
     <!--Croatian -->
 </resources>

@@ -1,11 +1,15 @@
 package com.app.dealspot.presentation.ui.home.search_provide_for_service.looking_for_service
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,24 +18,37 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import com.app.dealspot.business.ScreenType
+import com.app.dealspot.data.model.LatLngEntity
+import com.app.dealspot.data.model.MapCameraState
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.SpacerHeight10Dp
 import com.app.dealspot.presentation.theme.SpacerHeight25Dp
 import com.app.dealspot.presentation.theme.SpacerHeight5Dp
+import com.app.dealspot.presentation.theme.dimens_1
 import com.app.dealspot.presentation.theme.dimens_100
+import com.app.dealspot.presentation.theme.dimens_16
 import com.app.dealspot.presentation.theme.dimens_20
+import com.app.dealspot.presentation.theme.dimens_300
+import com.app.dealspot.presentation.theme.dimens_4
+import com.app.dealspot.presentation.theme.dimens_5
 import com.app.dealspot.presentation.theme.dimens_50
 import com.app.dealspot.presentation.theme.dimens_60
+import com.app.dealspot.presentation.theme.grey_50_transparent
 import com.app.dealspot.presentation.theme.grey_700_70_transparent
+import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.text_size_16
+import com.app.dealspot.presentation.ui.components.SelectableMap
 import com.app.dealspot.presentation.ui.components.TopBar
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionField
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionSheet
 import com.app.dealspot.presentation.view.DealSpotTextInputFieldWithInnerPlaceholderText
+import com.app.dealspot.presentation.view.HorizontalThicknessDividerAlpha008
 import com.app.dealspot.presentation.view.ToggleWithLeftText
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.describe_the_problem
@@ -53,6 +70,9 @@ fun LookingForServiceScreen(
     var selectedService by remember { mutableStateOf<String?>(null) }
     var showSelectionSheet by remember { mutableStateOf(false) }
     var isUrgent by remember { mutableStateOf(false) }
+    var selectedLocation by remember { mutableStateOf<LatLngEntity?>(null) }
+    var miniMapCameraState by remember { mutableStateOf<MapCameraState?>(null) }
+    var userSelectedLocation by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -103,25 +123,6 @@ fun LookingForServiceScreen(
 
                 Text(
                     modifier = Modifier.align(Alignment.Start),
-                    text = stringResource(Res.string.what_service_do_you_need),
-                    fontSize = text_size_16,
-                    color = Grey,
-                    fontWeight = FontWeight.W600,
-                    fontFamily = latoFontFamily()
-                )
-
-                SpacerHeight10Dp()
-
-                ServiceSelectionField(
-                    selectedCategory = selectedCategory,
-                    selectedService = selectedService,
-                    onClick = { showSelectionSheet = true }
-                )
-
-                SpacerHeight25Dp()
-
-                Text(
-                    modifier = Modifier.align(Alignment.Start),
                     text = stringResource(Res.string.describe_the_problem),
                     fontSize = text_size_16,
                     color = Grey,
@@ -141,7 +142,29 @@ fun LookingForServiceScreen(
                     problemDescription = description
                 }
 
+                SpacerHeight25Dp()
+
+                Text(
+                    modifier = Modifier.align(Alignment.Start),
+                    text = stringResource(Res.string.what_service_do_you_need),
+                    fontSize = text_size_16,
+                    color = Grey,
+                    fontWeight = FontWeight.W600,
+                    fontFamily = latoFontFamily()
+                )
+
                 SpacerHeight10Dp()
+
+                ServiceSelectionField(
+                    selectedCategory = selectedCategory,
+                    selectedService = selectedService,
+                    onClick = { showSelectionSheet = true }
+                )
+
+                SpacerHeight25Dp()
+
+                /** Toggle section */
+                HorizontalThicknessDividerAlpha008()
 
                 ToggleWithLeftText(
                     modifier = Modifier
@@ -151,6 +174,59 @@ fun LookingForServiceScreen(
                 ) { isServiceUrgent ->
                     println("ToggleWithLeftText. isServiceUrgent: $isServiceUrgent")
                     isUrgent = isServiceUrgent
+                }
+
+                HorizontalThicknessDividerAlpha008()
+
+                SpacerHeight25Dp()
+
+                /** Text title for map */
+                Text(
+                    modifier = Modifier.align(Alignment.Start),
+                    text = "Change location if need",
+                    fontSize = text_size_16,
+                    color = Grey,
+                    fontWeight = FontWeight.W600,
+                    fontFamily = latoFontFamily()
+                )
+
+                SpacerHeight10Dp()
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(dimens_300)
+                        .border(width = dimens_1, color = grey_middle, shape = RoundedCornerShape(dimens_5))
+                ) {
+                    SelectableMap(
+                        modifier = Modifier.fillMaxSize(),
+                        initialCamera = miniMapCameraState,
+                        selectedPosition = selectedLocation,
+                        onCameraChanged = { cameraState ->
+                            miniMapCameraState = cameraState
+                        },
+                        onMapClick = { latLng ->
+                            println("MiniMap onMapClick lat=${latLng.latitude}, lng=${latLng.longitude}")
+                            userSelectedLocation = true
+                            selectedLocation = latLng
+                            miniMapCameraState = MapCameraState(
+                                latitude = latLng.latitude,
+                                longitude = latLng.longitude,
+                                zoom = miniMapCameraState?.zoom ?: 15f
+                            )
+                        },
+                        onLocationAvailable = { latLng ->
+                            if (!userSelectedLocation) {
+                                println("MiniMap onLocationAvailable lat=${latLng.latitude}, lng=${latLng.longitude}")
+                                selectedLocation = latLng
+                                miniMapCameraState = MapCameraState(
+                                    latitude = latLng.latitude,
+                                    longitude = latLng.longitude,
+                                    zoom = miniMapCameraState?.zoom ?: 14f
+                                )
+                            }
+                        }
+                    )
                 }
 
                 SpacerHeight25Dp()

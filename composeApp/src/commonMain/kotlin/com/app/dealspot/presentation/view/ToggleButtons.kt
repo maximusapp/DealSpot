@@ -33,10 +33,11 @@ fun ToggleWithLeftText(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        val displayText = if (toggleText.isNotEmpty()) toggleText else stringResource(Res.string.urgent_problem)
         Text(
-            text = stringResource(Res.string.urgent_problem),
+            text = displayText,
             fontSize = text_size_16,
-            color = Grey,
+            color = DealSpotDark,
             fontWeight = FontWeight.W600,
             fontFamily = latoFontFamily(),
             modifier = Modifier.weight(1f)

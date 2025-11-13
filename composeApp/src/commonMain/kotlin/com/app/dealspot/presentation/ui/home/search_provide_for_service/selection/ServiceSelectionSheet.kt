@@ -71,6 +71,7 @@ import com.app.dealspot.presentation.theme.dimens_1
 import com.app.dealspot.presentation.theme.dimens_16
 import com.app.dealspot.presentation.theme.dimens_200
 import com.app.dealspot.presentation.theme.dimens_45
+import com.app.dealspot.presentation.theme.dimens_5
 import com.app.dealspot.presentation.theme.dimens_8
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
@@ -372,11 +373,10 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
             ServiceEntity(id = 12007, categoryId = 12, name = stringResource(Res.string.service_emergency_opening_locks)),
             ServiceEntity(id = 12008, categoryId = 12, name = stringResource(Res.string.service_other))
         )
-    )
-)
+    ))
 }
 
-private val rowShape = RoundedCornerShape(dimens_16)
+private val rowShape = RoundedCornerShape(dimens_5)
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -587,6 +587,7 @@ private fun CategoryRow(
                     style = MaterialTheme.typography.titleMedium.copy(fontFamily = latoFontFamily()),
                     fontWeight = FontWeight.W600,
                     maxLines = 2,
+                    color = Grey,
                     overflow = TextOverflow.Ellipsis
                 )
                 if (isExpanded) {

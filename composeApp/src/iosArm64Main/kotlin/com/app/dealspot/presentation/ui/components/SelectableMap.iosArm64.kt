@@ -149,15 +149,18 @@ actual fun SelectableMap(
 
             class MapDelegate : NSObject(), cocoapods.GoogleMaps.GMSMapViewDelegateProtocol {
                 override fun mapView(mapView: GMSMapView, idleAtCameraPosition: GMSCameraPosition) {
-                    if (idleAtCameraPosition.zoom >= 2.0f) {
-                        idleAtCameraPosition.target.useContents {
-                            updateSelectionMarker(mapView, this.latitude, this.longitude)
-                            onMapClick(LatLngEntity(latitude = this.latitude, longitude = this.longitude))
-                            val currentZoom = mapView.camera.zoom
-                            val camera = GMSCameraPosition.cameraWithLatitude(this.latitude, this.longitude, currentZoom)
-                            val update = GMSCameraUpdate.setCamera(camera)
-                            mapView.animateWithCameraUpdate(update)
-                        }
+                    // Handle camera idle events if needed
+                }
+
+                override fun mapView(mapView: GMSMapView, didTapAtCoordinate: kotlinx.cinterop.CValue<cocoapods.GoogleMaps.CLLocationCoordinate2D>) {
+                    // Handle direct map tap - equivalent to Android's setOnMapClickListener
+                    didTapAtCoordinate.useContents {
+                        updateSelectionMarker(mapView, latitude, longitude)
+                        onMapClick(LatLngEntity(latitude = latitude, longitude = longitude))
+                        val currentZoom = mapView.camera.zoom
+                        val camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude, currentZoom)
+                        val update = GMSCameraUpdate.setCamera(camera)
+                        mapView.animateWithCameraUpdate(update)
                     }
                 }
             }

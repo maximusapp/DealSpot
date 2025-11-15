@@ -369,9 +369,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
             ServiceEntity(id = 12003, categoryId = 12, name = stringResource(Res.string.service_cargo_transportation_services)),
             ServiceEntity(id = 12004, categoryId = 12, name = stringResource(Res.string.service_furniture_reupholstery_restoration)),
             ServiceEntity(id = 12005, categoryId = 12, name = stringResource(Res.string.service_sports_equipment_repair)),
-            ServiceEntity(id = 12006, categoryId = 12, name = stringResource(Res.string.service_other_service)),
-            ServiceEntity(id = 12007, categoryId = 12, name = stringResource(Res.string.service_emergency_opening_locks)),
-            ServiceEntity(id = 12008, categoryId = 12, name = stringResource(Res.string.service_other))
+            ServiceEntity(id = 12007, categoryId = 12, name = stringResource(Res.string.service_emergency_opening_locks))
         )
     ))
 }
@@ -459,7 +457,8 @@ fun ServiceSelectionSheet(
                                         ServiceResultRow(
                                             category = category,
                                             service = service,
-                                            isSelected = selectedService == service.name,
+                                            // Check both category and service name to avoid "Other" being selected in all categories
+                                            isSelected = selectedCategory == category.name && selectedService == service.name,
                                             onClick = {
                                                 query = ""
                                                 expandedCategory = category.name
@@ -495,7 +494,8 @@ fun ServiceSelectionSheet(
                                                     verticalArrangement = Arrangement.spacedBy(8.dp)
                                                 ) {
                                                     category.services.forEach { service ->
-                                                        val selected = selectedService == service.name
+                                                        // Check both category and service name to avoid "Other" being selected in all categories
+                                                        val selected = selectedCategory == category.name && selectedService == service.name
                                                         val borderStroke = BorderStroke(
                                                             width = 1.dp,
                                                             color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)

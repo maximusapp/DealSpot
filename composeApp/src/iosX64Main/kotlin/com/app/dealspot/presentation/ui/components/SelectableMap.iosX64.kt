@@ -130,7 +130,7 @@ actual fun SelectableMap(
             val mapView = GMSMapView()
             mapViewState.value = mapView
             mapView.myLocationEnabled = true
-            mapView.settings.myLocationButton = false
+            mapView.settings.myLocationButton = true // Enable "My Location" button
 
             val style = GMSMapStyle.styleWithJSONString(mapStyle(), null)
             if (style != null) {
@@ -161,6 +161,23 @@ actual fun SelectableMap(
                         val camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude, currentZoom)
                         val update = GMSCameraUpdate.setCamera(camera)
                         mapView.animateWithCameraUpdate(update)
+                    }
+                }
+
+                override fun didTapMyLocationButtonForMapView(mapView: GMSMapView): Boolean {
+                    // Return false to allow default behavior, then handle in didTapMyLocation
+                    return false
+                }
+
+                override fun mapView(mapView: GMSMapView, didTapMyLocation: kotlinx.cinterop.CValue<cocoapods.GoogleMaps.CLLocationCoordinate2D>) {
+                    // Handle "My Location" button tap - move camera to current location
+                    didTapMyLocation.useContents {
+                        // Animate camera to current location
+                        val camera = GMSCameraPosition.cameraWithLatitude(latitude, longitude, 14.0f)
+                        val update = GMSCameraUpdate.setCamera(camera)
+                        mapView.animateWithCameraUpdate(update)
+                        updateSelectionMarker(mapView, latitude, longitude)
+                        onLocationAvailable(LatLngEntity(latitude = latitude, longitude = longitude))
                     }
                 }
             }

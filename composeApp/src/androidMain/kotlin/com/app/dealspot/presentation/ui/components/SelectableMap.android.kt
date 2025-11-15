@@ -43,9 +43,7 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalPermissionsApi::class)
 actual fun SelectableMap(
     modifier: Modifier,
-    initialCamera: MapCameraState?,
     selectedPosition: LatLngEntity?,
-    onCameraChanged: (MapCameraState) -> Unit,
     onMapClick: (LatLngEntity) -> Unit,
     onLocationAvailable: (LatLngEntity) -> Unit
 ) {
@@ -107,40 +105,26 @@ actual fun SelectableMap(
         val coarseGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
         if (fineGranted || coarseGranted) {
-            if (initialCamera?.latitude.zeroIfNull() <= 0.0 || initialCamera?.longitude.zeroIfNull() <= 0.0) {
-
-                fused.lastLocation.addOnSuccessListener { location ->
-                    if (location != null) {
-                        val latLng = LatLng(location.latitude, location.longitude)
-                        selectedLocationMarker?.remove()
-                        selectedLocationMarker = updateSelectableMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
-                        onLocationAvailable(LatLngEntity(latLng.latitude, latLng.longitude))
-                        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
-                    } else {
-                        val cts = CancellationTokenSource()
-                        fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
-                            .addOnSuccessListener { current ->
-                                if (current != null) {
-                                    val latLng = LatLng(current.latitude, current.longitude)
-                                    selectedLocationMarker?.remove()
-                                    selectedLocationMarker = updateSelectableMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
-                                    onLocationAvailable(LatLngEntity(latLng.latitude, latLng.longitude))
-                                    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
-                                }
+            fused.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    selectedLocationMarker?.remove()
+                    selectedLocationMarker = updateSelectableMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
+                    onLocationAvailable(LatLngEntity(latLng.latitude, latLng.longitude))
+                    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+                } else {
+                    val cts = CancellationTokenSource()
+                    fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
+                        .addOnSuccessListener { current ->
+                            if (current != null) {
+                                val latLng = LatLng(current.latitude, current.longitude)
+                                selectedLocationMarker?.remove()
+                                selectedLocationMarker = updateSelectableMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
+                                onLocationAvailable(LatLngEntity(latLng.latitude, latLng.longitude))
+                                map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
                             }
-                    }
-                }
-            } else {
-                val cts = CancellationTokenSource()
-                fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
-                    .addOnSuccessListener { current ->
-                        if (current != null) {
-                            val latLng = LatLng(current.latitude, current.longitude)
-                            selectedLocationMarker?.remove()
-                            selectedLocationMarker = updateSelectableMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
-                            onLocationAvailable(LatLngEntity(latLng.latitude, latLng.longitude))
                         }
-                    }
+                }
             }
         }
     }
@@ -162,18 +146,18 @@ actual fun SelectableMap(
                 }
 
                 googleMap.setOnCameraIdleListener {
-                    val cam = googleMap.cameraPosition
-                    if (cam.target.latitude > 0.0 && cam.target.longitude > 0.0) {
-                        onCameraChanged(
-                            MapCameraState(
-                                latitude = cam.target.latitude,
-                                longitude = cam.target.longitude,
-                                zoom = cam.zoom,
-                                bearing = cam.bearing,
-                                tilt = cam.tilt
-                            )
-                        )
-                    }
+//                    val cam = googleMap.cameraPosition
+//                    if (cam.target.latitude > 0.0 && cam.target.longitude > 0.0) {
+//                        onCameraChanged(
+//                            MapCameraState(
+//                                latitude = cam.target.latitude,
+//                                longitude = cam.target.longitude,
+//                                zoom = cam.zoom,
+//                                bearing = cam.bearing,
+//                                tilt = cam.tilt
+//                            )
+//                        )
+//                    }
                 }
 
                 googleMap.setOnMapLoadedCallback {
@@ -247,4 +231,5 @@ private fun updateSelectableMarker(
             .flat(false)
     )
 }
+
 

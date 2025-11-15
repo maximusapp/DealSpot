@@ -183,7 +183,7 @@ fun LookingForServiceScreen(
                 /** Text title for map */
                 Text(
                     modifier = Modifier.align(Alignment.Start),
-                    text = "Change location if need",
+                    text = "Поставте маркер, якщо хочете змінити локацію",
                     fontSize = text_size_16,
                     color = Grey,
                     fontWeight = FontWeight.W600,
@@ -200,11 +200,11 @@ fun LookingForServiceScreen(
                 ) {
                     SelectableMap(
                         modifier = Modifier.fillMaxSize(),
-                        initialCamera = miniMapCameraState,
+//                        initialCamera = miniMapCameraState,
                         selectedPosition = selectedLocation,
-                        onCameraChanged = { cameraState ->
-                            miniMapCameraState = cameraState
-                        },
+//                        onCameraChanged = { cameraState ->
+//                            miniMapCameraState = cameraState
+//                        },
                         onMapClick = { latLng ->
                             println("MiniMap onMapClick lat=${latLng.latitude}, lng=${latLng.longitude}")
                             userSelectedLocation = true

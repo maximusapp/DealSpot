@@ -266,6 +266,7 @@
     <!-- Services - Auto Services -->
     <string name="service_auto_mechanic">Автомеханік</string>
     <string name="service_auto_electrician">Автоелектрик</string>
+    <string name="service_tow_truck">Евакуатор</string>
     <string name="service_other">Інше</string>
     
     <!-- Services - Creative, Cultural & Media Services -->

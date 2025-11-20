@@ -266,6 +266,7 @@
     <!-- Services - Auto Services -->
     <string name="service_auto_mechanic">Mechanik samochodowy</string>
     <string name="service_auto_electrician">Elektryk samochodowy</string>
+    <string name="service_tow_truck">Laweta</string>
     <string name="service_other">Inne</string>
     
     <!-- Services - Creative, Cultural & Media Services -->

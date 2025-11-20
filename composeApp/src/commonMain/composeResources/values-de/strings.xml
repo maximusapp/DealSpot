@@ -266,6 +266,7 @@
     <!-- Services - Auto Services -->
     <string name="service_auto_mechanic">Automechaniker</string>
     <string name="service_auto_electrician">Autoelektriker</string>
+    <string name="service_tow_truck">Abschleppdienst</string>
     <string name="service_other">Andere</string>
     
     <!-- Services - Creative, Cultural & Media Services -->

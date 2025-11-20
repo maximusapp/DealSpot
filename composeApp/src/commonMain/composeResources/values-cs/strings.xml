@@ -267,6 +267,7 @@
     <!-- Services - Auto Services -->
     <string name="service_auto_mechanic">Automechanik</string>
     <string name="service_auto_electrician">Autoelektrikář</string>
+    <string name="service_tow_truck">Odtahová služba</string>
     <string name="service_other">Jiné</string>
     
     <!-- Services - Creative, Cultural & Media Services -->

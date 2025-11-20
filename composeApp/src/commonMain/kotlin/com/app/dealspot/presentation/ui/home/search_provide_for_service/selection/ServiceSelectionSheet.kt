@@ -192,7 +192,8 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
         services = listOf(
             ServiceEntity(id = 3000, categoryId = 3, name = stringResource(Res.string.service_auto_mechanic)),
             ServiceEntity(id = 3001, categoryId = 3, name = stringResource(Res.string.service_auto_electrician)),
-            ServiceEntity(id = 3002, categoryId = 3, name = stringResource(Res.string.service_other))
+            ServiceEntity(id = 3002, categoryId = 3, name = stringResource(Res.string.service_tow_truck)),
+            ServiceEntity(id = 3003, categoryId = 3, name = stringResource(Res.string.service_other))
         )
     ),
     // 4. Building & Cleaning Services - Cleaning, maintenance, construction

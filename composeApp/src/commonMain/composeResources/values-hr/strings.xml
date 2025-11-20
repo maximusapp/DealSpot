@@ -266,6 +266,7 @@
     <!-- Services - Auto Services -->
     <string name="service_auto_mechanic">Automehaničar</string>
     <string name="service_auto_electrician">Auto električar</string>
+    <string name="service_tow_truck">Vučna služba</string>
     <string name="service_other">Ostalo</string>
     
     <!-- Services - Creative, Cultural & Media Services -->

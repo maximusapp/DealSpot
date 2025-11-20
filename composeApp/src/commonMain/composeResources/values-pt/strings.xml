@@ -266,6 +266,7 @@
     <!-- Services - Auto Services -->
     <string name="service_auto_mechanic">Mecânico de automóveis</string>
     <string name="service_auto_electrician">Eletricista automotivo</string>
+    <string name="service_tow_truck">Guincho</string>
     <string name="service_other">Outro</string>
     
     <!-- Services - Creative, Cultural & Media Services -->

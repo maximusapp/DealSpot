@@ -266,6 +266,7 @@
     <!-- Services - Auto Services -->
     <string name="service_auto_mechanic">Meccanico auto</string>
     <string name="service_auto_electrician">Elettrauto</string>
+    <string name="service_tow_truck">Carro attrezzi</string>
     <string name="service_other">Altro</string>
     
     <!-- Services - Creative, Cultural & Media Services -->

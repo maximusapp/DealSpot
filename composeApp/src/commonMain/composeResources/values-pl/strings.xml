@@ -302,8 +302,11 @@
     <string name="problem_that_needs_to_be_solved">Problem do rozwiązania</string>
     <string name="problem_example_washing_machine">np. Pralka się zepsuła</string>
     <string name="what_service_do_you_need">Wybierz kategorię usługi</string>
+    <string name="my_specialization">Moja specjalizacja</string>
     <string name="describe_the_problem">Opisz problem</string>
+    <string name="describe_your_service">Opisz swoją usługę</string>
     <string name="problem_description_example">np. Pralka pokazuje mi błąd OEF01</string>
+    <string name="describe_services_you_provide">Opisz wszystkie usługi, które świadczysz</string>
     <string name="urgent_problem">Pilny problem</string>
     <string name="publish">Opublikuj</string>
     <!--Polish-->

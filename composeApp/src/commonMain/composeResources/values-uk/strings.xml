@@ -302,8 +302,11 @@
     <string name="problem_that_needs_to_be_solved">Проблема, яку потрібно вирішити</string>
     <string name="problem_example_washing_machine">напр. Пральна машина зламалася</string>
     <string name="what_service_do_you_need">Виберіть категорію послуги</string>
+    <string name="my_specialization">Моя спеціалізація</string>
     <string name="describe_the_problem">Опишіть проблему</string>
+    <string name="describe_your_service">Опишіть вашу послугу</string>
     <string name="problem_description_example">напр. Пральна машина показує мені помилку OEF01</string>
+    <string name="describe_services_you_provide">Опишіть усі послуги, які ви надаєте</string>
     <string name="urgent_problem">Термінова проблема</string>
     <string name="publish">Опублікувати</string>
 </resources>

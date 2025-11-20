@@ -303,8 +303,11 @@
     <string name="problem_that_needs_to_be_solved">Problém, který je třeba vyřešit</string>
     <string name="problem_example_washing_machine">např. Pračka se porouchala</string>
     <string name="what_service_do_you_need">Vyberte kategorii služeb</string>
+    <string name="my_specialization">Moje specializace</string>
     <string name="describe_the_problem">Popište problém</string>
+    <string name="describe_your_service">Popište svou službu</string>
     <string name="problem_description_example">např. Pračka mi ukazuje chybu OEF01</string>
+    <string name="describe_services_you_provide">Popište všechny služby, které poskytujete</string>
     <string name="urgent_problem">Naléhavý problém</string>
     <string name="publish">Publikovat</string>
     <!--Czech -->

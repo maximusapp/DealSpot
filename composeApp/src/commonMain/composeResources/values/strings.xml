@@ -301,8 +301,11 @@
     <string name="problem_that_needs_to_be_solved">Problem that needs to be solved</string>
     <string name="problem_example_washing_machine">e.g. The washing machine broke down</string>
     <string name="what_service_do_you_need">Select a service category</string>
+    <string name="my_specialization">My specialization</string>
     <string name="describe_the_problem">Describe the problem</string>
+    <string name="describe_your_service">Describe your service</string>
     <string name="problem_description_example">e.g. The wash machine show me error OEF01</string>
+    <string name="describe_services_you_provide">Describe all services you provide</string>
     <string name="urgent_problem">Urgent problem</string>
     <string name="publish">Publish</string>
 </resources>

@@ -302,8 +302,11 @@
     <string name="problem_that_needs_to_be_solved">Problem koji treba riješiti</string>
     <string name="problem_example_washing_machine">npr. Perilica rublja se pokvarila</string>
     <string name="what_service_do_you_need">Odaberite kategoriju usluge</string>
+    <string name="my_specialization">Moja specijalizacija</string>
     <string name="describe_the_problem">Opišite problem</string>
+    <string name="describe_your_service">Opišite svoju uslugu</string>
     <string name="problem_description_example">npr. Perilica rublja mi prikazuje grešku OEF01</string>
+    <string name="describe_services_you_provide">Opišite sve usluge koje pružate</string>
     <string name="urgent_problem">Hitno problem</string>
     <string name="publish">Objavi</string>
     <!--Croatian -->

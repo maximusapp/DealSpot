@@ -1,5 +1,6 @@
 package com.app.dealspot.business
 
+import com.app.dealspot.data.model.LatLngEntity
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
@@ -34,3 +35,15 @@ data class Step3(
     val isValid: Boolean
         get() = password.length >= 8 && password == confirmPassword
 }
+
+data class CreateDealEntity(
+    val id: Long,
+    val categoryId: Long,
+    val guid: String,
+    val name: String,
+    val description: String,
+    val type: DealType,
+    val location: LatLngEntity,
+    val isUrgent: Int,
+    val dateTime: String
+)

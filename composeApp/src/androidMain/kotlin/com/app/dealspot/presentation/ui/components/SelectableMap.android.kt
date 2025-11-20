@@ -66,7 +66,7 @@ actual fun SelectableMap(
                     selectedLocationMarker?.remove()
                     selectedLocationMarker = updateSelectableMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
                     onLocationAvailable(LatLngEntity(latLng.latitude, latLng.longitude))
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                 } else {
                     val cts = CancellationTokenSource()
                     fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
@@ -76,7 +76,7 @@ actual fun SelectableMap(
                                 selectedLocationMarker?.remove()
                                 selectedLocationMarker = updateSelectableMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
                                 onLocationAvailable(LatLngEntity(latLng.latitude, latLng.longitude))
-                                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+                                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                             }
                         }
                 }
@@ -111,7 +111,7 @@ actual fun SelectableMap(
                     selectedLocationMarker?.remove()
                     selectedLocationMarker = updateSelectableMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
                     onLocationAvailable(LatLngEntity(latLng.latitude, latLng.longitude))
-                    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+                    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                 } else {
                     val cts = CancellationTokenSource()
                     fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
@@ -121,7 +121,7 @@ actual fun SelectableMap(
                                 selectedLocationMarker?.remove()
                                 selectedLocationMarker = updateSelectableMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
                                 onLocationAvailable(LatLngEntity(latLng.latitude, latLng.longitude))
-                                map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+                                map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                             }
                         }
                 }

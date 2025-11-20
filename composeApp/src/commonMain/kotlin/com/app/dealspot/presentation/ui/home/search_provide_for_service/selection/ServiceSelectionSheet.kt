@@ -381,10 +381,10 @@ private val rowShape = RoundedCornerShape(dimens_5)
 @Composable
 fun ServiceSelectionSheet(
     visible: Boolean,
-    selectedCategory: String?,
-    selectedService: String?,
+    selectedCategory: ServiceCategoryEntity?,
+    selectedService: ServiceEntity?,
     onDismissRequest: () -> Unit,
-    onServiceSelected: (category: String, service: String) -> Unit
+    onServiceSelected: (category: ServiceCategoryEntity, service: ServiceEntity) -> Unit
 ) {
     var query by remember { mutableStateOf("") }
     var expandedCategory by remember { mutableStateOf(selectedCategory) }
@@ -459,11 +459,11 @@ fun ServiceSelectionSheet(
                                             category = category,
                                             service = service,
                                             // Check both category and service name to avoid "Other" being selected in all categories
-                                            isSelected = selectedCategory == category.name && selectedService == service.name,
+                                            isSelected = selectedCategory?.name.orEmpty() == category.name && selectedService?.name.orEmpty() == service.name,
                                             onClick = {
                                                 query = ""
-                                                expandedCategory = category.name
-                                                onServiceSelected(category.name, service.name)
+                                                expandedCategory = category
+                                                onServiceSelected(category, service)
                                             }
                                         )
                                     }
@@ -477,14 +477,14 @@ fun ServiceSelectionSheet(
                                     items(serviceCategories) { category ->
                                         CategoryRow(
                                             category = category,
-                                            isExpanded = expandedCategory == category.name,
-                                            isSelected = selectedCategory == category.name,
+                                            isExpanded = expandedCategory?.name.orEmpty() == category.name,
+                                            isSelected = selectedCategory?.name.orEmpty() == category.name,
                                             onClick = {
-                                                expandedCategory = if (expandedCategory == category.name) null else category.name
+                                                expandedCategory = if (expandedCategory?.name.orEmpty() == category.name) null else category
                                             }
                                         )
 
-                                        AnimatedVisibility(visible = expandedCategory == category.name) {
+                                        AnimatedVisibility(visible = expandedCategory?.name.orEmpty() == category.name) {
                                             Column(
                                                 modifier = Modifier
                                                     .fillMaxWidth()
@@ -496,7 +496,7 @@ fun ServiceSelectionSheet(
                                                 ) {
                                                     category.services.forEach { service ->
                                                         // Check both category and service name to avoid "Other" being selected in all categories
-                                                        val selected = selectedCategory == category.name && selectedService == service.name
+                                                        val selected = selectedCategory?.name.orEmpty() == category.name && selectedService?.name.orEmpty() == service.name
                                                         val borderStroke = BorderStroke(
                                                             width = 1.dp,
                                                             color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
@@ -504,7 +504,7 @@ fun ServiceSelectionSheet(
                                                         AssistChip(
                                                             onClick = {
                                                                 query = ""
-                                                                onServiceSelected(category.name, service.name)
+                                                                onServiceSelected(category, service)
                                                             },
                                                             label = { Text(service.name, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                                                             colors = AssistChipDefaults.assistChipColors(
@@ -659,8 +659,8 @@ private fun ServiceResultRow(
 
 @Composable
 fun ServiceSelectionField(
-    selectedCategory: String?,
-    selectedService: String?,
+    selectedCategory: ServiceCategoryEntity?,
+    selectedService: ServiceEntity?,
     onClick: () -> Unit
 ) {
     val borderColor = if (selectedService != null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.15f)
@@ -676,14 +676,14 @@ fun ServiceSelectionField(
         ) {
             if (selectedService != null) {
                 Text(
-                    text = selectedService,
+                    text = selectedService.name,
                     fontWeight = FontWeight.W600,
                     style = MaterialTheme.typography.titleMedium.copy(fontFamily = latoFontFamily())
                 )
                 selectedCategory?.let {
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = it,
+                        text = it.name,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

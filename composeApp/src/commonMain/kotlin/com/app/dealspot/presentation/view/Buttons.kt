@@ -33,6 +33,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun DealSpotDarkButton(
     modifier: Modifier = Modifier,
     buttonText: String = "Some text",
+    isEnable: Boolean = true,
     onClick: () -> Unit = {}
 ) {
     Button(
@@ -44,6 +45,7 @@ fun DealSpotDarkButton(
             containerColor = DealSpotDark,
             contentColor = Color.White
         ),
+        enabled = isEnable,
         shape = RoundedCornerShape(dimens_12)
     ) {
         Text(

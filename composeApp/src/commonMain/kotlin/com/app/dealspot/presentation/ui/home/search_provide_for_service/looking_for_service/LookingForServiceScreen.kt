@@ -57,18 +57,20 @@ import dealspot.composeapp.generated.resources.publish
 import dealspot.composeapp.generated.resources.urgent_problem
 import dealspot.composeapp.generated.resources.what_service_do_you_need
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 
 @Composable
 fun LookingForServiceScreen(
+    viewModel: LookingForServiceViewModel = koinInject(),
     onBackClicked: () -> Unit = {}
 ) {
-    var problemName by remember { mutableStateOf("") }
-    var problemDescription by remember { mutableStateOf("") }
-    var selectedCategory by remember { mutableStateOf<String?>(null) }
-    var selectedService by remember { mutableStateOf<String?>(null) }
+//    var problemName by remember { mutableStateOf("") }
+//    var problemDescription by remember { mutableStateOf("") }
+//    var selectedCategory by remember { mutableStateOf<ServiceCategoryEntity?>(null) }
+//    var selectedService by remember { mutableStateOf<ServiceEntity?>(null) }
     var showSelectionSheet by remember { mutableStateOf(false) }
-    var isUrgent by remember { mutableStateOf(false) }
-    var selectedLocation by remember { mutableStateOf<LatLngEntity?>(null) }
+//    var isUrgent by remember { mutableStateOf(false) }
+//    var selectedLocation by remember { mutableStateOf<LatLngEntity?>(null) }
     var miniMapCameraState by remember { mutableStateOf<MapCameraState?>(null) }
     var userSelectedLocation by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
@@ -119,7 +121,8 @@ fun LookingForServiceScreen(
                     imeAction = ImeAction.Done,
                     labelTextColor = grey_700_70_transparent
                 ) { name ->
-                    problemName = name
+//                    problemName = name
+                    viewModel.setName(name = name)
                 }
 
                 SpacerHeight25Dp()
@@ -142,7 +145,8 @@ fun LookingForServiceScreen(
                     labelTextColor = grey_700_70_transparent,
                     imeAction = ImeAction.Done
                 ) { description ->
-                    problemDescription = description
+//                    problemDescription = description
+                    viewModel.setDescription(description = description)
                 }
 
                 SpacerHeight25Dp()
@@ -159,8 +163,8 @@ fun LookingForServiceScreen(
                 SpacerHeight10Dp()
 
                 ServiceSelectionField(
-                    selectedCategory = selectedCategory,
-                    selectedService = selectedService,
+                    selectedCategory = viewModel.selectedCategory,
+                    selectedService = viewModel.selectedService,
                     onClick = { showSelectionSheet = true }
                 )
 
@@ -176,7 +180,8 @@ fun LookingForServiceScreen(
                     toggleText = stringResource(Res.string.urgent_problem)
                 ) { isServiceUrgent ->
                     println("ToggleWithLeftText. isServiceUrgent: $isServiceUrgent")
-                    isUrgent = isServiceUrgent
+//                    isUrgent = isServiceUrgent
+                    viewModel.setUrgent(urgent = isServiceUrgent)
                 }
 
                 HorizontalThicknessDividerAlpha008()
@@ -215,14 +220,16 @@ fun LookingForServiceScreen(
                     SelectableMap(
                         modifier = Modifier.fillMaxSize(),
 //                        initialCamera = miniMapCameraState,
-                        selectedPosition = selectedLocation,
+//                        selectedPosition = selectedLocation,
+                        selectedPosition = viewModel.getSelectedLocation(),
 //                        onCameraChanged = { cameraState ->
 //                            miniMapCameraState = cameraState
 //                        },
                         onMapClick = { latLng ->
                             println("MiniMap onMapClick lat=${latLng.latitude}, lng=${latLng.longitude}")
                             userSelectedLocation = true
-                            selectedLocation = latLng
+//                            selectedLocation = latLng
+                            viewModel.setLocation(location = latLng)
                             miniMapCameraState = MapCameraState(
                                 latitude = latLng.latitude,
                                 longitude = latLng.longitude,
@@ -232,11 +239,12 @@ fun LookingForServiceScreen(
                         onLocationAvailable = { latLng ->
                             if (!userSelectedLocation) {
                                 println("MiniMap onLocationAvailable lat=${latLng.latitude}, lng=${latLng.longitude}")
-                                selectedLocation = latLng
+//                                selectedLocation = latLng
+                                viewModel.setLocation(location = latLng)
                                 miniMapCameraState = MapCameraState(
                                     latitude = latLng.latitude,
                                     longitude = latLng.longitude,
-                                    zoom = miniMapCameraState?.zoom ?: 14f
+                                    zoom = miniMapCameraState?.zoom ?: 15f
                                 )
                             }
                         }
@@ -249,9 +257,10 @@ fun LookingForServiceScreen(
                     modifier = Modifier
                         .fillMaxWidth(),
                     buttonText = stringResource(Res.string.publish),
+                    isEnable = viewModel.problemName.isNotBlank() && viewModel.problemDescription.isNotBlank() && viewModel.selectedCategory != null,
                     onClick = {
                         println("LookingForServiceScreen. Create button clicked")
-
+                        viewModel.publishDeal()
                     }
                 )
 
@@ -261,12 +270,13 @@ fun LookingForServiceScreen(
 
         ServiceSelectionSheet(
             visible = showSelectionSheet,
-            selectedCategory = selectedCategory,
-            selectedService = selectedService,
+            selectedCategory = viewModel.selectedCategory,
+            selectedService = viewModel.selectedService,
             onDismissRequest = { showSelectionSheet = false },
             onServiceSelected = { category, service ->
-                selectedCategory = category
-                selectedService = service
+//                selectedCategory = category
+//                selectedService = service
+                viewModel.setCategoryInfo(category = category, service = service)
                 showSelectionSheet = false
             }
         )

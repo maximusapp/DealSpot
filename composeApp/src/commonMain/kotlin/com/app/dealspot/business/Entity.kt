@@ -38,11 +38,14 @@ data class Step3(
 
 data class CreateDealEntity(
     val id: Long,
-    val categoryId: Long,
     val guid: String,
     val name: String,
     val description: String,
     val type: DealType,
+    val categoryId: Long,
+    val categoryName: String,
+    val serviceId: Long,
+    val serviceName: String,
     val location: LatLngEntity,
     val isUrgent: Int,
     val dateTime: String

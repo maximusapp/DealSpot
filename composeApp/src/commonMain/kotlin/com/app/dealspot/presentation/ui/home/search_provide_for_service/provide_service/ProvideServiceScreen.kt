@@ -24,6 +24,8 @@ import androidx.compose.ui.text.input.ImeAction
 import com.app.dealspot.business.ScreenType
 import com.app.dealspot.data.model.LatLngEntity
 import com.app.dealspot.data.model.MapCameraState
+import com.app.dealspot.data.model.ServiceCategoryEntity
+import com.app.dealspot.data.model.ServiceEntity
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.SpacerHeight10Dp
 import com.app.dealspot.presentation.theme.SpacerHeight25Dp
@@ -61,8 +63,8 @@ fun ProvideServiceScreen(
 ) {
     var specialization by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var selectedCategory by remember { mutableStateOf<String?>(null) }
-    var selectedService by remember { mutableStateOf<String?>(null) }
+    var selectedCategory by remember { mutableStateOf<ServiceCategoryEntity?>(null) }
+    var selectedService by remember { mutableStateOf<ServiceEntity?>(null) }
     var showSelectionSheet by remember { mutableStateOf(false) }
     var selectedLocation by remember { mutableStateOf<LatLngEntity?>(null) }
     var miniMapCameraState by remember { mutableStateOf<MapCameraState?>(null) }

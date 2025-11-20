@@ -1,6 +1,5 @@
 package com.app.dealspot.presentation.ui.home.search_provide_for_service.looking_for_service
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,8 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,8 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import com.app.dealspot.business.ScreenType
@@ -31,14 +30,11 @@ import com.app.dealspot.presentation.theme.SpacerHeight25Dp
 import com.app.dealspot.presentation.theme.SpacerHeight5Dp
 import com.app.dealspot.presentation.theme.dimens_1
 import com.app.dealspot.presentation.theme.dimens_100
-import com.app.dealspot.presentation.theme.dimens_16
 import com.app.dealspot.presentation.theme.dimens_20
 import com.app.dealspot.presentation.theme.dimens_300
-import com.app.dealspot.presentation.theme.dimens_4
 import com.app.dealspot.presentation.theme.dimens_5
 import com.app.dealspot.presentation.theme.dimens_50
 import com.app.dealspot.presentation.theme.dimens_60
-import com.app.dealspot.presentation.theme.grey_50_transparent
 import com.app.dealspot.presentation.theme.grey_700_70_transparent
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
@@ -47,6 +43,7 @@ import com.app.dealspot.presentation.ui.components.SelectableMap
 import com.app.dealspot.presentation.ui.components.TopBar
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionField
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionSheet
+import com.app.dealspot.presentation.view.DealSpotDarkButton
 import com.app.dealspot.presentation.view.DealSpotTextInputFieldWithInnerPlaceholderText
 import com.app.dealspot.presentation.view.HorizontalThicknessDividerAlpha008
 import com.app.dealspot.presentation.view.ToggleWithLeftText
@@ -56,6 +53,7 @@ import dealspot.composeapp.generated.resources.looking_for_service
 import dealspot.composeapp.generated.resources.problem_description_example
 import dealspot.composeapp.generated.resources.problem_example_washing_machine
 import dealspot.composeapp.generated.resources.problem_that_needs_to_be_solved
+import dealspot.composeapp.generated.resources.publish
 import dealspot.composeapp.generated.resources.urgent_problem
 import dealspot.composeapp.generated.resources.what_service_do_you_need
 import org.jetbrains.compose.resources.stringResource
@@ -73,6 +71,8 @@ fun LookingForServiceScreen(
     var selectedLocation by remember { mutableStateOf<LatLngEntity?>(null) }
     var miniMapCameraState by remember { mutableStateOf<MapCameraState?>(null) }
     var userSelectedLocation by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
+    var isMapGestureActive by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -86,7 +86,10 @@ fun LookingForServiceScreen(
             contentAlignment = Alignment.Center
         ) {
             Column(
-                modifier = Modifier.fillMaxSize().padding(horizontal = dimens_20),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState, enabled = !isMapGestureActive)
+                    .padding(horizontal = dimens_20),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 TopBar(
@@ -197,6 +200,17 @@ fun LookingForServiceScreen(
                         .fillMaxWidth()
                         .height(dimens_300)
                         .border(width = dimens_1, color = grey_middle, shape = RoundedCornerShape(dimens_5))
+                        .pointerInput(Unit) {
+                            awaitPointerEventScope {
+                                while (true) {
+                                    val event = awaitPointerEvent()
+                                    val anyPressed = event.changes.any { it.pressed }
+                                    if (isMapGestureActive != anyPressed) {
+                                        isMapGestureActive = anyPressed
+                                    }
+                                }
+                            }
+                        }
                 ) {
                     SelectableMap(
                         modifier = Modifier.fillMaxSize(),
@@ -228,6 +242,18 @@ fun LookingForServiceScreen(
                         }
                     )
                 }
+
+                SpacerHeight25Dp()
+
+                DealSpotDarkButton(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    buttonText = stringResource(Res.string.publish),
+                    onClick = {
+                        println("LookingForServiceScreen. Create button clicked")
+
+                    }
+                )
 
                 SpacerHeight25Dp()
             }

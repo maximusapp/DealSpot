@@ -305,4 +305,5 @@
     <string name="describe_the_problem">Beschreiben Sie das Problem</string>
     <string name="problem_description_example">z.B. Die Waschmaschine zeigt mir den Fehler OEF01</string>
     <string name="urgent_problem">Dringendes Problem</string>
+    <string name="publish">Veröffentlichen</string>
 </resources>

@@ -306,5 +306,6 @@
     <string name="describe_the_problem">Popište problém</string>
     <string name="problem_description_example">např. Pračka mi ukazuje chybu OEF01</string>
     <string name="urgent_problem">Naléhavý problém</string>
+    <string name="publish">Publikovat</string>
     <!--Czech -->
 </resources>

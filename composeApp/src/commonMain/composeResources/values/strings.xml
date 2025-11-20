@@ -304,4 +304,5 @@
     <string name="describe_the_problem">Describe the problem</string>
     <string name="problem_description_example">e.g. The wash machine show me error OEF01</string>
     <string name="urgent_problem">Urgent problem</string>
+    <string name="publish">Publish</string>
 </resources>

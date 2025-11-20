@@ -305,5 +305,6 @@
     <string name="describe_the_problem">Opišite problem</string>
     <string name="problem_description_example">npr. Perilica rublja mi prikazuje grešku OEF01</string>
     <string name="urgent_problem">Hitno problem</string>
+    <string name="publish">Objavi</string>
     <!--Croatian -->
 </resources>

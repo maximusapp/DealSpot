@@ -305,4 +305,5 @@
     <string name="describe_the_problem">Опишіть проблему</string>
     <string name="problem_description_example">напр. Пральна машина показує мені помилку OEF01</string>
     <string name="urgent_problem">Термінова проблема</string>
+    <string name="publish">Опублікувати</string>
 </resources>

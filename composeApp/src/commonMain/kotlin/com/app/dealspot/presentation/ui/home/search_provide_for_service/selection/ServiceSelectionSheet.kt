@@ -25,6 +25,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import kotlinx.coroutines.launch
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -76,11 +79,17 @@ import com.app.dealspot.presentation.theme.dimens_8
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.white
+import com.app.dealspot.presentation.view.DealSpotDarkButton
 import com.app.dealspot.presentation.view.DealSpotOutlineButton
 import com.app.dealspot.presentation.view.DealSpotTextInputField
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.text.style.TextAlign
+import kotlinx.coroutines.launch
+import com.app.dealspot.common.rememberEmailSender
 
 private val SheetShape = RoundedCornerShape(dimens_16)
 
@@ -384,11 +393,41 @@ fun ServiceSelectionSheet(
     selectedCategory: ServiceCategoryEntity?,
     selectedService: ServiceEntity?,
     onDismissRequest: () -> Unit,
-    onServiceSelected: (category: ServiceCategoryEntity, service: ServiceEntity) -> Unit
+    onServiceSelected: (category: ServiceCategoryEntity, service: ServiceEntity) -> Unit,
+    appDataStore: com.app.dealspot.business.AppDataStore? = null
 ) {
     var query by remember { mutableStateOf("") }
     var expandedCategory by remember { mutableStateOf(selectedCategory) }
+    var categoryName by remember { mutableStateOf("") }
+    var serviceName by remember { mutableStateOf("") }
+    var showSuccessMessage by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
+    val emailSender = rememberEmailSender()
+    
+    // TODO: Replace with your actual email address
+    val supportEmail = "thedealspotapp@gmail.com"
+    
+    // Determine if we should show suggestion form (needed for layout calculations)
     val serviceCategories = getServiceCategories()
+    val filteredResults = remember(query) {
+        if (query.isBlank()) emptyList()
+        else serviceCategories.flatMap { category ->
+            category.services.filter { it.name.contains(query, ignoreCase = true) }
+                .map { service -> category to service }
+        }
+    }
+    val shouldShowSuggestionForm = query.isNotBlank() && filteredResults.isEmpty()
+    
+    // Get user email when sheet becomes visible and reset states when dismissed
+    LaunchedEffect(visible) {
+        if (!visible) {
+            categoryName = ""
+            serviceName = ""
+            showSuccessMessage = false
+            query = ""
+        }
+    }
 
     AnimatedVisibility(visible = visible, enter = fadeIn(), exit = fadeOut()) {
         Box(
@@ -402,8 +441,8 @@ fun ServiceSelectionSheet(
         ) {
             BoxWithConstraints(
                 modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(horizontal = 20.dp)
+                    .align(if (shouldShowSuggestionForm || showSuccessMessage) Alignment.TopCenter else Alignment.Center)
+                    .padding(horizontal = 20.dp, vertical = if (shouldShowSuggestionForm || showSuccessMessage) 40.dp else 0.dp)
                     .clickable(
                         indication = null,
                         enabled = false,
@@ -411,6 +450,13 @@ fun ServiceSelectionSheet(
                     ) { }
             ) {
                 val sheetMaxHeight = (maxHeight - 88.dp).coerceAtLeast(220.dp)
+                
+                // When showing suggestion form, allow more height for keyboard
+                val adjustedMaxHeight = if (shouldShowSuggestionForm || showSuccessMessage) {
+                    (maxHeight - 120.dp).coerceAtLeast(400.dp)
+                } else {
+                    sheetMaxHeight
+                }
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -422,9 +468,11 @@ fun ServiceSelectionSheet(
                         modifier = Modifier
                             .shadow(dimens_1, SheetShape)
                             .fillMaxWidth()
-                            .heightIn(max = sheetMaxHeight)
+                            .heightIn(max = adjustedMaxHeight)
                     ) {
-                        Column(modifier = Modifier.padding(top = dimens_8, bottom = dimens_8)) {
+                        Column(
+                            modifier = Modifier.padding(top = dimens_8, bottom = dimens_8)
+                        ) {
                             DealSpotTextInputField(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -440,15 +488,96 @@ fun ServiceSelectionSheet(
                                 query = service
                             }
 
-                            val filteredResults = remember(query) {
-                                if (query.isBlank()) emptyList()
-                                else serviceCategories.flatMap { category ->
-                                    category.services.filter { it.name.contains(query, ignoreCase = true) }
-                                        .map { service -> category to service }
-                                }
-                            }
+                            // filteredResults and shouldShowSuggestionForm are now calculated above
 
-                            if (filteredResults.isNotEmpty()) {
+                            if (showSuccessMessage) {
+                                // Success message view
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 20.dp, vertical = 16.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        text = stringResource(Res.string.suggestion_sent_success),
+                                        style = MaterialTheme.typography.bodyMedium.copy(fontFamily = latoFontFamily()),
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.padding(vertical = 16.dp)
+                                    )
+                                }
+                            } else if (shouldShowSuggestionForm) {
+                                // Suggestion form view
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .verticalScroll(scrollState)
+                                        .padding(horizontal = 20.dp, vertical = 16.dp)
+                                ) {
+                                    Text(
+                                        text = stringResource(Res.string.nothing_found_message),
+                                        style = MaterialTheme.typography.bodyMedium.copy(fontFamily = latoFontFamily()),
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        modifier = Modifier.padding(bottom = 20.dp)
+                                    )
+
+                                    DealSpotTextInputField(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(bottom = 12.dp),
+                                        placeHolderText = stringResource(Res.string.category_name),
+                                        isPasswordField = false,
+                                        imeAction = ImeAction.Next,
+                                        labelTextColor = Grey
+                                    ) { category ->
+                                        categoryName = category
+                                    }
+
+                                    DealSpotTextInputField(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(bottom = 20.dp),
+                                        placeHolderText = stringResource(Res.string.service_name),
+                                        isPasswordField = false,
+                                        imeAction = ImeAction.Done,
+                                        labelTextColor = Grey
+                                    ) { service ->
+                                        serviceName = service
+                                    }
+
+                                    DealSpotDarkButton(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        buttonText = stringResource(Res.string.send),
+                                        isEnable = categoryName.isNotBlank() && serviceName.isNotBlank(),
+                                        onClick = {
+                                            // Open email app with pre-filled email
+                                            val subject = "Service Suggestion: $serviceName"
+                                            val body = """
+                                                Category: $categoryName
+                                                Service: $serviceName
+                                                
+                                                Please add this service to the appropriate category.
+                                            """.trimIndent()
+                                            
+                                            emailSender.openEmailClient(
+                                                to = supportEmail,
+                                                subject = subject,
+                                                body = body
+                                            )
+                                            
+                                            showSuccessMessage = true
+                                            // Close after 2 seconds
+                                            coroutineScope.launch {
+                                                kotlinx.coroutines.delay(2000)
+                                                onDismissRequest()
+                                            }
+                                        }
+                                    )
+                                    
+                                    // Add extra padding at the bottom to ensure content scrolls above keyboard
+                                    Spacer(modifier = Modifier.height(300.dp))
+                                }
+                            } else if (filteredResults.isNotEmpty()) {
                                 LazyColumn(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -469,6 +598,7 @@ fun ServiceSelectionSheet(
                                     }
                                 }
                             } else {
+                                // Show all categories when query is blank
                                 LazyColumn(
                                     modifier = Modifier
                                         .fillMaxWidth()

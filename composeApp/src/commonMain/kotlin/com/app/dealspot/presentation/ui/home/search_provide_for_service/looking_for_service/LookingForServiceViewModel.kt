@@ -2,13 +2,18 @@ package com.app.dealspot.presentation.ui.home.search_provide_for_service.looking
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.dealspot.business.DealType
+import com.app.dealspot.data.model.CreateDealRequest
 import com.app.dealspot.data.model.LatLngEntity
 import com.app.dealspot.data.model.ServiceCategoryEntity
 import com.app.dealspot.data.model.ServiceEntity
+import com.app.dealspot.domain.use_cases.deals.CreateDealUseCase
+import com.app.dealspot.presentation.utils.booleanToInt
+import com.app.dealspot.presentation.utils.getCurrentDateTime
 import kotlinx.coroutines.launch
 
 class LookingForServiceViewModel(
-
+    private val createDealUseCase: CreateDealUseCase
 ) : ViewModel() {
     var problemName: String = ""
     private set
@@ -46,23 +51,35 @@ class LookingForServiceViewModel(
         return selectedLocation
     }
 
-//    fun getSelectedCategory(): ServiceCategoryEntity? {
-//        return selectedCategory
-//    }
-//
-//    fun getSelectedService(): ServiceEntity? {
-//        return selectedService
-//    }
-
-
     fun publishDeal() {
         viewModelScope.launch {
-            println("Deal name: $problemName")
-            println("Deal descr: $problemDescription")
-            println("Deal category: $selectedCategory")
-            println("Deal service: $selectedService")
-            println("Deal urgent: $isUrgent")
-            println("Deal location: ${selectedLocation?.latitude}, ${selectedLocation?.longitude}")
+            val location = selectedLocation
+            val category = selectedCategory
+            val service = selectedService
+            
+            if (location == null || category == null || service == null) {
+                println("DealRepositoryImpl. publishDeal. Missing required fields")
+                return@launch
+            }
+            
+            val request = CreateDealRequest(
+                type = DealType.LOOKING_FOR_SERVICE.ordinal,
+                name = problemName,
+                description = problemDescription,
+                categoryId = category.id,
+                categoryName = category.name,
+                serviceId = service.id,
+                serviceName = service.name,
+                latitude = location.latitude,
+                longitude = location.longitude,
+                isUrgent = isUrgent.booleanToInt(),
+                dateTime = getCurrentDateTime(),
+                isActive = 1
+            )
+            
+            println("DealRepositoryImpl. publishDeal. Sending request: $request")
+
+            createDealUseCase.createDeal(request)
         }
     }
 }

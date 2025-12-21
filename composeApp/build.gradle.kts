@@ -83,6 +83,7 @@ kotlin {
             implementation(libs.koin.compose)
 
             implementation(libs.ktor.serialization)
+            implementation(libs.ktor.client.core)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
             implementation(libs.compose.navigation)

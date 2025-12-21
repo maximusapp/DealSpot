@@ -308,4 +308,11 @@
     <string name="describe_services_you_provide">Describe all services you provide</string>
     <string name="urgent_problem">Urgent problem</string>
     <string name="publish">Publish</string>
+    
+    <!-- Service Suggestion -->
+    <string name="nothing_found_message">Nothing was found with your request. You can suggest your service and category. Fill out next fields and send to us, and we will add your proposed service as soon as possible.</string>
+    <string name="category_name">Category name</string>
+    <string name="service_name">Service name</string>
+    <string name="send">Send</string>
+    <string name="suggestion_sent_success">Message was sent to support successfully. The suggested service will appear in the appropriate category soon.</string>
 </resources>

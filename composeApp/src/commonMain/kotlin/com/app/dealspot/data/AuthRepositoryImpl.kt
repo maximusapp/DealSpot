@@ -4,11 +4,11 @@ import com.app.dealspot.business.LoginState
 import com.app.dealspot.business.ResendVerificationCodeState
 import com.app.dealspot.business.ResetPasswordState
 import com.app.dealspot.business.VerificationEmailState
-import com.app.dealspot.common.AWSConfig.CLIENT_ID
-import com.app.dealspot.common.AWSConfig.REGION
 import com.app.dealspot.data.model.LoginResponse
 import com.app.dealspot.data.model.SignUpResponse
 import com.app.dealspot.data.model.TokenResponse
+import com.dealspot.network.AWSConfig.CLIENT_ID
+import com.dealspot.network.AWSConfig.REGION
 import com.dealspot.network.IdentityProviderClient
 import com.dealspot.network.core_cognito.IdentityProviderException
 import com.dealspot.network.core_cognito.UserAttribute

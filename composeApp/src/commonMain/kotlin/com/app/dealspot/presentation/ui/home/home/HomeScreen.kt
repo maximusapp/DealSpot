@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +32,8 @@ import com.app.dealspot.presentation.theme.dimens_12
 import com.app.dealspot.presentation.theme.dimens_20
 import com.app.dealspot.presentation.ui.components.AppMap
 import com.app.dealspot.presentation.ui.components.BottomBar
+import com.app.dealspot.presentation.view.BlurWhite80Background
+import com.app.dealspot.presentation.view.CircularLoadingIndicator
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.ic_notifications_bold_500
 import org.jetbrains.compose.resources.painterResource
@@ -51,7 +54,13 @@ internal fun HomeScreen(
         val viewModel: HomeScreenViewModel = koinInject()
         val camera = viewModel.cameraState.collectAsState().value
         val goToLocationTrigger = viewModel.goToCurrentLocationTrigger.collectAsState().value
+        val isLoading = viewModel.isLoading.collectAsState().value
         var showActionSheet by remember { mutableStateOf(false) }
+
+        // Initialize user when screen opens
+        LaunchedEffect(Unit) {
+            viewModel.initializeUser()
+        }
 
         AppMap(
             modifier = Modifier.fillMaxSize(),
@@ -154,5 +163,11 @@ internal fun HomeScreen(
                 onProvideService.invoke()
             }
         )
+
+        // Loading indicator
+        if (isLoading) {
+            BlurWhite80Background()
+            CircularLoadingIndicator()
+        }
     }
 }

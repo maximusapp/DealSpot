@@ -6,7 +6,6 @@ import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 
-const val mySQLDateFormat: String = "yyyy-MM-dd HH:mm:ss"
 
 /**
  * Gets the current date and time formatted as "yyyy-MM-dd HH:mm:ss"

@@ -256,56 +256,6 @@ aws lambda create-function \
 3. Click **Deploy**
 4. **Note the Invoke URL** (e.g., `https://abc123.execute-api.eu-west-1.amazonaws.com/prod`)
 
-### 5.6 Using AWS CLI
-
-```bash
-# Create REST API
-aws apigateway create-rest-api \
-    --name DealSpot-API \
-    --region eu-west-1
-
-# Note the API ID from output
-
-# Get root resource ID
-aws apigateway get-resources \
-    --rest-api-id YOUR_API_ID \
-    --region eu-west-1
-
-# Create /deals resource
-aws apigateway create-resource \
-    --rest-api-id YOUR_API_ID \
-    --parent-id ROOT_RESOURCE_ID \
-    --path-part deals \
-    --region eu-west-1
-
-# Note the resource ID from output
-
-# Create POST method
-aws apigateway put-method \
-    --rest-api-id YOUR_API_ID \
-    --resource-id DEALS_RESOURCE_ID \
-    --http-method POST \
-    --authorization-type NONE \
-    --region eu-west-1
-
-# Set up Lambda integration
-aws apigateway put-integration \
-    --rest-api-id YOUR_API_ID \
-    --resource-id DEALS_RESOURCE_ID \
-    --http-method POST \
-    --type AWS_PROXY \
-    --integration-http-method POST \
-    --uri arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:YOUR_ACCOUNT_ID:function:DealSpot-CreateDeal/invocations \
-    --region eu-west-1
-
-# Deploy API
-aws apigateway create-deployment \
-    --rest-api-id YOUR_API_ID \
-    --stage-name prod \
-    --region eu-west-1
-```
-
----
 
 ## Step 6: Update App Configuration
 

@@ -5,12 +5,14 @@ import com.app.dealspot.business.AppDataStoreManager
 import com.app.dealspot.common.Context
 import com.app.dealspot.data.AuthRepositoryImpl
 import com.app.dealspot.data.DealRepositoryImpl
+import com.app.dealspot.data.ProfileRepositoryImpl
 import com.app.dealspot.domain.use_cases.ConfirmForgotPasswordUseCase
 import com.app.dealspot.domain.use_cases.EmailVerificationUseCase
 import com.app.dealspot.domain.use_cases.ForgotPasswordUseCase
 import com.app.dealspot.domain.use_cases.SignUpUseCase
 import com.app.dealspot.domain.use_cases.LoginUseCase
 import com.app.dealspot.domain.use_cases.deals.CreateDealUseCase
+import com.app.dealspot.domain.use_cases.profile.GetUserUseCase
 import com.app.dealspot.presentation.SharedViewModel
 import com.app.dealspot.presentation.ui.SplashViewModel
 import com.app.dealspot.presentation.ui.auth.email_verification.EmailVerificationScreenViewModel
@@ -47,23 +49,23 @@ fun appModule(context: Context) = module {
 
     /**PROFILE-USE-CASES*/
 //    single { LogoutUseCase(get()) }
-//    single { GetUserProfileDataUseCase(get()) }
+    single { GetUserUseCase(get()) }
 //    single { RefreshAccessTokenUseCase(get()) }
 
     /** Repository */
     single { AuthRepositoryImpl() }
     single { DealRepositoryImpl() }
-//    single { ProfileRepositoryImpl(get()) }
-//
+    single { ProfileRepositoryImpl() }
+
     single<AppDataStore> { AppDataStoreManager(context) }
+    single { SharedViewModel(get()) }
     factory { SplashViewModel() }
-    factory { SharedViewModel(get()) }
     factory { WelcomeScreenViewModel(get()) }
     factory { RegistrationViewModel(get(), get(), get()) }
     factory { EmailVerificationScreenViewModel(get()) }
-    single { HomeScreenViewModel() }
+    single { HomeScreenViewModel(get(), get(), get(), get(), get()) }
     factory { LoginViewModel(get(), get(), get()) }
-    factory { LookingForServiceViewModel(get()) }
+    factory { LookingForServiceViewModel(get(), get(), get()) }
 //    factory { ProfileViewModel(get()) }
 //    factory { SettingsViewModel(get()) }
 //    factory { EditProfileViewModel(get(), get(), get()) }

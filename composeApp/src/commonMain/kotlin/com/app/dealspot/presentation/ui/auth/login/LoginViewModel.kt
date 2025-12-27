@@ -97,6 +97,8 @@ class LoginViewModel(
             val loginResponseValue = Json.encodeToString(loginResponse)
             println("loginResponseValue: $loginResponseValue")
 
+            dataStore.putString(key = DataStoreKeys.USER_EMAIL, value = email)
+            dataStore.putString(key = DataStoreKeys.USER_PASSWORD, value = password)
             dataStore.putString(key = DataStoreKeys.TOKEN_USER_DATA, value = loginResponseValue)
             dataStore.putString(key = DataStoreKeys.IS_USER_LOGGED_IN, value = "1")
 

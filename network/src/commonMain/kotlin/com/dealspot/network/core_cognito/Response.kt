@@ -55,11 +55,11 @@ data class CodeDeliveryDetails(
 
 @Serializable
 data class GetUserResponse(
-    val MFAOptions: MFAOptions?,
-    val PreferredMfaSetting: String?,
+    val MFAOptions: MFAOptions? = null,
+    val PreferredMfaSetting: String? = null,
     val UserAttributes: List<UserAttribute> = listOf(),
     val UserMFASettingList: List<String> = listOf(),
-    val Username: String
+    val Username: String = ""
 )
 
 @Serializable

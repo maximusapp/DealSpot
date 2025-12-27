@@ -7,6 +7,7 @@ object DataStoreKeys {
     const val IS_USER_REGISTERED = "IS_USER_REGISTERED"
     const val EMAIL_THAT_NEED_VERIFY = "EMAIL_THAT_NEED_VERIFY"
     const val TOKEN_USER_DATA = "TOKEN_USER_DATA"
+    const val ACCESS_TOKEN_LAST_UPDATED = "ACCESS_TOKEN_LAST_UPDATED"
     const val USER_EMAIL = "USER_EMAIL"
     const val USER_PASSWORD = "USER_PASSWORD"
     const val USER_SUB = "USER_SUB"

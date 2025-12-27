@@ -253,8 +253,7 @@ fun LookingForServiceScreen(
             onServiceSelected = { category, service ->
                 viewModel.setCategoryInfo(category = category, service = service)
                 showSelectionSheet = false
-            },
-            appDataStore = appDataStore
+            }
         )
     }
 }

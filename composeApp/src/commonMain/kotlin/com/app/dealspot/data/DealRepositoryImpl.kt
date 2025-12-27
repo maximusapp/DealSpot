@@ -7,7 +7,6 @@ import com.dealspot.network.apiGetawayClient
 import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import com.dealspot.network.core_cognito.Result
 
 class DealRepositoryImpl() {
     private val client = apiGetawayClient()
@@ -15,7 +14,7 @@ class DealRepositoryImpl() {
     suspend fun createDeal(request: CreateDealRequest): CreateDealResponse {
         return try {
             println("DealRepositoryImpl. createDeal. Request: $request")
-            val response = client.post("${AWSConfig.API_GATEWAY_URL}/deals") {
+            val response = client.post("${AWSConfig.API_GATEWAY_URL_DEV}/createDeal") {
                 setBody(request)
             }
             val result: CreateDealResponse = response.body()

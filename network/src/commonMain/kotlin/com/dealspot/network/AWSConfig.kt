@@ -6,5 +6,6 @@ object AWSConfig {
     const val CLIENT_SECRET = "YOUR_CLIENT_SECRET" // App Client Secret:
     const val REGION = "eu-west-1"
     // TODO: Replace with your actual API Gateway URL after deployment
-    const val API_GATEWAY_URL = "https://YOUR_API_ID.execute-api.eu-west-1.amazonaws.com/prod"
-} 
+    const val API_GATEWAY_URL_DEV = "https://tfuf29zw7b.execute-api.eu-west-1.amazonaws.com/dev/"
+    const val API_GATEWAY_URL_PROD = "https://tfuf29zw7b.execute-api.eu-west-1.amazonaws.com/prod/"
+}

@@ -22,6 +22,7 @@ import com.app.dealspot.presentation.ui.auth.login.LoginViewModel
 import com.app.dealspot.presentation.ui.auth.registration.RegistrationViewModel
 import com.app.dealspot.presentation.ui.home.home.HomeScreenViewModel
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.looking_for_service.LookingForServiceViewModel
+import com.app.dealspot.presentation.ui.home.search_provide_for_service.provide_service.ProvideServiceViewModel
 import com.app.dealspot.presentation.ui.welcome.WelcomeScreenViewModel
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
@@ -66,6 +67,7 @@ fun appModule(context: Context) = module {
     single { HomeScreenViewModel(get(), get(), get(), get(), get()) }
     factory { LoginViewModel(get(), get(), get()) }
     factory { LookingForServiceViewModel(get(), get(), get()) }
+    factory { ProvideServiceViewModel(get(), get()) }
 //    factory { ProfileViewModel(get()) }
 //    factory { SettingsViewModel(get()) }
 //    factory { EditProfileViewModel(get(), get(), get()) }

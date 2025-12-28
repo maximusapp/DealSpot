@@ -15,7 +15,8 @@ data class CreateDealRequest(
     val longitude: Double,
     val isUrgent: Int,
     val dateTime: String,
-    val isActive: Int
+    val isActive: Int,
+    val userSub: String
 )
 
 

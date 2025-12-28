@@ -6,11 +6,26 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.app.dealspot.presentation.theme.white_80_transparent
 
 @Composable
 fun BlurWhite80Background() {
     Box(
         modifier = Modifier.fillMaxSize().background(color = white_80_transparent).clickable(enabled = false) { }
+    )
+}
+
+@Composable
+fun DarkBackground() {
+    Box(
+        modifier = Modifier.fillMaxSize().background(color = Color.Black.copy(alpha = 0.6f)).clickable(enabled = false) { }
+    )
+}
+
+@Composable
+fun WhiteBackground() {
+    Box(
+        modifier = Modifier.fillMaxSize().background(color = Color.White.copy(alpha = 0.6f)).clickable(enabled = false) { }
     )
 }

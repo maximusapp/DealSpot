@@ -1,9 +1,97 @@
 package com.app.dealspot.presentation.ui.home.search_provide_for_service.provide_service
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.app.dealspot.business.AppDataStore
+import com.app.dealspot.business.DealType
+import com.app.dealspot.business.constants.DataStoreKeys
+import com.app.dealspot.data.model.CreateDealRequest
+import com.app.dealspot.domain.use_cases.deals.CreateDealUseCase
+import com.app.dealspot.presentation.ui.home.base.BaseServiceViewModel
+import com.app.dealspot.presentation.utils.getCurrentDateTime
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class ProvideServiceViewModel(
+    private val createDealUseCase: CreateDealUseCase,
+    private val dataStore: AppDataStore
+) : BaseServiceViewModel() {
 
-) : ViewModel() {
+    var specialization: String = ""
+        private set
 
+    var serviceDescription: String = ""
+        private set
+    
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    
+    private val _showSuccessDialog = MutableStateFlow(false)
+    val showSuccessDialog: StateFlow<Boolean> = _showSuccessDialog.asStateFlow()
+
+    fun setSpecialization(spec: String) {
+        println("ProvideServiceViewModel. Need setSpecialization: $spec")
+        specialization = spec
+    }
+
+    fun setServiceDescription(description: String) {
+        println("ProvideServiceViewModel. Need setServiceDescription: $description")
+        serviceDescription = description
+    }
+
+    fun publishDeal() {
+        viewModelScope.launch {
+            val location = selectedLocation
+            val category = selectedCategory
+            val service = selectedService
+            val userSub = dataStore.getString(key = DataStoreKeys.USER_SUB).orEmpty()
+
+
+            if (location == null || category == null || service == null) {
+                println("ProvideServiceViewModel. publishDeal. Missing required fields")
+                return@launch
+            }
+
+            _isLoading.value = true
+            
+            try {
+                val request = CreateDealRequest(
+                    type = DealType.PROVIDE_SERVICE.ordinal,
+                    name = specialization,
+                    description = serviceDescription,
+                    categoryId = category.id,
+                    categoryName = category.name,
+                    serviceId = service.id,
+                    serviceName = service.name,
+                    latitude = location.latitude,
+                    longitude = location.longitude,
+                    isUrgent = 0,
+                    dateTime = getCurrentDateTime(),
+                    isActive = 1,
+                    userSub = userSub
+                )
+
+                println("ProvideServiceViewModel. publishDeal. Sending request: $request")
+
+                val response = createDealUseCase.createDeal(request)
+                
+                if (response.success) {
+                    _showSuccessDialog.value = true
+                } else {
+                    // Handle error if needed
+                    println("ProvideServiceViewModel. publishDeal failed: ${response.message}")
+                }
+            } catch (e: Exception) {
+                println("ProvideServiceViewModel. publishDeal error: ${e.message}")
+                e.printStackTrace()
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+    
+    fun clearSuccessDialog() {
+        _showSuccessDialog.value = false
+    }
 }

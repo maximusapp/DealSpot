@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,8 +42,11 @@ import com.app.dealspot.presentation.ui.components.SelectableMap
 import com.app.dealspot.presentation.ui.components.TopBar
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionField
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionSheet
+import com.app.dealspot.presentation.view.CircularLoadingIndicator
+import com.app.dealspot.presentation.view.DarkBackground
 import com.app.dealspot.presentation.view.DealSpotDarkButton
 import com.app.dealspot.presentation.view.DealSpotTextInputFieldWithInnerPlaceholderText
+import com.app.dealspot.presentation.view.DialogSuccessWithOkButton
 import com.app.dealspot.presentation.view.HorizontalThicknessDividerAlpha008
 import com.app.dealspot.presentation.view.ToggleWithLeftText
 import dealspot.composeapp.generated.resources.Res
@@ -57,6 +61,7 @@ import dealspot.composeapp.generated.resources.what_service_do_you_need
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import com.app.dealspot.business.AppDataStore
+import com.app.dealspot.presentation.view.WhiteBackground
 
 @Composable
 fun LookingForServiceScreen(
@@ -68,6 +73,14 @@ fun LookingForServiceScreen(
     var userSelectedLocation by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
     var isMapGestureActive by remember { mutableStateOf(false) }
+    
+    // Local state for form fields to ensure button state updates reactively
+    var problemName by remember { mutableStateOf("") }
+    var problemDescription by remember { mutableStateOf("") }
+    
+    // ViewModel state
+    val isLoading by viewModel.isLoading.collectAsState()
+    val showSuccessDialog by viewModel.showSuccessDialog.collectAsState()
 
     Box(
         modifier = Modifier
@@ -112,10 +125,12 @@ fun LookingForServiceScreen(
                     modifier = Modifier,
                     placeHolderText = stringResource(Res.string.problem_example_washing_machine),
                     imeAction = ImeAction.Done,
-                    labelTextColor = grey_700_70_transparent
+                    labelTextColor = grey_700_70_transparent,
+                    prevValue = problemName
                 ) { name ->
                     println("LookingForServiceScreen. Problem name: $name")
                     println("LookingForServiceScreen. selectedCategory: ${viewModel.selectedCategory?.name}")
+                    problemName = name
                     viewModel.setName(name = name)
                 }
 
@@ -137,10 +152,12 @@ fun LookingForServiceScreen(
                     placeHolderText = stringResource(Res.string.problem_description_example),
                     isSingleLine = false,
                     labelTextColor = grey_700_70_transparent,
-                    imeAction = ImeAction.Done
+                    imeAction = ImeAction.Done,
+                    prevValue = problemDescription
                 ) { description ->
                     println("LookingForServiceScreen. Problem description: $description")
                     println("LookingForServiceScreen. selectedCategory: ${viewModel.selectedCategory?.name}")
+                    problemDescription = description
                     viewModel.setDescription(description = description)
                 }
 
@@ -213,7 +230,7 @@ fun LookingForServiceScreen(
                 ) {
                     SelectableMap(
                         modifier = Modifier.fillMaxSize(),
-                        selectedPosition = viewModel.getSelectedLocation(),
+                        selectedPosition = viewModel.selectedLocation,
                         onMapClick = { latLng ->
                             println("MiniMap onMapClick lat=${latLng.latitude}, lng=${latLng.longitude}")
                             userSelectedLocation = true
@@ -234,7 +251,7 @@ fun LookingForServiceScreen(
                     modifier = Modifier
                         .fillMaxWidth(),
                     buttonText = stringResource(Res.string.publish),
-                    isEnable = viewModel.problemName.isNotBlank() && viewModel.problemDescription.isNotBlank() && viewModel.selectedCategory != null,
+                    isEnable = !isLoading && problemName.isNotBlank() && problemDescription.isNotBlank() && viewModel.selectedCategory != null,
                     onClick = {
                         println("LookingForServiceScreen. Create button clicked")
                         viewModel.publishDeal()
@@ -255,5 +272,22 @@ fun LookingForServiceScreen(
                 showSelectionSheet = false
             }
         )
+        
+        // Loading overlay
+        if (isLoading) {
+            WhiteBackground()
+            CircularLoadingIndicator()
+        }
+        
+        // Success dialog
+        if (showSuccessDialog) {
+            DialogSuccessWithOkButton(
+                dialogText = "Your deal published",
+                onOkClicked = {
+                    viewModel.clearSuccessDialog()
+                    onBackClicked()
+                }
+            )
+        }
     }
 }

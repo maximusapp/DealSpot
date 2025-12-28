@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,10 +23,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import com.app.dealspot.business.ScreenType
-import com.app.dealspot.data.model.LatLngEntity
 import com.app.dealspot.data.model.MapCameraState
-import com.app.dealspot.data.model.ServiceCategoryEntity
-import com.app.dealspot.data.model.ServiceEntity
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.SpacerHeight10Dp
 import com.app.dealspot.presentation.theme.SpacerHeight25Dp
@@ -45,8 +43,12 @@ import com.app.dealspot.presentation.ui.components.SelectableMap
 import com.app.dealspot.presentation.ui.components.TopBar
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionField
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionSheet
+import com.app.dealspot.presentation.view.CircularLoadingIndicator
+import com.app.dealspot.presentation.view.DarkBackground
 import com.app.dealspot.presentation.view.DealSpotDarkButton
 import com.app.dealspot.presentation.view.DealSpotTextInputFieldWithInnerPlaceholderText
+import com.app.dealspot.presentation.view.DialogSuccessWithOkButton
+import com.app.dealspot.presentation.view.WhiteBackground
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.describe_services_you_provide
 import dealspot.composeapp.generated.resources.describe_your_service
@@ -56,21 +58,26 @@ import dealspot.composeapp.generated.resources.publish
 import dealspot.composeapp.generated.resources.service_electrician
 import dealspot.composeapp.generated.resources.what_service_do_you_need
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.koinInject
 
 @Composable
 fun ProvideServiceScreen(
+    viewModel: ProvideServiceViewModel = koinInject(),
     onBackClicked: () -> Unit = {}
 ) {
-    var specialization by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-    var selectedCategory by remember { mutableStateOf<ServiceCategoryEntity?>(null) }
-    var selectedService by remember { mutableStateOf<ServiceEntity?>(null) }
     var showSelectionSheet by remember { mutableStateOf(false) }
-    var selectedLocation by remember { mutableStateOf<LatLngEntity?>(null) }
     var miniMapCameraState by remember { mutableStateOf<MapCameraState?>(null) }
     var userSelectedLocation by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
     var isMapGestureActive by remember { mutableStateOf(false) }
+    
+    // Local state for form fields to ensure button state updates reactively
+    var specialization by remember { mutableStateOf("") }
+    var serviceDescription by remember { mutableStateOf("") }
+    
+    // ViewModel state
+    val isLoading by viewModel.isLoading.collectAsState()
+    val showSuccessDialog by viewModel.showSuccessDialog.collectAsState()
 
     Box(
         modifier = Modifier
@@ -113,8 +120,12 @@ fun ProvideServiceScreen(
                     modifier = Modifier,
                     placeHolderText = stringResource(Res.string.service_electrician),
                     imeAction = ImeAction.Done,
-                    labelTextColor = grey_700_70_transparent
-                ) { specialization = it }
+                    labelTextColor = grey_700_70_transparent,
+                    prevValue = specialization
+                ) { spec ->
+                    specialization = spec
+                    viewModel.setSpecialization(spec = spec)
+                }
 
                 SpacerHeight25Dp()
 
@@ -134,9 +145,11 @@ fun ProvideServiceScreen(
                     placeHolderText = stringResource(Res.string.describe_services_you_provide),
                     isSingleLine = false,
                     labelTextColor = grey_700_70_transparent,
-                    imeAction = ImeAction.Default
-                ) {
-                    description = it
+                    imeAction = ImeAction.Default,
+                    prevValue = serviceDescription
+                ) { description ->
+                    serviceDescription = description
+                    viewModel.setServiceDescription(description = description)
                 }
 
                 SpacerHeight25Dp()
@@ -153,14 +166,14 @@ fun ProvideServiceScreen(
                 SpacerHeight10Dp()
 
                 ServiceSelectionField(
-                    selectedCategory = selectedCategory,
-                    selectedService = selectedService,
+                    selectedCategory = viewModel.selectedCategory,
+                    selectedService = viewModel.selectedService,
                     onClick = { showSelectionSheet = true }
                 )
 
                 SpacerHeight25Dp()
 
-                androidx.compose.material3.Text(
+                Text(
                     modifier = Modifier.align(Alignment.Start),
                     text = "Поставте маркер, якщо хочете змінити локацію",
                     fontSize = text_size_16,
@@ -190,10 +203,10 @@ fun ProvideServiceScreen(
                 ) {
                     SelectableMap(
                         modifier = Modifier.fillMaxSize(),
-                        selectedPosition = selectedLocation,
+                        selectedPosition = viewModel.selectedLocation,
                         onMapClick = { latLng ->
                             userSelectedLocation = true
-                            selectedLocation = latLng
+                            viewModel.setLocation(location = latLng)
                             miniMapCameraState = MapCameraState(
                                 latitude = latLng.latitude,
                                 longitude = latLng.longitude,
@@ -202,7 +215,7 @@ fun ProvideServiceScreen(
                         },
                         onLocationAvailable = { latLng ->
                             if (!userSelectedLocation) {
-                                selectedLocation = latLng
+                                viewModel.setLocation(location = latLng)
                                 miniMapCameraState = MapCameraState(
                                     latitude = latLng.latitude,
                                     longitude = latLng.longitude,
@@ -218,8 +231,13 @@ fun ProvideServiceScreen(
                 DealSpotDarkButton(
                     modifier = Modifier.fillMaxWidth(),
                     buttonText = stringResource(Res.string.publish),
+                    isEnable = !isLoading && specialization.isNotBlank() && 
+                               serviceDescription.isNotBlank() && 
+                               viewModel.selectedCategory != null && 
+                               viewModel.selectedService != null,
                     onClick = {
-                        // TODO: Handle publish for provide service
+                        println("ProvideServiceScreen. Create button clicked")
+                        viewModel.publishDeal()
                     }
                 )
 
@@ -229,14 +247,30 @@ fun ProvideServiceScreen(
 
         ServiceSelectionSheet(
             visible = showSelectionSheet,
-            selectedCategory = selectedCategory,
-            selectedService = selectedService,
+            selectedCategory = viewModel.selectedCategory,
+            selectedService = viewModel.selectedService,
             onDismissRequest = { showSelectionSheet = false },
             onServiceSelected = { category, service ->
-                selectedCategory = category
-                selectedService = service
+                viewModel.setCategoryInfo(category = category, service = service)
                 showSelectionSheet = false
             }
         )
+        
+        // Loading overlay
+        if (isLoading) {
+            WhiteBackground()
+            CircularLoadingIndicator()
+        }
+        
+        // Success dialog
+        if (showSuccessDialog) {
+            DialogSuccessWithOkButton(
+                dialogText = "Your deal published",
+                onOkClicked = {
+                    viewModel.clearSuccessDialog()
+                    onBackClicked()
+                }
+            )
+        }
     }
 }

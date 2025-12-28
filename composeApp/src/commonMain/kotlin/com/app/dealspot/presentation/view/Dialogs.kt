@@ -87,3 +87,38 @@ fun DialogErrorWithOkButton(
         }
     )
 }
+
+@Composable
+fun DialogSuccessWithOkButton(
+    onOkClicked: () -> Unit,
+    dialogTitle: String = "Success",
+    dialogText: String,
+    icon: DrawableResource? = null,
+    buttonText: String = "OK"
+) {
+    AlertDialog(
+        icon = {
+            if (icon != null) Icon(painterResource(icon), contentDescription = "Success Icon")
+        },
+        title = {
+            Text(
+                text = dialogTitle,
+                textAlign = TextAlign.Center
+            )
+        },
+        text = {
+            Text(text = dialogText)
+        },
+        onDismissRequest = { },
+        confirmButton = {
+            TextButton(
+                onClick = { onOkClicked() }
+            ) {
+                Text(
+                    text = buttonText,
+                    color = Grey
+                )
+            }
+        }
+    )
+}

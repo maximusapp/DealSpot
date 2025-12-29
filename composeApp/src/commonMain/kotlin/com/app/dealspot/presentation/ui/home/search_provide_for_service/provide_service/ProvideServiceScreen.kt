@@ -43,12 +43,9 @@ import com.app.dealspot.presentation.ui.components.SelectableMap
 import com.app.dealspot.presentation.ui.components.TopBar
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionField
 import com.app.dealspot.presentation.ui.home.search_provide_for_service.selection.ServiceSelectionSheet
-import com.app.dealspot.presentation.view.CircularLoadingIndicator
-import com.app.dealspot.presentation.view.DarkBackground
+import com.app.dealspot.presentation.view.DealPublishBottomSheet
 import com.app.dealspot.presentation.view.DealSpotDarkButton
 import com.app.dealspot.presentation.view.DealSpotTextInputFieldWithInnerPlaceholderText
-import com.app.dealspot.presentation.view.DialogSuccessWithOkButton
-import com.app.dealspot.presentation.view.WhiteBackground
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.describe_services_you_provide
 import dealspot.composeapp.generated.resources.describe_your_service
@@ -77,7 +74,7 @@ fun ProvideServiceScreen(
     
     // ViewModel state
     val isLoading by viewModel.isLoading.collectAsState()
-    val showSuccessDialog by viewModel.showSuccessDialog.collectAsState()
+    val showBottomSheet by viewModel.showBottomSheet.collectAsState()
 
     Box(
         modifier = Modifier
@@ -256,21 +253,14 @@ fun ProvideServiceScreen(
             }
         )
         
-        // Loading overlay
-        if (isLoading) {
-            WhiteBackground()
-            CircularLoadingIndicator()
-        }
-        
-        // Success dialog
-        if (showSuccessDialog) {
-            DialogSuccessWithOkButton(
-                dialogText = "Your deal published",
-                onOkClicked = {
-                    viewModel.clearSuccessDialog()
-                    onBackClicked()
-                }
-            )
-        }
+        // Publish bottom sheet
+        DealPublishBottomSheet(
+            visible = showBottomSheet,
+            isLoading = isLoading,
+            onOkClicked = {
+                viewModel.closeBottomSheet()
+                onBackClicked()
+            }
+        )
     }
 }

@@ -25,8 +25,8 @@ class LookingForServiceViewModel(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
     
-    private val _showSuccessDialog = MutableStateFlow(false)
-    val showSuccessDialog: StateFlow<Boolean> = _showSuccessDialog.asStateFlow()
+    private val _showBottomSheet = MutableStateFlow(false)
+    val showBottomSheet: StateFlow<Boolean> = _showBottomSheet.asStateFlow()
 
 //    init {
 //        viewModelScope.launch {
@@ -77,6 +77,8 @@ class LookingForServiceViewModel(
                 return@launch
             }
             
+            // Show bottom sheet immediately with loading state
+            _showBottomSheet.value = true
             _isLoading.value = true
             
             try {
@@ -101,21 +103,25 @@ class LookingForServiceViewModel(
                 val response = createDealUseCase.createDeal(request)
                 
                 if (response.success) {
-                    _showSuccessDialog.value = true
+                    // Show success state
+                    _isLoading.value = false
                 } else {
                     // Handle error if needed
                     println("LookingForServiceViewModel. publishDeal failed: ${response.message}")
+                    _isLoading.value = false
+                    // Could show error state here if needed
                 }
             } catch (e: Exception) {
                 println("LookingForServiceViewModel. publishDeal error: ${e.message}")
                 e.printStackTrace()
-            } finally {
                 _isLoading.value = false
+                // Could show error state here if needed
             }
         }
     }
     
-    fun clearSuccessDialog() {
-        _showSuccessDialog.value = false
+    fun closeBottomSheet() {
+        _showBottomSheet.value = false
+        _isLoading.value = false
     }
 }

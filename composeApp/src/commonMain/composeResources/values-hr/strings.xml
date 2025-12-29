@@ -309,5 +309,8 @@
     <string name="describe_services_you_provide">Opišite sve usluge koje pružate</string>
     <string name="urgent_problem">Hitno problem</string>
     <string name="publish">Objavi</string>
+    <string name="your_request_in_progress">Vaš zahtjev se obrađuje</string>
+    <string name="success">Uspjeh</string>
+    <string name="your_deal_published">Vaša ponuda je objavljena</string>
     <!--Croatian -->
 </resources>

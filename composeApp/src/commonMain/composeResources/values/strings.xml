@@ -316,4 +316,7 @@
     <string name="service_name">Service name</string>
     <string name="send">Send</string>
     <string name="suggestion_sent_success">Message was sent to support successfully. The suggested service will appear in the appropriate category soon.</string>
+    <string name="your_request_in_progress">Your request in progress</string>
+    <string name="success">Success</string>
+    <string name="your_deal_published">Your Deal published</string>
 </resources>

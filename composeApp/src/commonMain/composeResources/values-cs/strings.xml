@@ -310,5 +310,8 @@
     <string name="describe_services_you_provide">Popište všechny služby, které poskytujete</string>
     <string name="urgent_problem">Naléhavý problém</string>
     <string name="publish">Publikovat</string>
+    <string name="your_request_in_progress">Vaše žádost se zpracovává</string>
+    <string name="success">Úspěch</string>
+    <string name="your_deal_published">Vaše nabídka byla zveřejněna</string>
     <!--Czech -->
 </resources>

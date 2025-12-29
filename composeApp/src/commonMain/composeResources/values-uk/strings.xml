@@ -309,4 +309,7 @@
     <string name="describe_services_you_provide">Опишіть усі послуги, які ви надаєте</string>
     <string name="urgent_problem">Термінова проблема</string>
     <string name="publish">Опублікувати</string>
+    <string name="your_request_in_progress">Ваш запит обробляється</string>
+    <string name="success">Успіх</string>
+    <string name="your_deal_published">Ваша угода опублікована</string>
 </resources>

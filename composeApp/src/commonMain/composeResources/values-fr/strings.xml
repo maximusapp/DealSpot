@@ -309,4 +309,7 @@
     <string name="describe_services_you_provide">Décrivez tous les services que vous proposez</string>
     <string name="urgent_problem">Problème urgent</string>
     <string name="publish">Publier</string>
+    <string name="your_request_in_progress">Votre demande est en cours</string>
+    <string name="success">Succès</string>
+    <string name="your_deal_published">Votre offre a été publiée</string>
 </resources>

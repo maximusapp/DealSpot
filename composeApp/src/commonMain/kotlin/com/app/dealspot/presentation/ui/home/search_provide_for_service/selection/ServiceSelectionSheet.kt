@@ -584,7 +584,9 @@ fun ServiceSelectionSheet(
     selectedCategory: ServiceCategoryEntity?,
     selectedService: ServiceEntity?,
     onDismissRequest: () -> Unit,
-    onServiceSelected: (category: ServiceCategoryEntity, service: ServiceEntity) -> Unit
+    onServiceSelected: (category: ServiceCategoryEntity, service: ServiceEntity) -> Unit,
+    showCancelButton: Boolean = true,
+    showBackground: Boolean = true
 ) {
     var query by remember { mutableStateOf("") }
     var expandedCategory by remember { mutableStateOf(selectedCategory) }
@@ -612,26 +614,27 @@ fun ServiceSelectionSheet(
     }
 
     AnimatedVisibility(visible = visible, enter = fadeIn(), exit = fadeOut()) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.10f))
-                .clickable(
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() }
-                ) { onDismissRequest() }
-        ) {
-            BoxWithConstraints(
+        if (showBackground) {
+            Box(
                 modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(horizontal = 20.dp)
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.10f))
                     .clickable(
                         indication = null,
-                        enabled = false,
                         interactionSource = remember { MutableInteractionSource() }
-                    ) { }
+                    ) { onDismissRequest() }
             ) {
-                val sheetMaxHeight = (maxHeight - 88.dp).coerceAtLeast(220.dp)
+                BoxWithConstraints(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(horizontal = 20.dp)
+                        .clickable(
+                            indication = null,
+                            enabled = false,
+                            interactionSource = remember { MutableInteractionSource() }
+                        ) { }
+                ) {
+                    val sheetMaxHeight = (maxHeight - 88.dp).coerceAtLeast(220.dp)
                 
                 val adjustedMaxHeight = sheetMaxHeight
 
@@ -643,7 +646,7 @@ fun ServiceSelectionSheet(
                         shape = SheetShape,
                         color = MaterialTheme.colorScheme.surface,
                         modifier = Modifier
-                            .shadow(dimens_1, SheetShape)
+                            .then(if (showBackground) Modifier.shadow(dimens_1, SheetShape) else Modifier)
                             .fillMaxWidth()
                             .heightIn(max = adjustedMaxHeight)
                     ) {
@@ -770,18 +773,168 @@ fun ServiceSelectionSheet(
                         }
                     }
 
-                    SpacerHeight12Dp()
+                        if (showCancelButton) {
+                            SpacerHeight12Dp()
 
-                    DealSpotOutlineButton(
-                        modifier = Modifier.width(dimens_200),
-                        buttonText = stringResource(Res.string.cancel),
-                        buttonHeight = dimens_45,
-                        fillWidth = false,
-                        shape = RoundedCornerShape(18.dp),
-                        containerColor = white,
-                        borderColor = grey_middle
+                            DealSpotOutlineButton(
+                                modifier = Modifier.width(dimens_200),
+                                buttonText = stringResource(Res.string.cancel),
+                                buttonHeight = dimens_45,
+                                fillWidth = false,
+                                shape = RoundedCornerShape(18.dp),
+                                containerColor = white,
+                                borderColor = grey_middle
+                            ) {
+                                onDismissRequest()
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            BoxWithConstraints(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable(
+                        indication = null,
+                        enabled = false,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) { }
+            ) {
+                val adjustedMaxHeight = maxHeight
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.wrapContentHeight()
+                ) {
+                    Surface(
+                        shape = SheetShape,
+                        color = MaterialTheme.colorScheme.surface,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(max = adjustedMaxHeight)
                     ) {
-                        onDismissRequest()
+                        Column(
+                            modifier = Modifier.padding(top = dimens_8, bottom = dimens_8)
+                        ) {
+                            DealSpotTextInputField(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 20.dp, vertical = 4.dp),
+                                leftIcon = Res.drawable.ic_search,
+                                placeHolderText = stringResource(Res.string.search_for_service),
+                                isPasswordField = false,
+                                imeAction = ImeAction.Done,
+                                labelTextColor = Grey
+                            ) { service ->
+                                println("ServiceSelectionSheet. Service is: $service")
+
+                                query = service
+                            }
+
+                            // filteredResults and shouldShowSuggestionForm are now calculated above
+
+                            if (shouldShowSuggestionForm) {
+                                // Show message and button to open suggestion dialog
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 20.dp, vertical = 16.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        text = stringResource(Res.string.nothing_found_message),
+                                        style = MaterialTheme.typography.bodyMedium.copy(fontFamily = latoFontFamily()),
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.padding(bottom = 20.dp)
+                                    )
+
+                                    DealSpotDarkButton(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        buttonText = stringResource(Res.string.suggest_service),
+                                        isEnable = true,
+                                        onClick = {
+                                            showSuggestionDialog = true
+                                        }
+                                    )
+                                }
+                            } else if (filteredResults.isNotEmpty()) {
+                                LazyColumn(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 8.dp)
+                                ) {
+                                    items(filteredResults) { (category, service) ->
+                                        ServiceResultRow(
+                                            category = category,
+                                            service = service,
+                                            // Check both category and service name to avoid "Other" being selected in all categories
+                                            isSelected = selectedCategory?.name.orEmpty() == category.name && selectedService?.name.orEmpty() == service.name,
+                                            onClick = {
+                                                query = ""
+                                                expandedCategory = category
+                                                onServiceSelected(category, service)
+                                            }
+                                        )
+                                    }
+                                }
+                            } else {
+                                // Show all categories when query is blank
+                                LazyColumn(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 8.dp)
+                                ) {
+                                    items(serviceCategories) { category ->
+                                        CategoryRow(
+                                            category = category,
+                                            isExpanded = expandedCategory?.name.orEmpty() == category.name,
+                                            isSelected = selectedCategory?.name.orEmpty() == category.name,
+                                            onClick = {
+                                                expandedCategory = if (expandedCategory?.name.orEmpty() == category.name) null else category
+                                            }
+                                        )
+
+                                        AnimatedVisibility(visible = expandedCategory?.name.orEmpty() == category.name) {
+                                            Column(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                                            ) {
+                                                FlowRow(
+                                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                                                ) {
+                                                    category.services.forEach { service ->
+                                                        // Check both category and service name to avoid "Other" being selected in all categories
+                                                        val selected = selectedCategory?.name.orEmpty() == category.name && selectedService?.name.orEmpty() == service.name
+                                                        val borderStroke = BorderStroke(
+                                                            width = 1.dp,
+                                                            color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+                                                        )
+                                                        AssistChip(
+                                                            onClick = {
+                                                                query = ""
+                                                                onServiceSelected(category, service)
+                                                            },
+                                                            label = { Text(service.name, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                                                            colors = AssistChipDefaults.assistChipColors(
+                                                                containerColor = if (selected) MaterialTheme.colorScheme.primary.copy(alpha = 0.15f) else MaterialTheme.colorScheme.surface,
+                                                                labelColor = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                                                            ),
+                                                            border = borderStroke
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

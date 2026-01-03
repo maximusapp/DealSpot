@@ -312,4 +312,9 @@
     <string name="your_request_in_progress">Votre demande est en cours</string>
     <string name="success">Succès</string>
     <string name="your_deal_published">Votre offre a été publiée</string>
+    <string name="apply_filter">Appliquer</string>
+    <string name="close">Effacer</string>
+    <string name="find_service">Je cherche</string>
+    <string name="provide_service_tab">J\'offre</string>
+    <string name="type_of_service">Type de service</string>
 </resources>

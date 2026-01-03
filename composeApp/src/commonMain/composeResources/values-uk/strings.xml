@@ -312,4 +312,9 @@
     <string name="your_request_in_progress">Ваш запит обробляється</string>
     <string name="success">Успіх</string>
     <string name="your_deal_published">Ваша угода опублікована</string>
+    <string name="apply_filter">Застосувати</string>
+    <string name="close">Очистити</string>
+    <string name="find_service">Шукаю</string>
+    <string name="provide_service_tab">Надаю</string>
+    <string name="type_of_service">Тип послуги</string>
 </resources>

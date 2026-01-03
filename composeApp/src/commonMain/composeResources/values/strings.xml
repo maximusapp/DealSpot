@@ -319,4 +319,9 @@
     <string name="your_request_in_progress">Your request in progress</string>
     <string name="success">Success</string>
     <string name="your_deal_published">Your Deal published</string>
+    <string name="apply_filter">Apply</string>
+    <string name="close">Clear</string>
+    <string name="find_service">Looking For</string>
+    <string name="provide_service_tab">I Provide</string>
+    <string name="type_of_service">Type of service</string>
 </resources>

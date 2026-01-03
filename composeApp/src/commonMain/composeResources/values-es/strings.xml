@@ -312,5 +312,10 @@
     <string name="your_request_in_progress">Su solicitud está en proceso</string>
     <string name="success">Éxito</string>
     <string name="your_deal_published">Su oferta ha sido publicada</string>
+    <string name="apply_filter">Aplicar</string>
+    <string name="close">Limpiar</string>
+    <string name="find_service">Busco</string>
+    <string name="provide_service_tab">Ofrezco</string>
+    <string name="type_of_service">Tipo de servicio</string>
     <!--Spanish -->
 </resources>

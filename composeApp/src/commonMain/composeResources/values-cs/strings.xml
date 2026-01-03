@@ -313,5 +313,10 @@
     <string name="your_request_in_progress">Vaše žádost se zpracovává</string>
     <string name="success">Úspěch</string>
     <string name="your_deal_published">Vaše nabídka byla zveřejněna</string>
+    <string name="apply_filter">Použít</string>
+    <string name="close">Vymazat</string>
+    <string name="find_service">Hledám</string>
+    <string name="provide_service_tab">Poskytuji</string>
+    <string name="type_of_service">Typ služby</string>
     <!--Czech -->
 </resources>

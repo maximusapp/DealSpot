@@ -39,6 +39,14 @@ class HomeScreenViewModel(
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    
+    // Filter state: type 0 = find_deal, type 1 = provide_deal
+    // Default to provide_deal (type 1)
+    private val _filterType = MutableStateFlow(1)
+    val filterType: StateFlow<Int> = _filterType.asStateFlow()
+    
+    private val _isFilterActive = MutableStateFlow(false)
+    val isFilterActive: StateFlow<Boolean> = _isFilterActive.asStateFlow()
 
     fun updateCamera(state: MapCameraState) {
         _cameraState.value = state
@@ -50,6 +58,20 @@ class HomeScreenViewModel(
 
     fun resetCurrentLocationTrigger() {
         _goToCurrentLocationTrigger.value = 0
+    }
+    
+    fun setFilterActive(isActive: Boolean) {
+        _isFilterActive.value = isActive
+    }
+    
+    fun setFilterType(type: Int) {
+        _filterType.value = type
+    }
+    
+    fun resetFilter() {
+        _isFilterActive.value = false
+        // Reset to default (provide_deal = type 1)
+        _filterType.value = 1
     }
 
     @OptIn(ExperimentalTime::class)

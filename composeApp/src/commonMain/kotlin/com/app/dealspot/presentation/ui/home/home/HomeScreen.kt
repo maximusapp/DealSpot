@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.offset
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -34,6 +36,7 @@ import com.app.dealspot.presentation.ui.components.AppMap
 import com.app.dealspot.presentation.ui.components.BottomBar
 import com.app.dealspot.presentation.view.BlurWhite80Background
 import com.app.dealspot.presentation.view.CircularLoadingIndicator
+import com.app.dealspot.presentation.view.FilterBottomSheet
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.ic_notifications_bold_500
 import org.jetbrains.compose.resources.painterResource
@@ -55,7 +58,10 @@ internal fun HomeScreen(
         val camera = viewModel.cameraState.collectAsState().value
         val goToLocationTrigger = viewModel.goToCurrentLocationTrigger.collectAsState().value
         val isLoading = viewModel.isLoading.collectAsState().value
+        val isFilterActive = viewModel.isFilterActive.collectAsState().value
+        val filterType = viewModel.filterType.collectAsState().value
         var showActionSheet by remember { mutableStateOf(false) }
+        var showFilterSheet by remember { mutableStateOf(false) }
 
         // Initialize user when screen opens
         LaunchedEffect(Unit) {
@@ -69,15 +75,48 @@ internal fun HomeScreen(
             goToCurrentLocationTrigger = goToLocationTrigger
         )
 
-        // Top right icons: Notifications and Location
+        // Top right icons: Location, Filter, and Notifications
         Column(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(top = 50.dp, end = dimens_12)
-                .align(Alignment.TopEnd),
+                .padding(bottom = 150.dp, end = dimens_12)
+                .align(Alignment.BottomEnd),
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.spacedBy(dimens_12)
         ) {
+            // Filter icon
+            Box(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .clip(RoundedCornerShape(25.dp))
+                    .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(25.dp))
+                    .background(MaterialTheme.colorScheme.surface)
+                    .clickable {
+                        showFilterSheet = true
+                    }
+                    .padding(horizontal = 5.dp, vertical = 5.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.FilterList,
+                    contentDescription = "Filter",
+                    tint = Color.Gray,
+                    modifier = Modifier.size(30.dp)
+                )
+                
+                // Black dot indicator when filter is active
+                if (isFilterActive) {
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .offset(x = 4.dp, y = (-4).dp)
+                            .size(8.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(Color.Black)
+                    )
+                }
+            }
+            
             // Notifications icon
             Box(
                 modifier = Modifier
@@ -99,7 +138,7 @@ internal fun HomeScreen(
                     modifier = Modifier.size(30.dp)
                 )
             }
-            
+
             // Location icon (go to current location)
             Box(
                 modifier = Modifier
@@ -161,6 +200,23 @@ internal fun HomeScreen(
             onProvideServiceClick = {
                 viewModel.resetCurrentLocationTrigger()
                 onProvideService.invoke()
+            }
+        )
+
+        // Filter bottom sheet
+        FilterBottomSheet(
+            visible = showFilterSheet,
+            selectedFilterType = filterType,
+            onFilterTypeChanged = { type ->
+                viewModel.setFilterType(type)
+            },
+            onClose = { showFilterSheet = false },
+            onApplyFilter = {
+                // TODO: Apply filter logic here
+                viewModel.setFilterActive(true)
+            },
+            onClearFilter = {
+                viewModel.resetFilter()
             }
         )
 

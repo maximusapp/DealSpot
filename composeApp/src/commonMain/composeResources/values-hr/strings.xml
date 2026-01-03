@@ -312,5 +312,10 @@
     <string name="your_request_in_progress">Vaš zahtjev se obrađuje</string>
     <string name="success">Uspjeh</string>
     <string name="your_deal_published">Vaša ponuda je objavljena</string>
+    <string name="apply_filter">Primijeni</string>
+    <string name="close">Očisti</string>
+    <string name="find_service">Tražim</string>
+    <string name="provide_service_tab">Pružam</string>
+    <string name="type_of_service">Vrsta usluge</string>
     <!--Croatian -->
 </resources>

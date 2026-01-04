@@ -18,6 +18,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
 import com.app.dealspot.R
+import com.app.dealspot.data.model.DealEntity
 import com.app.dealspot.data.model.MapCameraState
 import com.app.dealspot.extensions.dpToPx
 import com.app.dealspot.presentation.utils.zeroIfNull
@@ -44,12 +45,14 @@ actual fun AppMap(
     modifier: Modifier,
     initialCamera: MapCameraState?,
     onCameraChanged: (MapCameraState) -> Unit,
-    goToCurrentLocationTrigger: Int
+    goToCurrentLocationTrigger: Int,
+    deals: List<DealEntity>
 ) {
     val mapView = rememberMapViewWithLifecycle()
     val context = LocalContext.current
     var googleMapRef by remember { mutableStateOf<GoogleMap?>(null) }
     var userLocationMarker by remember { mutableStateOf<Marker?>(null) }
+    var dealMarkers by remember { mutableStateOf<List<Marker>>(emptyList()) }
     val currentUserMarker by lazy { createCustomLocationMarker(context) }
     val fused by lazy { LocationServices.getFusedLocationProviderClient(context) }
     
@@ -204,6 +207,35 @@ actual fun AppMap(
             }
         }
     )
+    
+    // Update deal markers when deals list changes
+    LaunchedEffect(deals, googleMapRef) {
+        val map = googleMapRef
+        if (map != null) {
+            // Remove old markers
+            dealMarkers.forEach { it.remove() }
+            
+            // Add new markers for each deal
+            val newMarkers = deals.mapNotNull { deal ->
+                val latitude = deal.latitude ?: return@mapNotNull null
+                val longitude = deal.longitude ?: return@mapNotNull null
+                
+                if (latitude > 0.0 && longitude > 0.0) {
+                    map.addMarker(
+                        MarkerOptions()
+                            .position(LatLng(latitude, longitude))
+                            .title(deal.name ?: "")
+                            .snippet(deal.serviceName ?: "")
+                    )
+                } else {
+                    null
+                }
+            }
+            
+            dealMarkers = newMarkers.filterNotNull()
+            println("AppMap. Updated ${dealMarkers.size} deal markers")
+        }
+    }
 }
 
 @Composable

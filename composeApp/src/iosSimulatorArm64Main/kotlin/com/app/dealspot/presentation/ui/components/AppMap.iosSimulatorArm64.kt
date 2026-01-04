@@ -14,6 +14,7 @@ import cocoapods.GoogleMaps.GMSCameraPosition
 import cocoapods.GoogleMaps.GMSCameraUpdate
 import cocoapods.GoogleMaps.GMSMarker
 import cocoapods.GoogleMaps.animateWithCameraUpdate
+import com.app.dealspot.data.model.DealEntity
 import com.app.dealspot.data.model.MapCameraState
 import com.app.dealspot.presentation.utils.mapStyle
 import com.app.dealspot.presentation.utils.zeroIfNull
@@ -32,7 +33,8 @@ actual fun AppMap(
     modifier: Modifier,
     initialCamera: MapCameraState?,
     onCameraChanged: (MapCameraState) -> Unit,
-    goToCurrentLocationTrigger: Int
+    goToCurrentLocationTrigger: Int,
+    deals: List<DealEntity>
 ) {
     val mapViewState = remember { mutableStateOf<GMSMapView?>(null) }
     val locationMarkerState = remember { mutableStateOf<GMSMarker?>(null) }

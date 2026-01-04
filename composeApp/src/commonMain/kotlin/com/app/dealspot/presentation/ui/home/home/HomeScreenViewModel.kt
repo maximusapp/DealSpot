@@ -8,7 +8,9 @@ import com.app.dealspot.data.ProfileRepositoryImpl
 import com.app.dealspot.data.model.MapCameraState
 import com.app.dealspot.data.model.TokenResponse
 import com.app.dealspot.domain.use_cases.LoginUseCase
+import com.app.dealspot.domain.use_cases.deals.GetDealsUseCase
 import com.app.dealspot.domain.use_cases.profile.GetUserUseCase
+import com.app.dealspot.data.model.DealEntity
 import com.app.dealspot.presentation.SharedViewModel
 import com.app.dealspot.presentation.utils.getCurrentDateTime
 import com.dealspot.network.core_cognito.GetUserResponse
@@ -29,7 +31,8 @@ class HomeScreenViewModel(
     private val loginUseCase: LoginUseCase,
     private val dataStore: AppDataStore,
     private val profileRepository: ProfileRepositoryImpl,
-    private val sharedViewModel: SharedViewModel
+    private val sharedViewModel: SharedViewModel,
+    private val getDealsUseCase: GetDealsUseCase
 ) : ViewModel() {
     private val _cameraState = MutableStateFlow<MapCameraState?>(null)
     val cameraState: StateFlow<MapCameraState?> = _cameraState.asStateFlow()
@@ -47,6 +50,9 @@ class HomeScreenViewModel(
     
     private val _isFilterActive = MutableStateFlow(false)
     val isFilterActive: StateFlow<Boolean> = _isFilterActive.asStateFlow()
+    
+    private val _deals = MutableStateFlow<List<DealEntity>>(emptyList())
+    val deals: StateFlow<List<DealEntity>> = _deals.asStateFlow()
 
     fun updateCamera(state: MapCameraState) {
         _cameraState.value = state
@@ -62,16 +68,38 @@ class HomeScreenViewModel(
     
     fun setFilterActive(isActive: Boolean) {
         _isFilterActive.value = isActive
+        // Fetch deals when filter is applied
+        if (isActive) {
+            fetchDeals(_filterType.value)
+        }
     }
     
     fun setFilterType(type: Int) {
         _filterType.value = type
+        // Fetch deals when filter type changes
+        fetchDeals(type)
     }
     
     fun resetFilter() {
         _isFilterActive.value = false
         // Reset to default (provide_deal = type 1)
         _filterType.value = 1
+        fetchDeals(1)
+    }
+    
+    fun fetchDeals(type: Int) {
+        viewModelScope.launch {
+            try {
+                println("HomeScreenViewModel. fetchDeals. Type: $type")
+                val response = getDealsUseCase(type)
+                _deals.value = response.items
+                println("HomeScreenViewModel. fetchDeals. Fetched ${response.count} deals")
+            } catch (e: Exception) {
+                println("HomeScreenViewModel. fetchDeals error: ${e.message}")
+                e.printStackTrace()
+                _deals.value = emptyList()
+            }
+        }
     }
 
     @OptIn(ExperimentalTime::class)
@@ -104,6 +132,8 @@ class HomeScreenViewModel(
                     if (hoursSinceUpdate < 24) {
                         println("HomeScreenViewModel. Token was updated ${hoursSinceUpdate}h ago, less than 24 hours. Skipping refresh.")
                         _isLoading.value = false
+                        // Fetch deals even when token refresh is skipped
+                        fetchDeals(1)
                         return@launch
                     } else {
                         println("HomeScreenViewModel. Token was updated ${hoursSinceUpdate}h ago, more than 24 hours. Need to refresh.")
@@ -131,6 +161,8 @@ class HomeScreenViewModel(
                         saveAccessTokenLastUpdated()
                         saveUserSub(getUserResponse)
                         _isLoading.value = false
+                        // Fetch deals after user initialization (default type 1 = provide_deal)
+                        fetchDeals(1)
                     },
                     onFailure = { exception ->
                         println("HomeScreenViewModel. getUser failed: $exception")
@@ -253,6 +285,8 @@ class HomeScreenViewModel(
                                     saveAccessTokenLastUpdated()
                                     saveUserSub(getUserResponse)
                                     _isLoading.value = false
+                                    // Fetch deals after user initialization (default type 1 = provide_deal)
+                                    fetchDeals(1)
                                 },
                                 onFailure = { exception ->
                                     println("HomeScreenViewModel. getUser failed after login: $exception")

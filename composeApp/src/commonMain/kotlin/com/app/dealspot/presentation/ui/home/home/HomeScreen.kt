@@ -60,6 +60,7 @@ internal fun HomeScreen(
         val isLoading = viewModel.isLoading.collectAsState().value
         val isFilterActive = viewModel.isFilterActive.collectAsState().value
         val filterType = viewModel.filterType.collectAsState().value
+        val deals = viewModel.deals.collectAsState().value
         var showActionSheet by remember { mutableStateOf(false) }
         var showFilterSheet by remember { mutableStateOf(false) }
 
@@ -72,7 +73,8 @@ internal fun HomeScreen(
             modifier = Modifier.fillMaxSize(),
             initialCamera = camera,
             onCameraChanged = { viewModel.updateCamera(it) },
-            goToCurrentLocationTrigger = goToLocationTrigger
+            goToCurrentLocationTrigger = goToLocationTrigger,
+            deals = deals
         )
 
         // Top right icons: Location, Filter, and Notifications
@@ -223,7 +225,12 @@ internal fun HomeScreen(
         // Loading indicator
         if (isLoading) {
             BlurWhite80Background()
-            CircularLoadingIndicator()
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularLoadingIndicator()
+            }
         }
     }
 }

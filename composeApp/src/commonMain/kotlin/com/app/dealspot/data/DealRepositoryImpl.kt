@@ -2,6 +2,8 @@ package com.app.dealspot.data
 
 import com.app.dealspot.data.model.CreateDealRequest
 import com.app.dealspot.data.model.CreateDealResponse
+import com.app.dealspot.data.model.GetDealsRequest
+import com.app.dealspot.data.model.GetDealsResponse
 import com.dealspot.network.AWSConfig
 import com.dealspot.network.apiGetawayClient
 import io.ktor.client.call.body
@@ -35,6 +37,22 @@ class DealRepositoryImpl() {
                 success = false,
                 message = "Error happen. Please try again"
             )
+        }
+    }
+    
+    suspend fun getDeals(request: GetDealsRequest): GetDealsResponse {
+        return try {
+            println("DealRepositoryImpl. getDeals. Request: $request")
+            val response = client.post("${AWSConfig.API_GATEWAY_URL_DEV}/getDeals") {
+                setBody(request)
+            }
+            val result: GetDealsResponse = response.body()
+            println("DealRepositoryImpl. getDeals. Response: ${result.count} deals found")
+            result
+        } catch (e: Exception) {
+            println("DealRepositoryImpl. getDeals. Error: ${e.message}")
+            e.printStackTrace()
+            GetDealsResponse(items = emptyList(), count = 0)
         }
     }
 }

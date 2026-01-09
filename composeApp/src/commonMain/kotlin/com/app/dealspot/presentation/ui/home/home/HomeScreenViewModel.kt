@@ -213,18 +213,18 @@ class HomeScreenViewModel(
         
         val dateParts = parts[0].split("-")
         val timeParts = parts[1].split(":")
-        
+
         if (dateParts.size != 3 || timeParts.size != 3) {
             throw IllegalArgumentException("Invalid date format: $dateTimeStr")
         }
-        
+
         val year = dateParts[0].toInt()
         val month = dateParts[1].toInt()
         val day = dateParts[2].toInt()
         val hour = timeParts[0].toInt()
         val minute = timeParts[1].toInt()
         val second = timeParts[2].toInt()
-        
+
         // Convert month number to kotlinx.datetime.Month
         val monthObj = when (month) {
             1 -> kotlinx.datetime.Month.JANUARY
@@ -241,14 +241,17 @@ class HomeScreenViewModel(
             12 -> kotlinx.datetime.Month.DECEMBER
             else -> throw IllegalArgumentException("Invalid month: $month")
         }
-        
+
         return LocalDateTime(year, monthObj, day, hour, minute, second)
     }
-    
+
     private fun saveAccessTokenLastUpdated() {
         viewModelScope.launch {
             val currentDateTime = getCurrentDateTime()
-            dataStore.putString(key = DataStoreKeys.ACCESS_TOKEN_LAST_UPDATED, value = currentDateTime)
+            dataStore.putString(
+                key = DataStoreKeys.ACCESS_TOKEN_LAST_UPDATED,
+                value = currentDateTime
+            )
             println("HomeScreenViewModel. Saved access token last updated: $currentDateTime")
         }
     }
@@ -258,26 +261,27 @@ class HomeScreenViewModel(
             try {
                 val email = dataStore.getString(key = DataStoreKeys.USER_EMAIL).orEmpty()
                 val password = dataStore.getString(key = DataStoreKeys.USER_PASSWORD).orEmpty()
-                
+
                 if (email.isEmpty() || password.isEmpty()) {
                     println("HomeScreenViewModel. email or password is empty. Email: $email, password: $password")
                     _isLoading.value = false
                     return@launch
                 }
-                
+
                 println("HomeScreenViewModel. Logging in user: $email")
                 val loginState = loginUseCase.invoke(email = email, password = password)
-                
+
                 when (loginState) {
                     is com.app.dealspot.business.LoginState.Success -> {
                         println("HomeScreenViewModel. Login successful")
                         // Save user credentials to DataStore
                         saveUserCredentialsToDataStore(loginState.response.tokenResponse)
-                        
+
                         // Get user again with new token
                         val tokenResponse = loginState.response.tokenResponse
                         if (tokenResponse != null) {
-                            val getUserResult = profileRepository.getCurrentUserWithResult(tokenResponse.accessToken)
+                            val getUserResult =
+                                profileRepository.getCurrentUserWithResult(tokenResponse.accessToken)
                             getUserResult.fold(
                                 onSuccess = { getUserResponse ->
                                     println("HomeScreenViewModel. getUserResponse after login: $getUserResponse")
@@ -297,6 +301,7 @@ class HomeScreenViewModel(
                             _isLoading.value = false
                         }
                     }
+
                     else -> {
                         println("HomeScreenViewModel. Login failed: $loginState")
                         _isLoading.value = false

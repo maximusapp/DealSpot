@@ -49,7 +49,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -60,7 +59,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.app.dealspot.data.model.ServiceCategoryEntity
@@ -78,208 +76,10 @@ import com.app.dealspot.presentation.theme.dimens_8
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.white
-import com.app.dealspot.presentation.view.DealSpotDarkButton
 import com.app.dealspot.presentation.view.DealSpotOutlineButton
 import com.app.dealspot.presentation.view.DealSpotTextInputField
 import dealspot.composeapp.generated.resources.Res
-import dealspot.composeapp.generated.resources.cancel
-import dealspot.composeapp.generated.resources.category_auto_services
-import dealspot.composeapp.generated.resources.category_building_cleaning_services
-import dealspot.composeapp.generated.resources.category_business_finance_administrative_services
-import dealspot.composeapp.generated.resources.category_creative_cultural_media_services
-import dealspot.composeapp.generated.resources.category_food_hospitality_services
-import dealspot.composeapp.generated.resources.category_health_human_services
-import dealspot.composeapp.generated.resources.category_household_appliances
-import dealspot.composeapp.generated.resources.category_legal_protective_services
-import dealspot.composeapp.generated.resources.category_other_services
-import dealspot.composeapp.generated.resources.category_personal_lifestyle_services
-import dealspot.composeapp.generated.resources.category_skilled_trades_technical_services
-import dealspot.composeapp.generated.resources.category_technology_information_services
-import dealspot.composeapp.generated.resources.ic_search
-import dealspot.composeapp.generated.resources.nothing_found_message
-import dealspot.composeapp.generated.resources.search_for_service
-import dealspot.composeapp.generated.resources.select_service
-import dealspot.composeapp.generated.resources.service_accountant
-import dealspot.composeapp.generated.resources.service_actor
-import dealspot.composeapp.generated.resources.service_air_conditioner_cleaning
-import dealspot.composeapp.generated.resources.service_air_conditioner_dismantling
-import dealspot.composeapp.generated.resources.service_air_conditioner_repair
-import dealspot.composeapp.generated.resources.service_all_home_appliance_repair_services
-import dealspot.composeapp.generated.resources.service_animator
-import dealspot.composeapp.generated.resources.service_antenna_repair
-import dealspot.composeapp.generated.resources.service_auto_electrician
-import dealspot.composeapp.generated.resources.service_auto_mechanic
-import dealspot.composeapp.generated.resources.service_baker
-import dealspot.composeapp.generated.resources.service_barber
-import dealspot.composeapp.generated.resources.service_barista
-import dealspot.composeapp.generated.resources.service_bartender
-import dealspot.composeapp.generated.resources.service_bathroom_fitter
-import dealspot.composeapp.generated.resources.service_blender_repair
-import dealspot.composeapp.generated.resources.service_boiler_dismantling
-import dealspot.composeapp.generated.resources.service_boiler_repair
-import dealspot.composeapp.generated.resources.service_boiler_technician
-import dealspot.composeapp.generated.resources.service_bread_maker_repair
-import dealspot.composeapp.generated.resources.service_bricklayer_mason
-import dealspot.composeapp.generated.resources.service_butcher
-import dealspot.composeapp.generated.resources.service_camera_repair
-import dealspot.composeapp.generated.resources.service_cargo_transportation_services
-import dealspot.composeapp.generated.resources.service_carpenter
-import dealspot.composeapp.generated.resources.service_ceiling_installer
-import dealspot.composeapp.generated.resources.service_chef
-import dealspot.composeapp.generated.resources.service_coffee_maker_repair
-import dealspot.composeapp.generated.resources.service_construction_worker
-import dealspot.composeapp.generated.resources.service_cook
-import dealspot.composeapp.generated.resources.service_cooktop_dismantling
-import dealspot.composeapp.generated.resources.service_cooktop_repair
-import dealspot.composeapp.generated.resources.service_cosmetologist
-import dealspot.composeapp.generated.resources.service_countertop_fabricator
-import dealspot.composeapp.generated.resources.service_cybersecurity_specialist
-import dealspot.composeapp.generated.resources.service_deep_fryer_repair
-import dealspot.composeapp.generated.resources.service_demolition_worker
-import dealspot.composeapp.generated.resources.service_dishwasher_dismantling
-import dealspot.composeapp.generated.resources.service_dishwasher_repair
-import dealspot.composeapp.generated.resources.service_doctor
-import dealspot.composeapp.generated.resources.service_door_installer
-import dealspot.composeapp.generated.resources.service_dough_mixer_repair
-import dealspot.composeapp.generated.resources.service_dryer_dismantling
-import dealspot.composeapp.generated.resources.service_dryer_repair
-import dealspot.composeapp.generated.resources.service_drywaller
-import dealspot.composeapp.generated.resources.service_electric_cooktop_repair
-import dealspot.composeapp.generated.resources.service_electric_fireplace_repair
-import dealspot.composeapp.generated.resources.service_electric_meat_grinder_repair
-import dealspot.composeapp.generated.resources.service_electric_stove_repair
-import dealspot.composeapp.generated.resources.service_electrician
-import dealspot.composeapp.generated.resources.service_elevator_specialist
-import dealspot.composeapp.generated.resources.service_emergency_opening_locks
-import dealspot.composeapp.generated.resources.service_epoxy_floor_installer
-import dealspot.composeapp.generated.resources.service_event_planner
-import dealspot.composeapp.generated.resources.service_fence_installer
-import dealspot.composeapp.generated.resources.service_financial_advisor
-import dealspot.composeapp.generated.resources.service_fire_protection_installer
-import dealspot.composeapp.generated.resources.service_fitness_trainer
-import dealspot.composeapp.generated.resources.service_floor_layer
-import dealspot.composeapp.generated.resources.service_framer
-import dealspot.composeapp.generated.resources.service_freezer_repair
-import dealspot.composeapp.generated.resources.service_furniture_reupholstery_restoration
-import dealspot.composeapp.generated.resources.service_gardener
-import dealspot.composeapp.generated.resources.service_gas_fitter
-import dealspot.composeapp.generated.resources.service_glazier
-import dealspot.composeapp.generated.resources.service_graphic_designer
-import dealspot.composeapp.generated.resources.service_grill_repair
-import dealspot.composeapp.generated.resources.service_hair_dryer_repair
-import dealspot.composeapp.generated.resources.service_hair_stylist
-import dealspot.composeapp.generated.resources.service_handyman
-import dealspot.composeapp.generated.resources.service_heating_ventilation_air_conditioning
-import dealspot.composeapp.generated.resources.service_home_audio_system_repair
-import dealspot.composeapp.generated.resources.service_home_theater_repair
-import dealspot.composeapp.generated.resources.service_hotel_cleaner
-import dealspot.composeapp.generated.resources.service_housekeeper
-import dealspot.composeapp.generated.resources.service_housekeeping_assistant
-import dealspot.composeapp.generated.resources.service_ice_maker_repair
-import dealspot.composeapp.generated.resources.service_illustrator
-import dealspot.composeapp.generated.resources.service_induction_cooktop_repair
-import dealspot.composeapp.generated.resources.service_instant_water_heater_repair
-import dealspot.composeapp.generated.resources.service_interior_decorator
-import dealspot.composeapp.generated.resources.service_interior_designer
-import dealspot.composeapp.generated.resources.service_iron_repair
-import dealspot.composeapp.generated.resources.service_irrigation_system_installer
-import dealspot.composeapp.generated.resources.service_janitor
-import dealspot.composeapp.generated.resources.service_joiner
-import dealspot.composeapp.generated.resources.service_journalist
-import dealspot.composeapp.generated.resources.service_kitchen_fitter
-import dealspot.composeapp.generated.resources.service_kitchen_food_processor_repair
-import dealspot.composeapp.generated.resources.service_kitchen_hood_repair
-import dealspot.composeapp.generated.resources.service_landscaper
-import dealspot.composeapp.generated.resources.service_lawn_care_specialist
-import dealspot.composeapp.generated.resources.service_lawyer
-import dealspot.composeapp.generated.resources.service_lighting_specialist
-import dealspot.composeapp.generated.resources.service_loader_services
-import dealspot.composeapp.generated.resources.service_locksmith
-import dealspot.composeapp.generated.resources.service_makeup_artist
-import dealspot.composeapp.generated.resources.service_massage_therapist
-import dealspot.composeapp.generated.resources.service_microwave_oven_repair
-import dealspot.composeapp.generated.resources.service_multicooker_repair
-import dealspot.composeapp.generated.resources.service_music_center_repair
-import dealspot.composeapp.generated.resources.service_musician
-import dealspot.composeapp.generated.resources.service_nail_technician
-import dealspot.composeapp.generated.resources.service_network_administrator
-import dealspot.composeapp.generated.resources.service_network_installer
-import dealspot.composeapp.generated.resources.service_notary_public
-import dealspot.composeapp.generated.resources.service_nurse
-import dealspot.composeapp.generated.resources.service_nutritionist_dietitian
-import dealspot.composeapp.generated.resources.service_other
-import dealspot.composeapp.generated.resources.service_oven_repair
-import dealspot.composeapp.generated.resources.service_overlock_machine_repair
-import dealspot.composeapp.generated.resources.service_painter
-import dealspot.composeapp.generated.resources.service_paralegal
-import dealspot.composeapp.generated.resources.service_personal_trainer
-import dealspot.composeapp.generated.resources.service_pest_control_technician
-import dealspot.composeapp.generated.resources.service_photographer
-import dealspot.composeapp.generated.resources.service_physical_therapist
-import dealspot.composeapp.generated.resources.service_plasterer
-import dealspot.composeapp.generated.resources.service_plumber
-import dealspot.composeapp.generated.resources.service_pool_maintenance_technician
-import dealspot.composeapp.generated.resources.service_pressure_cooker_repair
-import dealspot.composeapp.generated.resources.service_projector_repair
-import dealspot.composeapp.generated.resources.service_psychiatrist
-import dealspot.composeapp.generated.resources.service_psychologist
-import dealspot.composeapp.generated.resources.service_real_estate_agent
-import dealspot.composeapp.generated.resources.service_rebar_installer
-import dealspot.composeapp.generated.resources.service_refrigeration_equipment_display_case_repair
-import dealspot.composeapp.generated.resources.service_refrigeration_mechanic
-import dealspot.composeapp.generated.resources.service_refrigerator_repair
-import dealspot.composeapp.generated.resources.service_repair_maintenance_computer_equipment
-import dealspot.composeapp.generated.resources.service_road_surface_installer
-import dealspot.composeapp.generated.resources.service_roofer
-import dealspot.composeapp.generated.resources.service_seamstress
-import dealspot.composeapp.generated.resources.service_security_guard
-import dealspot.composeapp.generated.resources.service_security_system_specialist
-import dealspot.composeapp.generated.resources.service_sewing_machine_repair
-import dealspot.composeapp.generated.resources.service_smart_home_technician
-import dealspot.composeapp.generated.resources.service_snow_removal
-import dealspot.composeapp.generated.resources.service_software_engineer
-import dealspot.composeapp.generated.resources.service_solar_panel
-import dealspot.composeapp.generated.resources.service_sound_engineer
-import dealspot.composeapp.generated.resources.service_space_heater_repair
-import dealspot.composeapp.generated.resources.service_speech_therapist
-import dealspot.composeapp.generated.resources.service_sports_equipment_repair
-import dealspot.composeapp.generated.resources.service_stair_installer
-import dealspot.composeapp.generated.resources.service_stone_mason
-import dealspot.composeapp.generated.resources.service_take_out_trash
-import dealspot.composeapp.generated.resources.service_tattoo_artist
-import dealspot.composeapp.generated.resources.service_telephone_repair
-import dealspot.composeapp.generated.resources.service_television_dismantling
-import dealspot.composeapp.generated.resources.service_television_repair
-import dealspot.composeapp.generated.resources.service_tiler
-import dealspot.composeapp.generated.resources.service_tour_guide
-import dealspot.composeapp.generated.resources.service_tow_truck
-import dealspot.composeapp.generated.resources.service_translator
-import dealspot.composeapp.generated.resources.service_tree_surgeon
-import dealspot.composeapp.generated.resources.service_tuner_firmware_update
-import dealspot.composeapp.generated.resources.service_tv_remote_control_repair
-import dealspot.composeapp.generated.resources.service_upholstered_furniture_carpet_cleaning
-import dealspot.composeapp.generated.resources.service_vacuum_cleaner_repair
-import dealspot.composeapp.generated.resources.service_veterinarian
-import dealspot.composeapp.generated.resources.service_videographer
-import dealspot.composeapp.generated.resources.service_waiter_waitress
-import dealspot.composeapp.generated.resources.service_walking_pets
-import dealspot.composeapp.generated.resources.service_wallpaper_installer
-import dealspot.composeapp.generated.resources.service_washing_machine_dismantling
-import dealspot.composeapp.generated.resources.service_washing_machine_repair
-import dealspot.composeapp.generated.resources.service_waste_collector
-import dealspot.composeapp.generated.resources.service_water_cooler_cleaning
-import dealspot.composeapp.generated.resources.service_water_cooler_repair
-import dealspot.composeapp.generated.resources.service_water_heater_boiler_cleaning
-import dealspot.composeapp.generated.resources.service_water_treatment_installer
-import dealspot.composeapp.generated.resources.service_wedding_planner
-import dealspot.composeapp.generated.resources.service_welder
-import dealspot.composeapp.generated.resources.service_wind_renewable_energy_technician
-import dealspot.composeapp.generated.resources.service_window_cleaner
-import dealspot.composeapp.generated.resources.service_window_installer
-import dealspot.composeapp.generated.resources.service_woodcarver
-import dealspot.composeapp.generated.resources.service_writer
-import dealspot.composeapp.generated.resources.suggest_service
-import dealspot.composeapp.generated.resources.tap_to_choose_service
+import dealspot.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 
 private val SheetShape = RoundedCornerShape(dimens_16)
@@ -590,218 +390,29 @@ fun ServiceSelectionSheet(
 ) {
     var query by remember { mutableStateOf("") }
     var expandedCategory by remember { mutableStateOf(selectedCategory) }
-    var showSuggestionDialog by remember { mutableStateOf(false) }
-    
-    val supportEmail = "thedealspotapp@gmail.com"
-    
-    // Determine if we should show suggestion form (needed for layout calculations)
     val serviceCategories = getServiceCategories()
-    val filteredResults = remember(query) {
-        if (query.isBlank()) emptyList()
-        else serviceCategories.flatMap { category ->
-            category.services.filter { it.name.contains(query, ignoreCase = true) }
-                .map { service -> category to service }
-        }
-    }
-    val shouldShowSuggestionForm = query.isNotBlank() && filteredResults.isEmpty()
-    
-    // Reset states when sheet is dismissed
-    LaunchedEffect(visible) {
-        if (!visible) {
-            query = ""
-            showSuggestionDialog = false
-        }
-    }
 
     AnimatedVisibility(visible = visible, enter = fadeIn(), exit = fadeOut()) {
-        if (showBackground) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.10f))
-                    .clickable(
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() }
-                    ) { onDismissRequest() }
-            ) {
-                BoxWithConstraints(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(horizontal = 20.dp)
-                        .clickable(
-                            indication = null,
-                            enabled = false,
-                            interactionSource = remember { MutableInteractionSource() }
-                        ) { }
-                ) {
-                    val sheetMaxHeight = (maxHeight - 88.dp).coerceAtLeast(220.dp)
-                
-                val adjustedMaxHeight = sheetMaxHeight
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.wrapContentHeight()
-                ) {
-                    Surface(
-                        shape = SheetShape,
-                        color = MaterialTheme.colorScheme.surface,
-                        modifier = Modifier
-                            .then(if (showBackground) Modifier.shadow(dimens_1, SheetShape) else Modifier)
-                            .fillMaxWidth()
-                            .heightIn(max = adjustedMaxHeight)
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(top = dimens_8, bottom = dimens_8)
-                        ) {
-                            DealSpotTextInputField(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 20.dp, vertical = 4.dp),
-                                leftIcon = Res.drawable.ic_search,
-                                placeHolderText = stringResource(Res.string.search_for_service),
-                                isPasswordField = false,
-                                imeAction = ImeAction.Done,
-                                labelTextColor = Grey
-                            ) { service ->
-                                println("ServiceSelectionSheet. Service is: $service")
-
-                                query = service
-                            }
-
-                            // filteredResults and shouldShowSuggestionForm are now calculated above
-
-                            if (shouldShowSuggestionForm) {
-                                // Show message and button to open suggestion dialog
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 20.dp, vertical = 16.dp),
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    Text(
-                                        text = stringResource(Res.string.nothing_found_message),
-                                        style = MaterialTheme.typography.bodyMedium.copy(fontFamily = latoFontFamily()),
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                        textAlign = TextAlign.Center,
-                                        modifier = Modifier.padding(bottom = 20.dp)
-                                    )
-
-                                    DealSpotDarkButton(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        buttonText = stringResource(Res.string.suggest_service),
-                                        isEnable = true,
-                                        onClick = {
-                                            showSuggestionDialog = true
-                                        }
-                                    )
-                                }
-                            } else if (filteredResults.isNotEmpty()) {
-                                LazyColumn(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(top = 8.dp)
-                                ) {
-                                    items(filteredResults) { (category, service) ->
-                                        ServiceResultRow(
-                                            category = category,
-                                            service = service,
-                                            // Check both category and service name to avoid "Other" being selected in all categories
-                                            isSelected = selectedCategory?.name.orEmpty() == category.name && selectedService?.name.orEmpty() == service.name,
-                                            onClick = {
-                                                query = ""
-                                                expandedCategory = category
-                                                onServiceSelected(category, service)
-                                            }
-                                        )
-                                    }
-                                }
-                            } else {
-                                // Show all categories when query is blank
-                                LazyColumn(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(top = 8.dp)
-                                ) {
-                                    items(serviceCategories) { category ->
-                                        CategoryRow(
-                                            category = category,
-                                            isExpanded = expandedCategory?.name.orEmpty() == category.name,
-                                            isSelected = selectedCategory?.name.orEmpty() == category.name,
-                                            onClick = {
-                                                expandedCategory = if (expandedCategory?.name.orEmpty() == category.name) null else category
-                                            }
-                                        )
-
-                                        AnimatedVisibility(visible = expandedCategory?.name.orEmpty() == category.name) {
-                                            Column(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .padding(horizontal = 16.dp, vertical = 8.dp)
-                                            ) {
-                                                FlowRow(
-                                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                                                ) {
-                                                    category.services.forEach { service ->
-                                                        // Check both category and service name to avoid "Other" being selected in all categories
-                                                        val selected = selectedCategory?.name.orEmpty() == category.name && selectedService?.name.orEmpty() == service.name
-                                                        val borderStroke = BorderStroke(
-                                                            width = 1.dp,
-                                                            color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
-                                                        )
-                                                        AssistChip(
-                                                            onClick = {
-                                                                query = ""
-                                                                onServiceSelected(category, service)
-                                                            },
-                                                            label = { Text(service.name, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                                                            colors = AssistChipDefaults.assistChipColors(
-                                                                containerColor = if (selected) MaterialTheme.colorScheme.primary.copy(alpha = 0.15f) else MaterialTheme.colorScheme.surface,
-                                                                labelColor = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
-                                                            ),
-                                                            border = borderStroke
-                                                        )
-                                                    }
-                                                }
-                                            }
-                                        }
-
-                                        Spacer(modifier = Modifier.height(4.dp))
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                        if (showCancelButton) {
-                            SpacerHeight12Dp()
-
-                            DealSpotOutlineButton(
-                                modifier = Modifier.width(dimens_200),
-                                buttonText = stringResource(Res.string.cancel),
-                                buttonHeight = dimens_45,
-                                fillWidth = false,
-                                shape = RoundedCornerShape(18.dp),
-                                containerColor = white,
-                                borderColor = grey_middle
-                            ) {
-                                onDismissRequest()
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.10f))
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) { onDismissRequest() }
+        ) {
             BoxWithConstraints(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .align(Alignment.Center)
+                    .padding(horizontal = 20.dp)
                     .clickable(
                         indication = null,
                         enabled = false,
                         interactionSource = remember { MutableInteractionSource() }
                     ) { }
             ) {
-                val adjustedMaxHeight = maxHeight
+                val sheetMaxHeight = (maxHeight - 88.dp).coerceAtLeast(220.dp)
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -811,12 +422,11 @@ fun ServiceSelectionSheet(
                         shape = SheetShape,
                         color = MaterialTheme.colorScheme.surface,
                         modifier = Modifier
+                            .shadow(dimens_1, SheetShape)
                             .fillMaxWidth()
-                            .heightIn(max = adjustedMaxHeight)
+                            .heightIn(max = sheetMaxHeight)
                     ) {
-                        Column(
-                            modifier = Modifier.padding(top = dimens_8, bottom = dimens_8)
-                        ) {
+                        Column(modifier = Modifier.padding(top = dimens_8, bottom = dimens_8)) {
                             DealSpotTextInputField(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -832,34 +442,15 @@ fun ServiceSelectionSheet(
                                 query = service
                             }
 
-                            // filteredResults and shouldShowSuggestionForm are now calculated above
-
-                            if (shouldShowSuggestionForm) {
-                                // Show message and button to open suggestion dialog
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 20.dp, vertical = 16.dp),
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    Text(
-                                        text = stringResource(Res.string.nothing_found_message),
-                                        style = MaterialTheme.typography.bodyMedium.copy(fontFamily = latoFontFamily()),
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                        textAlign = TextAlign.Center,
-                                        modifier = Modifier.padding(bottom = 20.dp)
-                                    )
-
-                                    DealSpotDarkButton(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        buttonText = stringResource(Res.string.suggest_service),
-                                        isEnable = true,
-                                        onClick = {
-                                            showSuggestionDialog = true
-                                        }
-                                    )
+                            val filteredResults = remember(query) {
+                                if (query.isBlank()) emptyList()
+                                else serviceCategories.flatMap { category ->
+                                    category.services.filter { it.name.contains(query, ignoreCase = true) }
+                                        .map { service -> category to service }
                                 }
-                            } else if (filteredResults.isNotEmpty()) {
+                            }
+
+                            if (filteredResults.isNotEmpty()) {
                                 LazyColumn(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -880,7 +471,6 @@ fun ServiceSelectionSheet(
                                     }
                                 }
                             } else {
-                                // Show all categories when query is blank
                                 LazyColumn(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -936,22 +526,24 @@ fun ServiceSelectionSheet(
                             }
                         }
                     }
+
+                    SpacerHeight12Dp()
+
+                    DealSpotOutlineButton(
+                        modifier = Modifier.width(dimens_200),
+                        buttonText = stringResource(Res.string.cancel),
+                        buttonHeight = dimens_45,
+                        fillWidth = false,
+                        shape = RoundedCornerShape(18.dp),
+                        containerColor = white,
+                        borderColor = grey_middle
+                    ) {
+                        onDismissRequest()
+                    }
                 }
             }
         }
     }
-    
-    // Service suggestion dialog
-    ServiceSuggestionDialog(
-        visible = showSuggestionDialog,
-        onDismissRequest = { showSuggestionDialog = false },
-        supportEmail = supportEmail,
-        onSendSuggestion = {
-            // Close both dialogs before opening email app
-            showSuggestionDialog = false
-            onDismissRequest()
-        }
-    )
 }
 
 @Composable

@@ -321,7 +321,16 @@ fun categoryMarker(serviceId: Int): Int {
         1 -> R.drawable.ic_household_marker
         2 -> R.drawable.ic_technical_marker
         3 -> R.drawable.ic_car_service_marker
-        else -> R.drawable.ic_household_marker
+        4 -> R.drawable.ic_builder_marker
+        5 -> R.drawable.ic_software_marker
+        6 -> R.drawable.ic_lifestyle_marker
+        7 -> R.drawable.ic_health_marker
+        8 -> R.drawable.ic_food_marker
+        9 -> R.drawable.ic_finance_marker
+        10 -> R.drawable.ic_legal_marker
+        11 -> R.drawable.ic_creative_marker
+        12 -> R.drawable.ic_other_marker
+        else -> R.drawable.ic_technical_marker
     }
 }
 

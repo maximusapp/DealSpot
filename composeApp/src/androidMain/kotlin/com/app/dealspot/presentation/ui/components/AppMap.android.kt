@@ -221,11 +221,19 @@ actual fun AppMap(
                 val longitude = deal.longitude ?: return@mapNotNull null
                 
                 if (latitude > 0.0 && longitude > 0.0) {
+                    val serviceId = deal.categoryId?.toInt() ?: 0
+                    // Build marker using ic_marker_example with CategoryIcon centered in the circle
+//                    val bitmap = BitmapFactory.decodeResource(context.resources, categoryMarker(serviceId = serviceId))
+//                    val descriptor = BitmapDescriptorFactory.fromBitmap(createCustomServiceMarker(context = context, serviceId = serviceId))
+
                     map.addMarker(
                         MarkerOptions()
                             .position(LatLng(latitude, longitude))
                             .title(deal.name ?: "")
                             .snippet(deal.serviceName ?: "")
+                            .icon(createCustomServiceMarker(context = context, serviceId = serviceId))
+                            // Pin-shaped marker: anchor at bottom center (tip of pin)
+                            .anchor(0.5f, 1.0f)
                     )
                 } else {
                     null
@@ -280,6 +288,40 @@ private fun createCustomLocationMarker(context: Context): BitmapDescriptor? {
     } catch (e: Exception) {
         println("Error in createCustomLocationMarker. Error: ${e.message}")
         return null
+    }
+}
+
+private fun createCustomServiceMarker(context: Context, serviceId: Int): BitmapDescriptor? {
+    // Build marker directly from drawable resource (vector or bitmap)
+    try {
+        val drawable = ContextCompat.getDrawable(context, categoryMarker(serviceId = serviceId))
+            ?: throw IllegalStateException("ic_marker_my_location_2 not found")
+
+        // Slightly reduce size for better visual balance
+        val scale = 0.85f
+        val baseWidth = 40.dpToPx(context)
+        val baseHeight = 50.dpToPx(context)
+        val width = (baseWidth * scale).toInt().coerceAtLeast(24)
+        val height = (baseHeight * scale).toInt().coerceAtLeast(24)
+
+        val bitmap = createBitmap(width, height)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, width, height)
+        drawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    } catch (e: Exception) {
+        println("Error in createCustomLocationMarker. Error: ${e.message}")
+        return null
+    }
+}
+
+fun categoryMarker(serviceId: Int): Int {
+    println("categoryMarker. serviceId: $serviceId")
+    return when (serviceId) {
+        1 -> R.drawable.ic_household_marker
+        2 -> R.drawable.ic_technical_marker
+        3 -> R.drawable.ic_car_service_marker
+        else -> R.drawable.ic_household_marker
     }
 }
 

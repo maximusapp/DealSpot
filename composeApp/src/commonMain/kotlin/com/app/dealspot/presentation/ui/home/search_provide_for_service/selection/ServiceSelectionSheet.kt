@@ -65,6 +65,7 @@ import com.app.dealspot.data.model.ServiceCategoryEntity
 import com.app.dealspot.data.model.ServiceEntity
 import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.Grey
+import com.app.dealspot.presentation.theme.PrimaryColor
 import com.app.dealspot.presentation.theme.SpacerHeight12Dp
 import com.app.dealspot.presentation.theme.SpacerWidth15Dp
 import com.app.dealspot.presentation.theme.dimens_1
@@ -80,6 +81,7 @@ import com.app.dealspot.presentation.view.DealSpotOutlineButton
 import com.app.dealspot.presentation.view.DealSpotTextInputField
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 private val SheetShape = RoundedCornerShape(dimens_16)
@@ -92,7 +94,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 1,
         name = stringResource(Res.string.category_household_appliances),
-        icon = Icons.Outlined.Kitchen,
+        icon = Res.drawable.ic_household,
         services = listOf(
             ServiceEntity(id = 1000, categoryId = 1, name = stringResource(Res.string.service_all_home_appliance_repair_services)),
             ServiceEntity(id = 1002, categoryId = 1, name = stringResource(Res.string.service_deep_fryer_repair)),
@@ -157,7 +159,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 2,
         name = stringResource(Res.string.category_skilled_trades_technical_services),
-        icon = Icons.Outlined.Construction,
+        icon = Res.drawable.ic_technical,
         services = listOf(
             ServiceEntity(id = 2000, categoryId = 2, name = stringResource(Res.string.service_electrician)),
             ServiceEntity(id = 2001, categoryId = 2, name = stringResource(Res.string.service_plumber)),
@@ -188,7 +190,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 3,
         name = stringResource(Res.string.category_auto_services),
-        icon = Icons.Outlined.DirectionsCar,
+        icon = Res.drawable.ic_car_service,
         services = listOf(
             ServiceEntity(id = 3000, categoryId = 3, name = stringResource(Res.string.service_auto_mechanic)),
             ServiceEntity(id = 3001, categoryId = 3, name = stringResource(Res.string.service_auto_electrician)),
@@ -200,7 +202,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 4,
         name = stringResource(Res.string.category_building_cleaning_services),
-        icon = Icons.Outlined.CleaningServices,
+        icon = Res.drawable.ic_building,
         services = listOf(
             ServiceEntity(id = 4000, categoryId = 4, name = stringResource(Res.string.service_janitor)),
             ServiceEntity(id = 4001, categoryId = 4, name = stringResource(Res.string.service_housekeeper)),
@@ -248,7 +250,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 5,
         name = stringResource(Res.string.category_technology_information_services),
-        icon = Icons.Outlined.Computer,
+        icon = Res.drawable.ic_software,
         services = listOf(
             ServiceEntity(id = 5000, categoryId = 5, name = stringResource(Res.string.service_network_administrator)),
             ServiceEntity(id = 5001, categoryId = 5, name = stringResource(Res.string.service_cybersecurity_specialist)),
@@ -261,7 +263,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 6,
         name = stringResource(Res.string.category_personal_lifestyle_services),
-        icon = Icons.Outlined.Person,
+        icon = Res.drawable.ic_lifestyle,
         services = listOf(
             ServiceEntity(id = 6000, categoryId = 6, name = stringResource(Res.string.service_barber)),
             ServiceEntity(id = 6001, categoryId = 6, name = stringResource(Res.string.service_hair_stylist)),
@@ -278,7 +280,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 7,
         name = stringResource(Res.string.category_health_human_services),
-        icon = Icons.Outlined.HealthAndSafety,
+        icon = Res.drawable.ic_health,
         services = listOf(
             ServiceEntity(id = 7000, categoryId = 7, name = stringResource(Res.string.service_doctor)),
             ServiceEntity(id = 7001, categoryId = 7, name = stringResource(Res.string.service_nurse)),
@@ -298,7 +300,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 8,
         name = stringResource(Res.string.category_food_hospitality_services),
-        icon = Icons.Outlined.Restaurant,
+        icon = Res.drawable.ic_food,
         services = listOf(
             ServiceEntity(id = 8000, categoryId = 8, name = stringResource(Res.string.service_chef)),
             ServiceEntity(id = 8001, categoryId = 8, name = stringResource(Res.string.service_cook)),
@@ -317,7 +319,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 9,
         name = stringResource(Res.string.category_business_finance_administrative_services),
-        icon = Icons.Outlined.AccountBalance,
+        icon = Res.drawable.ic_finance,
         services = listOf(
             ServiceEntity(id = 9000, categoryId = 9, name = stringResource(Res.string.service_accountant)),
             ServiceEntity(id = 9001, categoryId = 9, name = stringResource(Res.string.service_financial_advisor)),
@@ -329,7 +331,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 10,
         name = stringResource(Res.string.category_legal_protective_services),
-        icon = Icons.Outlined.Gavel,
+        icon = Res.drawable.ic_legal,
         services = listOf(
             ServiceEntity(id = 10000, categoryId = 10, name = stringResource(Res.string.service_lawyer)),
             ServiceEntity(id = 10001, categoryId = 10, name = stringResource(Res.string.service_paralegal)),
@@ -342,7 +344,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 11,
         name = stringResource(Res.string.category_creative_cultural_media_services),
-        icon = Icons.Outlined.Brush,
+        icon = Res.drawable.ic_creative,
         services = listOf(
             ServiceEntity(id = 11000, categoryId = 11, name = stringResource(Res.string.service_photographer)),
             ServiceEntity(id = 11001, categoryId = 11, name = stringResource(Res.string.service_videographer)),
@@ -362,7 +364,7 @@ private fun getServiceCategories(): List<ServiceCategoryEntity> {
     ServiceCategoryEntity(
         id = 12,
         name = stringResource(Res.string.category_other_services),
-        icon = Icons.Outlined.DevicesOther,
+        icon = Res.drawable.ic_other,
         services = listOf(
             ServiceEntity(id = 12000, categoryId = 12, name = stringResource(Res.string.service_walking_pets)),
             ServiceEntity(id = 12001, categoryId = 12, name = stringResource(Res.string.service_take_out_trash)),
@@ -573,12 +575,12 @@ private fun CategoryRow(
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
             ) {
                 Icon(
-                    imageVector = category.icon,
+                    painter = painterResource(category.icon),
                     contentDescription = null,
                     modifier = Modifier
                         .size(36.dp)
                         .padding(8.dp),
-                    tint = DealSpotDark
+                    tint = Color.Unspecified
                 )
             }
 
@@ -631,7 +633,7 @@ private fun ServiceResultRow(
             color = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
         ) {
             Icon(
-                imageVector = category.icon,
+                painter = painterResource(category.icon),
                 contentDescription = null,
                 modifier = Modifier
                     .size(32.dp)

@@ -94,6 +94,9 @@ class HomeScreenViewModel(
                 val response = getDealsUseCase(type)
                 _deals.value = response.items
                 println("HomeScreenViewModel. fetchDeals. Fetched ${response.count} deals")
+                response.items.forEach {
+                    println("HomeScreenViewModel. Deal: $it")
+                }
             } catch (e: Exception) {
                 println("HomeScreenViewModel. fetchDeals error: ${e.message}")
                 e.printStackTrace()

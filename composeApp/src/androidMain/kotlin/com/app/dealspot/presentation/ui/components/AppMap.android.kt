@@ -51,9 +51,7 @@ actual fun AppMap(
     val mapView = rememberMapViewWithLifecycle()
     val context = LocalContext.current
     var googleMapRef by remember { mutableStateOf<GoogleMap?>(null) }
-    var userLocationMarker by remember { mutableStateOf<Marker?>(null) }
     var dealMarkers by remember { mutableStateOf<List<Marker>>(emptyList()) }
-    val currentUserMarker by lazy { createCustomLocationMarker(context) }
     val fused by lazy { LocationServices.getFusedLocationProviderClient(context) }
     
     // Handle "go to current location" action when trigger changes
@@ -67,8 +65,6 @@ actual fun AppMap(
                 fused.lastLocation.addOnSuccessListener { location ->
                     if (location != null) {
                         val latLng = LatLng(location.latitude, location.longitude)
-                        userLocationMarker?.remove()
-                        userLocationMarker = updateCurrentUserMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
                         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
                     } else {
                         val cts = CancellationTokenSource()
@@ -76,8 +72,6 @@ actual fun AppMap(
                             .addOnSuccessListener { current ->
                                 if (current != null) {
                                     val latLng = LatLng(current.latitude, current.longitude)
-                                    userLocationMarker?.remove()
-                                    userLocationMarker = updateCurrentUserMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
                                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
                                 }
                             }
@@ -119,10 +113,6 @@ actual fun AppMap(
                         println("lastLocation: is not null: $location")
 
                         val latLng = LatLng(location.latitude, location.longitude)
-                        // Update custom location marker
-                        userLocationMarker?.remove()
-                        userLocationMarker = updateCurrentUserMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
-
                         map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
                     } else {
                         println("lastLocation: is null. ELSE case")
@@ -131,28 +121,11 @@ actual fun AppMap(
                             .addOnSuccessListener { current ->
                                 if (current != null) {
                                     val latLng = LatLng(current.latitude, current.longitude)
-                                    // Update custom location marker
-                                    userLocationMarker?.remove()
-                                    userLocationMarker = updateCurrentUserMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
-
                                     map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
                                 }
                             }
                     }
                 }
-            } else {
-                println("latitude and longitude <= 0. ELSE case")
-
-                val cts = CancellationTokenSource()
-                fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
-                    .addOnSuccessListener { current ->
-                        if (current != null) {
-                            val latLng = LatLng(current.latitude, current.longitude)
-                            // Update custom location marker
-                            userLocationMarker?.remove()
-                            userLocationMarker = updateCurrentUserMarker(map = map, latLng = latLng, currentUserMarker = currentUserMarker)
-                        }
-                    }
             }
         }
     }
@@ -165,7 +138,7 @@ actual fun AppMap(
                 googleMapRef = googleMap
 
                 runCatching {
-                    googleMap.isMyLocationEnabled = false
+                    googleMap.isMyLocationEnabled = true
                     googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(view.context, R.raw.map_style))
                     
                     // Disable system icons on Map when click on my marker
@@ -222,9 +195,6 @@ actual fun AppMap(
                 
                 if (latitude > 0.0 && longitude > 0.0) {
                     val serviceId = deal.categoryId?.toInt() ?: 0
-                    // Build marker using ic_marker_example with CategoryIcon centered in the circle
-//                    val bitmap = BitmapFactory.decodeResource(context.resources, categoryMarker(serviceId = serviceId))
-//                    val descriptor = BitmapDescriptorFactory.fromBitmap(createCustomServiceMarker(context = context, serviceId = serviceId))
 
                     map.addMarker(
                         MarkerOptions()
@@ -232,7 +202,6 @@ actual fun AppMap(
                             .title(deal.name ?: "")
                             .snippet(deal.serviceName ?: "")
                             .icon(createCustomServiceMarker(context = context, serviceId = serviceId))
-                            // Pin-shaped marker: anchor at bottom center (tip of pin)
                             .anchor(0.5f, 1.0f)
                     )
                 } else {
@@ -267,29 +236,29 @@ private fun rememberMapViewWithLifecycle(): MapView {
 /**
  * Creates a custom location marker
  */
-private fun createCustomLocationMarker(context: Context): BitmapDescriptor? {
-    // Build marker directly from drawable resource (vector or bitmap)
-    try {
-        val drawable = ContextCompat.getDrawable(context, R.drawable.ic_marker_my_location_3)
-            ?: throw IllegalStateException("ic_marker_my_location_2 not found")
-
-        // Slightly reduce size for better visual balance
-        val scale = 0.85f
-        val baseWidth = 40.dpToPx(context)
-        val baseHeight = 50.dpToPx(context)
-        val width = (baseWidth * scale).toInt().coerceAtLeast(24)
-        val height = (baseHeight * scale).toInt().coerceAtLeast(24)
-
-        val bitmap = createBitmap(width, height)
-        val canvas = Canvas(bitmap)
-        drawable.setBounds(0, 0, width, height)
-        drawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
-    } catch (e: Exception) {
-        println("Error in createCustomLocationMarker. Error: ${e.message}")
-        return null
-    }
-}
+//private fun createCustomLocationMarker(context: Context): BitmapDescriptor? {
+//    // Build marker directly from drawable resource (vector or bitmap)
+//    try {
+//        val drawable = ContextCompat.getDrawable(context, R.drawable.ic_marker_my_location_3)
+//            ?: throw IllegalStateException("ic_marker_my_location_2 not found")
+//
+//        // Slightly reduce size for better visual balance
+//        val scale = 0.85f
+//        val baseWidth = 40.dpToPx(context)
+//        val baseHeight = 50.dpToPx(context)
+//        val width = (baseWidth * scale).toInt().coerceAtLeast(24)
+//        val height = (baseHeight * scale).toInt().coerceAtLeast(24)
+//
+//        val bitmap = createBitmap(width, height)
+//        val canvas = Canvas(bitmap)
+//        drawable.setBounds(0, 0, width, height)
+//        drawable.draw(canvas)
+//        return BitmapDescriptorFactory.fromBitmap(bitmap)
+//    } catch (e: Exception) {
+//        println("Error in createCustomLocationMarker. Error: ${e.message}")
+//        return null
+//    }
+//}
 
 private fun createCustomServiceMarker(context: Context, serviceId: Int): BitmapDescriptor? {
     // Build marker directly from drawable resource (vector or bitmap)

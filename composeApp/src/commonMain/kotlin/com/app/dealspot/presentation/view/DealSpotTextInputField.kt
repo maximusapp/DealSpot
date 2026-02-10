@@ -11,6 +11,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -114,8 +115,15 @@ private fun BaseDealSpotTextField(
     placeHolderText: String,
     useFloatingLabel: Boolean
 ) {
-    var text by remember { mutableStateOf("") }
+    var text by remember { mutableStateOf(value) }
     var passwordVisible by remember { mutableStateOf(false) }
+
+    // Keep internal text in sync with external value when caller changes prevValue
+    LaunchedEffect(value) {
+        if (value != text) {
+            text = value
+        }
+    }
 
     val trailingPasswordIcon = @Composable {
         val icon = if (passwordVisible) Res.drawable.ic_visibility_on else Res.drawable.ic_visibility_off
@@ -125,7 +133,7 @@ private fun BaseDealSpotTextField(
         }
     }
 
-    val currentValue = value.ifEmpty { text }
+    val currentValue = text
 
     OutlinedTextField(
         value = currentValue,

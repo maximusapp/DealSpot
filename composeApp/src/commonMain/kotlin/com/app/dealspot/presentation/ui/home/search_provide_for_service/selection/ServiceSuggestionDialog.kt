@@ -130,11 +130,12 @@ fun ServiceSuggestionDialog(
                     SpacerHeight12Dp()
 
                     DealSpotOutlineButton(
-                        modifier = Modifier.width(dimens_200),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp),
                         buttonText = stringResource(Res.string.cancel),
                         buttonHeight = dimens_45,
                         fillWidth = false,
-                        shape = RoundedCornerShape(18.dp),
                         containerColor = white,
                         borderColor = grey_middle
                     ) {

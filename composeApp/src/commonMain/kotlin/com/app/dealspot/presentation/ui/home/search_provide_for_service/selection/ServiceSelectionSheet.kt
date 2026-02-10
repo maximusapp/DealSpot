@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,20 +28,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountBalance
-import androidx.compose.material.icons.outlined.Brush
-import androidx.compose.material.icons.outlined.CleaningServices
-import androidx.compose.material.icons.outlined.Computer
-import androidx.compose.material.icons.outlined.Construction
-import androidx.compose.material.icons.outlined.DevicesOther
-import androidx.compose.material.icons.outlined.DirectionsCar
 import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
-import androidx.compose.material.icons.outlined.Gavel
-import androidx.compose.material.icons.outlined.HealthAndSafety
-import androidx.compose.material.icons.outlined.Kitchen
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Icon
@@ -53,6 +40,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,9 +53,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.app.dealspot.data.model.ServiceCategoryEntity
 import com.app.dealspot.data.model.ServiceEntity
-import com.app.dealspot.presentation.theme.DealSpotDark
 import com.app.dealspot.presentation.theme.Grey
-import com.app.dealspot.presentation.theme.PrimaryColor
 import com.app.dealspot.presentation.theme.SpacerHeight12Dp
 import com.app.dealspot.presentation.theme.SpacerWidth15Dp
 import com.app.dealspot.presentation.theme.dimens_1
@@ -79,14 +65,232 @@ import com.app.dealspot.presentation.theme.dimens_8
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.white
+import com.app.dealspot.presentation.view.DealSpotDarkButton
 import com.app.dealspot.presentation.view.DealSpotOutlineButton
 import com.app.dealspot.presentation.view.DealSpotTextInputField
 import dealspot.composeapp.generated.resources.Res
-import dealspot.composeapp.generated.resources.*
+import dealspot.composeapp.generated.resources.cancel
+import dealspot.composeapp.generated.resources.category_auto_services
+import dealspot.composeapp.generated.resources.category_building_cleaning_services
+import dealspot.composeapp.generated.resources.category_business_finance_administrative_services
+import dealspot.composeapp.generated.resources.category_creative_cultural_media_services
+import dealspot.composeapp.generated.resources.category_food_hospitality_services
+import dealspot.composeapp.generated.resources.category_health_human_services
+import dealspot.composeapp.generated.resources.category_household_appliances
+import dealspot.composeapp.generated.resources.category_legal_protective_services
+import dealspot.composeapp.generated.resources.category_other_services
+import dealspot.composeapp.generated.resources.category_personal_lifestyle_services
+import dealspot.composeapp.generated.resources.category_skilled_trades_technical_services
+import dealspot.composeapp.generated.resources.category_technology_information_services
+import dealspot.composeapp.generated.resources.ic_building
+import dealspot.composeapp.generated.resources.ic_car_service
+import dealspot.composeapp.generated.resources.ic_creative
+import dealspot.composeapp.generated.resources.ic_finance
+import dealspot.composeapp.generated.resources.ic_food
+import dealspot.composeapp.generated.resources.ic_health
+import dealspot.composeapp.generated.resources.ic_household
+import dealspot.composeapp.generated.resources.ic_legal
+import dealspot.composeapp.generated.resources.ic_lifestyle
+import dealspot.composeapp.generated.resources.ic_other
+import dealspot.composeapp.generated.resources.ic_search
+import dealspot.composeapp.generated.resources.ic_software
+import dealspot.composeapp.generated.resources.ic_technical
+import dealspot.composeapp.generated.resources.nothing_found_message
+import dealspot.composeapp.generated.resources.search_for_service
+import dealspot.composeapp.generated.resources.select_service
+import dealspot.composeapp.generated.resources.send
+import dealspot.composeapp.generated.resources.service_accountant
+import dealspot.composeapp.generated.resources.service_actor
+import dealspot.composeapp.generated.resources.service_air_conditioner_cleaning
+import dealspot.composeapp.generated.resources.service_air_conditioner_dismantling
+import dealspot.composeapp.generated.resources.service_air_conditioner_repair
+import dealspot.composeapp.generated.resources.service_all_home_appliance_repair_services
+import dealspot.composeapp.generated.resources.service_animator
+import dealspot.composeapp.generated.resources.service_antenna_repair
+import dealspot.composeapp.generated.resources.service_auto_electrician
+import dealspot.composeapp.generated.resources.service_auto_mechanic
+import dealspot.composeapp.generated.resources.service_baker
+import dealspot.composeapp.generated.resources.service_barber
+import dealspot.composeapp.generated.resources.service_barista
+import dealspot.composeapp.generated.resources.service_bartender
+import dealspot.composeapp.generated.resources.service_bathroom_fitter
+import dealspot.composeapp.generated.resources.service_blender_repair
+import dealspot.composeapp.generated.resources.service_boiler_dismantling
+import dealspot.composeapp.generated.resources.service_boiler_repair
+import dealspot.composeapp.generated.resources.service_boiler_technician
+import dealspot.composeapp.generated.resources.service_bread_maker_repair
+import dealspot.composeapp.generated.resources.service_bricklayer_mason
+import dealspot.composeapp.generated.resources.service_butcher
+import dealspot.composeapp.generated.resources.service_camera_repair
+import dealspot.composeapp.generated.resources.service_cargo_transportation_services
+import dealspot.composeapp.generated.resources.service_carpenter
+import dealspot.composeapp.generated.resources.service_ceiling_installer
+import dealspot.composeapp.generated.resources.service_chef
+import dealspot.composeapp.generated.resources.service_coffee_maker_repair
+import dealspot.composeapp.generated.resources.service_construction_worker
+import dealspot.composeapp.generated.resources.service_cook
+import dealspot.composeapp.generated.resources.service_cooktop_dismantling
+import dealspot.composeapp.generated.resources.service_cooktop_repair
+import dealspot.composeapp.generated.resources.service_cosmetologist
+import dealspot.composeapp.generated.resources.service_countertop_fabricator
+import dealspot.composeapp.generated.resources.service_cybersecurity_specialist
+import dealspot.composeapp.generated.resources.service_deep_fryer_repair
+import dealspot.composeapp.generated.resources.service_demolition_worker
+import dealspot.composeapp.generated.resources.service_dishwasher_dismantling
+import dealspot.composeapp.generated.resources.service_dishwasher_repair
+import dealspot.composeapp.generated.resources.service_doctor
+import dealspot.composeapp.generated.resources.service_door_installer
+import dealspot.composeapp.generated.resources.service_dough_mixer_repair
+import dealspot.composeapp.generated.resources.service_dryer_dismantling
+import dealspot.composeapp.generated.resources.service_dryer_repair
+import dealspot.composeapp.generated.resources.service_drywaller
+import dealspot.composeapp.generated.resources.service_electric_cooktop_repair
+import dealspot.composeapp.generated.resources.service_electric_fireplace_repair
+import dealspot.composeapp.generated.resources.service_electric_meat_grinder_repair
+import dealspot.composeapp.generated.resources.service_electric_stove_repair
+import dealspot.composeapp.generated.resources.service_electrician
+import dealspot.composeapp.generated.resources.service_elevator_specialist
+import dealspot.composeapp.generated.resources.service_emergency_opening_locks
+import dealspot.composeapp.generated.resources.service_epoxy_floor_installer
+import dealspot.composeapp.generated.resources.service_event_planner
+import dealspot.composeapp.generated.resources.service_fence_installer
+import dealspot.composeapp.generated.resources.service_financial_advisor
+import dealspot.composeapp.generated.resources.service_fire_protection_installer
+import dealspot.composeapp.generated.resources.service_fitness_trainer
+import dealspot.composeapp.generated.resources.service_floor_layer
+import dealspot.composeapp.generated.resources.service_framer
+import dealspot.composeapp.generated.resources.service_freezer_repair
+import dealspot.composeapp.generated.resources.service_furniture_reupholstery_restoration
+import dealspot.composeapp.generated.resources.service_gardener
+import dealspot.composeapp.generated.resources.service_gas_fitter
+import dealspot.composeapp.generated.resources.service_glazier
+import dealspot.composeapp.generated.resources.service_graphic_designer
+import dealspot.composeapp.generated.resources.service_grill_repair
+import dealspot.composeapp.generated.resources.service_hair_dryer_repair
+import dealspot.composeapp.generated.resources.service_hair_stylist
+import dealspot.composeapp.generated.resources.service_handyman
+import dealspot.composeapp.generated.resources.service_heating_ventilation_air_conditioning
+import dealspot.composeapp.generated.resources.service_home_audio_system_repair
+import dealspot.composeapp.generated.resources.service_home_theater_repair
+import dealspot.composeapp.generated.resources.service_hotel_cleaner
+import dealspot.composeapp.generated.resources.service_housekeeper
+import dealspot.composeapp.generated.resources.service_housekeeping_assistant
+import dealspot.composeapp.generated.resources.service_ice_maker_repair
+import dealspot.composeapp.generated.resources.service_illustrator
+import dealspot.composeapp.generated.resources.service_induction_cooktop_repair
+import dealspot.composeapp.generated.resources.service_instant_water_heater_repair
+import dealspot.composeapp.generated.resources.service_interior_decorator
+import dealspot.composeapp.generated.resources.service_interior_designer
+import dealspot.composeapp.generated.resources.service_iron_repair
+import dealspot.composeapp.generated.resources.service_irrigation_system_installer
+import dealspot.composeapp.generated.resources.service_janitor
+import dealspot.composeapp.generated.resources.service_joiner
+import dealspot.composeapp.generated.resources.service_journalist
+import dealspot.composeapp.generated.resources.service_kitchen_fitter
+import dealspot.composeapp.generated.resources.service_kitchen_food_processor_repair
+import dealspot.composeapp.generated.resources.service_kitchen_hood_repair
+import dealspot.composeapp.generated.resources.service_landscaper
+import dealspot.composeapp.generated.resources.service_lawn_care_specialist
+import dealspot.composeapp.generated.resources.service_lawyer
+import dealspot.composeapp.generated.resources.service_lighting_specialist
+import dealspot.composeapp.generated.resources.service_loader_services
+import dealspot.composeapp.generated.resources.service_locksmith
+import dealspot.composeapp.generated.resources.service_makeup_artist
+import dealspot.composeapp.generated.resources.service_massage_therapist
+import dealspot.composeapp.generated.resources.service_microwave_oven_repair
+import dealspot.composeapp.generated.resources.service_multicooker_repair
+import dealspot.composeapp.generated.resources.service_music_center_repair
+import dealspot.composeapp.generated.resources.service_musician
+import dealspot.composeapp.generated.resources.service_nail_technician
+import dealspot.composeapp.generated.resources.service_network_administrator
+import dealspot.composeapp.generated.resources.service_network_installer
+import dealspot.composeapp.generated.resources.service_notary_public
+import dealspot.composeapp.generated.resources.service_nurse
+import dealspot.composeapp.generated.resources.service_nutritionist_dietitian
+import dealspot.composeapp.generated.resources.service_other
+import dealspot.composeapp.generated.resources.service_oven_repair
+import dealspot.composeapp.generated.resources.service_overlock_machine_repair
+import dealspot.composeapp.generated.resources.service_painter
+import dealspot.composeapp.generated.resources.service_paralegal
+import dealspot.composeapp.generated.resources.service_personal_trainer
+import dealspot.composeapp.generated.resources.service_pest_control_technician
+import dealspot.composeapp.generated.resources.service_photographer
+import dealspot.composeapp.generated.resources.service_physical_therapist
+import dealspot.composeapp.generated.resources.service_plasterer
+import dealspot.composeapp.generated.resources.service_plumber
+import dealspot.composeapp.generated.resources.service_pool_maintenance_technician
+import dealspot.composeapp.generated.resources.service_pressure_cooker_repair
+import dealspot.composeapp.generated.resources.service_projector_repair
+import dealspot.composeapp.generated.resources.service_psychiatrist
+import dealspot.composeapp.generated.resources.service_psychologist
+import dealspot.composeapp.generated.resources.service_real_estate_agent
+import dealspot.composeapp.generated.resources.service_rebar_installer
+import dealspot.composeapp.generated.resources.service_refrigeration_equipment_display_case_repair
+import dealspot.composeapp.generated.resources.service_refrigeration_mechanic
+import dealspot.composeapp.generated.resources.service_refrigerator_repair
+import dealspot.composeapp.generated.resources.service_repair_maintenance_computer_equipment
+import dealspot.composeapp.generated.resources.service_road_surface_installer
+import dealspot.composeapp.generated.resources.service_roofer
+import dealspot.composeapp.generated.resources.service_seamstress
+import dealspot.composeapp.generated.resources.service_security_guard
+import dealspot.composeapp.generated.resources.service_security_system_specialist
+import dealspot.composeapp.generated.resources.service_sewing_machine_repair
+import dealspot.composeapp.generated.resources.service_smart_home_technician
+import dealspot.composeapp.generated.resources.service_snow_removal
+import dealspot.composeapp.generated.resources.service_software_engineer
+import dealspot.composeapp.generated.resources.service_solar_panel
+import dealspot.composeapp.generated.resources.service_sound_engineer
+import dealspot.composeapp.generated.resources.service_space_heater_repair
+import dealspot.composeapp.generated.resources.service_speech_therapist
+import dealspot.composeapp.generated.resources.service_sports_equipment_repair
+import dealspot.composeapp.generated.resources.service_stair_installer
+import dealspot.composeapp.generated.resources.service_stone_mason
+import dealspot.composeapp.generated.resources.service_take_out_trash
+import dealspot.composeapp.generated.resources.service_tattoo_artist
+import dealspot.composeapp.generated.resources.service_telephone_repair
+import dealspot.composeapp.generated.resources.service_television_dismantling
+import dealspot.composeapp.generated.resources.service_television_repair
+import dealspot.composeapp.generated.resources.service_tiler
+import dealspot.composeapp.generated.resources.service_tour_guide
+import dealspot.composeapp.generated.resources.service_tow_truck
+import dealspot.composeapp.generated.resources.service_translator
+import dealspot.composeapp.generated.resources.service_tree_surgeon
+import dealspot.composeapp.generated.resources.service_tuner_firmware_update
+import dealspot.composeapp.generated.resources.service_tv_remote_control_repair
+import dealspot.composeapp.generated.resources.service_upholstered_furniture_carpet_cleaning
+import dealspot.composeapp.generated.resources.service_vacuum_cleaner_repair
+import dealspot.composeapp.generated.resources.service_veterinarian
+import dealspot.composeapp.generated.resources.service_videographer
+import dealspot.composeapp.generated.resources.service_waiter_waitress
+import dealspot.composeapp.generated.resources.service_walking_pets
+import dealspot.composeapp.generated.resources.service_wallpaper_installer
+import dealspot.composeapp.generated.resources.service_washing_machine_dismantling
+import dealspot.composeapp.generated.resources.service_washing_machine_repair
+import dealspot.composeapp.generated.resources.service_waste_collector
+import dealspot.composeapp.generated.resources.service_water_cooler_cleaning
+import dealspot.composeapp.generated.resources.service_water_cooler_repair
+import dealspot.composeapp.generated.resources.service_water_heater_boiler_cleaning
+import dealspot.composeapp.generated.resources.service_water_treatment_installer
+import dealspot.composeapp.generated.resources.service_wedding_planner
+import dealspot.composeapp.generated.resources.service_welder
+import dealspot.composeapp.generated.resources.service_wind_renewable_energy_technician
+import dealspot.composeapp.generated.resources.service_window_cleaner
+import dealspot.composeapp.generated.resources.service_window_installer
+import dealspot.composeapp.generated.resources.service_woodcarver
+import dealspot.composeapp.generated.resources.service_writer
+import dealspot.composeapp.generated.resources.suggest_service
+import dealspot.composeapp.generated.resources.suggestion_sent_success
+import dealspot.composeapp.generated.resources.tap_to_choose_service
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 private val SheetShape = RoundedCornerShape(dimens_16)
+
+// Email where service suggestions will be sent.
+private const val SUPPORT_EMAIL = "thedealspotapp@gmail.com"
 
 @Composable
 private fun getServiceCategories(): List<ServiceCategoryEntity> {
@@ -398,6 +602,9 @@ fun ServiceSelectionSheet(
     var query by remember { mutableStateOf("") }
     var expandedCategory by remember { mutableStateOf(selectedCategory) }
     val serviceCategories = getServiceCategories()
+    var showSuggestionDialog by remember { mutableStateOf(false) }
+    var showSuccessMessage by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
 
     AnimatedVisibility(visible = visible, enter = fadeIn(), exit = fadeOut()) {
         val background = if (showBackground) Color.Black.copy(alpha = 0.10f) else Color.Transparent
@@ -444,7 +651,8 @@ fun ServiceSelectionSheet(
                                 placeHolderText = stringResource(Res.string.search_for_service),
                                 isPasswordField = false,
                                 imeAction = ImeAction.Done,
-                                labelTextColor = Grey
+                                labelTextColor = Grey,
+                                prevValue = query
                             ) { service ->
                                 println("ServiceSelectionSheet. Service is: $service")
 
@@ -458,6 +666,10 @@ fun ServiceSelectionSheet(
                                         .map { service -> category to service }
                                 }
                             }
+
+                            // When the user has typed something but we found no services,
+                            // we should offer them to suggest a new service.
+                            val shouldShowSuggestionForm = query.isNotBlank() && filteredResults.isEmpty()
 
                             if (filteredResults.isNotEmpty()) {
                                 LazyColumn(
@@ -476,6 +688,57 @@ fun ServiceSelectionSheet(
                                                 expandedCategory = category
                                                 onServiceSelected(category, service)
                                             }
+                                        )
+                                    }
+                                }
+                            } else if (shouldShowSuggestionForm) {
+                                // Show \"nothing found\" message and entry point for suggesting a new service
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 20.dp, vertical = 12.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        text = stringResource(Res.string.nothing_found_message),
+                                        style = MaterialTheme.typography.bodyMedium.copy(
+                                            fontFamily = latoFontFamily()
+                                        ),
+                                        color = MaterialTheme.colorScheme.onSurface
+                                    )
+
+                                    SpacerHeight12Dp()
+
+                                    Text(
+                                        text = stringResource(Res.string.suggest_service),
+                                        style = MaterialTheme.typography.bodyMedium.copy(
+                                            fontFamily = latoFontFamily()
+                                        ),
+                                        color = MaterialTheme.colorScheme.onSurface
+                                    )
+
+                                    SpacerHeight12Dp()
+
+                                    DealSpotDarkButton(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        buttonText = stringResource(Res.string.send),
+                                        isEnable = true,
+                                        onClick = {
+                                            println("ServiceSelectionSheet. Send suggestion button clicked.")
+                                            query = ""
+                                            showSuggestionDialog = true
+                                        }
+                                    )
+
+                                    if (showSuccessMessage) {
+                                        SpacerHeight12Dp()
+                                        Text(
+                                            text = stringResource(Res.string.suggestion_sent_success),
+                                            style = MaterialTheme.typography.bodySmall.copy(
+                                                fontFamily = latoFontFamily(),
+                                                fontWeight = FontWeight.W600
+                                            ),
+                                            color = MaterialTheme.colorScheme.primary
                                         )
                                     }
                                 }
@@ -554,6 +817,24 @@ fun ServiceSelectionSheet(
                 }
             }
         }
+
+        // Dialog that contains the full suggestion form and sends the email
+        ServiceSuggestionDialog(
+            visible = showSuggestionDialog,
+            onDismissRequest = { showSuggestionDialog = false },
+            supportEmail = SUPPORT_EMAIL,
+            onSendSuggestion = {
+                // Close dialog, clear search so all services are visible again,
+                // and show short success message using suggestion_sent_success
+                showSuggestionDialog = false
+                query = ""
+                showSuccessMessage = true
+                coroutineScope.launch {
+                    delay(2000)
+                    showSuccessMessage = false
+                }
+            }
+        )
     }
 }
 

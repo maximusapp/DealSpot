@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.layout.offset
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -38,6 +36,8 @@ import com.app.dealspot.presentation.view.BlurWhite80Background
 import com.app.dealspot.presentation.view.CircularLoadingIndicator
 import com.app.dealspot.presentation.view.FilterBottomSheet
 import dealspot.composeapp.generated.resources.Res
+import dealspot.composeapp.generated.resources.ic_filter_active
+import dealspot.composeapp.generated.resources.ic_filter_inactive_1
 import dealspot.composeapp.generated.resources.ic_notifications_bold_500
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.koinInject
@@ -99,22 +99,19 @@ internal fun HomeScreen(
                     .padding(horizontal = 5.dp, vertical = 5.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = Icons.Filled.FilterList,
-                    contentDescription = "Filter",
-                    tint = Color.Gray,
-                    modifier = Modifier.size(30.dp)
-                )
-                
-                // Black dot indicator when filter is active
                 if (isFilterActive) {
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .offset(x = 4.dp, y = (-4).dp)
-                            .size(8.dp)
-                            .clip(RoundedCornerShape(4.dp))
-                            .background(Color.Black)
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_filter_active),
+                        contentDescription = "Filter",
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(30.dp)
+                    )
+                } else {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_filter_inactive_1),
+                        contentDescription = "Filter",
+                        tint = Color.Gray,
+                        modifier = Modifier.size(30.dp)
                     )
                 }
             }

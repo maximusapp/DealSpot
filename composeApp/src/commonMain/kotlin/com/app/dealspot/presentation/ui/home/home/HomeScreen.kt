@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.app.dealspot.data.model.DealEntity
 import com.app.dealspot.presentation.theme.SpacerHeight100Dp
 import com.app.dealspot.presentation.theme.dimens_12
 import com.app.dealspot.presentation.theme.dimens_20
@@ -34,6 +35,7 @@ import com.app.dealspot.presentation.ui.components.AppMap
 import com.app.dealspot.presentation.ui.components.BottomBar
 import com.app.dealspot.presentation.view.BlurWhite80Background
 import com.app.dealspot.presentation.view.CircularLoadingIndicator
+import com.app.dealspot.presentation.view.DealInfoBottomSheet
 import com.app.dealspot.presentation.view.FilterBottomSheet
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.ic_filter_active
@@ -63,6 +65,7 @@ internal fun HomeScreen(
         val deals = viewModel.deals.collectAsState().value
         var showActionSheet by remember { mutableStateOf(false) }
         var showFilterSheet by remember { mutableStateOf(false) }
+        var selectedDeal by remember { mutableStateOf<DealEntity?>(null) }
 
         // Initialize user when screen opens
         LaunchedEffect(Unit) {
@@ -74,7 +77,9 @@ internal fun HomeScreen(
             initialCamera = camera,
             onCameraChanged = { viewModel.updateCamera(it) },
             goToCurrentLocationTrigger = goToLocationTrigger,
-            deals = deals
+            deals = deals,
+            selectedDeal = selectedDeal,
+            onDealSelected = { selectedDeal = it }
         )
 
         // Top right icons: Location, Filter, and Notifications
@@ -228,5 +233,14 @@ internal fun HomeScreen(
                 CircularLoadingIndicator()
             }
         }
+
+        // Deal info sheet — on top of map, buttons, and bottom bar
+        DealInfoBottomSheet(
+            visible = selectedDeal != null,
+            deal = selectedDeal,
+            onDismiss = { selectedDeal = null },
+            onSendRequest = { /* TODO: send request */ },
+            onCancel = { selectedDeal = null }
+        )
     }
 }

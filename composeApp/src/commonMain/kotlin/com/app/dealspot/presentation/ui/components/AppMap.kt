@@ -12,7 +12,9 @@ expect fun AppMap(
     initialCamera: MapCameraState? = null,
     onCameraChanged: (MapCameraState) -> Unit = {},
     goToCurrentLocationTrigger: Int = 0,
-    deals: List<DealEntity> = emptyList()
+    deals: List<DealEntity> = emptyList(),
+    selectedDeal: DealEntity? = null,
+    onDealSelected: (DealEntity?) -> Unit = {}
 )
 
 

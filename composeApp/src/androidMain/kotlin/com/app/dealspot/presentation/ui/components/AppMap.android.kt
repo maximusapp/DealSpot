@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Canvas
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -46,7 +48,9 @@ actual fun AppMap(
     initialCamera: MapCameraState?,
     onCameraChanged: (MapCameraState) -> Unit,
     goToCurrentLocationTrigger: Int,
-    deals: List<DealEntity>
+    deals: List<DealEntity>,
+    selectedDeal: DealEntity?,
+    onDealSelected: (DealEntity?) -> Unit
 ) {
     val mapView = rememberMapViewWithLifecycle()
     val context = LocalContext.current
@@ -130,6 +134,7 @@ actual fun AppMap(
         }
     }
 
+    Box(modifier = Modifier.fillMaxSize()) {
     AndroidView(
         modifier = modifier,
         factory = { mapView },
@@ -149,6 +154,14 @@ actual fun AppMap(
                     uiSettings.isMyLocationButtonEnabled = false // Already disabled but ensure it's off
                 }.onFailure { e ->
                     println("Error occur when try: INIT_MAP, Error: ${e.message}")
+                }
+
+                googleMap.setOnMarkerClickListener { marker ->
+                    val deal = marker.tag as? DealEntity
+                    println("setOnMarkerClickListener. Marker clicked:${deal?.serviceName}, userSub:${deal?.userSub}")
+
+                    if (deal != null) onDealSelected(deal)
+                    true
                 }
 
                 // Restore initial camera position immediately if available (before map renders)
@@ -182,6 +195,8 @@ actual fun AppMap(
             }
         }
     )
+
+    }
     
     // Update deal markers when deals list changes
     LaunchedEffect(deals, googleMapRef) {
@@ -197,15 +212,14 @@ actual fun AppMap(
                 
                 if (latitude > 0.0 && longitude > 0.0) {
                     val serviceId = deal.categoryId?.toInt() ?: 0
-
-                    map.addMarker(
+                    val marker = map.addMarker(
                         MarkerOptions()
                             .position(LatLng(latitude, longitude))
-                            .title(deal.name ?: "")
-                            .snippet(deal.serviceName ?: "")
                             .icon(createCustomServiceMarker(context = context, serviceId = serviceId))
                             .anchor(0.5f, 1.0f)
                     )
+                    marker?.tag = deal
+                    marker
                 } else {
                     null
                 }

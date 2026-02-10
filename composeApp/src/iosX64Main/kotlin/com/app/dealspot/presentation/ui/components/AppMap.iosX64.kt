@@ -34,7 +34,9 @@ actual fun AppMap(
     initialCamera: MapCameraState?,
     onCameraChanged: (MapCameraState) -> Unit,
     goToCurrentLocationTrigger: Int,
-    deals: List<DealEntity>
+    deals: List<DealEntity>,
+    selectedDeal: DealEntity?,
+    onDealSelected: (DealEntity?) -> Unit
 ) {
     val mapViewState = remember { mutableStateOf<GMSMapView?>(null) }
     val locationMarkerState = remember { mutableStateOf<GMSMarker?>(null) }

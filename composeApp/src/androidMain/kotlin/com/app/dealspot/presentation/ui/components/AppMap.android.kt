@@ -135,7 +135,9 @@ actual fun AppMap(
         factory = { mapView },
         update = { view ->
             view.getMapAsync { googleMap ->
-                googleMapRef = googleMap
+                if (googleMapRef?.cameraPosition != googleMap.cameraPosition) {
+                    googleMapRef = googleMap
+                }
 
                 runCatching {
                     googleMap.isMyLocationEnabled = true

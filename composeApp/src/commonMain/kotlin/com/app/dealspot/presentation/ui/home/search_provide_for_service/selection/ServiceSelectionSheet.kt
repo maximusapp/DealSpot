@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -60,6 +61,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.app.dealspot.data.model.ServiceCategoryEntity
 import com.app.dealspot.data.model.ServiceEntity
@@ -388,17 +390,22 @@ fun ServiceSelectionSheet(
     onDismissRequest: () -> Unit,
     onServiceSelected: (category: ServiceCategoryEntity, service: ServiceEntity) -> Unit,
     showCancelButton: Boolean = true,
-    showBackground: Boolean = true
+    showBackground: Boolean = true,
+    horizontalPadding: Dp = 20.dp,
+    verticalPadding: Dp = 0.dp,
+    needSetSheetMaxHeight: Boolean = true
 ) {
     var query by remember { mutableStateOf("") }
     var expandedCategory by remember { mutableStateOf(selectedCategory) }
     val serviceCategories = getServiceCategories()
 
     AnimatedVisibility(visible = visible, enter = fadeIn(), exit = fadeOut()) {
+        val background = if (showBackground) Color.Black.copy(alpha = 0.10f) else Color.Transparent
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Black.copy(alpha = 0.10f))
+                .background(background)
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
@@ -407,14 +414,14 @@ fun ServiceSelectionSheet(
             BoxWithConstraints(
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .padding(horizontal = 20.dp)
+                    .padding(start = horizontalPadding, end = horizontalPadding, top = verticalPadding, bottom = verticalPadding)
                     .clickable(
                         indication = null,
                         enabled = false,
                         interactionSource = remember { MutableInteractionSource() }
                     ) { }
             ) {
-                val sheetMaxHeight = (maxHeight - 88.dp).coerceAtLeast(220.dp)
+                val sheetMaxHeight = if (needSetSheetMaxHeight) (maxHeight - 88.dp).coerceAtLeast(220.dp) else Dp.Unspecified
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -531,16 +538,18 @@ fun ServiceSelectionSheet(
 
                     SpacerHeight12Dp()
 
-                    DealSpotOutlineButton(
-                        modifier = Modifier.width(dimens_200),
-                        buttonText = stringResource(Res.string.cancel),
-                        buttonHeight = dimens_45,
-                        fillWidth = false,
-                        shape = RoundedCornerShape(18.dp),
-                        containerColor = white,
-                        borderColor = grey_middle
-                    ) {
-                        onDismissRequest()
+                    if (showCancelButton) {
+                        DealSpotOutlineButton(
+                            modifier = Modifier.width(dimens_200),
+                            buttonText = stringResource(Res.string.cancel),
+                            buttonHeight = dimens_45,
+                            fillWidth = false,
+                            shape = RoundedCornerShape(18.dp),
+                            containerColor = white,
+                            borderColor = grey_middle
+                        ) {
+                            onDismissRequest()
+                        }
                     }
                 }
             }

@@ -213,9 +213,8 @@ internal fun HomeScreen(
                 viewModel.setFilterType(type)
             },
             onClose = { showFilterSheet = false },
-            onApplyFilter = {
-                // TODO: Apply filter logic here
-                viewModel.setFilterActive(true)
+            onApplyFilter = { category, service ->
+                viewModel.applyFilter(category, service)
             },
             onClearFilter = {
                 viewModel.resetFilter()

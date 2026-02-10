@@ -7,6 +7,8 @@ import com.app.dealspot.business.constants.DataStoreKeys
 import com.app.dealspot.data.ProfileRepositoryImpl
 import com.app.dealspot.data.model.MapCameraState
 import com.app.dealspot.data.model.TokenResponse
+import com.app.dealspot.data.model.ServiceCategoryEntity
+import com.app.dealspot.data.model.ServiceEntity
 import com.app.dealspot.domain.use_cases.LoginUseCase
 import com.app.dealspot.domain.use_cases.deals.GetDealsUseCase
 import com.app.dealspot.domain.use_cases.profile.GetUserUseCase
@@ -51,6 +53,10 @@ class HomeScreenViewModel(
     private val _isFilterActive = MutableStateFlow(false)
     val isFilterActive: StateFlow<Boolean> = _isFilterActive.asStateFlow()
     
+    // Full list of deals fetched from backend for the current filterType
+    private val _allDeals = MutableStateFlow<List<DealEntity>>(emptyList())
+
+    // Deals currently shown on the map (may be additionally filtered by category/service)
     private val _deals = MutableStateFlow<List<DealEntity>>(emptyList())
     val deals: StateFlow<List<DealEntity>> = _deals.asStateFlow()
 
@@ -66,14 +72,6 @@ class HomeScreenViewModel(
         _goToCurrentLocationTrigger.value = 0
     }
     
-    fun setFilterActive(isActive: Boolean) {
-        _isFilterActive.value = isActive
-        // Fetch deals when filter is applied
-        if (isActive) {
-            fetchDeals(_filterType.value)
-        }
-    }
-    
     fun setFilterType(type: Int) {
         _filterType.value = type
         // Fetch deals when filter type changes
@@ -86,12 +84,39 @@ class HomeScreenViewModel(
         _filterType.value = 1
         fetchDeals(1)
     }
+
+    /**
+     * Apply additional filtering by selected category and/or service on top of the current filterType.
+     * This does NOT refetch from backend; it filters the already loaded deals list in memory.
+     */
+    fun applyFilter(
+        selectedCategory: ServiceCategoryEntity?,
+        selectedService: ServiceEntity?
+    ) {
+        // Mark filter as active so UI can show indicator
+        _isFilterActive.value = true
+
+        val base = _allDeals.value
+
+        val categoryIdFilter: Long? = selectedCategory?.id
+        val serviceIdFilter: Long? = selectedService?.id
+
+        val filtered = base.filter { deal ->
+            val matchesCategory = categoryIdFilter?.let { it == deal.categoryId } ?: true
+            val matchesService = serviceIdFilter?.let { it == deal.serviceId } ?: true
+            matchesCategory && matchesService
+        }
+
+        _deals.value = filtered
+    }
     
     fun fetchDeals(type: Int) {
         viewModelScope.launch {
             try {
                 println("HomeScreenViewModel. fetchDeals. Type: $type")
                 val response = getDealsUseCase(type)
+                // Keep a copy of all deals for this type, and expose them as current deals by default
+                _allDeals.value = response.items
                 _deals.value = response.items
                 println("HomeScreenViewModel. fetchDeals. Fetched ${response.count} deals")
                 response.items.forEach {

@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.app.dealspot.data.model.ServiceCategoryEntity
@@ -65,11 +66,15 @@ fun FilterBottomSheet(
     selectedFilterType: Int, // 0 = Find Service, 1 = Provide Service
     onFilterTypeChanged: (Int) -> Unit,
     onClose: () -> Unit,
-    onApplyFilter: () -> Unit = {},
+    onApplyFilter: (
+        selectedCategory: ServiceCategoryEntity?,
+        selectedService: ServiceEntity?
+    ) -> Unit = { _, _ -> },
     onClearFilter: () -> Unit = {}
 ) {
     var selectedCategory by remember { mutableStateOf<ServiceCategoryEntity?>(null) }
     var selectedService by remember { mutableStateOf<ServiceEntity?>(null) }
+
     AnimatedVisibility(
         visible = visible,
         enter = fadeIn(animationSpec = tween(300)) + slideInVertically(
@@ -102,7 +107,10 @@ fun FilterBottomSheet(
                         contentDescription = "Close filter",
                         modifier = Modifier
                             .size(dimens_30)
-                            .clickable { onClose() },
+                            .clickable {
+                                println("FilterBottomSheet. Close filter clicked")
+                                onClose()
+                            },
                         tint = Grey
                     )
                 }
@@ -144,7 +152,10 @@ fun FilterBottomSheet(
                             selectedService = service
                         },
                         showCancelButton = false,
-                        showBackground = false
+                        showBackground = false,
+                        horizontalPadding = 10.dp,
+                        verticalPadding = 15.dp,
+                        needSetSheetMaxHeight = false
                     )
                 }
                 
@@ -163,7 +174,9 @@ fun FilterBottomSheet(
                         buttonText = stringResource(Res.string.apply_filter),
                         isEnable = true,
                         onClick = {
-                            onApplyFilter()
+                            // Pass the currently selected category and service
+                            println("FilterBottomSheet. Apply filter clicked")
+                            onApplyFilter(selectedCategory, selectedService)
                             onClose()
                         }
                     )
@@ -174,6 +187,10 @@ fun FilterBottomSheet(
                         enable = true,
                         fillWidth = false,
                         onClick = {
+                            println("FilterBottomSheet. Clear filter clicked")
+                            // Reset local selection state so ServiceSelectionSheet is cleared too
+                            selectedCategory = null
+                            selectedService = null
                             onClearFilter()
                             onClose()
                         }

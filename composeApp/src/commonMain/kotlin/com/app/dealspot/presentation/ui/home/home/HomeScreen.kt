@@ -40,18 +40,22 @@ import com.app.dealspot.presentation.view.FilterBottomSheet
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.ic_filter_active
 import dealspot.composeapp.generated.resources.ic_filter_inactive_1
+import dealspot.composeapp.generated.resources.ic_my_location
+import dealspot.composeapp.generated.resources.ic_no_notifications
 import dealspot.composeapp.generated.resources.ic_notifications_bold_500
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 
+@Preview
 @Composable
 internal fun HomeScreen(
-    onOpenNotification: () -> Unit,
-    onOpenSettings: () -> Unit,
-    onOpenChats: () -> Unit,
-    onOpenProfile: () -> Unit,
-    onLookingService: () -> Unit,
-    onProvideService: () -> Unit
+    onOpenNotification: () -> Unit = {},
+    onOpenSettings: () -> Unit = {},
+    onOpenChats: () -> Unit = {},
+    onOpenProfile: () -> Unit = {},
+    onLookingService: () -> Unit = {},
+    onProvideService: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -136,7 +140,7 @@ internal fun HomeScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painter = painterResource(Res.drawable.ic_notifications_bold_500),
+                    painter = painterResource(Res.drawable.ic_no_notifications),
                     contentDescription = "Notifications",
                     tint = Color.Gray,
                     modifier = Modifier.size(30.dp)
@@ -157,9 +161,9 @@ internal fun HomeScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = Icons.Filled.MyLocation,
+                    painter = painterResource(Res.drawable.ic_my_location),
                     contentDescription = "Go to current location",
-                    tint = Color.Gray,
+                    tint = Color.Unspecified,
                     modifier = Modifier.size(30.dp)
                 )
             }

@@ -317,4 +317,6 @@
     <string name="find_service">Cerco</string>
     <string name="provide_service_tab">Offro</string>
     <string name="type_of_service">Tipo di servizio</string>
+    <string name="visit_profile">Visita il profilo</string>
+    <string name="send_request">Invia richiesta</string>
 </resources>

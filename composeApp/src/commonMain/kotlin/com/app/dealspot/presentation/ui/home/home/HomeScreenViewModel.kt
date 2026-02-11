@@ -363,10 +363,10 @@ class HomeScreenViewModel(
                 .associate { it.Name to it.Value }
 
             val userSubResponse: String = attrMap["sub"].orEmpty()
-            val userNameResponse: String = getUserResponse.Username
-            println("HomeScreenViewModel. userSub from response: $userSubResponse")
+            val userNameResponse: String = attrMap["name"].orEmpty()
+            println("HomeScreenViewModel. userSub from response: $userSubResponse, userName: $userNameResponse")
 
-            if (userSubResponse.isNotEmpty()) {
+            if (userSubResponse.isNotEmpty() && userNameResponse.isNotEmpty()) {
                 dataStore.putString(key = DataStoreKeys.USER_SUB, value = userSubResponse)
                 dataStore.putString(key = DataStoreKeys.USER_NAME, value = userNameResponse)
             }

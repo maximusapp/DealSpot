@@ -317,5 +317,7 @@
     <string name="find_service">Szukam</string>
     <string name="provide_service_tab">Oferuję</string>
     <string name="type_of_service">Typ usługi</string>
+    <string name="visit_profile">Zobacz profil</string>
+    <string name="send_request">Wyślij prośbę</string>
     <!--Polish-->
 </resources>

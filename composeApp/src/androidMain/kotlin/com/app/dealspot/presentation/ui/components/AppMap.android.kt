@@ -68,6 +68,7 @@ actual fun AppMap(
             if ((fineGranted || coarseGranted) && map != null) {
                 fused.lastLocation.addOnSuccessListener { location ->
                     if (location != null) {
+                        println("AppMap. location.latitude: ${location.latitude}, location.longitude: ${location.longitude}")
                         val latLng = LatLng(location.latitude, location.longitude)
                         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
                     } else {
@@ -109,26 +110,24 @@ actual fun AppMap(
 
         println("fineGranted: $fineGranted, coarseGranted: $coarseGranted")
         if (fineGranted || coarseGranted) {
-            if (initialCamera?.latitude.zeroIfNull() <= 0.0 || initialCamera?.longitude.zeroIfNull() <= 0.0) {
-                println("latitude and longitude <= 0")
+            println("latitude and longitude <= 0")
 
-                fused.lastLocation.addOnSuccessListener { location ->
-                    if (location != null) {
-                        println("lastLocation: is not null: $location")
+            fused.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    println("lastLocation: is not null: $location")
 
-                        val latLng = LatLng(location.latitude, location.longitude)
-                        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
-                    } else {
-                        println("lastLocation: is null. ELSE case")
-                        val cts = CancellationTokenSource()
-                        fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
-                            .addOnSuccessListener { current ->
-                                if (current != null) {
-                                    val latLng = LatLng(current.latitude, current.longitude)
-                                    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
-                                }
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
+                } else {
+                    println("lastLocation: is null. ELSE case")
+                    val cts = CancellationTokenSource()
+                    fused.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cts.token)
+                        .addOnSuccessListener { current ->
+                            if (current != null) {
+                                val latLng = LatLng(current.latitude, current.longitude)
+                                map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
                             }
-                    }
+                        }
                 }
             }
         }
@@ -165,27 +164,22 @@ actual fun AppMap(
                 }
 
                 // Restore initial camera position immediately if available (before map renders)
-                // This prevents the visible zoom effect when navigating back to the map
-                if (initialCamera?.latitude.zeroIfNull() > 0.0 && initialCamera?.longitude.zeroIfNull() > 0.0) {
-                    val latLng = LatLng(initialCamera?.latitude.zeroIfNull(), initialCamera?.longitude.zeroIfNull())
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, initialCamera?.zoom.zeroIfNull()))
-                }
+                val latLng = LatLng(initialCamera?.latitude.zeroIfNull(), initialCamera?.longitude.zeroIfNull())
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, initialCamera?.zoom.zeroIfNull()))
 
                 googleMap.setOnCameraIdleListener {
                     val cam = googleMap.cameraPosition
                     println("setOnCameraIdleListener. latitude: ${cam.target.latitude}, longitude: ${cam.target.longitude}")
 
-                    if (cam.target.latitude > 0.0 && cam.target.longitude > 0.0) {
-                        onCameraChanged(
-                            MapCameraState(
-                                latitude = cam.target.latitude,
-                                longitude = cam.target.longitude,
-                                zoom = cam.zoom,
-                                bearing = cam.bearing,
-                                tilt = cam.tilt
-                            )
+                    onCameraChanged(
+                        MapCameraState(
+                            latitude = cam.target.latitude,
+                            longitude = cam.target.longitude,
+                            zoom = cam.zoom,
+                            bearing = cam.bearing,
+                            tilt = cam.tilt
                         )
-                    }
+                    )
                 }
 
                 googleMap.setOnMapLoadedCallback {
@@ -210,19 +204,15 @@ actual fun AppMap(
                 val latitude = deal.latitude ?: return@mapNotNull null
                 val longitude = deal.longitude ?: return@mapNotNull null
                 
-                if (latitude > 0.0 && longitude > 0.0) {
-                    val serviceId = deal.categoryId?.toInt() ?: 0
-                    val marker = map.addMarker(
-                        MarkerOptions()
-                            .position(LatLng(latitude, longitude))
-                            .icon(createCustomServiceMarker(context = context, serviceId = serviceId))
-                            .anchor(0.5f, 1.0f)
-                    )
-                    marker?.tag = deal
-                    marker
-                } else {
-                    null
-                }
+                val serviceId = deal.categoryId?.toInt() ?: 0
+                val marker = map.addMarker(
+                    MarkerOptions()
+                        .position(LatLng(latitude, longitude))
+                        .icon(createCustomServiceMarker(context = context, serviceId = serviceId))
+                        .anchor(0.5f, 1.0f)
+                )
+                marker?.tag = deal
+                marker
             }
             
             dealMarkers = newMarkers.filterNotNull()

@@ -324,4 +324,7 @@
     <string name="find_service">Looking For</string>
     <string name="provide_service_tab">I Provide</string>
     <string name="type_of_service">Type of service</string>
+
+    <string name="visit_profile">Visit profile</string>
+    <string name="send_request">Send Request</string>
 </resources>

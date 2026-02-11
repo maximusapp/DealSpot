@@ -70,6 +70,7 @@ class LookingForServiceViewModel(
             val category = selectedCategory
             val service = selectedService
             val userSub = dataStore.getString(key = DataStoreKeys.USER_SUB).orEmpty()
+            val userName = dataStore.getString(key = DataStoreKeys.REG_FULL_NAME).orEmpty()
 
             
             if (location == null || category == null || service == null) {
@@ -95,7 +96,8 @@ class LookingForServiceViewModel(
                     isUrgent = isUrgent.booleanToInt(),
                     dateTime = getCurrentDateTime(),
                     isActive = 1,
-                    userSub = userSub
+                    userSub = userSub,
+                    userName = userName
                 )
                 
                 println("LookingForServiceViewModel. publishDeal. Sending request: $request")

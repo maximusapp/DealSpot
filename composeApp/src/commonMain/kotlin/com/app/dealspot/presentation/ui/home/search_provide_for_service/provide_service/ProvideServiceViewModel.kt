@@ -46,6 +46,7 @@ class ProvideServiceViewModel(
             val category = selectedCategory
             val service = selectedService
             val userSub = dataStore.getString(key = DataStoreKeys.USER_SUB).orEmpty()
+            val userName = dataStore.getString(key = DataStoreKeys.USER_NAME).orEmpty()
 
 
             if (location == null || category == null || service == null) {
@@ -71,7 +72,8 @@ class ProvideServiceViewModel(
                     isUrgent = 0,
                     dateTime = getCurrentDateTime(),
                     isActive = 1,
-                    userSub = userSub
+                    userSub = userSub,
+                    userName = userName
                 )
 
                 println("ProvideServiceViewModel. publishDeal. Sending request: $request")

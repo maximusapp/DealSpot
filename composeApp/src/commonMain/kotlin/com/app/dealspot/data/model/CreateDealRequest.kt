@@ -16,7 +16,8 @@ data class CreateDealRequest(
     val isUrgent: Int,
     val dateTime: String,
     val isActive: Int,
-    val userSub: String
+    val userSub: String,
+    val userName: String
 )
 
 

@@ -17,6 +17,7 @@ data class DealEntity(
     val isUrgent: Int? = null,
     val dateTime: String? = null,
     val isActive: Int? = null,
-    val userSub: String? = null
+    val userSub: String? = null,
+    val userName: String? = null,
 )
 

@@ -22,4 +22,5 @@ object DataStoreKeys {
     const val REG_PHONE = "REG_PHONE"
     const val REG_PASSWORD = "REG_PASSWORD"
     const val REG_CONFIRM_PASSWORD = "REG_CONFIRM_PASSWORD"
+    const val USER_NAME = "USER_NAME"
 }

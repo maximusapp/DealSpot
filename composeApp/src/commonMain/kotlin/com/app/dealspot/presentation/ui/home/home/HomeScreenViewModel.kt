@@ -187,7 +187,7 @@ class HomeScreenViewModel(
                         println("HomeScreenViewModel. getUserResponse: $getUserResponse")
                         // Update last updated timestamp
                         saveAccessTokenLastUpdated()
-                        saveUserSub(getUserResponse)
+                        saveUserData(getUserResponse)
                         _isLoading.value = false
                         // Fetch deals after user initialization (default type 1 = provide_deal)
                         fetchDeals(1)
@@ -315,7 +315,7 @@ class HomeScreenViewModel(
                                     println("HomeScreenViewModel. getUserResponse after login: $getUserResponse")
                                     // Update last updated timestamp
                                     saveAccessTokenLastUpdated()
-                                    saveUserSub(getUserResponse)
+                                    saveUserData(getUserResponse)
                                     _isLoading.value = false
                                     // Fetch deals after user initialization (default type 1 = provide_deal)
                                     fetchDeals(1)
@@ -357,16 +357,18 @@ class HomeScreenViewModel(
         }
     }
 
-    private fun saveUserSub(getUserResponse: GetUserResponse) {
+    private fun saveUserData(getUserResponse: GetUserResponse) {
         viewModelScope.launch {
             val attrMap: Map<String, String> = getUserResponse.UserAttributes
                 .associate { it.Name to it.Value }
 
             val userSubResponse: String = attrMap["sub"].orEmpty()
+            val userNameResponse: String = getUserResponse.Username
             println("HomeScreenViewModel. userSub from response: $userSubResponse")
 
             if (userSubResponse.isNotEmpty()) {
                 dataStore.putString(key = DataStoreKeys.USER_SUB, value = userSubResponse)
+                dataStore.putString(key = DataStoreKeys.USER_NAME, value = userNameResponse)
             }
         }
     }

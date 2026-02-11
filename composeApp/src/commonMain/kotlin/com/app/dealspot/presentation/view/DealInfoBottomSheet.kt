@@ -122,7 +122,7 @@ fun DealInfoBottomSheet(
                     ) {
                         Spacer(modifier = Modifier.size(dimens_30))
                         Text(
-                            text = "Test user name",
+                            text = deal?.userName ?: "User",
                             fontSize = text_size_18,
                             fontWeight = FontWeight.Bold,
                             fontFamily = latoFontFamily(),

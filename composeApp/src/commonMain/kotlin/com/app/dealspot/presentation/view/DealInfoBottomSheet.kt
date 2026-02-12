@@ -52,22 +52,17 @@ import androidx.compose.ui.unit.dp
 import com.app.dealspot.data.model.DealEntity
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.blueSplashText
-import com.app.dealspot.presentation.theme.dimens_10
 import com.app.dealspot.presentation.theme.dimens_12
 import com.app.dealspot.presentation.theme.dimens_20
-import com.app.dealspot.presentation.theme.dimens_25
 import com.app.dealspot.presentation.theme.dimens_30
 import com.app.dealspot.presentation.theme.dimens_40
-import com.app.dealspot.presentation.theme.dimens_45
 import com.app.dealspot.presentation.theme.dimens_5
 import com.app.dealspot.presentation.theme.grey_middle
 import com.app.dealspot.presentation.theme.latoFontFamily
 import com.app.dealspot.presentation.theme.text_size_14
-import com.app.dealspot.presentation.theme.text_size_16
 import com.app.dealspot.presentation.theme.text_size_18
 import com.app.dealspot.presentation.utils.serviceIcon
 import dealspot.composeapp.generated.resources.Res
-import dealspot.composeapp.generated.resources.cancel
 import dealspot.composeapp.generated.resources.cancel_request
 import dealspot.composeapp.generated.resources.send_request
 import dealspot.composeapp.generated.resources.visit_profile
@@ -262,31 +257,34 @@ fun DealInfoBottomSheet(
                                 .fillMaxWidth()
                                 .padding(bottom = dimens_20),
                         ) {
-                            DealSpotOutlineButton(
-                                modifier = Modifier.fillMaxWidth(),
-                                buttonText = stringResource(Res.string.cancel_request),
-                                textColor = Color.White,
-                                needChangeTextColor = true,
-                                borderColor = Color.Red,
-                                textSize = text_size_18,
-                                enable = true,
-                                fillWidth = false,
-                                containerColor = Color.Red.copy(alpha = 0.6f),
-                                onClick = {
-                                    onCancel()
-                                    onDismiss()
-                                }
-                            )
 
-                            DealSpotDarkButton(
-                                modifier = Modifier.fillMaxWidth(),
-                                buttonText = stringResource(Res.string.send_request),
-                                isEnable = true,
-                                onClick = {
-                                    onSendRequest()
-                                    onDismiss()
-                                }
-                            )
+                            if (currentUserSub in deal?.requestedUsersSub.orEmpty()) {
+                                DealSpotOutlineButton(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    buttonText = stringResource(Res.string.cancel_request),
+                                    textColor = Color.White,
+                                    needChangeTextColor = true,
+                                    borderColor = Color.Red,
+                                    textSize = text_size_18,
+                                    enable = true,
+                                    fillWidth = false,
+                                    containerColor = Color.Red.copy(alpha = 0.6f),
+                                    onClick = {
+                                        println("DealInfoBottomSheet. Cancel request button clicked")
+                                        onCancel()
+                                    }
+                                )
+                            } else {
+                                DealSpotDarkButton(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    buttonText = stringResource(Res.string.send_request),
+                                    isEnable = (currentUserSub != deal?.userSub.orEmpty()),
+                                    onClick = {
+                                        println("DealInfoBottomSheet. Send request button clicked")
+                                        onSendRequest()
+                                    }
+                                )
+                            }
                         }
 
                         Spacer(modifier = Modifier.height(dimens_40))

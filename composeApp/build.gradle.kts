@@ -63,6 +63,8 @@ kotlin {
             implementation(libs.coil3.network.okhttp)
             implementation(libs.play.services.maps)
             implementation(libs.play.services.location)
+
+//            implementation("com.google.maps.android:maps-compose-utils:4.3.0")
         }
         commonMain.dependencies {
             implementation(projects.network)

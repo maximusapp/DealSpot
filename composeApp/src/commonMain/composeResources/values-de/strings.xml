@@ -317,6 +317,8 @@
     <string name="find_service">Suche</string>
     <string name="provide_service_tab">Biete an</string>
     <string name="type_of_service">Art des Service</string>
-    <string name="visit_profile">Profil ansehen</string>
+
+    <string name="visit_profile">Profil</string>
     <string name="send_request">Anfrage senden</string>
+    <string name="cancel_request">Anfrage abbrechen</string>
 </resources>

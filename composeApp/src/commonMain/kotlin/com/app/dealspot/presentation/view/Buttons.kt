@@ -64,6 +64,8 @@ fun DealSpotOutlineButton(
     buttonText: String = "Some text",
     enable: Boolean = true,
     textSize: TextUnit = text_size_16,
+    needChangeTextColor: Boolean = false,
+    textColor: Color = Color.DarkGray,
     buttonHeight: Dp = dimens_50,
     fillWidth: Boolean = true,
     shape: Shape = RoundedCornerShape(dimens_12),
@@ -78,7 +80,7 @@ fun DealSpotOutlineButton(
         modifier = appliedModifier
             .height(buttonHeight),
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = if (enable) DealSpotDark else grey_middle,
+            contentColor = if (needChangeTextColor) textColor else if (enable) DealSpotDark else grey_middle,
             containerColor = containerColor
         ),
         border = BorderStroke(

@@ -318,7 +318,9 @@
     <string name="find_service">Hledám</string>
     <string name="provide_service_tab">Poskytuji</string>
     <string name="type_of_service">Typ služby</string>
-    <string name="visit_profile">Zobrazit profil</string>
+
+    <string name="visit_profile">Profil</string>
     <string name="send_request">Odeslat žádost</string>
+    <string name="cancel_request">Zrušit žádost</string>
     <!--Czech -->
 </resources>

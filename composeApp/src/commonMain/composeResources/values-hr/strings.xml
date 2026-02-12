@@ -317,7 +317,9 @@
     <string name="find_service">Tražim</string>
     <string name="provide_service_tab">Pružam</string>
     <string name="type_of_service">Vrsta usluge</string>
-    <string name="visit_profile">Posjeti profil</string>
+
+    <string name="visit_profile">Profil</string>
     <string name="send_request">Pošalji zahtjev</string>
+    <string name="cancel_request">Otkaži zahtjev</string>
     <!--Croatian -->
 </resources>

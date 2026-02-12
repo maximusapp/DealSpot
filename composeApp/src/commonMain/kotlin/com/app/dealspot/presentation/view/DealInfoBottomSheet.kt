@@ -68,6 +68,7 @@ import com.app.dealspot.presentation.theme.text_size_18
 import com.app.dealspot.presentation.utils.serviceIcon
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.cancel
+import dealspot.composeapp.generated.resources.cancel_request
 import dealspot.composeapp.generated.resources.send_request
 import dealspot.composeapp.generated.resources.visit_profile
 import kotlinx.coroutines.delay
@@ -82,6 +83,7 @@ private val SheetShape = RoundedCornerShape(topStart = dimens_20, topEnd = dimen
 fun DealInfoBottomSheet(
     visible: Boolean,
     deal: DealEntity?,
+    currentUserSub: String = "",
     onDismiss: () -> Unit = {},
     onSendRequest: () -> Unit = {},
     onCancel: () -> Unit = {},
@@ -163,42 +165,41 @@ fun DealInfoBottomSheet(
                                 tint = Grey
                             )
 
-                            Text(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .clickable(
-                                        indication = null,
-                                        interactionSource = remember { MutableInteractionSource() }
-                                    ) {
-                                        println("DealInfoBottomSheet. Visit profile text clicked")
-                                        onVisitProfile.invoke()
-                                    },
-                                text = stringResource(Res.string.visit_profile),
-                                fontSize = text_size_14,
-                                fontWeight = FontWeight.Bold,
-                                fontFamily = latoFontFamily(),
-                                color = blueSplashText,
-                                textAlign = TextAlign.End
-                            )
+                            if ((currentUserSub != deal?.userSub.orEmpty())) {
+                                Row(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .clickable(
+                                            indication = null,
+                                            interactionSource = remember { MutableInteractionSource() }
+                                        ) {
+                                            println("DealInfoBottomSheet. Visit profile text clicked")
+                                            onVisitProfile.invoke()
+                                        },
+                                    horizontalArrangement = Arrangement.End
+                                ) {
+                                    Text(
+                                        modifier = Modifier,
+                                        text = stringResource(Res.string.visit_profile),
+                                        fontSize = text_size_14,
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = latoFontFamily(),
+                                        color = blueSplashText,
+                                        textAlign = TextAlign.End
+                                    )
 
-                            Icon(
-                                imageVector = Icons.Filled.KeyboardDoubleArrowRight,
-                                contentDescription = "profile",
-                                modifier = Modifier
-                                    .size(dimens_20)
-                                    .clickable(
-                                        indication = null,
-                                        interactionSource = remember { MutableInteractionSource() }
-                                    ) {
-                                        println("DealInfoBottomSheet. Visit profile icon clicked")
-                                        onVisitProfile.invoke()
-                                    },
-                                tint = blueSplashText
-                            )
+                                    Icon(
+                                        imageVector = Icons.Filled.KeyboardDoubleArrowRight,
+                                        contentDescription = "profile",
+                                        modifier = Modifier.size(dimens_20),
+                                        tint = blueSplashText
+                                    )
+                                }
+                            }
                         }
 
                         // Leave space for the avatar that overlaps the top border
-                        Spacer(modifier = Modifier.height(dimens_10))
+                        Spacer(modifier = Modifier.height(dimens_5))
 
                         // User name, serviceName, description
                         Column(
@@ -256,25 +257,29 @@ fun DealInfoBottomSheet(
                         Spacer(modifier = Modifier.height(dimens_12))
 
                         // Bottom: Cancel (left) and Send Request (right)
-                        Row(
+                        Column(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = dimens_20),
-                            horizontalArrangement = Arrangement.spacedBy(dimens_12),
-                            verticalAlignment = Alignment.Bottom
                         ) {
                             DealSpotOutlineButton(
-                                modifier = Modifier.weight(1f).height(dimens_45),
-                                buttonText = stringResource(Res.string.cancel),
+                                modifier = Modifier.fillMaxWidth(),
+                                buttonText = stringResource(Res.string.cancel_request),
+                                textColor = Color.White,
+                                needChangeTextColor = true,
+                                borderColor = Color.Red,
+                                textSize = text_size_18,
                                 enable = true,
                                 fillWidth = false,
+                                containerColor = Color.Red.copy(alpha = 0.6f),
                                 onClick = {
                                     onCancel()
                                     onDismiss()
                                 }
                             )
+
                             DealSpotDarkButton(
-                                modifier = Modifier.weight(1f).height(dimens_45),
+                                modifier = Modifier.fillMaxWidth(),
                                 buttonText = stringResource(Res.string.send_request),
                                 isEnable = true,
                                 onClick = {

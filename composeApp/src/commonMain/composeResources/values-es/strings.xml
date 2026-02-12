@@ -317,7 +317,9 @@
     <string name="find_service">Busco</string>
     <string name="provide_service_tab">Ofrezco</string>
     <string name="type_of_service">Tipo de servicio</string>
+
     <string name="visit_profile">Ver perfil</string>
     <string name="send_request">Enviar solicitud</string>
+    <string name="cancel_request">Cancelar solicitud</string>
     <!--Spanish -->
 </resources>

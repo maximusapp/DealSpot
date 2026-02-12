@@ -317,6 +317,8 @@
     <string name="find_service">Шукаю</string>
     <string name="provide_service_tab">Надаю</string>
     <string name="type_of_service">Тип послуги</string>
-    <string name="visit_profile">Переглянути профіль</string>
+
+    <string name="visit_profile">Профіль</string>
     <string name="send_request">Надіслати запит</string>
+    <string name="cancel_request">Скасувати запит</string>
 </resources>

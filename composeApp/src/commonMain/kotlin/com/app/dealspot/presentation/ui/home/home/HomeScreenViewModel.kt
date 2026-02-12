@@ -20,6 +20,7 @@ import com.dealspot.network.core_cognito.IdentityProviderException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
@@ -83,6 +84,11 @@ class HomeScreenViewModel(
         // Reset to default (provide_deal = type 1)
         _filterType.value = 1
         fetchDeals(1)
+    }
+
+    fun currentUserSub() = flow {
+        val userSub = dataStore.getString(key = DataStoreKeys.USER_SUB).orEmpty()
+        emit(userSub)
     }
 
     /**

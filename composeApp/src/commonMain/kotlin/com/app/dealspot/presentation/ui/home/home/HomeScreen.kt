@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.app.dealspot.data.model.DealEntity
 import com.app.dealspot.presentation.theme.SpacerHeight100Dp
 import com.app.dealspot.presentation.theme.dimens_12
@@ -70,6 +71,7 @@ internal fun HomeScreen(
         var showActionSheet by remember { mutableStateOf(false) }
         var showFilterSheet by remember { mutableStateOf(false) }
         var selectedDeal by remember { mutableStateOf<DealEntity?>(null) }
+        val currentUserSub = viewModel.currentUserSub().collectAsState("").value
 
         // Initialize user when screen opens
         LaunchedEffect(Unit) {
@@ -242,6 +244,7 @@ internal fun HomeScreen(
         DealInfoBottomSheet(
             visible = selectedDeal != null,
             deal = selectedDeal,
+            currentUserSub = currentUserSub,
             onDismiss = { selectedDeal = null },
             onSendRequest = { /* TODO: send request */ },
             onCancel = { selectedDeal = null }

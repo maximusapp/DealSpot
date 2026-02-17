@@ -51,8 +51,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.app.dealspot.data.model.ServiceCategoryEntity
-import com.app.dealspot.data.model.ServiceEntity
+import com.app.dealspot.domain.model.ServiceCategoryEntity
+import com.app.dealspot.domain.model.ServiceEntity
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.SpacerHeight12Dp
 import com.app.dealspot.presentation.theme.SpacerWidth15Dp

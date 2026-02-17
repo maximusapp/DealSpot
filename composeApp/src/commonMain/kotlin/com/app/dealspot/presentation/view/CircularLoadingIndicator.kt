@@ -23,6 +23,7 @@ import com.app.dealspot.presentation.theme.dimens_40
 import com.app.dealspot.presentation.theme.dimens_50
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@Preview
 @Composable
 fun CircularLoadingIndicator(
     modifier: Modifier = Modifier,

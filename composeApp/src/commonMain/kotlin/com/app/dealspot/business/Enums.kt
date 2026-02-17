@@ -33,3 +33,7 @@ enum class ScreenType {
 enum class DealType {
     LOOKING_FOR_SERVICE, PROVIDE_SERVICE
 }
+
+enum class ApplyDealRequestType {
+    SEND_REQUEST, CANCEL_REQUEST
+}

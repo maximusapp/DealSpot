@@ -6,7 +6,7 @@ import com.app.dealspot.business.AppDataStore
 import com.app.dealspot.business.EmailPasswordDataValidationState
 import com.app.dealspot.business.LoginState
 import com.app.dealspot.business.constants.DataStoreKeys
-import com.app.dealspot.data.model.TokenResponse
+import com.app.dealspot.domain.model.TokenResponse
 import com.app.dealspot.domain.use_cases.ForgotPasswordUseCase
 import com.app.dealspot.domain.use_cases.LoginUseCase
 import dealspot.composeapp.generated.resources.Res

@@ -1,9 +1,10 @@
 package com.app.dealspot.data
 
-import com.app.dealspot.data.model.CreateDealRequest
-import com.app.dealspot.data.model.CreateDealResponse
-import com.app.dealspot.data.model.GetDealsRequest
-import com.app.dealspot.data.model.GetDealsResponse
+import com.app.dealspot.domain.model.CreateDealRequest
+import com.app.dealspot.domain.model.CreateDealResponse
+import com.app.dealspot.domain.model.DealRequest
+import com.app.dealspot.domain.model.GetDealsRequest
+import com.app.dealspot.domain.model.GetDealsResponse
 import com.dealspot.network.AWSConfig
 import com.dealspot.network.apiGetawayClient
 import io.ktor.client.call.body
@@ -54,5 +55,13 @@ class DealRepositoryImpl() {
             e.printStackTrace()
             GetDealsResponse(items = emptyList(), count = 0)
         }
+    }
+
+    suspend fun getDeal(dealId: String) {
+
+    }
+
+    suspend fun requestToDeal(dealRequest: DealRequest) {
+
     }
 }

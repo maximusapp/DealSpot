@@ -14,7 +14,7 @@ import cocoapods.GoogleMaps.GMSMapStyle
 import cocoapods.GoogleMaps.GMSMapView
 import cocoapods.GoogleMaps.GMSMarker
 import cocoapods.GoogleMaps.animateWithCameraUpdate
-import com.app.dealspot.data.model.LatLngEntity
+import com.app.dealspot.domain.model.LatLngEntity
 import com.app.dealspot.presentation.utils.mapStyle
 import com.app.dealspot.presentation.utils.zeroIfNull
 import kotlinx.cinterop.memScoped

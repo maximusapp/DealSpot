@@ -1,4 +1,4 @@
-package com.app.dealspot.data.model
+package com.app.dealspot.domain.model
 
 class ServiceEntity(
     val id: Long = 0,

@@ -49,7 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.app.dealspot.data.model.DealEntity
+import com.app.dealspot.domain.model.DealEntity
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.blueSplashText
 import com.app.dealspot.presentation.theme.dimens_12
@@ -66,7 +66,6 @@ import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.cancel_request
 import dealspot.composeapp.generated.resources.send_request
 import dealspot.composeapp.generated.resources.visit_profile
-import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -79,22 +78,19 @@ fun DealInfoBottomSheet(
     visible: Boolean,
     deal: DealEntity?,
     currentUserSub: String = "",
+    showLoading: Boolean = false,
     onDismiss: () -> Unit = {},
     onSendRequest: () -> Unit = {},
-    onCancel: () -> Unit = {},
+    onCancelRequest: () -> Unit = {},
     onVisitProfile: () -> Unit = {},
 ) {
     // Dimmed background fades in with delay so it doesn't pop in with the sheet
     var showBackgroundDim by remember { mutableStateOf(false) }
 
     LaunchedEffect(visible) {
-        if (visible) {
-            delay(180)
-            showBackgroundDim = true
-        } else {
-            showBackgroundDim = false
-        }
+        showBackgroundDim = visible
     }
+
     val backgroundAlpha by animateFloatAsState(
         targetValue = if (showBackgroundDim) 0.3f else 0f,
         animationSpec = tween(durationMillis = 220)
@@ -103,8 +99,8 @@ fun DealInfoBottomSheet(
     AnimatedVisibility(
         visible = visible,
 //        visible = true,
-        enter = fadeIn(animationSpec = tween(300)) + slideInVertically(
-            animationSpec = tween(300),
+        enter = fadeIn(animationSpec = tween(100)) + slideInVertically(
+            animationSpec = tween(100),
             initialOffsetY = { it }
         ),
         exit = fadeOut(animationSpec = tween(300)) + slideOutVertically(
@@ -139,7 +135,8 @@ fun DealInfoBottomSheet(
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight()
-                            .padding(horizontal = dimens_20)
+                            .padding(horizontal = dimens_20),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         // Top bar: arrow down in the left corner
                         Row(
@@ -251,39 +248,47 @@ fun DealInfoBottomSheet(
 
                         Spacer(modifier = Modifier.height(dimens_12))
 
-                        // Bottom: Cancel (left) and Send Request (right)
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = dimens_20),
-                        ) {
+                        // Bottom buttons
+                        if (showLoading) {
+                            CircularLoadingIndicator(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = dimens_20)
+                            )
+                        } else {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = dimens_20),
+                            ) {
 
-                            if (currentUserSub in deal?.requestedUsersSub.orEmpty()) {
-                                DealSpotOutlineButton(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    buttonText = stringResource(Res.string.cancel_request),
-                                    textColor = Color.White,
-                                    needChangeTextColor = true,
-                                    borderColor = Color.Red,
-                                    textSize = text_size_18,
-                                    enable = true,
-                                    fillWidth = false,
-                                    containerColor = Color.Red.copy(alpha = 0.6f),
-                                    onClick = {
-                                        println("DealInfoBottomSheet. Cancel request button clicked")
-                                        onCancel()
-                                    }
-                                )
-                            } else {
-                                DealSpotDarkButton(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    buttonText = stringResource(Res.string.send_request),
-                                    isEnable = (currentUserSub != deal?.userSub.orEmpty()),
-                                    onClick = {
-                                        println("DealInfoBottomSheet. Send request button clicked")
-                                        onSendRequest()
-                                    }
-                                )
+                                if (currentUserSub in deal?.requestedUsersSub.orEmpty()) {
+                                    DealSpotOutlineButton(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        buttonText = stringResource(Res.string.cancel_request),
+                                        textColor = Color.White,
+                                        needChangeTextColor = true,
+                                        borderColor = Color.Red,
+                                        textSize = text_size_18,
+                                        enable = true,
+                                        fillWidth = false,
+                                        containerColor = Color.Red.copy(alpha = 0.6f),
+                                        onClick = {
+                                            println("DealInfoBottomSheet. Cancel request button clicked")
+                                            onCancelRequest()
+                                        }
+                                    )
+                                } else {
+                                    DealSpotDarkButton(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        buttonText = stringResource(Res.string.send_request),
+                                        isEnable = (currentUserSub != deal?.userSub.orEmpty()),
+                                        onClick = {
+                                            println("DealInfoBottomSheet. Send request button clicked")
+                                            onSendRequest()
+                                        }
+                                    )
+                                }
                             }
                         }
 

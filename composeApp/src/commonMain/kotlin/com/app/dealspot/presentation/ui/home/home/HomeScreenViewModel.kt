@@ -3,31 +3,36 @@ package com.app.dealspot.presentation.ui.home.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.dealspot.business.AppDataStore
+import com.app.dealspot.business.ApplyDealRequestType
 import com.app.dealspot.business.constants.DataStoreKeys
 import com.app.dealspot.data.ProfileRepositoryImpl
-import com.app.dealspot.data.model.MapCameraState
-import com.app.dealspot.data.model.TokenResponse
-import com.app.dealspot.data.model.ServiceCategoryEntity
-import com.app.dealspot.data.model.ServiceEntity
+import com.app.dealspot.domain.model.MapCameraState
+import com.app.dealspot.domain.model.TokenResponse
+import com.app.dealspot.domain.model.ServiceCategoryEntity
+import com.app.dealspot.domain.model.ServiceEntity
 import com.app.dealspot.domain.use_cases.LoginUseCase
 import com.app.dealspot.domain.use_cases.deals.GetDealsUseCase
 import com.app.dealspot.domain.use_cases.profile.GetUserUseCase
-import com.app.dealspot.data.model.DealEntity
+import com.app.dealspot.domain.model.DealEntity
+import com.app.dealspot.domain.use_cases.deals.SendDealRequest
 import com.app.dealspot.presentation.SharedViewModel
 import com.app.dealspot.presentation.utils.getCurrentDateTime
 import com.dealspot.network.core_cognito.GetUserResponse
 import com.dealspot.network.core_cognito.IdentityProviderException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.serialization.json.Json
 import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
 class HomeScreenViewModel(
     private val getUserUseCase: GetUserUseCase,
@@ -35,7 +40,8 @@ class HomeScreenViewModel(
     private val dataStore: AppDataStore,
     private val profileRepository: ProfileRepositoryImpl,
     private val sharedViewModel: SharedViewModel,
-    private val getDealsUseCase: GetDealsUseCase
+    private val getDealsUseCase: GetDealsUseCase,
+    private val sendRequestToDeal: SendDealRequest
 ) : ViewModel() {
     private val _cameraState = MutableStateFlow<MapCameraState?>(null)
     val cameraState: StateFlow<MapCameraState?> = _cameraState.asStateFlow()
@@ -60,6 +66,9 @@ class HomeScreenViewModel(
     // Deals currently shown on the map (may be additionally filtered by category/service)
     private val _deals = MutableStateFlow<List<DealEntity>>(emptyList())
     val deals: StateFlow<List<DealEntity>> = _deals.asStateFlow()
+
+    val currentUserSub: StateFlow<String>
+        field = MutableStateFlow("")
 
     fun updateCamera(state: MapCameraState) {
         _cameraState.value = state
@@ -86,9 +95,10 @@ class HomeScreenViewModel(
         fetchDeals(1)
     }
 
-    fun currentUserSub() = flow {
-        val userSub = dataStore.getString(key = DataStoreKeys.USER_SUB).orEmpty()
-        emit(userSub)
+    fun getCurrentUserSub() {
+        viewModelScope.launch {
+            currentUserSub.value = dataStore.getString(key = DataStoreKeys.USER_SUB).orEmpty()
+        }
     }
 
     /**
@@ -136,7 +146,6 @@ class HomeScreenViewModel(
         }
     }
 
-    @OptIn(ExperimentalTime::class)
     fun initializeUser() {
         println("HomeScreenViewModel. initializeUser()")
         viewModelScope.launch {
@@ -217,8 +226,20 @@ class HomeScreenViewModel(
             }
         }
     }
+
+    fun sendRequestToDeal(selectedDeal: DealEntity?, requestType: ApplyDealRequestType) {
+        viewModelScope.launch {
+            val userSub = dataStore.getString(key = DataStoreKeys.USER_SUB).orEmpty()
+
+            println("sendDealRequest. selectedDeal: $selectedDeal, requestType: ${requestType.name}, userSub: $userSub")
+
+            sendRequestToDeal(
+                dealId = selectedDeal?.dealId.orEmpty(), dealType = selectedDeal?.type ?: 0,
+                requestType = requestType.ordinal, userSub = currentUserSub.value.ifEmpty { userSub }
+            )
+        }
+    }
     
-    @OptIn(ExperimentalTime::class)
     private fun calculateHoursSinceUpdate(lastUpdatedStr: String): Double {
         return try {
             val lastUpdatedLocal = parseMySQLDateTime(lastUpdatedStr)
@@ -236,8 +257,7 @@ class HomeScreenViewModel(
             999.0
         }
     }
-    
-    @OptIn(ExperimentalTime::class)
+
     private fun parseMySQLDateTime(dateTimeStr: String): LocalDateTime {
         // Parse "yyyy-MM-dd HH:mm:ss" format
         val parts = dateTimeStr.split(" ")

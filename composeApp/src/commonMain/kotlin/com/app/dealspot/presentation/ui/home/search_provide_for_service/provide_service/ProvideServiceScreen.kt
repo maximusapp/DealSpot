@@ -23,7 +23,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import com.app.dealspot.business.ScreenType
-import com.app.dealspot.data.model.MapCameraState
+import com.app.dealspot.domain.model.MapCameraState
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.SpacerHeight10Dp
 import com.app.dealspot.presentation.theme.SpacerHeight25Dp

@@ -13,6 +13,7 @@ import com.app.dealspot.domain.use_cases.SignUpUseCase
 import com.app.dealspot.domain.use_cases.LoginUseCase
 import com.app.dealspot.domain.use_cases.deals.CreateDealUseCase
 import com.app.dealspot.domain.use_cases.deals.GetDealsUseCase
+import com.app.dealspot.domain.use_cases.deals.SendDealRequest
 import com.app.dealspot.domain.use_cases.profile.GetUserUseCase
 import com.app.dealspot.presentation.SharedViewModel
 import com.app.dealspot.presentation.ui.SplashViewModel
@@ -46,9 +47,10 @@ fun appModule(context: Context) = module {
     single { ForgotPasswordViewModel(get()) }
     single { VerificationCodeViewModel(get()) }
 
-    /**CREATE_DEAL_USE-CASES*/
+    /**DEAL_USE-CASES*/
     single { CreateDealUseCase(get()) }
     single { GetDealsUseCase(get()) }
+    single { SendDealRequest(get()) }
 
     /**PROFILE-USE-CASES*/
 //    single { LogoutUseCase(get()) }
@@ -66,7 +68,7 @@ fun appModule(context: Context) = module {
     factory { WelcomeScreenViewModel(get()) }
     factory { RegistrationViewModel(get(), get(), get()) }
     factory { EmailVerificationScreenViewModel(get()) }
-    single { HomeScreenViewModel(get(), get(), get(), get(), get(), get()) }
+    single { HomeScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
     factory { LoginViewModel(get(), get(), get()) }
     factory { LookingForServiceViewModel(get(), get(), get()) }
     factory { ProvideServiceViewModel(get(), get()) }

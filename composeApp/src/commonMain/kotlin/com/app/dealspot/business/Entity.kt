@@ -1,6 +1,6 @@
 package com.app.dealspot.business
 
-import com.app.dealspot.data.model.LatLngEntity
+import com.app.dealspot.domain.model.LatLngEntity
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 

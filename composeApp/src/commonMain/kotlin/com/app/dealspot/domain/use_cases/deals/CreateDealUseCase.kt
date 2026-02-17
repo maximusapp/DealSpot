@@ -1,8 +1,8 @@
 package com.app.dealspot.domain.use_cases.deals
 
 import com.app.dealspot.data.DealRepositoryImpl
-import com.app.dealspot.data.model.CreateDealRequest
-import com.app.dealspot.data.model.CreateDealResponse
+import com.app.dealspot.domain.model.CreateDealRequest
+import com.app.dealspot.domain.model.CreateDealResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext

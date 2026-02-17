@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.app.dealspot.business.AppDataStore
 import com.app.dealspot.business.DealType
 import com.app.dealspot.business.constants.DataStoreKeys
-import com.app.dealspot.data.model.CreateDealRequest
+import com.app.dealspot.domain.model.CreateDealRequest
 import com.app.dealspot.domain.use_cases.deals.CreateDealUseCase
 import com.app.dealspot.domain.use_cases.profile.GetUserUseCase
 import com.app.dealspot.presentation.ui.home.base.BaseServiceViewModel

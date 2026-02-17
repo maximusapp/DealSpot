@@ -1,8 +1,7 @@
 package com.app.dealspot.business
 
-import com.app.dealspot.data.model.LoginResponse
+import com.app.dealspot.domain.model.LoginResponse
 import dealspot.composeapp.generated.resources.Res
-import dealspot.composeapp.generated.resources.invalid_verification_code
 import dealspot.composeapp.generated.resources.password_info
 import dealspot.composeapp.generated.resources.passwords_do_not_match
 import dealspot.composeapp.generated.resources.verification_code_info

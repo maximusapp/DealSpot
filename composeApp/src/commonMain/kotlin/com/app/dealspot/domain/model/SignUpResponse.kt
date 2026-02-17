@@ -1,4 +1,4 @@
-package com.app.dealspot.data.model
+package com.app.dealspot.domain.model
 
 import org.jetbrains.compose.resources.StringResource
 

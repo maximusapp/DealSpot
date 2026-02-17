@@ -20,8 +20,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
 import com.app.dealspot.R
-import com.app.dealspot.data.model.DealEntity
-import com.app.dealspot.data.model.MapCameraState
+import com.app.dealspot.domain.model.DealEntity
+import com.app.dealspot.domain.model.MapCameraState
 import com.app.dealspot.extensions.dpToPx
 import com.app.dealspot.presentation.utils.zeroIfNull
 import com.google.accompanist.permissions.ExperimentalPermissionsApi

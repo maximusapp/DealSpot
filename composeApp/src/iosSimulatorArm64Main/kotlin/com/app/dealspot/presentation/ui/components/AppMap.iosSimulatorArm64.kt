@@ -14,8 +14,8 @@ import cocoapods.GoogleMaps.GMSCameraPosition
 import cocoapods.GoogleMaps.GMSCameraUpdate
 import cocoapods.GoogleMaps.GMSMarker
 import cocoapods.GoogleMaps.animateWithCameraUpdate
-import com.app.dealspot.data.model.DealEntity
-import com.app.dealspot.data.model.MapCameraState
+import com.app.dealspot.domain.model.DealEntity
+import com.app.dealspot.domain.model.MapCameraState
 import com.app.dealspot.presentation.utils.mapStyle
 import com.app.dealspot.presentation.utils.zeroIfNull
 import kotlinx.cinterop.*

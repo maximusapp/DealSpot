@@ -1,9 +1,9 @@
 package com.app.dealspot.presentation.ui.home.base
 
 import androidx.lifecycle.ViewModel
-import com.app.dealspot.data.model.LatLngEntity
-import com.app.dealspot.data.model.ServiceCategoryEntity
-import com.app.dealspot.data.model.ServiceEntity
+import com.app.dealspot.domain.model.LatLngEntity
+import com.app.dealspot.domain.model.ServiceCategoryEntity
+import com.app.dealspot.domain.model.ServiceEntity
 
 abstract class BaseServiceViewModel() : ViewModel() {
     var problemName: String = ""

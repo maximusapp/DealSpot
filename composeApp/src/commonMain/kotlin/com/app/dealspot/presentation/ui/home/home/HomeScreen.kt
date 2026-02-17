@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -27,8 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.app.dealspot.data.model.DealEntity
+import com.app.dealspot.business.ApplyDealRequestType
+import com.app.dealspot.domain.model.DealEntity
 import com.app.dealspot.presentation.theme.SpacerHeight100Dp
 import com.app.dealspot.presentation.theme.dimens_12
 import com.app.dealspot.presentation.theme.dimens_20
@@ -43,7 +41,6 @@ import dealspot.composeapp.generated.resources.ic_filter_active
 import dealspot.composeapp.generated.resources.ic_filter_inactive_1
 import dealspot.composeapp.generated.resources.ic_my_location
 import dealspot.composeapp.generated.resources.ic_no_notifications
-import dealspot.composeapp.generated.resources.ic_notifications_bold_500
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
@@ -71,11 +68,13 @@ internal fun HomeScreen(
         var showActionSheet by remember { mutableStateOf(false) }
         var showFilterSheet by remember { mutableStateOf(false) }
         var selectedDeal by remember { mutableStateOf<DealEntity?>(null) }
-        val currentUserSub = viewModel.currentUserSub().collectAsState("").value
+        val currentUserSub = viewModel.currentUserSub.value
+        var showLoadingInDealInfo by remember { mutableStateOf(false) }
 
         // Initialize user when screen opens
         LaunchedEffect(Unit) {
             viewModel.initializeUser()
+            viewModel.getCurrentUserSub()
         }
 
         AppMap(
@@ -245,9 +244,17 @@ internal fun HomeScreen(
             visible = selectedDeal != null,
             deal = selectedDeal,
             currentUserSub = currentUserSub,
+            showLoading = showLoadingInDealInfo,
             onDismiss = { selectedDeal = null },
-            onSendRequest = { /* TODO: send request */ },
-            onCancel = { selectedDeal = null }
+            onSendRequest = {
+                showLoadingInDealInfo = true
+                viewModel.getCurrentUserSub()
+                viewModel.sendRequestToDeal(selectedDeal = selectedDeal, requestType = ApplyDealRequestType.SEND_REQUEST)
+            },
+            onCancelRequest = {
+                showLoadingInDealInfo = true
+                viewModel.sendRequestToDeal(selectedDeal = selectedDeal, requestType = ApplyDealRequestType.CANCEL_REQUEST)
+            }
         )
     }
 }

@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.app.dealspot.business.ApplyDealRequestType
+import com.app.dealspot.business.DealRequestState
 import com.app.dealspot.domain.model.DealEntity
 import com.app.dealspot.presentation.theme.SpacerHeight100Dp
 import com.app.dealspot.presentation.theme.dimens_12
@@ -67,9 +68,10 @@ internal fun HomeScreen(
         val deals = viewModel.deals.collectAsState().value
         var showActionSheet by remember { mutableStateOf(false) }
         var showFilterSheet by remember { mutableStateOf(false) }
-        var selectedDeal by remember { mutableStateOf<DealEntity?>(null) }
+//        var selectedDeal by remember { mutableStateOf<DealEntity?>(null) }
+        val selectedDeal = viewModel.selectedDeal.collectAsState().value
         val currentUserSub = viewModel.currentUserSub.value
-        var showLoadingInDealInfo by remember { mutableStateOf(false) }
+        val sendDealRequestState by viewModel.sendDealRequestState.collectAsState()
 
         // Initialize user when screen opens
         LaunchedEffect(Unit) {
@@ -84,7 +86,7 @@ internal fun HomeScreen(
             goToCurrentLocationTrigger = goToLocationTrigger,
             deals = deals,
             selectedDeal = selectedDeal,
-            onDealSelected = { selectedDeal = it }
+            onDealSelected = { viewModel.setSelectedDeal(deal = it) }
         )
 
         // Top right icons: Location, Filter, and Notifications
@@ -244,17 +246,17 @@ internal fun HomeScreen(
             visible = selectedDeal != null,
             deal = selectedDeal,
             currentUserSub = currentUserSub,
-            showLoading = showLoadingInDealInfo,
-            onDismiss = { selectedDeal = null },
+            showLoading = sendDealRequestState == DealRequestState.Loading,
+            sendDealRequestState = sendDealRequestState,
+            onDismiss = { viewModel.setSelectedDeal(deal = null) },
             onSendRequest = {
-                showLoadingInDealInfo = true
                 viewModel.getCurrentUserSub()
                 viewModel.sendRequestToDeal(selectedDeal = selectedDeal, requestType = ApplyDealRequestType.SEND_REQUEST)
             },
             onCancelRequest = {
-                showLoadingInDealInfo = true
                 viewModel.sendRequestToDeal(selectedDeal = selectedDeal, requestType = ApplyDealRequestType.CANCEL_REQUEST)
-            }
+            },
+            onClearSendDealRequestState = { viewModel.clearSendDealRequestState() }
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.app.dealspot.business
 
+import com.app.dealspot.domain.model.DealRequestResponse
 import com.app.dealspot.domain.model.LoginResponse
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.password_info
@@ -45,4 +46,10 @@ sealed class ResetPasswordVerificationDataState() {
     data class PasswordsMismatch(val message: StringResource = Res.string.passwords_do_not_match): ResetPasswordVerificationDataState()
     object Ok: ResetPasswordVerificationDataState()
     object None: ResetPasswordVerificationDataState()
+}
+
+sealed class DealRequestState() {
+    object None : DealRequestState()
+    object Loading : DealRequestState()
+    data class Result(val result: DealRequestResponse): DealRequestState()
 }

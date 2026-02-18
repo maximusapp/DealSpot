@@ -321,5 +321,7 @@
     <string name="visit_profile">Ver perfil</string>
     <string name="send_request">Enviar solicitud</string>
     <string name="cancel_request">Cancelar solicitud</string>
+    <string name="request_sent_successfully">Solicitud enviada correctamente</string>
+    <string name="request_removed_successfully">Solicitud cancelada correctamente</string>
     <!--Spanish -->
 </resources>

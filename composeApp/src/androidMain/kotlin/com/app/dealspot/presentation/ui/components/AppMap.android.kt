@@ -157,7 +157,7 @@ actual fun AppMap(
 
                 googleMap.setOnMarkerClickListener { marker ->
                     val deal = marker.tag as? DealEntity
-                    println("setOnMarkerClickListener. Marker clicked:${deal?.serviceName}, userSub:${deal?.userSub}")
+                    println("setOnMarkerClickListener. Marker clicked:${deal?.serviceName}, userSub:${deal?.userSub}, dealId: ${deal?.dealId}")
 
                     if (deal != null) onDealSelected(deal)
                     true

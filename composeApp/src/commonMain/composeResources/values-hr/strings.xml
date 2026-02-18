@@ -321,5 +321,7 @@
     <string name="visit_profile">Profil</string>
     <string name="send_request">Pošalji zahtjev</string>
     <string name="cancel_request">Otkaži zahtjev</string>
+    <string name="request_sent_successfully">Zahtjev je uspješno poslan</string>
+    <string name="request_removed_successfully">Zahtjev je uspješno uklonjen</string>
     <!--Croatian -->
 </resources>

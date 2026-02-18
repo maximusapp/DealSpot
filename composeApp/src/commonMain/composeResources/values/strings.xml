@@ -328,4 +328,6 @@
     <string name="visit_profile">Visit profile</string>
     <string name="send_request">Send Request</string>
     <string name="cancel_request">Cancel request</string>
+    <string name="request_sent_successfully">Request sent successfully</string>
+    <string name="request_removed_successfully">Request removed successfully</string>
 </resources>

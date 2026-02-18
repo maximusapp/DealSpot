@@ -1,9 +1,15 @@
 package com.app.dealspot.presentation.ui.home.home
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.dealspot.business.AppDataStore
 import com.app.dealspot.business.ApplyDealRequestType
+import com.app.dealspot.business.DealRequestState
+import com.app.dealspot.business.LoginState
 import com.app.dealspot.business.constants.DataStoreKeys
 import com.app.dealspot.data.ProfileRepositoryImpl
 import com.app.dealspot.domain.model.MapCameraState
@@ -14,6 +20,7 @@ import com.app.dealspot.domain.use_cases.LoginUseCase
 import com.app.dealspot.domain.use_cases.deals.GetDealsUseCase
 import com.app.dealspot.domain.use_cases.profile.GetUserUseCase
 import com.app.dealspot.domain.model.DealEntity
+import com.app.dealspot.domain.model.DealRequestResponse
 import com.app.dealspot.domain.use_cases.deals.SendDealRequest
 import com.app.dealspot.presentation.SharedViewModel
 import com.app.dealspot.presentation.utils.getCurrentDateTime
@@ -29,6 +36,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.serialization.json.Json
@@ -67,8 +75,22 @@ class HomeScreenViewModel(
     private val _deals = MutableStateFlow<List<DealEntity>>(emptyList())
     val deals: StateFlow<List<DealEntity>> = _deals.asStateFlow()
 
+    private val _sendDealRequestState = MutableStateFlow<DealRequestState>(DealRequestState.None)
+    val sendDealRequestState: StateFlow<DealRequestState> = _sendDealRequestState.asStateFlow()
+
     val currentUserSub: StateFlow<String>
         field = MutableStateFlow("")
+
+    val selectedDeal: StateFlow<DealEntity?>
+        field = MutableStateFlow<DealEntity?>(null)
+
+    fun setSelectedDeal(deal: DealEntity?) {
+        selectedDeal.value = deal
+    }
+
+    fun clearSendDealRequestState() {
+        _sendDealRequestState.value = DealRequestState.None
+    }
 
     fun updateCamera(state: MapCameraState) {
         _cameraState.value = state
@@ -126,7 +148,7 @@ class HomeScreenViewModel(
         _deals.value = filtered
     }
     
-    fun fetchDeals(type: Int) {
+    private fun fetchDeals(type: Int) {
         viewModelScope.launch {
             try {
                 println("HomeScreenViewModel. fetchDeals. Type: $type")
@@ -229,14 +251,22 @@ class HomeScreenViewModel(
 
     fun sendRequestToDeal(selectedDeal: DealEntity?, requestType: ApplyDealRequestType) {
         viewModelScope.launch {
+            _sendDealRequestState.value = DealRequestState.Loading
+
             val userSub = dataStore.getString(key = DataStoreKeys.USER_SUB).orEmpty()
 
-            println("sendDealRequest. selectedDeal: $selectedDeal, requestType: ${requestType.name}, userSub: $userSub")
+            println("HomeScreenViewModel. sendRequestToDeal. selectedDeal: $selectedDeal, requestType: ${requestType.name}, userSub: $userSub")
 
-            sendRequestToDeal(
-                dealId = selectedDeal?.dealId.orEmpty(), dealType = selectedDeal?.type ?: 0,
-                requestType = requestType.ordinal, userSub = currentUserSub.value.ifEmpty { userSub }
+            val result: DealRequestResponse = sendRequestToDeal(
+                dealId = selectedDeal?.dealId.orEmpty(),
+                dealType = selectedDeal?.type ?: 0,
+                requestType = requestType.ordinal,
+                userSub = currentUserSub.value.ifEmpty { userSub }
             )
+
+            _sendDealRequestState.value = DealRequestState.Result(result = result)
+
+            println("HomeScreenViewModel. sendRequestToDeal. Result: $result")
         }
     }
     
@@ -281,18 +311,18 @@ class HomeScreenViewModel(
 
         // Convert month number to kotlinx.datetime.Month
         val monthObj = when (month) {
-            1 -> kotlinx.datetime.Month.JANUARY
-            2 -> kotlinx.datetime.Month.FEBRUARY
-            3 -> kotlinx.datetime.Month.MARCH
-            4 -> kotlinx.datetime.Month.APRIL
-            5 -> kotlinx.datetime.Month.MAY
-            6 -> kotlinx.datetime.Month.JUNE
-            7 -> kotlinx.datetime.Month.JULY
-            8 -> kotlinx.datetime.Month.AUGUST
-            9 -> kotlinx.datetime.Month.SEPTEMBER
-            10 -> kotlinx.datetime.Month.OCTOBER
-            11 -> kotlinx.datetime.Month.NOVEMBER
-            12 -> kotlinx.datetime.Month.DECEMBER
+            1 -> Month.JANUARY
+            2 -> Month.FEBRUARY
+            3 -> Month.MARCH
+            4 -> Month.APRIL
+            5 -> Month.MAY
+            6 -> Month.JUNE
+            7 -> Month.JULY
+            8 -> Month.AUGUST
+            9 -> Month.SEPTEMBER
+            10 -> Month.OCTOBER
+            11 -> Month.NOVEMBER
+            12 -> Month.DECEMBER
             else -> throw IllegalArgumentException("Invalid month: $month")
         }
 
@@ -326,7 +356,7 @@ class HomeScreenViewModel(
                 val loginState = loginUseCase.invoke(email = email, password = password)
 
                 when (loginState) {
-                    is com.app.dealspot.business.LoginState.Success -> {
+                    is LoginState.Success -> {
                         println("HomeScreenViewModel. Login successful")
                         // Save user credentials to DataStore
                         saveUserCredentialsToDataStore(loginState.response.tokenResponse)

@@ -321,5 +321,7 @@
     <string name="visit_profile">Profil</string>
     <string name="send_request">Wyślij prośbę</string>
     <string name="cancel_request">Anuluj prośbę</string>
+    <string name="request_sent_successfully">Prośba wysłana pomyślnie</string>
+    <string name="request_removed_successfully">Prośba anulowana pomyślnie</string>
     <!--Polish-->
 </resources>

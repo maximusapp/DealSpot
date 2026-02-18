@@ -3,6 +3,7 @@ package com.app.dealspot.data
 import com.app.dealspot.domain.model.CreateDealRequest
 import com.app.dealspot.domain.model.CreateDealResponse
 import com.app.dealspot.domain.model.DealRequest
+import com.app.dealspot.domain.model.DealRequestResponse
 import com.app.dealspot.domain.model.GetDealsRequest
 import com.app.dealspot.domain.model.GetDealsResponse
 import com.dealspot.network.AWSConfig
@@ -58,10 +59,27 @@ class DealRepositoryImpl() {
     }
 
     suspend fun getDeal(dealId: String) {
-
+        // Not implemented yet
     }
 
-    suspend fun requestToDeal(dealRequest: DealRequest) {
+    suspend fun requestToDeal(dealRequest: DealRequest): DealRequestResponse {
+        return try {
+            println("DealRepositoryImpl. requestToDeal. Request: $dealRequest")
+            val response = client.post("${AWSConfig.API_GATEWAY_URL_DEV}/requestToDeal") {
+                setBody(dealRequest)
+            }
+            println("DealRepositoryImpl. Response is: $response")
 
+            val result: DealRequestResponse = response.body()
+            println("DealRepositoryImpl. requestToDeal. Response: $result")
+            result
+        } catch (e: Exception) {
+            println("DealRepositoryImpl. requestToDeal. Error: ${e.message}")
+            e.printStackTrace()
+            DealRequestResponse(
+                success = false,
+                message = "Error happen. Please try again"
+            )
+        }
     }
 }

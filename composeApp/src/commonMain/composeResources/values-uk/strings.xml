@@ -321,4 +321,6 @@
     <string name="visit_profile">Профіль</string>
     <string name="send_request">Надіслати запит</string>
     <string name="cancel_request">Скасувати запит</string>
+    <string name="request_sent_successfully">Запит успішно надіслано</string>
+    <string name="request_removed_successfully">Запит успішно скасовано</string>
 </resources>

@@ -41,6 +41,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.delay
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,6 +50,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.app.dealspot.business.DealRequestState
 import com.app.dealspot.domain.model.DealEntity
 import com.app.dealspot.presentation.theme.Grey
 import com.app.dealspot.presentation.theme.blueSplashText
@@ -64,6 +66,8 @@ import com.app.dealspot.presentation.theme.text_size_18
 import com.app.dealspot.presentation.utils.serviceIcon
 import dealspot.composeapp.generated.resources.Res
 import dealspot.composeapp.generated.resources.cancel_request
+import dealspot.composeapp.generated.resources.request_removed_successfully
+import dealspot.composeapp.generated.resources.request_sent_successfully
 import dealspot.composeapp.generated.resources.send_request
 import dealspot.composeapp.generated.resources.visit_profile
 import org.jetbrains.compose.resources.painterResource
@@ -79,16 +83,39 @@ fun DealInfoBottomSheet(
     deal: DealEntity?,
     currentUserSub: String = "",
     showLoading: Boolean = false,
+    sendDealRequestState: DealRequestState = DealRequestState.None,
     onDismiss: () -> Unit = {},
     onSendRequest: () -> Unit = {},
     onCancelRequest: () -> Unit = {},
     onVisitProfile: () -> Unit = {},
+    onClearSendDealRequestState: () -> Unit = {},
 ) {
     // Dimmed background fades in with delay so it doesn't pop in with the sheet
     var showBackgroundDim by remember { mutableStateOf(false) }
+    val isClickEnable by remember { mutableStateOf(sendDealRequestState != DealRequestState.Loading) }
 
     LaunchedEffect(visible) {
         showBackgroundDim = visible
+    }
+
+    LaunchedEffect(sendDealRequestState) {
+        if (sendDealRequestState is DealRequestState.Result) {
+            delay(5000L)
+            onClearSendDealRequestState()
+        }
+    }
+
+    println("DealInfoBottomSheet. Selected deal: $deal")
+
+    // Message from send/cancel request: success uses requestType (0 = sent, 1 = removed), failure uses backend message
+    val resultMessage: String? = when (val state = sendDealRequestState) {
+        is DealRequestState.Result -> if (state.result.success) {
+            if (state.result.requestType == 0) stringResource(Res.string.request_sent_successfully)
+            else stringResource(Res.string.request_removed_successfully)
+        } else {
+            state.result.message.ifEmpty { null }
+        }
+        else -> null
     }
 
     val backgroundAlpha by animateFloatAsState(
@@ -113,7 +140,7 @@ fun DealInfoBottomSheet(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.Black.copy(alpha = backgroundAlpha))
-                    .clickable(enabled = true) { onDismiss() }
+                    .clickable(enabled = isClickEnable) { onDismiss() }
             )
 
             // Container that holds the card surface and the floating avatar row
@@ -150,7 +177,7 @@ fun DealInfoBottomSheet(
                                 contentDescription = "Close",
                                 modifier = Modifier
                                     .size(dimens_30)
-                                    .clickable {
+                                    .clickable(enabled = isClickEnable) {
                                         println("DealInfoBottomSheet. Close icon clicked")
                                         onDismiss()
                                     },
@@ -162,6 +189,7 @@ fun DealInfoBottomSheet(
                                     modifier = Modifier
                                         .weight(1f)
                                         .clickable(
+                                            enabled = isClickEnable,
                                             indication = null,
                                             interactionSource = remember { MutableInteractionSource() }
                                         ) {
@@ -248,6 +276,21 @@ fun DealInfoBottomSheet(
 
                         Spacer(modifier = Modifier.height(dimens_12))
 
+                        // Message from send/cancel request (above buttons, green, shown 5s)
+                        if (resultMessage != null) {
+                            Text(
+                                text = resultMessage,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = dimens_12),
+                                fontSize = text_size_14,
+                                fontWeight = FontWeight.W600,
+                                fontFamily = latoFontFamily(),
+                                color = Color(0xFF2E7D32),
+                                textAlign = TextAlign.Center
+                            )
+                        }
+
                         // Bottom buttons
                         if (showLoading) {
                             CircularLoadingIndicator(
@@ -262,7 +305,7 @@ fun DealInfoBottomSheet(
                                     .padding(bottom = dimens_20),
                             ) {
 
-                                if (currentUserSub in deal?.requestedUsersSub.orEmpty()) {
+                                if (currentUserSub in deal?.dealRequests.orEmpty()) {
                                     DealSpotOutlineButton(
                                         modifier = Modifier.fillMaxWidth(),
                                         buttonText = stringResource(Res.string.cancel_request),

@@ -322,5 +322,7 @@
     <string name="visit_profile">Profil</string>
     <string name="send_request">Odeslat žádost</string>
     <string name="cancel_request">Zrušit žádost</string>
+    <string name="request_sent_successfully">Žádost byla úspěšně odeslána</string>
+    <string name="request_removed_successfully">Žádost byla úspěšně zrušena</string>
     <!--Czech -->
 </resources>

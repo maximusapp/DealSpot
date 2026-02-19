@@ -1,9 +1,5 @@
 package com.app.dealspot.presentation.ui.home.home
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.dealspot.business.AppDataStore
@@ -12,29 +8,25 @@ import com.app.dealspot.business.DealRequestState
 import com.app.dealspot.business.LoginState
 import com.app.dealspot.business.constants.DataStoreKeys
 import com.app.dealspot.data.ProfileRepositoryImpl
-import com.app.dealspot.domain.model.MapCameraState
-import com.app.dealspot.domain.model.TokenResponse
-import com.app.dealspot.domain.model.ServiceCategoryEntity
-import com.app.dealspot.domain.model.ServiceEntity
-import com.app.dealspot.domain.use_cases.LoginUseCase
-import com.app.dealspot.domain.use_cases.deals.GetDealsUseCase
-import com.app.dealspot.domain.use_cases.profile.GetUserUseCase
 import com.app.dealspot.domain.model.DealEntity
 import com.app.dealspot.domain.model.DealRequestResponse
+import com.app.dealspot.domain.model.MapCameraState
+import com.app.dealspot.domain.model.ServiceCategoryEntity
+import com.app.dealspot.domain.model.ServiceEntity
+import com.app.dealspot.domain.model.TokenResponse
+import com.app.dealspot.domain.use_cases.LoginUseCase
+import com.app.dealspot.domain.use_cases.deals.GetDealUseCase
+import com.app.dealspot.domain.use_cases.deals.GetDealsUseCase
 import com.app.dealspot.domain.use_cases.deals.SendDealRequest
+import com.app.dealspot.domain.use_cases.profile.GetUserUseCase
 import com.app.dealspot.presentation.SharedViewModel
 import com.app.dealspot.presentation.utils.getCurrentDateTime
 import com.dealspot.network.core_cognito.GetUserResponse
 import com.dealspot.network.core_cognito.IdentityProviderException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
@@ -263,6 +255,20 @@ class HomeScreenViewModel(
                 requestType = requestType.ordinal,
                 userSub = currentUserSub.value.ifEmpty { userSub }
             )
+
+            /** Update deal in deals list*/
+            if (result.deal != null) {
+                _deals.value = _deals.value.map { deal ->
+                    if (deal.dealId == result.deal.dealId) {
+                        deal.dealRequests = result.deal.dealRequests
+                    }
+
+                    deal
+                }
+
+                /** Update selected deal */
+                setSelectedDeal(deal = result.deal)
+            }
 
             _sendDealRequestState.value = DealRequestState.Result(result = result)
 

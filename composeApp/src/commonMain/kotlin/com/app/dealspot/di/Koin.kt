@@ -12,6 +12,7 @@ import com.app.dealspot.domain.use_cases.ForgotPasswordUseCase
 import com.app.dealspot.domain.use_cases.SignUpUseCase
 import com.app.dealspot.domain.use_cases.LoginUseCase
 import com.app.dealspot.domain.use_cases.deals.CreateDealUseCase
+import com.app.dealspot.domain.use_cases.deals.GetDealUseCase
 import com.app.dealspot.domain.use_cases.deals.GetDealsUseCase
 import com.app.dealspot.domain.use_cases.deals.SendDealRequest
 import com.app.dealspot.domain.use_cases.profile.GetUserUseCase
@@ -50,6 +51,7 @@ fun appModule(context: Context) = module {
     /**DEAL_USE-CASES*/
     single { CreateDealUseCase(get()) }
     single { GetDealsUseCase(get()) }
+    single { GetDealUseCase(get()) }
     single { SendDealRequest(get()) }
 
     /**PROFILE-USE-CASES*/

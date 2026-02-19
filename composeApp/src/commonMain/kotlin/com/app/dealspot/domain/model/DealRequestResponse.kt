@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 data class DealRequestResponse(
     val success: Boolean = false,
     val requestType: Int = 0,
+    val deal: DealEntity? = null,
     val message: String = ""
 )
 

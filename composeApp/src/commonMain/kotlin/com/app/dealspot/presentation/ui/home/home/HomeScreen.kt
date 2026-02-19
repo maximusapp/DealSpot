@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.app.dealspot.business.ApplyDealRequestType
 import com.app.dealspot.business.DealRequestState
-import com.app.dealspot.domain.model.DealEntity
 import com.app.dealspot.presentation.theme.SpacerHeight100Dp
 import com.app.dealspot.presentation.theme.dimens_12
 import com.app.dealspot.presentation.theme.dimens_20

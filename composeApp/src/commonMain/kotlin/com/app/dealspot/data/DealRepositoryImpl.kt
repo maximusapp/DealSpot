@@ -4,6 +4,7 @@ import com.app.dealspot.domain.model.CreateDealRequest
 import com.app.dealspot.domain.model.CreateDealResponse
 import com.app.dealspot.domain.model.DealRequest
 import com.app.dealspot.domain.model.DealRequestResponse
+import com.app.dealspot.domain.model.GetDealResponse
 import com.app.dealspot.domain.model.GetDealsRequest
 import com.app.dealspot.domain.model.GetDealsResponse
 import com.dealspot.network.AWSConfig
@@ -58,8 +59,27 @@ class DealRepositoryImpl() {
         }
     }
 
-    suspend fun getDeal(dealId: String) {
-        // Not implemented yet
+    suspend fun getDeal(dealId: String): GetDealResponse {
+        //TODO("Not implemented API and Lambda on aws side")
+        return try {
+            println("DealRepositoryImpl. getDeal. dealId: $dealId")
+
+            val response = client.post("${AWSConfig.API_GATEWAY_URL_DEV}/getDeal") {
+                setBody(dealId)
+            }
+            println("DealRepositoryImpl. getDeal. Response is: $response")
+
+            val result: GetDealResponse = response.body()
+            println("DealRepositoryImpl. getDeal. Response: $result")
+
+            result
+        } catch (e: Exception) {
+            println("DealRepositoryImpl. getDeal. Error: ${e.message}")
+            e.printStackTrace()
+            GetDealResponse(
+                deal = null
+            )
+        }
     }
 
     suspend fun requestToDeal(dealRequest: DealRequest): DealRequestResponse {
@@ -68,7 +88,7 @@ class DealRepositoryImpl() {
             val response = client.post("${AWSConfig.API_GATEWAY_URL_DEV}/requestToDeal") {
                 setBody(dealRequest)
             }
-            println("DealRepositoryImpl. Response is: $response")
+            println("DealRepositoryImpl. requestToDeal. Response is: $response")
 
             val result: DealRequestResponse = response.body()
             println("DealRepositoryImpl. requestToDeal. Response: $result")

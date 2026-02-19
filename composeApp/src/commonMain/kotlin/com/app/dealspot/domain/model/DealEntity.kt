@@ -19,6 +19,6 @@ data class DealEntity(
     val isActive: Int? = null,
     val userSub: String? = null,
     val userName: String? = null,
-    val dealRequests: List<String>? = emptyList()
+    var dealRequests: List<String>? = emptyList()
 )
 
